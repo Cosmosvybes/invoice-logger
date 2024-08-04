@@ -1,19 +1,19 @@
-import { Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 type textType = {
   text: string;
   icon: any;
-  callback(): void | boolean | object;
+  path: any;
 };
 
-const Btn = ({ text, icon, callback }: textType) => {
+const Btn = ({ text, icon, path }: textType) => {
   return (
-    <Button
-      onClick={() => callback()}
-      className={`h-72 w-72  max-sm:w-52 max-sm:h-52 flex flex-col bg-gray-50  justify-center  shadow-md shadow-gray-400  items-center text-center text-2xl hover:from-sky-800 hover:to-sky-900 hover:text-white duration-1000 transition  text-sky-600 border rounded-lg   px-4  font-semibold hover:bg-gradient-to-tr `}
+    <Link
+      to={`/${path}`}
+      className={`h-72 w-72  hover:z-30 hover:bg-gray-200 max-sm:w-52 max-sm:h-52 flex flex-col bg-gray-50 text-black  justify-center  shadow-md shadow-gray-400  items-center text-center text-2xl :text-white duration-1000 transition   border rounded-lg   px-4  font-semibold hover:bg-gradient-to-tr `}
     >
       {icon} {text}
-    </Button>
+    </Link>
   );
 };
 

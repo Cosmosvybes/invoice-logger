@@ -1,69 +1,104 @@
-import { useState } from "react";
-import { objectType, reciept } from "./interface";
-
 export default function useModalController() {
-  const form: objectType[] = [
+  const forms = [
     {
-      id: 1,
+      type_: "text",
+      name: "Client",
       value: "",
-      name: "User",
-      labelName: "Invoice To",
-      placeholder: "Client/User",
+      placeholder: "Client's name",
     },
     {
-      id: 2,
+      type_: "text",
+      name: "ClientAddress",
       value: "",
-      name: "Description",
-      labelName: "Description",
-      placeholder: "Invoice Description",
+      placeholder: "Client'sa address",
     },
     {
-      id: 3,
+      type_: "text",
+      name: "City",
       value: "",
-      name: "Amount",
-      labelName: "Amount",
-      placeholder: "Amount",
+      placeholder: "City/Postal",
     },
     {
-      id: 6,
+      type_: "text",
+      name: "state",
       value: "",
+      placeholder: "State",
+    },
+    {
+      type_: "text",
+      name: "Country",
+      value: "",
+      placeholder: "Country",
+    },
+
+    {
+      type_: "text",
       name: "IssuedBy",
-      labelName: "Issued By",
-      placeholder: "Issued By",
+      value: "",
+      placeholder: "Invoice From",
     },
+    {
+      type_: "text",
+      name: "AdditionalInfo",
+      value: "",
+      placeholder: "Additional Information",
+    },
+    {
+      type_: "date",
+      name: "DateIssued",
+      value: "",
+      placeholder: "Issued on",
+    },
+    {
+      type_: "date",
+      name: "DateDue",
+      value: "",
+      placeholder: "Date Due",
+    },
+    // {
+    //   type_: "checkbox",
+    //   name: "Save Text Doc",
+    //   value: false,
+    //   placeholder: "Save Invoice",
+    // },
   ];
 
-  //get input values
-  const inputValues: any = () => {
-    let formValues = form.reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr.name]: curr.value,
-      }),
-      {}
-    );
-    return formValues;
-  };
-
-  const [allValues, setAllValues] = useState(inputValues);
-
-  function updateValues(newValue: string, inputName: string) {
-    setAllValues((prevValue: reciept) => ({
-      ...prevValue,
-      [inputName]: newValue,
-    }));
-    console.log(allValues);
-  }
-
-  function handleSubmit() {
-    console.log(allValues);
-  }
-
+  const senderInfo = [
+    {
+      type: "text",
+      name: "Business",
+      value: "",
+      placeholder: "Business name",
+    },
+    {
+      type: "text",
+      name: "BusinessAddress",
+      value: "",
+      placeholder: "Business address",
+    },
+    {
+      type: "text",
+      name: "ClientCity",
+      value: "",
+      placeholder: "City/Postal",
+    },
+    {
+      type_: "text",
+      name: "BusinessState",
+      value: "",
+      placeholder: "State",
+    },
+    {
+      type: "text",
+      name: "BusinessCountry",
+      value: "",
+      placeholder: "Business Country",
+    },
+  
+   
+  ];
   return {
-    form,
-    inputValues,
-    allValues,
-    updateValues,
-    handleSubmit,
+    forms,
+    senderInfo,
   };
 }

@@ -4,6 +4,7 @@ export interface objectType {
   name: string;
   labelName: string;
   placeholder: string;
+  inputType: string;
 }
 
 export interface reciept {

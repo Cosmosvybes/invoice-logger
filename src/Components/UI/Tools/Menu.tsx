@@ -3,50 +3,58 @@ import Btn from "./Button";
 import {
   Setting,
   Receipt,
-  LockDash,
   UserCircle,
+  File,
+  MoneyDollar,
+  UsersTriple,
 } from "react-huge-icons/outline";
 
-interface MenuInterface {
-  modal: boolean;
-  setModalSwitch(e: boolean): void;
-}
-
-const Menu = ({ modal, setModalSwitch }: MenuInterface) => {
+const Menu = () => {
   const [menuList] = useState([
     {
-      text: "Make Invoice",
-      icon: <Receipt className="text-5xl text-sky-600" />,
-      func: () => setModalSwitch(!modal),
+      text: "New Invoice",
+      icon: <Receipt className="text-5xl text-black" />,
+      path: "/",
     },
     {
-      text: "Verify Invoice",
-      icon: (
-        <LockDash className="text-5xl  text-sky-600 transition duration-700" />
-      ),
-      func: () => "",
+      text: "Revenue",
+      icon: <MoneyDollar className="text-5xl text-black" />,
+      path: "dashboard",
+    },
+    {
+      text: "Clients",
+      icon: <UsersTriple className="text-5xl text-black" />,
+      path: "dashboard",
+    },
+
+    {
+      text: "All Invoice",
+      icon: <File className="text-5xl text-black" />,
+      //path: () => setModalSwitch(!modal),
     },
     {
       text: "Profile",
       icon: (
-        <UserCircle className="text-5xl  text-sky-600 transition duration-700" />
+        <UserCircle className="text-5xl  text-black transition duration-700" />
       ),
-      func: () => "",
+      path: () => "",
     },
     {
       text: "Settings",
       icon: (
-        <Setting className="text-5xl  text-sky-600 transition duration-700" />
+        <Setting className="text-5xl  text-black transition duration-700" />
       ),
-      func: () => "",
+      path: () => "",
     },
   ]);
 
   return (
     <>
-      <div className="relative px-5  grid grid-cols-2 max-sm:grid-cols-2 gap-2 max-sm:py-14  max-sm:px-0">
-        {menuList.map((menu) => (
-          <Btn text={menu.text} icon={menu.icon} callback={menu.func} />
+      <div className="relative px-5  grid grid-cols-3 max-sm:grid-cols-2 gap-4 max-sm:py-14  max-sm:px-0">
+        {menuList.map(({ text, icon, path }, i) => (
+          <div className="relative" key={i}>
+            <Btn path={path} text={text} icon={icon} />
+          </div>
         ))}
       </div>
     </>

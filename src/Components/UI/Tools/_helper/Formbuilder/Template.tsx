@@ -1,0 +1,255 @@
+import { Form, Input } from "reactstrap";
+import { FORM } from "./type";
+
+import useTemplateController from "./main";
+import {
+  EyeLightDouble,
+  PlusThin,
+  SendFast,
+  TrashBent,
+} from "react-huge-icons/outline";
+
+import Btn from "./Btn";
+import ViewModal from "./ViewModal";
+
+const Template = ({ reciepient, sender }: FORM) => {
+  const {
+    updatedValues,
+    handleSubmit,
+    invoiceDetails,
+    inputs,
+    addNewItem,
+    updateValues,
+    items,
+    itemList,
+    handleDelete,
+    viewMode,
+    setViewMode,
+    handleView,
+  } = useTemplateController({ reciepient, sender });
+
+  const btns = [
+    {
+      text: "VIEW",
+      icon: <EyeLightDouble className="text-3xl text-black inline" />,
+      func: () => handleView(),
+    },
+  ];
+  const addNew = [
+    {
+      text: "ADD ITEM",
+      icon: <PlusThin className="text-3xl mt-1 text-black inline" />,
+      func: () => addNewItem(),
+    },
+  ];
+  const deleteBtn = [
+    {
+      text: "REMOVE",
+      icon: <TrashBent className="text-3xl text-gray-400 inline" />,
+    },
+  ];
+
+  //   //?? ///////////////////////////////////////////////
+  // FORM BUILDER TEMPLATE
+  //   //?? ///////////////////////////////////////////////
+
+  const OWNER_ = sender.map(({ type, name, placeholder }, index) => {
+    switch (type) {
+      case "checkbox":
+        return (
+          <div
+            className="relative items-center gap-1 py-3 flex justify-start"
+            key={index}
+          >
+            <strong className="text-gray-500">{name}</strong>
+            <Input
+              title="check"
+              type="checkbox"
+              className="max-sm:w-auto"
+              value={invoiceDetails[name]}
+              onChange={(e) => updatedValues(e.currentTarget.checked, name)}
+            />
+          </div>
+        );
+
+      default:
+        return (
+          <div
+            className="relative items-center gap-1 py-3 flex justify-start"
+            key={index}
+          >
+            <Input
+              title="check"
+              type="text"
+              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+              value={invoiceDetails[name]}
+              placeholder={placeholder}
+              onChange={(e) => updatedValues(e.target.value, name)}
+            />
+          </div>
+        );
+    }
+  });
+
+  const CUSTOMER_ = reciepient.map((input, index) => {
+    switch (input.type_) {
+      case "checkbox":
+        return (
+          <div
+            className="relative items-center gap-2 px-3 py-3 flex justify-start"
+            key={index}
+          >
+            <p className="text-gray-500">{input.placeholder}</p>
+            <Input
+              title="check"
+              type="checkbox"
+              className="max-sm:w-auto"
+              value={invoiceDetails[input.name]}
+              onChange={(e) =>
+                updatedValues(e.currentTarget.checked, input.name)
+              }
+            />
+          </div>
+        );
+      case "date":
+        return (
+          <div
+            className="relative ml-3 items-center gap-1 py-3 flex justify-start"
+            key={index}
+          >
+            <p className="text-gray-400 font-light text-xl max-sm:text-sm">
+              {input.placeholder}
+            </p>
+            <Input
+              title="date"
+              type="date"
+              className="max-sm:w-auto bg-inherit px-3  text-gray-400 border-none py-1"
+              value={invoiceDetails[input.name]}
+              onChange={(e) => updatedValues(e.target.value, input.name)}
+            />
+          </div>
+        );
+      default:
+        return (
+          <div className="relative" key={index}>
+            <Input
+              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+              type="text"
+              value={invoiceDetails[input.name]}
+              placeholder={input.placeholder}
+              onChange={(e) => updatedValues(e.target.value, input.name)}
+            />
+          </div>
+        );
+    }
+  });
+
+  //   //?? ///////////////////////////////////////////////
+  // ITEM MODAL
+  //   //?? ///////////////////////////////////////////////
+
+  const ADDITEM = inputs.map((input: any) => (
+    <div className="relative block">
+      <Input
+        className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+        type={input.type}
+        placeholder={input.name}
+        value={items[input.name]}
+        onChange={(e) => updateValues(e.target.value, input.name)}
+      />
+    </div>
+  ));
+
+  const ITEMLIST = itemList.map((item: any, i: any) => (
+    <div
+      className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
+      key={i}
+    >
+      <p className="text-gray-400 font-light text-xl max-sm:text-xs">
+        {item.description}
+      </p>
+      <p className="text-gray-400 font-light text-xl max-sm:text-xs">
+        {item.quantity}
+      </p>
+      <p className="text-gray-400 font-light text-xl max-sm:text-xs">
+        {item.unit_price}
+      </p>
+      <p className="text-gray-400 font-light text-xl max-sm:text-xs">
+        {item.amount}
+      </p>
+      {deleteBtn.map((btn, i) => (
+        <div className="relative h-12 w-auto " key={i}>
+          <Btn icon={btn.icon} callback={() => handleDelete(item.id)} />
+        </div>
+      ))}{" "}
+    </div>
+  ));
+
+  return (
+    <>
+      <div className="flex relative justify-start w-full h-full flex-col max-sm:py-5 px-12 max-sm:px-1">
+        {viewMode && (
+          <ViewModal
+            data={{ ...invoiceDetails, itemList }}
+            callback={() => setViewMode(!viewMode)}
+          />
+        )}
+        <h1 className="text-5xl font-extralight text-black max-sm:text-xl max-sm:font-normal  max-sm:ml-2">
+          New invoice
+        </h1>
+        <div className="relative flex justify-between">
+          <Form className="relative flex flex-col justify-between w-full max-sm:w-full">
+            {OWNER_}
+          </Form>
+          <div className="relative flex  h-14">
+            <div className="relative w-full max-sm:w-full gap-2 flex justify-start items-center">
+              {btns.map((btn, i) => (
+                <div className="relative h-12 w-auto " key={i}>
+                  <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={addNewItem}
+              className="relative flex justify-start  -ml-1 items-center text-black gap-2 font-light text-2xl"
+            >
+              <SendFast className="text-4xl  mt-0.5 inline text-black" />
+              SEND
+            </button>
+          </div>
+        </div>
+
+        <Form className="grid grid-cols-3 max-sm:grid-cols-2 w-full  gap-2 max-sm:gap-2">
+          {CUSTOMER_}
+        </Form>
+        <div className="relative w-full flex border  flex-col gap-0.5">
+          <div className="relative  bg-black items-center grid grid-cols-5  py-1 w-full max-sm:w-auto">
+            <p className="text-white  font-light px-2 text-xl max-sm:text-xs">
+              Description
+            </p>
+            <p className="text-white font-light text-xl max-sm:text-xs">
+              Quantity
+            </p>
+            <p className="text-white font-light text-xl max-sm:text-xs">
+              Unit price
+            </p>
+            <p className="text-white font-light text-xl max-sm:text-xs">
+              Amount
+            </p>
+          </div>
+          {ITEMLIST}
+        </div>
+        <div className="relative w-full flex justify-between items-center mt-2 gap-0.5">
+          {addNew.map((btn, i) => (
+            <div className="relative h-12 w-auto " key={i}>
+              <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
+            </div>
+          ))}{" "}
+          {ADDITEM}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Template;
