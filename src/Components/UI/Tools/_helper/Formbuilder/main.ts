@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import "react-toastify/ReactToastify.css";
 
 import { FORM, Reciept } from "./type";

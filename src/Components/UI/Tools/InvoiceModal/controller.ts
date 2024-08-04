@@ -83,7 +83,7 @@ export default function useModalController() {
       placeholder: "City/Postal",
     },
     {
-      type_: "text",
+      type: "text",
       name: "BusinessState",
       value: "",
       placeholder: "State",
