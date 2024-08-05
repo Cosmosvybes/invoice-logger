@@ -1,9 +1,9 @@
-import { Button, Form, Input } from "reactstrap";
+import { Form, Input } from "reactstrap";
 import { FORM } from "./type";
 import { draftInvoice } from "../../../../../States/Slices/invoice";
 import {
   useAppDispatch,
-  useAppSelector,
+  // useAppSelector,
 } from "../../../../../States/hoooks/hook";
 
 import useTemplateController from "./main";
@@ -16,8 +16,8 @@ import {
 
 import Btn from "./Btn";
 import ViewModal from "./ViewModal";
-import { useLayoutEffect } from "react";
-import InvoiceTemplate from "./InvoiceTemplate";
+// import { useLayoutEffect } from "react";
+// import InvoiceTemplate from "./InvoiceTemplate";
 
 const Template = ({ reciepient, sender }: FORM) => {
   const {
