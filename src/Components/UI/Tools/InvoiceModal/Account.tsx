@@ -115,10 +115,10 @@ const Account = () => {
               Overview
             </p>
 
-            <div className="relative w-full grid gap-7 max-md:gap-8 py-5 px-1 grid-cols-3   max-sm:grid-cols-1">
+            <div className="relative w-full grid gap-7 max-md:gap-8 py-5 px-3 grid-cols-3   max-sm:grid-cols-1">
               {accountData.map((information) => (
                 <div
-                  className="relative flex text-sm flex-col justify-center px-2 max-sm:w-full items-left w-full h-36 gap-3 rounded-lg border border-gray-300"
+                  className="relative flex text-sm flex-col justify-center px-2 max-sm:w-full items-left w-full h-32 gap-3 rounded-lg border border-gray-300"
                   key={information.id}
                 >
                   <p className="text-gray-500 text-xl font-light">
@@ -132,7 +132,7 @@ const Account = () => {
             </div>
           </div>
           <div className="relative w-full flex items-center  gap-5 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
-            <div className="relative w-full flex justify-between items-center px-2">
+            <div className="relative w-full flex justify-between items-center px-3">
               <p className="text-gray-600 text-xl font-light ">
                 Latest Invoice
               </p>{" "}
