@@ -153,7 +153,7 @@ const Account = () => {
             {data.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <div className="relative w-1/3  h-auto py-2 grid grid-cols-1 px-2 gap-2  mt-3 max-sm:grid-cols-1  max-sm:w-full  ">
+              <div className="relative w-1/3  h-auto py-2 grid grid-cols-1 px-2  max-sm:grid-cols-1  max-sm:w-full  ">
                 {data.map((invoice) => (
                   <div className="relative" key={invoice.id}>
                     <InvoiceTemplate invoice={invoice} />
