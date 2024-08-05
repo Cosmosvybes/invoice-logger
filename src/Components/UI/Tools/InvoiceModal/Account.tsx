@@ -118,7 +118,7 @@ const Account = () => {
             <div className="relative w-full grid gap-7 max-md:gap-8 py-5 px-3 grid-cols-3   max-sm:grid-cols-1">
               {accountData.map((information) => (
                 <div
-                  className="relative flex text-sm flex-col justify-center px-2 max-sm:w-full items-left w-full h-32 gap-3 rounded-lg border border-gray-300"
+                  className="relative flex text-sm flex-col justify-center px-2 max-sm:w-full items-left w-96 h-32 gap-3 rounded-lg border border-gray-500"
                   key={information.id}
                 >
                   <p className="text-gray-500 text-xl font-light">
@@ -175,19 +175,19 @@ const Account = () => {
           </div>
           <div className="relative w-full flex border  flex-col gap-0.5">
             <div className="relative  bg-black items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-auto">
-              <p className="text-white  font-light px-2 text-xl max-sm:text-xs">
+              <p className="text-gray-100  font-light px-2 text-xl max-sm:text-xs">
                 Number
               </p>
-              <p className="text-white font-light text-xl max-sm:text-xs">
+              <p className="text-gray-100 font-light text-xl max-sm:text-xs">
                 Client
               </p>
-              <p className="text-white font-light text-xl max-sm:text-xs">
+              <p className="text-gray-100 font-light text-xl max-sm:text-xs">
                 Status
               </p>
-              <p className="text-white font-light text-xl max-sm:text-xs">
+              <p className="text-gray-100 font-light text-xl max-sm:text-xs">
                 Amount
               </p>
-              <p className="text-white font-light text-xl max-sm:text-xs">
+              <p className="text-gray-100 font-light text-xl max-sm:text-xs">
                 Date
               </p>
             </div>
