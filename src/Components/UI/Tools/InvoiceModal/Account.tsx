@@ -102,7 +102,7 @@ const Account = () => {
 
             <Button
               // onClick={() => setIsCreatingNewInvoice(!isCreatingNewInvoice)}
-              className="bg-black h-16 max-sm:h-14 font-normal rounded-md text-gray-50 w-52 max-sm:w-44"
+              className="bg-black h-16 max-sm:h-14 max-sm:text-sm font-normal rounded-md text-gray-50 w-52 max-sm:w-44"
             >
               <p className="flex items-center justify-center">
                 {" "}
@@ -115,10 +115,10 @@ const Account = () => {
               Overview
             </p>
 
-            <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-2 grid-cols-3   max-sm:grid-cols-1">
+            <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-1 grid-cols-3   max-sm:grid-cols-1">
               {accountData.map((information) => (
                 <div
-                  className="relative flex text-sm flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 gap-5 rounded-lg border border-gray-500"
+                  className="relative flex text-sm flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 max-sm:h-24 gap-5 rounded-lg border border-gray-500"
                   key={information.id}
                 >
                   <p className="text-gray-500 text-sm font-light">
@@ -164,7 +164,7 @@ const Account = () => {
             {/* //invoice drfats */}
           </div>{" "}
           {/* //Latest invoiceF */}
-          <div className="relative w-full max-sm:px-2 justify-between flex  items-center">
+          <div className="relative w-full max-sm:px-1 justify-between flex  items-center">
             <p className="text-gray-600 text-xl font-light ">
               {" "}
               Recent Invoices
