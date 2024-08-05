@@ -1,50 +1,23 @@
 import { useState } from "react";
 import Btn from "./Button";
-import {
-  Setting,
-  Receipt,
-  UserCircle,
-  File,
-  MoneyDollar,
-  UsersTriple,
-} from "react-huge-icons/outline";
+import { ArchiveDocument } from "react-huge-icons/outline";
 
 const Menu = () => {
   const [menuList] = useState([
     {
-      text: "New Invoice",
-      icon: <Receipt className="text-5xl text-black" />,
+      text: "All Invoices",
+      icon: "2",
       path: "/",
     },
     {
+      text: "Account",
+      icon: <ArchiveDocument className="text-3xl mt-1 text-black" />,
+      path: "dashboard",
+    },
+    {
       text: "Revenue",
-      icon: <MoneyDollar className="text-5xl text-black" />,
+      icon: "$0.00",
       path: "dashboard",
-    },
-    {
-      text: "Clients",
-      icon: <UsersTriple className="text-5xl text-black" />,
-      path: "dashboard",
-    },
-
-    {
-      text: "All Invoice",
-      icon: <File className="text-5xl text-black" />,
-      //path: () => setModalSwitch(!modal),
-    },
-    {
-      text: "Profile",
-      icon: (
-        <UserCircle className="text-5xl  text-black transition duration-700" />
-      ),
-      path: () => "",
-    },
-    {
-      text: "Settings",
-      icon: (
-        <Setting className="text-5xl  text-black transition duration-700" />
-      ),
-      path: () => "",
     },
   ]);
 
