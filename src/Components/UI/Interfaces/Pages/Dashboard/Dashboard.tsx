@@ -70,7 +70,7 @@ const Dashboard = () => {
           ))}
         </div> */}
 
-        <div className="relative  w-full overflow-x-hidden h-screen px-44 max-sm:px-0 border">
+        <div className="relative  w-full  h-auto px-44 max-sm:px-0 border">
           <div className="relative ">{VIEWS_}</div>
         </div>
       </div>

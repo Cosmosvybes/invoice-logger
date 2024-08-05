@@ -31,8 +31,8 @@ const ViewModal = ({
 }) => {
   return (
     <>
-      <div className="absolute h-auto overflow-y-scroll max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
-        <div className="relative   rounded-xl z-10 bg-gray-50  overflow-y-scroll overflow-x-clip border flex flex-col py-5 px-5 ">
+      <div className="absolute h-auto  max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
+        <div className="relative   rounded-xl z-10 bg-gray-50   border flex flex-col py-5 px-5 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-light">Invoice Preview</h1>
 
