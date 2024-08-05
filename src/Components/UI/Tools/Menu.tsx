@@ -23,7 +23,7 @@ const Menu = () => {
 
   return (
     <>
-      <div className="relative px-5  grid grid-cols-3 max-sm:grid-cols-2 gap-4 max-sm:py-14  max-sm:px-0">
+      <div className="relative  max-sm:w-full px-5  grid grid-cols-3 max-sm:grid-cols-1 gap-4 max-sm:py-14  max-sm:px-2">
         {menuList.map(({ text, icon, path }, i) => (
           <div className="relative" key={i}>
             <Btn path={path} text={text} icon={icon} />
