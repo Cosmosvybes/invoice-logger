@@ -121,10 +121,10 @@ const Account = () => {
                   className="relative flex text-sm flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 gap-5 rounded-lg border border-gray-500"
                   key={information.id}
                 >
-                  <p className="text-gray-500 text-xl font-light">
+                  <p className="text-gray-500 text-sm font-light">
                     {information.title}
                   </p>
-                  <h1 className="text-black text-4xl font-extrabold">
+                  <h1 className="text-black text-xl font-extrabold">
                     {information.value}
                   </h1>
                 </div>
@@ -132,7 +132,7 @@ const Account = () => {
             </div>
           </div>
           <div className="relative w-full flex items-center  gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
-            <div className="relative w-full flex justify-between items-center px-3">
+            <div className="relative w-full flex justify-between items-center px-1">
               <p className="text-gray-600 text-xl font-light ">
                 Latest Invoice
               </p>{" "}
@@ -143,7 +143,7 @@ const Account = () => {
                 View Invoice
               </Link>{" "}
             </div>
-            <div className="relative w-full flex justify-between items-center px-3">
+            <div className="relative w-full flex justify-between items-center px-1">
               <p className="text-gray-600 text-xl w-full font-light">Drafts</p>
               <ArrowRight className="text-black text-4xl" />
             </div>
@@ -153,7 +153,7 @@ const Account = () => {
             {data.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <div className="relative w-1/3  h-auto py-2 grid grid-cols-1 px-2  max-sm:grid-cols-1  max-sm:w-full  ">
+              <div className="relative w-1/3 gap-1 h-auto py-2 grid grid-cols-1   max-sm:grid-cols-1  max-sm:w-full  ">
                 {data.map((invoice) => (
                   <div className="relative" key={invoice.id}>
                     <InvoiceTemplate invoice={invoice} />
