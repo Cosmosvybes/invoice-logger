@@ -115,10 +115,10 @@ const Account = () => {
               Overview
             </p>
 
-            <div className="relative w-full grid gap-10 max-md:gap-5 py-5 px-2 grid-cols-3   max-sm:grid-cols-1">
+            <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-2 grid-cols-3   max-sm:grid-cols-1">
               {accountData.map((information) => (
                 <div
-                  className="relative flex text-sm flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 gap-5 rounded-lg border border-gray-500"
+                  className="relative flex text-sm flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 gap-5 rounded-lg border border-gray-500"
                   key={information.id}
                 >
                   <p className="text-gray-500 text-xl font-light">
