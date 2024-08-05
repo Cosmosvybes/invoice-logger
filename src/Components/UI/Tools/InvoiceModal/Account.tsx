@@ -111,7 +111,7 @@ const Account = () => {
             </Button>
           </div>
           <div className="w-full  mt-5 block relative">
-            <p className="text-gray-500 px-3 text-3xl max-sm:text-xl font-light ">
+            <p className="text-black px-3 text-xl max-sm:text-sm font-light ">
               Overview
             </p>
 
@@ -124,7 +124,7 @@ const Account = () => {
                   <p className="text-gray-500 text-xl font-light">
                     {information.title}
                   </p>
-                  <h1 className="text-black text-6xl font-extrabold">
+                  <h1 className="text-black text-4xl font-extrabold">
                     {information.value}
                   </h1>
                 </div>
