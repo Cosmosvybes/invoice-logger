@@ -102,11 +102,11 @@ const Account = () => {
 
             <Button
               // onClick={() => setIsCreatingNewInvoice(!isCreatingNewInvoice)}
-              className="bg-black h-16 max-sm:h-14 max-sm:text-sm font-normal rounded-md text-gray-50 w-52 max-sm:w-44"
+              className="bg-black h-16 max-sm:h-12 max-sm:text-sm font-normal rounded-md text-gray-50 w-52 max-sm:w-32"
             >
               <p className="flex items-center justify-center">
                 {" "}
-                <PlusThin className="inline text-3xl" /> new invoice{" "}
+                <PlusThin className="inline text-2xl" /> new invoice{" "}
               </p>
             </Button>
           </div>
