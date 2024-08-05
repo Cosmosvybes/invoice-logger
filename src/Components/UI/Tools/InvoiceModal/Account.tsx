@@ -98,11 +98,11 @@ const Account = () => {
       <div className="relative h-screen  w-full   duration-1000 transition  max-sm:py-2 max-sm:h-screen   flex justify-center items-center max-sm:px-0 max-sm:w-full">
         <div className="relative h-screen boder-black w-full  py-10 max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-5  font-bold">
           <div className="relative w-full flex justify-between items-center px-2">
-            <h1 className="text-black text-6xl font-extrabold">Account</h1>
+            <h1 className="text-black text-6xl max-sm:text-4xl font-extrabold">Account</h1>
 
             <Button
               // onClick={() => setIsCreatingNewInvoice(!isCreatingNewInvoice)}
-              className="bg-black h-16 max-sm:h-14 font-normal rounded-md text-gray-50 w-52"
+              className="bg-black h-16 max-sm:h-14 font-normal rounded-md text-gray-50 w-52 max-sm:w-44"
             >
               <p className="flex items-center justify-center">
                 {" "}
