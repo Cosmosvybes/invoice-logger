@@ -9,6 +9,12 @@ const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
             className="text-gray-700 hover:bg-gray-300 text-xl text-center font-light px-2 w-full"
             onClick={() => console.log(invoice)}
           >
+            Send
+          </button>
+          <button
+            className="text-gray-700 hover:bg-gray-300 text-xl text-center font-light px-2 w-full"
+            onClick={() => console.log(invoice)}
+          >
             Edit
           </button>
           <button className="text-gray-700  hover:bg-gray-300 text-xl text-center 0 font-light px-2 w-full">

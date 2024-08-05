@@ -97,7 +97,7 @@ const Account = () => {
     <>
       <div className="relative h-screen  w-full   duration-1000 transition  max-sm:py-2 max-sm:h-screen   flex justify-center items-center max-sm:px-0 max-sm:w-full">
         <div className="relative h-screen boder-black w-full  py-10 max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-5  font-bold">
-          <div className="relative w-full flex justify-between items-center px-2">
+          <div className="relative w-full flex justify-between items-center px-3">
             <h1 className="text-black text-6xl max-sm:text-4xl font-light">Account</h1>
 
             <Button
@@ -115,10 +115,10 @@ const Account = () => {
               Overview
             </p>
 
-            <div className="relative w-full grid gap-7 max-md:gap-8 py-5 px-3 grid-cols-3   max-sm:grid-cols-1">
+            <div className="relative w-full grid gap-10 max-md:gap-5 py-5 px-2 grid-cols-3   max-sm:grid-cols-1">
               {accountData.map((information) => (
                 <div
-                  className="relative flex text-sm flex-col justify-center px-2 max-sm:w-full items-left w-96 h-32 gap-3 rounded-lg border border-gray-500"
+                  className="relative flex text-sm flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 gap-5 rounded-lg border border-gray-500"
                   key={information.id}
                 >
                   <p className="text-gray-500 text-xl font-light">
@@ -164,7 +164,7 @@ const Account = () => {
             {/* //invoice drfats */}
           </div>{" "}
           {/* //Latest invoiceF */}
-          <div className="relative w-full  justify-between flex  items-center">
+          <div className="relative w-full max-sm:px-2 justify-between flex  items-center">
             <p className="text-gray-600 text-xl font-light ">
               {" "}
               Recent Invoices
