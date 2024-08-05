@@ -131,7 +131,7 @@ const Account = () => {
               ))}
             </div>
           </div>
-          <div className="relative w-full flex items-center  gap-5 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
+          <div className="relative w-full flex items-center  gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
             <div className="relative w-full flex justify-between items-center px-3">
               <p className="text-gray-600 text-xl font-light ">
                 Latest Invoice
@@ -143,7 +143,7 @@ const Account = () => {
                 View Invoice
               </Link>{" "}
             </div>
-            <div className="relative w-full flex justify-between items-center px-2">
+            <div className="relative w-full flex justify-between items-center px-3">
               <p className="text-gray-600 text-xl w-full font-light">Drafts</p>
               <ArrowRight className="text-black text-4xl" />
             </div>
