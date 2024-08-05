@@ -98,7 +98,7 @@ const Account = () => {
       <div className="relative h-screen  w-full   duration-1000 transition  max-sm:py-2 max-sm:h-screen   flex justify-center items-center max-sm:px-0 max-sm:w-full">
         <div className="relative h-screen boder-black w-full  py-10 max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-5  font-bold">
           <div className="relative w-full flex justify-between items-center px-2">
-            <h1 className="text-black text-6xl max-sm:text-4xl font-extrabold">Account</h1>
+            <h1 className="text-black text-6xl max-sm:text-4xl font-light">Account</h1>
 
             <Button
               // onClick={() => setIsCreatingNewInvoice(!isCreatingNewInvoice)}
@@ -118,7 +118,7 @@ const Account = () => {
             <div className="relative w-full grid gap-7 max-md:gap-8 py-5 px-1 grid-cols-3  max-sm:grid-cols-1">
               {accountData.map((information) => (
                 <div
-                  className="relative flex text-sm flex-col justify-center px-2 max-sm:w-full items-left w-full h-40 gap-3 rounded-lg border"
+                  className="relative flex text-sm flex-col justify-center px-2 max-sm:w-full items-left w-full h-36 gap-3 rounded-lg border"
                   key={information.id}
                 >
                   <p className="text-gray-500 text-xl font-light">
