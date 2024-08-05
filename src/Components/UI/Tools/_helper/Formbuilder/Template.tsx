@@ -1,21 +1,30 @@
-import { Form, Input } from "reactstrap";
+import { Button, Form, Input } from "reactstrap";
 import { FORM } from "./type";
+import { draftInvoice } from "../../../../../States/Slices/invoice";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../States/hoooks/hook";
 
 import useTemplateController from "./main";
 import {
   EyeLightDouble,
+  MailArrowDown,
   PlusThin,
-  SendFast,
   TrashBent,
 } from "react-huge-icons/outline";
 
 import Btn from "./Btn";
 import ViewModal from "./ViewModal";
+import { useLayoutEffect } from "react";
+import InvoiceTemplate from "./InvoiceTemplate";
 
 const Template = ({ reciepient, sender }: FORM) => {
   const {
     updatedValues,
-    handleSubmit,
+    isCreatingNewInvoice,
+    // handleSubmit,
+    TOTAL,
     invoiceDetails,
     inputs,
     addNewItem,
@@ -27,6 +36,9 @@ const Template = ({ reciepient, sender }: FORM) => {
     setViewMode,
     handleView,
   } = useTemplateController({ reciepient, sender });
+
+  let invoice = { ...invoiceDetails, itemList };
+  let dispatch = useAppDispatch();
 
   const btns = [
     {
@@ -97,7 +109,7 @@ const Template = ({ reciepient, sender }: FORM) => {
         return (
           <div
             className="relative items-center gap-2 px-3 py-3 flex justify-start"
-            key={index}
+            key={input.placeholder}
           >
             <p className="text-gray-500">{input.placeholder}</p>
             <Input
@@ -177,8 +189,8 @@ const Template = ({ reciepient, sender }: FORM) => {
       <p className="text-gray-400 font-light text-xl max-sm:text-xs">
         {item.amount}
       </p>
-      {deleteBtn.map((btn, i) => (
-        <div className="relative h-12 w-auto " key={i}>
+      {deleteBtn.map((btn) => (
+        <div className="relative h-12 w-auto " key={btn.text}>
           <Btn icon={btn.icon} callback={() => handleDelete(item.id)} />
         </div>
       ))}{" "}
@@ -187,67 +199,77 @@ const Template = ({ reciepient, sender }: FORM) => {
 
   return (
     <>
-      <div className="flex relative justify-start w-full h-full flex-col max-sm:py-5 px-12 max-sm:px-1">
-        {viewMode && (
-          <ViewModal
-            data={{ ...invoiceDetails, itemList }}
-            callback={() => setViewMode(!viewMode)}
-          />
-        )}
-        <h1 className="text-5xl font-extralight text-black max-sm:text-xl max-sm:font-normal  max-sm:ml-2">
-          New invoice
-        </h1>
-        <div className="relative flex justify-between">
-          <Form className="relative flex flex-col justify-between w-full max-sm:w-full">
-            {OWNER_}
-          </Form>
-          <div className="relative flex  h-14">
-            <div className="relative w-full max-sm:w-full gap-2 flex justify-start items-center">
-              {btns.map((btn, i) => (
-                <div className="relative h-12 w-auto " key={i}>
-                  <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={addNewItem}
-              className="relative flex justify-start  -ml-1 items-center text-black gap-2 font-light text-2xl"
-            >
-              <SendFast className="text-4xl  mt-0.5 inline text-black" />
-              SEND
-            </button>
-          </div>
-        </div>
+      {isCreatingNewInvoice && (
+        <section className="flex relative transition duration-700 justify-start w-full h-full flex-col max-sm:py-5 px-1 max-sm:px-1">
+          {viewMode && (
+            <ViewModal
+              TOTAL={TOTAL}
+              data={{ ...invoiceDetails, itemList }}
+              callback={() => setViewMode(!viewMode)}
+            />
+          )}
 
-        <Form className="grid grid-cols-3 max-sm:grid-cols-2 w-full  gap-2 max-sm:gap-2">
-          {CUSTOMER_}
-        </Form>
-        <div className="relative w-full flex border  flex-col gap-0.5">
-          <div className="relative  bg-black items-center grid grid-cols-5  py-1 w-full max-sm:w-auto">
-            <p className="text-white  font-light px-2 text-xl max-sm:text-xs">
-              Description
-            </p>
-            <p className="text-white font-light text-xl max-sm:text-xs">
-              Quantity
-            </p>
-            <p className="text-white font-light text-xl max-sm:text-xs">
-              Unit price
-            </p>
-            <p className="text-white font-light text-xl max-sm:text-xs">
-              Amount
-            </p>
-          </div>
-          {ITEMLIST}
-        </div>
-        <div className="relative w-full flex justify-between items-center mt-2 gap-0.5">
-          {addNew.map((btn, i) => (
-            <div className="relative h-12 w-auto " key={i}>
-              <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
+          <div className="relative flex justify-between">
+            <Form className="relative flex flex-col justify-between w-full max-sm:w-full">
+              {OWNER_}
+            </Form>
+            <div className="relative flex justify-start   h-14">
+              <div className="relative w-full max-sm:w-full flex justify-start items-center">
+                {btns.map((btn) => (
+                  <div className="relative h-12 w-auto " key={btn.text}>
+                    <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={() => dispatch(draftInvoice(invoice))}
+                className="relative flex justify-start  mr-3 items-center text-black gap-2 font-light text-2xl"
+              >
+                <MailArrowDown className="text-4xl  mt-0.5 inline text-black" />
+                SAVE
+              </button>
             </div>
-          ))}{" "}
-          {ADDITEM}
-        </div>
-      </div>
+          </div>
+
+          <Form className="grid grid-cols-3 max-sm:grid-cols-2 w-full  gap-2 max-sm:gap-2">
+            {CUSTOMER_}
+          </Form>
+          <div className="relative w-full flex border  flex-col gap-0.5">
+            <div className="relative  bg-black items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-auto">
+              <p className="text-white  font-light px-2 text-xl max-sm:text-xs">
+                Description
+              </p>
+              <p className="text-white font-light text-xl max-sm:text-xs">
+                Quantity
+              </p>
+              <p className="text-white font-light text-xl max-sm:text-xs">
+                Unit price
+              </p>
+              <p className="text-white font-light text-xl max-sm:text-xs">
+                Sub-Total
+              </p>
+            </div>
+            {ITEMLIST}
+          </div>
+
+          <div className="relative w-full flex justify-between items-center mt-2 gap-0.5">
+            {addNew.map((btn) => (
+              <div className="relative h-12 w-auto " key={btn.text}>
+                <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
+              </div>
+            ))}{" "}
+            {ADDITEM}
+          </div>
+          <hr className="w-full border-black" />
+          <div className="relative w-full flex justify-end  items-center">
+            <div className="relative flex-col flex items-center gap-3">
+              <p className="text-3xl font-normal underline">Total</p>
+
+              <p className="text-xl mt-3"> ${TOTAL}</p>
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 };

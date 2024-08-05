@@ -1,4 +1,4 @@
-gitimport useModalController from "./controller";
+import useModalController from "./controller";
 import Template from "../_helper/Formbuilder/Template";
 import { Button } from "reactstrap";
 import { ArrowRight, PlusThin } from "react-huge-icons/outline";

@@ -17,6 +17,12 @@ export interface FORM {
   sender: SENDER_[];
 }
 
+export type ItemsType = {
+  type: string;
+  value: string | number;
+  name: string;
+  id: number;
+};
 export interface Reciept {
   AdditionalInfo: string;
   Amount: string;

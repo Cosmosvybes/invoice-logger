@@ -2,6 +2,7 @@ import { Like } from "react-huge-icons/outline";
 
 interface Data {
   AdditionalInfo: string;
+  id: string;
   Business: string;
   BusinessAddress: string;
   BusinessState: string;
@@ -19,15 +20,24 @@ interface Data {
   itemList: [];
 }
 
-const ViewModal = ({ data, callback }: { data: Data; callback(): void }) => {
+const ViewModal = ({
+  data,
+  callback,
+  TOTAL,
+}: {
+  data: Data;
+  TOTAL: number;
+  callback(): void;
+}) => {
   return (
     <>
-      <div className="absolute h-auto overflow-scroll max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
+      <div className="absolute h-auto overflow-y-scroll max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
         <div className="relative   rounded-xl z-10 bg-gray-50  overflow-y-scroll overflow-x-clip border flex flex-col py-5 px-5 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-light">Invoice Preview</h1>
 
             <div className="relative block mt-2">
+              <p>Invoice ID- {data.id}</p>
               <h1 className="text-2xl font-light underline">
                 Business Details
               </h1>
@@ -52,11 +62,11 @@ const ViewModal = ({ data, callback }: { data: Data; callback(): void }) => {
           </div>
           <div className="relative block mt-2">
             <h1 className="text-2xl font-light underline">Items List</h1>
-            <div className="relative grid grid-cols-4">
+            <div className="relative gap-1 grid grid-cols-4">
               <p>Description</p>
               <p>Quantity</p>
               <p>Unit Price</p>
-              <p>Amount</p>
+              <p>Sub-total</p>
             </div>
             <div className="relative flex-col flex">
               {data.itemList.map(
@@ -75,7 +85,7 @@ const ViewModal = ({ data, callback }: { data: Data; callback(): void }) => {
           <div className="relative w-full h-auto flex justify-end items-center">
             <div className="relative block">
               <p>Total </p>
-              <p className="underline">$ {200000000}</p>
+              <p className="underline">$ {TOTAL}</p>
             </div>
           </div>
           <Like

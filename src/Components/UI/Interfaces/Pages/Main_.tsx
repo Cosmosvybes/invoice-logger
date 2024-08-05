@@ -3,7 +3,7 @@ import Menu from "../../Tools/Menu";
 const Main = () => {
   return (
     <>
-      <div className="relative flex justify-center items-center  max-sm:items-start max-sm:py-0 h-screen overflow-y-scroll">
+      <div className="relative flex justify-center items-center  max-sm:items-start max-sm:py-0 h-screen ">
         <Menu />
       </div>
     </>
