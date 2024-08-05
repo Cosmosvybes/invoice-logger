@@ -111,7 +111,7 @@ const Account = () => {
             </Button>
           </div>
           <div className="w-full  mt-5 block relative">
-            <p className="text-gray-500 px-10 text-3xl max-sm:text-xl font-light ">
+            <p className="text-gray-500 px-3 text-3xl max-sm:text-xl font-light ">
               Overview
             </p>
 
