@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Item {
-  Description: string;
-  Amount: number;
+  description: string;
+  amount: number;
   unit_price: string;
-  id: number | string;
+  itemID: number | string;
 }
 export interface Invoice {
   id: string | number;
@@ -27,24 +27,57 @@ export interface Invoice {
 }
 export interface Invoices {
   invoices: Invoice[];
+  drafts: [];
+  outstanding: [];
 }
 const initialState: Invoices = {
   invoices: [],
+  drafts: [],
+  outstanding: [],
 };
+
+interface item {
+  id: string | number;
+  item: Item;
+}
+
+interface itemToDelete {
+  invoiceId: number;
+  itemId: number;
+}
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
-    draftInvoice: (state, action: PayloadAction<Invoice>) => {
+    draftInvoice: (state, action: PayloadAction<object>) => {
+      state.drafts.push();
+    },
+    createInvoice: (state, action: PayloadAction<Invoice>) => {
       let invoice: Invoice = action.payload;
       state.invoices.push(invoice);
     },
-    // updateInvoice: (state, action: PayloadAction<Invoice>) => {
-    //   const { id, data } = action.payload;
-    //   let invoice = state.invoices.find((invoice) => invoice.id == id);
-    // },
+
+    updateInvoiceItems: (state, action: PayloadAction<item>) => {
+      const { id, item }: item = action.payload;
+      let invoice = state.invoices.find((invoice) => invoice.id == id);
+      invoice!.itemList.push(item);
+    },
+
+    deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
+      const { invoiceId, itemId }: itemToDelete = action.payload;
+      let invoiceItemList = state.invoices.find(
+        (invoice) => invoice.id == invoiceId
+      )?.itemList;
+      let item: any = invoiceItemList?.find(
+        (data: Item) => data.itemID == itemId
+      );
+      let invoiceIndex = invoiceItemList!.indexOf(item);
+      invoiceItemList!.splice(Number(invoiceIndex), 1);
+      console.log(invoiceId, itemId);
+    },
   },
 });
 
 export default invoiceSlice.reducer;
-export const { draftInvoice } = invoiceSlice.actions;
+export const { createInvoice, deleteInvoiceItems, updateInvoiceItems } =
+  invoiceSlice.actions;

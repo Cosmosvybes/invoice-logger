@@ -1,17 +1,14 @@
 import { ToastContainer } from "react-toastify";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import Dashboard from "./Components/UI/Interfaces/Pages/Dashboard/Dashboard";
+import Nav from "./Components/UI/Tools/Layout/Nav/Nav";
 
+import _Routes from "./Components/Routes/_Routes";
 function App() {
   return (
     <>
       <ToastContainer />
-
-      <Routes>
-        <Route path="/" element={<Dashboard />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-      </Routes>
+      <Nav />
+      <_Routes />
     </>
   );
 }

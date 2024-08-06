@@ -15,6 +15,7 @@ export type SENDER_ = {
 export interface FORM {
   reciepient: InputModel[];
   sender: SENDER_[];
+  item?: object[];
 }
 
 export type ItemsType = {

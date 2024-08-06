@@ -32,14 +32,7 @@ const Dashboard = () => {
   const { currentView } = useDashboardController(icons);
 
   //set dashboard  views
-  const [views] = useState([
-    { id: 1, name: "invoice", element: <Account /> },
-    {
-      id: 2,
-      name: "revenue",
-      //   element: <InvoiceModal />,
-    },
-  ]);
+  const [views] = useState([{ id: 1, name: "invoice", element: <Account /> }]);
 
   const VIEWS_ = views.map((view: any) => {
     switch (currentView) {
@@ -55,24 +48,8 @@ const Dashboard = () => {
   });
   return (
     <>
-      <div className="relative flex ">
-        {/* <div className="relative w-1/3 bg-gray-300  max-sm:hidden h-screen  flex flex-col">
-          <div className="relative h-28 gap-1 flex justify-start px-9 items-center text-center">
-            <UserCircle className="text-black mt-1 text-5xl inline" />
-            <p className="text-black font-light text-3xl">
-              Welcome back, Ayomide
-            </p>
-          </div>
-          {links.map((link) => (
-            <span key={link.id}>
-              <Link_ to={link.to} action={link.action} icon={link.icon} />
-            </span>
-          ))}
-        </div> */}
-
-        <div className="relative  w-full  h-auto px-28 max-sm:px-0 border">
-          <div className="relative ">{VIEWS_}</div>
-        </div>
+      <div className="relative  w-full  h-auto px-28 max-sm:px-0 border">
+        <div className="relative ">{VIEWS_}</div>
       </div>
     </>
   );

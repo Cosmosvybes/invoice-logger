@@ -1,5 +1,5 @@
-import { Like } from "react-huge-icons/outline";
-
+import { Like } from "react-huge-icons/bulk";
+import { Modal, ModalBody, ModalFooter } from "reactstrap";
 interface Data {
   AdditionalInfo: string;
   id: string;
@@ -24,15 +24,17 @@ const ViewModal = ({
   data,
   callback,
   TOTAL,
+  isEditList,
 }: {
   data: Data;
   TOTAL: number;
   callback(): void;
+  isEditList?: any[];
 }) => {
   return (
     <>
-      <div className="absolute h-auto  max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
-        <div className="relative   rounded-xl z-10 bg-gray-50   border flex flex-col py-5 px-5 ">
+      <div className="absolute h-auto mt-2   max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
+        <div className="relative  bg-gray-100  rounded-xl z-10   border flex flex-col py-5 px-5 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-light">Invoice Preview</h1>
 
@@ -68,16 +70,33 @@ const ViewModal = ({
               <p>Unit Price</p>
               <p>Sub-total</p>
             </div>
-            <div className="relative flex-col flex">
-              {data.itemList.map(
-                ({ description, amount, unit_price, quantity }) => (
-                  <div className="relative grid grid-cols-4 gap-1">
-                    <p>{description}</p>
-                    <p>{quantity}</p>
-                    <p>{unit_price}</p>
-                    <p>{amount}</p>
-                  </div>
-                )
+            <div className="relative">
+              {isEditList?.length! > 0 ? (
+                <div className="relative flex-col flex">
+                  {isEditList?.map(
+                    ({ description, amount, unit_price, quantity }) => (
+                      <div className="relative grid grid-cols-4 gap-1">
+                        <p>{description}</p>
+                        <p>{quantity}</p>
+                        <p>{unit_price}</p>
+                        <p>{amount}</p>
+                      </div>
+                    )
+                  )}
+                </div>
+              ) : (
+                <div className="relative flex-col flex">
+                  {data.itemList.map(
+                    ({ description, amount, unit_price, quantity }) => (
+                      <div className="relative grid grid-cols-4 gap-1">
+                        <p>{description}</p>
+                        <p>{quantity}</p>
+                        <p>{unit_price}</p>
+                        <p>{amount}</p>
+                      </div>
+                    )
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -89,7 +108,7 @@ const ViewModal = ({
             </div>
           </div>
           <Like
-            className="text-5xl hover:text-gray-600 text-gray-400 absolute right-2 top-2"
+            className="text-5xl hover:text-gray-600 text-gray-400 absolute  transition duration-700 right-2 top-2"
             onClick={() => callback()}
           />
         </div>

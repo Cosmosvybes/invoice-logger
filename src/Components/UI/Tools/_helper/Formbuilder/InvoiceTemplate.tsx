@@ -1,5 +1,6 @@
 import { Edit } from "react-huge-icons/outline";
 import { Data } from "./invoiceTemplate.types";
+import { Link } from "react-router-dom";
 const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
   return (
     <>
@@ -11,12 +12,13 @@ const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
           >
             Send
           </button>
-          <button
+          <Link
+            to={`/${"invoice/update"}/${invoice.id}`}
             className="text-gray-700 hover:bg-gray-300 text-xl text-center font-light px-2 w-full"
-            onClick={() => console.log(invoice)}
+            // onClick={() => console.log(invoice)}
           >
             Edit
-          </button>
+          </Link>
           <button className="text-gray-700  hover:bg-gray-300 text-xl text-center 0 font-light px-2 w-full">
             Delete
           </button>

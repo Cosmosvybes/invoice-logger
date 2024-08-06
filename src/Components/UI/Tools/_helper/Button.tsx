@@ -11,7 +11,7 @@ const BTN = ({ text, callback, icon }: btnI) => {
     <>
       <Button
         onClick={() => callback()}
-        className="w-44 h-16 gap-1 bg-gradient-to-tr text-2xl flex justify-center items-center font-normal rounded-md from-sky-90 hover:bg-gradient-to-tl text-gray-50 to-sky-400"
+        className="w-44 h-16 gap-1 bg-gradient-to-tr text-2xl flex justify-center items-center font-normal rounded-md from-sky-90 hover:bg-gradient-to-tl text-gray-50"
       >
         {text}
         {icon}

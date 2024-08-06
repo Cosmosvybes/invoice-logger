@@ -2,8 +2,23 @@ import { useLayoutEffect, useState } from "react";
 import "react-toastify/ReactToastify.css";
 import { FORM, ItemsType } from "./type";
 import { toast } from "react-toastify";
+import { useAppDispatch } from "../../../../../States/hoooks/hook";
+import {
+  updateInvoiceItems,
+  deleteInvoiceItems,
+} from "../../../../../States/Slices/invoice";
+import { useParams } from "react-router-dom";
 
-export default function useTemplateController({ reciepient, sender }: FORM) {
+export default function useTemplateController({
+  reciepient,
+  sender,
+  item,
+}: FORM) {
+  // invoice id from req.params
+  const { id } = useParams();
+  let invoiceItem = item;
+
+  //form vfied values
   const FORMVALUES: any = reciepient.reduce(
     (acc, curr) => ({
       ...acc,
@@ -12,7 +27,10 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
     {}
   );
 
+  const dispatch = useAppDispatch(); //state dispatcher
+
   const ownerInfo = sender.reduce(
+    //invoice owner form fied values
     (allDetails, currentDetails) => ({
       ...allDetails,
       [currentDetails.name]: currentDetails.value,
@@ -20,7 +38,10 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
     {}
   );
 
+  // console.log(Object.keys({ ...FORMVALUES, ownerInfo }));
+
   const [inputs] = useState<ItemsType[]>([
+    //invoice items formFields
     {
       type: "text",
       value: "",
@@ -48,7 +69,7 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
   ]);
 
   let reducerVal: object = inputs.reduce(
-    (acc, curr) => ({ ...acc, [curr.name]: curr.value }),
+    (acc, curr) => ({ ...acc, [curr.name]: curr.value }), // invoice formFields value
     {}
   );
 
@@ -81,7 +102,6 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
     setItems((prev: any) => ({ ...prev, [name]: newValue }));
   };
 
-  
   //   //?? ///////////////////////////////////////////////
   // ADD NEW ITEM AND CLEAR INPUT
   //   //?? ///////////////////////////////////////////////
@@ -93,10 +113,17 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
       toast.warning("Missing item details");
       return;
     }
-    const newInput = { ...items, id: Date.now() };
-    setItem([...itemList, newInput]);
+    const item = { ...items, id: Date.now() };
+
+    if (invoiceItem) {
+      dispatch(updateInvoiceItems({ id: Number(id), item }));
+      Object.keys(items).map((item: string) => updateValues("", item));
+      toast.success("Invoice updated", { theme: "dark" });
+      return;
+    }
+    setItem([...itemList, item]);
     Object.keys(items).map((item: string) => updateValues("", item));
-    toast.success("New item listed", { theme: "colored" });
+    toast.success("New item listed", { theme: "dark" });
   };
 
   const [invoiceDetails, setDetails] = useState({
@@ -108,47 +135,6 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
   //   //?? ///////////////////////////////////////////////
   // HANDLE SUBMIT
   //   //?? ///////////////////////////////////////////////
-
-  const handleSubmit = () => {
-    // const {
-    //   Business,
-    //   BusinessAddress,
-    //   BusinessCountry,
-    //   City,
-    //   Client,
-    //   ClientAddress,
-    //   DateDue,
-    //   DateIssued,
-    //   Description,
-    //   AdditionalInfo,
-    //   Country,
-    //   Amount,
-    // }: Reciept = invoiceDetails;
-    // let reciept = `
-    // Ref ID-${"#12345"}
-    // Date - ${new Date().toLocaleTimeString()}
-    // Invoice To - ${Client}
-    // Client Address - ${ClientAddress}
-    // City - ${City}
-    // Country - ${Country}
-    // Date Issued - ${DateIssued}
-    // Date Due - ${DateDue}
-    // Description- ${Description}
-    // Amount - ${Amount}
-    // Additional Info- ${AdditionalInfo}
-    // IssuedBy - ${Business}
-    // Business Address - ${BusinessAddress}
-    // Country - ${BusinessCountry}
-    //                      Total - ${Amount}
-    // `;
-    // const blob = new Blob([reciept], { type: "text/plain" });
-    // const url = URL.createObjectURL(blob);
-    // let anchorLink = document.createElement("a");
-    // anchorLink.href = url;
-    // anchorLink.download = "receipt.txt";
-    // anchorLink.click();
-    // URL.revokeObjectURL(url);
-  };
 
   //   //?? ///////////////////////////////////////////////
   // VALUE UPDATE FUNC
@@ -167,20 +153,27 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
   //   //?? ///////////////////////////////////////////////
   //DELETE ITEM
   //   //?? ///////////////////////////////////////////////
-  const handleDelete = (id: any) => {
-    setItem(itemList.filter((item: any) => item.id !== id));
+  const handleDelete = (invoiceId: number, id: number) => {
+    if (!invoiceItem) {
+      setItem(itemList.filter((item: any) => item.id !== id));
+      return;
+    }
+    dispatch(deleteInvoiceItems({ invoiceId: Number(invoiceId), itemId: id }));
+    // if its an editing invoice
+    toast.success("invoice item removed", { theme: "dark" });
   };
 
   const handleView = () => {
     return setViewMode(true);
   };
 
+  useLayoutEffect(() => {}, []);
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
+
   return {
     handleView,
     updatedValues,
-    handleSubmit,
     invoiceDetails,
     addNewItem,
     inputs,
@@ -193,5 +186,7 @@ export default function useTemplateController({ reciepient, sender }: FORM) {
     TOTAL,
     setIsCreatingNewInvoice,
     isCreatingNewInvoice,
+    dispatch,
+    id,
   };
 }
