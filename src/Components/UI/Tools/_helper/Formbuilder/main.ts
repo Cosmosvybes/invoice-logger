@@ -3,7 +3,7 @@ import "react-toastify/ReactToastify.css";
 import { FORM, ItemsType } from "./type";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
-import invoice, {
+import {
   updateInvoiceItems,
   deleteInvoiceItems,
 } from "../../../../../States/Slices/invoice";
