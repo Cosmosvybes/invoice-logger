@@ -233,7 +233,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           />
         )}
 
-        <div className="relative flex justify-between">
+        <div className="relative flex justify-between border -mt-7">
           <Form className="relative flex flex-col justify-between w-full max-sm:w-full">
             {OWNER_}
           </Form>
