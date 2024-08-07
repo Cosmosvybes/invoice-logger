@@ -7,6 +7,7 @@ export interface Item {
   itemID: number | string;
 }
 export interface Invoice {
+  TOTAL: number;
   id: string | number;
   AdditionalInfo: string;
   Business: string;
@@ -27,13 +28,13 @@ export interface Invoice {
 }
 export interface Invoices {
   invoices: Invoice[];
-  drafts: [];
-  outstanding: [];
+  sent: [];
+  revenue: number;
 }
 const initialState: Invoices = {
   invoices: [],
-  drafts: [],
-  outstanding: [],
+  sent: [],
+  revenue: 0,
 };
 
 interface item {
@@ -43,15 +44,14 @@ interface item {
 
 interface itemToDelete {
   invoiceId: number;
-  itemId: number;
+  itemID: number | string;
 }
+
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
-    draftInvoice: (state, action: PayloadAction<object>) => {
-      state.drafts.push();
-    },
+    // deleteInvoice: (state, action) => {},
     createInvoice: (state, action: PayloadAction<Invoice>) => {
       let invoice: Invoice = action.payload;
       state.invoices.push(invoice);
@@ -59,21 +59,29 @@ const invoiceSlice = createSlice({
 
     updateInvoiceItems: (state, action: PayloadAction<item>) => {
       const { id, item }: item = action.payload;
-      let invoice = state.invoices.find((invoice) => invoice.id == id);
+      let invoice = state.invoices.find(
+        (invoice: { id: string | number }) => invoice.id == id
+      );
       invoice!.itemList.push(item);
+      invoice!.TOTAL += item.amount;
     },
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
-      const { invoiceId, itemId }: itemToDelete = action.payload;
-      let invoiceItemList = state.invoices.find(
+      const { invoiceId, itemID }: itemToDelete = action.payload;
+      console.log(invoiceId, itemID);
+      let invoiceItemList: Item[] = state.invoices.find(
         (invoice) => invoice.id == invoiceId
-      )?.itemList;
+      )!.itemList;
+
       let item: any = invoiceItemList?.find(
-        (data: Item) => data.itemID == itemId
+        (data: Item) => data!.itemID == itemID
       );
       let invoiceIndex = invoiceItemList!.indexOf(item);
       invoiceItemList!.splice(Number(invoiceIndex), 1);
-      console.log(invoiceId, itemId);
+      let invoiceItem = state.invoices.find(
+        (invoice) => invoice.id == invoiceId
+      );
+      invoiceItem!.TOTAL -= item.amount;
     },
   },
 });

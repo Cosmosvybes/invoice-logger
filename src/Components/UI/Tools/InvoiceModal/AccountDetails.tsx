@@ -4,22 +4,22 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/InvoiceTemplate";
 const AccountDetails = () => {
-  const { invoices } = useAppSelector((state) => state.invoice);
+  const { invoices, sent, revenue } = useAppSelector((state) => state.invoice);
   const [accountData] = useState([
     {
       id: 1,
-      title: "All invoices",
+      title: "All invoice",
       value: invoices.length,
     },
     {
       id: 2,
-      title: "Outstanding invoices",
-      value: 0,
+      title: "Sent",
+      value: sent.length,
     },
     {
       id: 35,
       title: "Revenue ",
-      value: "$0.00",
+      value: revenue,
     },
   ]);
   return (
@@ -70,13 +70,13 @@ const AccountDetails = () => {
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
               <div className="relative w-1/3 gap-1 h-auto py-2 grid grid-cols-1   max-sm:grid-cols-1  max-sm:w-full  ">
-                {invoices.map((invoice) => (
+                {invoices.map((invoice: any) => (
                   <div className="relative" key={invoice.id}>
                     <InvoiceTemplate invoice={invoice} />
                   </div>
                 ))}
               </div>
-            )}{" "}
+            )}
             {/* //invoice drfats */}
           </div>{" "}
           {/* //Latest invoiceF */}

@@ -3,11 +3,13 @@ import "react-toastify/ReactToastify.css";
 import { FORM, ItemsType } from "./type";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
-import {
+import invoice, {
   updateInvoiceItems,
   deleteInvoiceItems,
 } from "../../../../../States/Slices/invoice";
+
 import { useParams } from "react-router-dom";
+import { useAppSelector } from "../../../../../States/hoooks/hook";
 
 export default function useTemplateController({
   reciepient,
@@ -15,8 +17,16 @@ export default function useTemplateController({
   item,
 }: FORM) {
   // invoice id from req.params
+
   const { id } = useParams();
   let invoiceItem = item;
+  let editingInvoiceTotal;
+  //invoice state
+
+  const { invoices } = useAppSelector((state) => state.invoice);
+  if (invoiceItem) {
+    editingInvoiceTotal = invoices!.find((invoice) => invoice.id == id)!.TOTAL;
+  }
 
   //form vfied values
   const FORMVALUES: any = reciepient.reduce(
@@ -37,8 +47,6 @@ export default function useTemplateController({
     }),
     {}
   );
-
-  // console.log(Object.keys({ ...FORMVALUES, ownerInfo }));
 
   const [inputs] = useState<ItemsType[]>([
     //invoice items formFields
@@ -62,8 +70,9 @@ export default function useTemplateController({
     },
     {
       type: "text",
-      value: "",
+      value: 0,
       name: "amount",
+      status: true,
       id: Math.random() ** Date.now(),
     },
   ]);
@@ -113,7 +122,7 @@ export default function useTemplateController({
       toast.warning("Missing item details");
       return;
     }
-    const item = { ...items, id: Date.now() };
+    const item = { ...items, itemID: Date.now() };
 
     if (invoiceItem) {
       dispatch(updateInvoiceItems({ id: Number(id), item }));
@@ -153,13 +162,13 @@ export default function useTemplateController({
   //   //?? ///////////////////////////////////////////////
   //DELETE ITEM
   //   //?? ///////////////////////////////////////////////
-  const handleDelete = (invoiceId: number, id: number) => {
+  const handleDelete = (id: number, invoiceId?: number) => {
     if (!invoiceItem) {
-      setItem(itemList.filter((item: any) => item.id !== id));
+      setItem(itemList.filter((item) => item.itemID != id));
       return;
     }
-    dispatch(deleteInvoiceItems({ invoiceId: Number(invoiceId), itemId: id }));
     // if its an editing invoice
+    dispatch(deleteInvoiceItems({ invoiceId: Number(invoiceId), itemID: id }));
     toast.success("invoice item removed", { theme: "dark" });
   };
 
@@ -167,11 +176,12 @@ export default function useTemplateController({
     return setViewMode(true);
   };
 
-  useLayoutEffect(() => {}, []);
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
 
   return {
+    setItem,
+    itemList,
     handleView,
     updatedValues,
     invoiceDetails,
@@ -179,7 +189,6 @@ export default function useTemplateController({
     inputs,
     updateValues,
     items,
-    itemList,
     handleDelete,
     viewMode,
     setViewMode,
@@ -188,5 +197,7 @@ export default function useTemplateController({
     isCreatingNewInvoice,
     dispatch,
     id,
+    invoiceItem,
+    editingInvoiceTotal,
   };
 }

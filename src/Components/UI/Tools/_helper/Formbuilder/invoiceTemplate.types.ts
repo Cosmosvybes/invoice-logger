@@ -1,10 +1,12 @@
 export interface Item {
-  Description: string;
-  Amount: number;
+  description: string;
+  amount: number;
   unit_price: string;
   id: number | string;
+  itemID: string | number;
 }
 export type Data = {
+  TOTAL: number;
   id: string | number;
   AdditionalInfo: string;
   Business: string;
@@ -21,5 +23,5 @@ export type Data = {
   DateDue: string;
   DateIssued: string;
   IssuedBy: string;
-  itemList: Item[];
+  itemList: Item[] | any;
 };

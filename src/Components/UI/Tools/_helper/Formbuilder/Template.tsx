@@ -30,6 +30,8 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     handleView,
     dispatch,
     id,
+    invoiceItem,
+    editingInvoiceTotal,
   } = useTemplateController({ reciepient, sender, item });
 
   let invoice = { ...invoiceDetails, itemList };
@@ -185,15 +187,13 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       </p>
       {deleteBtn.map((btn) => (
         <div className="relative h-12 w-auto " key={btn.text}>
-          <Btn
-            icon={btn.icon}
-            callback={() => handleDelete(Number(id), item.id)}
-          />
+          <Btn icon={btn.icon} callback={() => handleDelete(item.itemID)} />
         </div>
       ))}{" "}
     </div>
   ));
-  const EDIT_ITEM_LIST = item?.map((item: any, i: any) => (
+
+  const EDIT_ITEM_LIST = invoiceItem?.map((item: any, i: any) => (
     <div
       className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
       key={i}
@@ -214,7 +214,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         <div className="relative h-12 w-auto " key={btn.text}>
           <Btn
             icon={btn.icon}
-            callback={() => handleDelete(Number(id), item.id)}
+            callback={() => handleDelete(item.itemID, Number(id))}
           />
         </div>
       ))}{" "}
@@ -226,7 +226,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       <section className="flex relative transition duration-700 justify-start w-full h-full flex-col max-sm:py-5 px-1 max-sm:px-1">
         {viewMode && (
           <ViewModal
-            TOTAL={TOTAL}
+            TOTAL={invoiceItem?.length! > 0 ? editingInvoiceTotal : TOTAL}
             isEditList={item}
             data={{ ...invoiceDetails, itemList }}
             callback={() => setViewMode(!viewMode)}
@@ -245,9 +245,11 @@ const Template = ({ reciepient, sender, item }: FORM) => {
                 </div>
               ))}
             </div>
+
             <button
               onClick={() => {
-                dispatch(createInvoice(invoice));
+                dispatch(createInvoice({ ...invoice, TOTAL }));
+
                 toast.success("Invoice added", { theme: "dark" });
               }}
               className="relative flex justify-start  mr-3 items-center text-black gap-2 font-light text-2xl"
@@ -292,7 +294,13 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           <div className="relative flex-col flex items-center gap-3">
             <p className="text-3xl font-normal underline">Total</p>
 
-            <p className="text-xl mt-3"> ${TOTAL}</p>
+            <p className="text-xl mt-3">
+              {" "}
+              $
+              {invoiceItem?.length! > 0
+                ? editingInvoiceTotal
+                : TOTAL.toFixed(2)}
+            </p>
           </div>
         </div>
       </section>

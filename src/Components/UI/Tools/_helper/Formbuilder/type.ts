@@ -23,6 +23,7 @@ export type ItemsType = {
   value: string | number;
   name: string;
   id: number;
+  status?: boolean;
 };
 export interface Reciept {
   AdditionalInfo: string;

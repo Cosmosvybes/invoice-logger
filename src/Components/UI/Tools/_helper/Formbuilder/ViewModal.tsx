@@ -1,5 +1,5 @@
 import { Like } from "react-huge-icons/bulk";
-import { Modal, ModalBody, ModalFooter } from "reactstrap";
+
 interface Data {
   AdditionalInfo: string;
   id: string;
@@ -27,13 +27,13 @@ const ViewModal = ({
   isEditList,
 }: {
   data: Data;
-  TOTAL: number;
+  TOTAL: number | any;
   callback(): void;
   isEditList?: any[];
 }) => {
   return (
     <>
-      <div className="absolute h-auto mt-2   max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
+      <div className="absolute h-auto mt-2  z-20  max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
         <div className="relative  bg-gray-100  rounded-xl z-10   border flex flex-col py-5 px-5 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-light">Invoice Preview</h1>
@@ -104,7 +104,7 @@ const ViewModal = ({
           <div className="relative w-full h-auto flex justify-end items-center">
             <div className="relative block">
               <p>Total </p>
-              <p className="underline">$ {TOTAL}</p>
+              <p className="underline">${TOTAL}</p>
             </div>
           </div>
           <Like

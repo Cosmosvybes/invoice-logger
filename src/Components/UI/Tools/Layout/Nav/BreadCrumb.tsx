@@ -17,11 +17,10 @@ const BreadCrumb = ({
       {useLink && (
         <Link
           to={"/invoice"}
-          // onClick={() => setIsCreatingNewInvoice(!isCreatingNewInvoice)}
+          onClick={() => ""}
           className="bg-black h-16 max-sm:h-12 max-sm:text-sm font-normal flex justify-center items-center rounded-md text-gray-50 w-52 max-sm:w-32"
         >
           <p className="flex items-center justify-center">
-            {" "}
             <PlusThin className="inline text-2xl" /> new invoice{" "}
           </p>
         </Link>

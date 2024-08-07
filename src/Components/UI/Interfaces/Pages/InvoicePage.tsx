@@ -10,7 +10,7 @@ const Main = () => {
   const { invoices } = useAppSelector((state) => state.invoice);
 
   let itemsList = invoices.find(
-    (invoice) => invoice.id == Number(id)
+    (invoice: any) => invoice.id == Number(id)
   )?.itemList;
 
   return (
