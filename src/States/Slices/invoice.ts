@@ -65,11 +65,21 @@ export interface keyValue {
   value: string | number | boolean;
   invoiceID: number | string | any;
 }
+
+export interface deletingItemId {
+  id: number | string;
+}
+
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
-    // deleteInvoice: (state, action) => {},
+    deleteInvoice: (state, action: PayloadAction<deletingItemId>) => {
+      const { id }: deletingItemId = action.payload;
+      const invoice = state.invoices.find((inv) => inv.id == id);
+      state.invoices.splice(state.invoices.indexOf(invoice!), 1);
+      console.log(state.invoices.length);
+    },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
       const { key, value, invoiceID } = action.payload;
@@ -90,7 +100,6 @@ const invoiceSlice = createSlice({
       );
       invoice!.itemList.push(item);
       invoice!.TOTAL += item.amount;
-      console.log(invoice?.TOTAL)
     },
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
@@ -118,4 +127,5 @@ export const {
   deleteInvoiceItems,
   updateInvoiceItems,
   updateInvoiceInformation,
+  deleteInvoice,
 } = invoiceSlice.actions;

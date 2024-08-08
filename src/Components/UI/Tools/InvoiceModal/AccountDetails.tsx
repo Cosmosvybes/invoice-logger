@@ -1,5 +1,5 @@
 import { ArrowRight } from "react-huge-icons/outline";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/InvoiceTemplate";
@@ -22,6 +22,8 @@ const AccountDetails = () => {
       value: "$" + `${revenue}` + ".00",
     },
   ]);
+
+  useLayoutEffect(() => {}, [invoices.length, sent.length, revenue]);
   return (
     <>
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
@@ -32,19 +34,22 @@ const AccountDetails = () => {
             </p>
 
             <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-1 grid-cols-3   max-sm:grid-cols-1">
-              {accountData.map((information) => (
-                <div
-                  className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 max-sm:h-24 gap-5 rounded-lg border border-gray-500"
-                  key={information.id}
-                >
-                  <p className="text-gray-500 text-xl font-bold">
-                    {information.title}
-                  </p>
-                  <h1 className="text-black text-xl font-extrabold">
-                    {information.value}
-                  </h1>
-                </div>
-              ))}
+              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500">
+                <p className="text-gray-500 text-xl font-bold">All invoice</p>
+                <h1 className="text-black text-xl font-extrabold">
+                  {invoices.length}
+                </h1>
+              </div>
+              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500">
+                <p className="text-gray-500 text-xl font-bold">Outgoing invoices</p>
+                <h1 className="text-black text-xl font-extrabold">
+                  {sent.length}
+                </h1>
+              </div>
+              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500">
+                <p className="text-gray-500 text-xl font-bold">Revenue</p>
+                <h1 className="text-black text-xl font-extrabold">{revenue}</h1>
+              </div>
             </div>
           </div>
           <div className="relative w-full flex items-center  gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">

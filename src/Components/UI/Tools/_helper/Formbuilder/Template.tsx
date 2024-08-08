@@ -1,6 +1,5 @@
 import { Form, Input } from "reactstrap";
 import { FORM } from "./type";
-import { createInvoice } from "../../../../../States/Slices/invoice";
 
 import useTemplateController from "./main";
 import { EyeLightDouble, PlusThin, TrashBent } from "react-huge-icons/outline";
@@ -8,7 +7,7 @@ import { EyeLightDouble, PlusThin, TrashBent } from "react-huge-icons/outline";
 import Btn from "./Btn";
 import ViewModal from "./ViewModal";
 import { toast } from "react-toastify";
-import { MailArrowLeft, SendFast } from "react-huge-icons/bulk";
+import { SendFast } from "react-huge-icons/bulk";
 
 const Template = ({ reciepient, sender, item }: FORM) => {
   const {
@@ -25,7 +24,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     viewMode,
     setViewMode,
     handleView,
-    dispatch,
     invoiceItem,
     editingInvoiceTotal,
     invoiceDetails,
@@ -64,7 +62,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               title="check"
               type="checkbox"
               className="max-sm:w-auto"
-              value={invoiceDetails[name]}
+              value={
+                invoiceItem ? invoiceInformation[name] : invoiceDetails[name]
+              }
               onChange={(e) =>
                 updateInvoiceDetails(e.currentTarget.checked, name)
               }
@@ -82,7 +82,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               title="check"
               type="text"
               className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
-              value={invoiceDetails[name]}
+              value={
+                invoiceItem ? invoiceInformation[name] : invoiceDetails[name]
+              }
               placeholder={placeholder}
               onChange={(e) => updateInvoiceDetails(e.target.value, name)}
             />
@@ -104,7 +106,11 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               title="check"
               type="checkbox"
               className="max-sm:w-auto"
-              value={invoiceDetails[input.name]}
+              value={
+                invoiceItem
+                  ? invoiceInformation[input.name]
+                  : invoiceDetails[input.name]
+              }
               onChange={(e) =>
                 updateInvoiceDetails(e.currentTarget.checked, input.name)
               }
@@ -117,14 +123,18 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             className="relative ml-3 items-center gap-1 py-3 flex justify-start"
             key={index}
           >
-            <p className="text-gray-400 font-light text-xl max-sm:text-sm">
+            <p className="text-gray-400 font-normal text-xl max-sm:text-sm">
               {input.placeholder}
             </p>
             <Input
               title="date"
               type="date"
-              className="max-sm:w-auto bg-inherit px-3  text-gray-400 border-none py-1"
-              value={invoiceDetails[input.name]}
+              className="max-sm:w-auto bg-inherit px-3 font-bold  text-black border-none py-1"
+              value={
+                invoiceItem
+                  ? invoiceInformation[input.name]
+                  : invoiceDetails[input.name]
+              }
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
           </div>
@@ -135,7 +145,11 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
               type="text"
-              value={invoiceDetails[input.name]}
+              value={
+                invoiceItem
+                  ? invoiceInformation[input.name]
+                  : invoiceDetails[input.name]
+              }
               placeholder={input.placeholder}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
@@ -165,16 +179,16 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
       key={i}
     >
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.description}
       </p>
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.quantity}
       </p>
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.unit_price}
       </p>
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.amount}
       </p>
       <TrashBent
@@ -189,16 +203,16 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
       key={i}
     >
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.description}
       </p>
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.quantity}
       </p>
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.unit_price}
       </p>
-      <p className="text-black  font-normal text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-xl max-sm:text-xs">
         {item.amount}
       </p>
       <TrashBent
@@ -229,7 +243,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             </div>
           ))}
 
-         
           <button
             onClick={() => {
               console.log(staticForm);

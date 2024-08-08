@@ -1,7 +1,11 @@
 import { Edit } from "react-huge-icons/outline";
 import { Data } from "./invoiceTemplate.types";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../../../../States/hoooks/hook";
+import { deleteInvoice } from "../../../../../States/Slices/invoice";
+
 const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
+  const dispatch = useAppDispatch();
   return (
     <>
       <div className="relative w-full py-5 flex-col  border rounded-md   border-gray-500 h-32  flex justify-between items-center">
@@ -18,13 +22,17 @@ const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
           >
             Edit
           </Link>
-          <button className="text-white hover:bg-gray-200 hover:text-black text-xl text-center 0 font-light px-2 w-full">
+          <button
+            onClick={() => dispatch(deleteInvoice({ id: invoice.id }))}
+            className="text-white hover:bg-gray-200 hover:text-black text-xl text-center 0 font-light px-2 w-full"
+          >
             Delete
           </button>
         </div>
 
         <div className="relative w-full flex justify-between px-2">
-          <p className="text-black font-normal">ID- {invoice.id}</p> <p className="text-black font-normal">${invoice.TOTAL}</p>
+          <p className="text-black font-normal">ID- {invoice.id}</p>{" "}
+          <p className="text-black font-normal">${invoice.TOTAL}</p>
         </div>
         <div className="relative h-auto w-full flex text-sm  justify-between px-2">
           <p className="text-black font-normal">
