@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import {
   updateInvoiceItems,
   deleteInvoiceItems,
+  updateInvoiceInformation,
 } from "../../../../../States/Slices/invoice";
 
 import { useParams } from "react-router-dom";
@@ -113,13 +114,15 @@ export default function useTemplateController({ item }: FORM) {
       return;
     }
     setItem([...itemList, item]);
+    dispatch(
+      updateInvoiceItems({ id: Number(localStorage.getItem("id")), item })
+    );
     Object.keys(items).map((item: string) => updateValues("", item));
     toast.success("New item listed", { theme: "dark" });
   };
 
   const [invoiceDetails, setInvoiceDetails] = useState({
     ...staticForm,
-    itemList,
   });
 
   //   //?? ///////////////////////////////////////////////
@@ -131,12 +134,22 @@ export default function useTemplateController({ item }: FORM) {
     inputName: any
   ) => {
     setInvoiceDetails((prev: {}) => ({ ...prev, [inputName]: newValue }));
-    if (id) {
-      console.log(invoiceDetails, inputName, newValue);
-      // return dispatch(
-      //   updateInvoiceInformation({ ...invoiceDetails, itemList: invoiceItem })
-      // );
-    }
+
+    return !id
+      ? dispatch(
+          updateInvoiceInformation({
+            value: newValue,
+            key: inputName,
+            invoiceID: Number(localStorage.getItem("id")),
+          })
+        )
+      : dispatch(
+          updateInvoiceInformation({
+            value: newValue,
+            key: inputName,
+            invoiceID: id,
+          })
+        );
   };
 
   //   //?? ///////////////////////////////////////////////
@@ -159,6 +172,7 @@ export default function useTemplateController({ item }: FORM) {
 
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
+ 
 
   return {
     setItem,

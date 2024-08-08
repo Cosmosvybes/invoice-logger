@@ -9,7 +9,7 @@ export const forms = [
     type_: "text",
     name: "ClientAddress",
     value: "",
-    placeholder: "Client'sa address",
+    placeholder: "Client's address",
   },
   {
     type_: "text",
@@ -32,12 +32,6 @@ export const forms = [
 
   {
     type_: "text",
-    name: "IssuedBy",
-    value: "",
-    placeholder: "Invoice From",
-  },
-  {
-    type_: "text",
     name: "AdditionalInfo",
     value: "",
     placeholder: "Additional Information",
@@ -54,12 +48,18 @@ export const forms = [
     value: "",
     placeholder: "Date Due",
   },
-  // {
-  //   type_: "checkbox",
-  //   name: "Save Text Doc",
-  //   value: false,
-  //   placeholder: "Save Invoice",
-  // },
+  {
+    type_: "text",
+    name: "OtherInformation",
+    value: "",
+    placeholder: "Other Information",
+  },
+  {
+    type_: "text",
+    name: "Notes",
+    value: "",
+    placeholder: "Transaction  Notes",
+  },
 ];
 
 export const senderInfo = [
@@ -67,31 +67,31 @@ export const senderInfo = [
     type: "text",
     name: "Business",
     value: "",
-    placeholder: "Business name",
+    placeholder: "Your business name",
   },
   {
     type: "text",
     name: "BusinessAddress",
     value: "",
-    placeholder: "Business address",
+    placeholder: "business address",
   },
   {
     type: "text",
     name: "ClientCity",
     value: "",
-    placeholder: "City/Postal",
+    placeholder: "city/postal",
   },
   {
     type: "text",
     name: "BusinessState",
     value: "",
-    placeholder: "State",
+    placeholder: "state",
   },
   {
     type: "text",
     name: "BusinessCountry",
     value: "",
-    placeholder: "Business Country",
+    placeholder: "country",
   },
 ];
 

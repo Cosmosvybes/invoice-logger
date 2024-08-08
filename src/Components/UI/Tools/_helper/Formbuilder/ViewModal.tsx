@@ -1,6 +1,7 @@
 import { Like } from "react-huge-icons/bulk";
 
 interface Data {
+  TOTAL: string | number;
   AdditionalInfo: string;
   id: string;
   Business: string;
@@ -31,6 +32,7 @@ const ViewModal = ({
   callback(): void;
   isEditList?: any[];
 }) => {
+  
   return (
     <>
       <div className="absolute h-auto mt-2  z-20  max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
@@ -104,7 +106,7 @@ const ViewModal = ({
           <div className="relative w-full h-auto flex justify-end items-center">
             <div className="relative block">
               <p>Total </p>
-              <p className="underline">${TOTAL}</p>
+              <p className="underline">${data.TOTAL ? data.TOTAL : TOTAL}</p>
             </div>
           </div>
           <Like

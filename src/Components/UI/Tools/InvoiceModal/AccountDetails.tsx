@@ -34,10 +34,10 @@ const AccountDetails = () => {
             <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-1 grid-cols-3   max-sm:grid-cols-1">
               {accountData.map((information) => (
                 <div
-                  className="relative flex text-sm flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 max-sm:h-24 gap-5 rounded-lg border border-gray-500"
+                  className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 max-sm:h-24 gap-5 rounded-lg border border-gray-500"
                   key={information.id}
                 >
-                  <p className="text-gray-500 text-sm font-light">
+                  <p className="text-gray-500 text-xl font-light">
                     {information.title}
                   </p>
                   <h1 className="text-black text-xl font-extrabold">
@@ -69,7 +69,7 @@ const AccountDetails = () => {
             {invoices.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <div className="relative w-1/3 gap-1 h-auto py-2 grid grid-cols-1   max-sm:grid-cols-1  max-sm:w-full  ">
+              <div className="relative w-1/3 gap-1 h-auto py-2 flex flex-col-reverse  max-sm:w-full  ">
                 {invoices.map((invoice: any) => (
                   <div className="relative" key={invoice.id}>
                     <InvoiceTemplate invoice={invoice} />

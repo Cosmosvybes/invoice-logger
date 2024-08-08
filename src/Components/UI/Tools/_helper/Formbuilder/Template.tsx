@@ -3,17 +3,12 @@ import { FORM } from "./type";
 import { createInvoice } from "../../../../../States/Slices/invoice";
 
 import useTemplateController from "./main";
-import {
-  EyeLightDouble,
-  MailArrowDown,
-  PlusThin,
-  TrashBent,
-} from "react-huge-icons/outline";
+import { EyeLightDouble, PlusThin, TrashBent } from "react-huge-icons/outline";
 
 import Btn from "./Btn";
 import ViewModal from "./ViewModal";
 import { toast } from "react-toastify";
-import { SendFast } from "react-huge-icons/bulk";
+import { MailArrowLeft, SendFast } from "react-huge-icons/bulk";
 
 const Template = ({ reciepient, sender, item }: FORM) => {
   const {
@@ -36,8 +31,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     invoiceDetails,
     invoiceInformation,
   } = useTemplateController({ reciepient, sender, item });
-
-  let invoice = { ...staticForm, itemList };
 
   const btns = [
     {
@@ -240,42 +233,41 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           />
         )}
 
+        <div className="relative flex justify-end gap-2  items-center  h-14 mb-4">
+          {btns.map((btn) => (
+            <div className="relative h-14 w-auto " key={btn.text}>
+              <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
+            </div>
+          ))}
+
+          <button
+            onClick={() => {
+              dispatch(createInvoice({ ...invoiceDetails, TOTAL }));
+              toast.success("Invoice added", { theme: "dark" });
+            }}
+            className="w-44 h-full max-sm:w-28 shadow-md border   text-center flex justify-center items-center transition duration-500 px-2  text-gray-black text-sm font-normal rounded-md"
+          >
+            <MailArrowLeft className="text-4xl  mt-0.5 inline text-black" />
+            DRAFT
+          </button>
+          <button
+            onClick={() => {
+              console.log(staticForm);
+              // dispatch(createInvoice({ ...invoice, TOTAL }));
+
+              toast.success("Invoice added", { theme: "dark" });
+            }}
+            className="w-44 h-full max-sm:w-28 shadow-md border   text-center flex justify-center items-center transition duration-500 px-2  text-gray-black text-sm font-normal rounded-md "
+          >
+            <SendFast className="text-4xl  mt-0.5 inline text-black" />
+            SEND
+          </button>
+        </div>
+
         <div className="relative flex justify-between -mt-7">
           <Form className="relative flex flex-col justify-between w-full max-sm:w-full">
             {OWNER_}
           </Form>
-          <div className="relative flex justify-start   h-14">
-            <div className="relative w-full max-sm:w-full flex justify-start items-center">
-              {btns.map((btn) => (
-                <div className="relative h-12 w-auto " key={btn.text}>
-                  <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={() => {
-                dispatch(createInvoice({ ...invoiceDetails, TOTAL }));
-
-                toast.success("Invoice added", { theme: "dark" });
-              }}
-              className="relative flex justify-start  mr-3 items-center text-black gap-2 font-light text-2xl max-sm:text-sm"
-            >
-              <MailArrowDown className="text-4xl  mt-0.5 inline text-black" />
-              DRAFT
-            </button>
-            <button
-              onClick={() => {
-                dispatch(createInvoice({ ...invoice, TOTAL }));
-
-                toast.success("Invoice added", { theme: "dark" });
-              }}
-              className="relative flex justify-start  mr-3 items-center text-black gap-2 font-light text-2xl max-sm:text-sm"
-            >
-              <SendFast className="text-4xl  mt-0.5 inline text-black" />
-              SEND
-            </button>
-          </div>
         </div>
 
         <Form className="grid grid-cols-3 max-sm:grid-cols-2 w-full  gap-2 max-sm:gap-2">

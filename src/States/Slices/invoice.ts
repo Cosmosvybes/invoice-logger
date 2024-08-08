@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Invoice } from "react-huge-icons/outline";
 import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
+
 export interface Item {
   description: string;
   amount: number;
@@ -59,31 +60,27 @@ interface itemToDelete {
   itemID: number | string;
 }
 
-// interface keyValuePair {
-//   key: string | number | boolean;
-//   value: string | number | boolean;
-//   invoiceID: number | string | any;
-// }
+export interface keyValue {
+  key: string | number | boolean | any;
+  value: string | number | boolean;
+  invoiceID: number | string | any;
+}
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
     // deleteInvoice: (state, action) => {},
 
-    updateInvoiceInformation: (state, action: PayloadAction<Invoice>) => {
-      const updatedInvoice: Invoice = action.payload;
-      let outDatedinvoice = state.invoices.find(
-        (invoice) => invoice.id == updatedInvoice.id
-      );
-      let invoiceIndex = state.invoices.indexOf(outDatedinvoice!);
-      state.invoices.splice(invoiceIndex, 1);
-      state.invoices.push(updatedInvoice);
-      console.log(state.invoices.find((doc) => doc.id == updatedInvoice.id));
+    updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
+      const { key, value, invoiceID } = action.payload;
+      let outDatedinvoice: string | number | boolean | any =
+        state.invoices.find((invoice) => invoice.id == invoiceID);
+      outDatedinvoice[key] = value;
     },
 
     createInvoice: (state, action: PayloadAction<Invoice>) => {
       let invoice: Invoice = action.payload;
-      state.invoices.push(invoice);
+      state.invoices.push({ ...invoice, id: localStorage.getItem("id")! });
     },
 
     updateInvoiceItems: (state, action: PayloadAction<item>) => {
@@ -93,13 +90,14 @@ const invoiceSlice = createSlice({
       );
       invoice!.itemList.push(item);
       invoice!.TOTAL += item.amount;
+      console.log(invoice?.TOTAL)
     },
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
       const { invoiceId, itemID }: itemToDelete = action.payload;
       let invoiceItemList: Item[] = state.invoices.find(
         (invoice) => invoice.id == invoiceId
-      )!.itemList;
+      )!.itemList!;
 
       let item: any = invoiceItemList?.find(
         (data: Item) => data!.itemID == itemID
