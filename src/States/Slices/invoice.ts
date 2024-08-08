@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import { Invoice } from "react-huge-icons/outline";
+import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
 export interface Item {
   description: string;
   amount: number;
@@ -30,11 +31,22 @@ export interface Invoices {
   invoices: Invoice[];
   sent: [];
   revenue: number;
+  staticForm: object | any;
 }
+const { combinedForm } = useModalController();
+
+let invoiceStaticValue = combinedForm.reduce(
+  (valuesBucket: any, currVa: any) => ({
+    ...valuesBucket,
+    [currVa.name]: currVa.value,
+  }),
+  { id: Date.now() }
+);
 const initialState: Invoices = {
   invoices: [],
   sent: [],
   revenue: 0,
+  staticForm: invoiceStaticValue,
 };
 
 interface item {
@@ -47,11 +59,28 @@ interface itemToDelete {
   itemID: number | string;
 }
 
+// interface keyValuePair {
+//   key: string | number | boolean;
+//   value: string | number | boolean;
+//   invoiceID: number | string | any;
+// }
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
     // deleteInvoice: (state, action) => {},
+
+    updateInvoiceInformation: (state, action: PayloadAction<Invoice>) => {
+      const updatedInvoice: Invoice = action.payload;
+      let outDatedinvoice = state.invoices.find(
+        (invoice) => invoice.id == updatedInvoice.id
+      );
+      let invoiceIndex = state.invoices.indexOf(outDatedinvoice!);
+      state.invoices.splice(invoiceIndex, 1);
+      state.invoices.push(updatedInvoice);
+      console.log(state.invoices.find((doc) => doc.id == updatedInvoice.id));
+    },
+
     createInvoice: (state, action: PayloadAction<Invoice>) => {
       let invoice: Invoice = action.payload;
       state.invoices.push(invoice);
@@ -68,7 +97,6 @@ const invoiceSlice = createSlice({
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
       const { invoiceId, itemID }: itemToDelete = action.payload;
-      console.log(invoiceId, itemID);
       let invoiceItemList: Item[] = state.invoices.find(
         (invoice) => invoice.id == invoiceId
       )!.itemList;
@@ -87,5 +115,9 @@ const invoiceSlice = createSlice({
 });
 
 export default invoiceSlice.reducer;
-export const { createInvoice, deleteInvoiceItems, updateInvoiceItems } =
-  invoiceSlice.actions;
+export const {
+  createInvoice,
+  deleteInvoiceItems,
+  updateInvoiceItems,
+  updateInvoiceInformation,
+} = invoiceSlice.actions;

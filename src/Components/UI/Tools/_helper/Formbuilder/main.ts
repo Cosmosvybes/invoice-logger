@@ -11,42 +11,24 @@ import {
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
 
-export default function useTemplateController({
-  reciepient,
-  sender,
-  item,
-}: FORM) {
+export default function useTemplateController({ item }: FORM) {
   // invoice id from req.params
 
   const { id } = useParams();
   let invoiceItem = item;
   let editingInvoiceTotal;
+  let invoiceInformation: any;
   //invoice state
 
-  const { invoices } = useAppSelector((state) => state.invoice);
-  if (invoiceItem) {
-    editingInvoiceTotal = invoices!.find((invoice) => invoice.id == id)!.TOTAL;
+  const { invoices, staticForm } = useAppSelector((state) => state.invoice);
+  if (id) {
+    invoiceInformation = invoices?.find((invoice) => invoice.id == id)!;
+    editingInvoiceTotal = invoices?.find((invoice) => invoice.id == id)!.TOTAL;
   }
 
   //form vfied values
-  const FORMVALUES: any = reciepient.reduce(
-    (acc, curr) => ({
-      ...acc,
-      [curr.name]: curr.value,
-    }),
-    {}
-  );
 
   const dispatch = useAppDispatch(); //state dispatcher
-
-  const ownerInfo = sender.reduce(
-    //invoice owner form fied values
-    (allDetails, currentDetails) => ({
-      ...allDetails,
-      [currentDetails.name]: currentDetails.value,
-    }),
-    {}
-  );
 
   const [inputs] = useState<ItemsType[]>([
     //invoice items formFields
@@ -135,33 +117,32 @@ export default function useTemplateController({
     toast.success("New item listed", { theme: "dark" });
   };
 
-  const [invoiceDetails, setDetails] = useState({
-    ...FORMVALUES,
-    ...ownerInfo,
-    id: Date.now(),
+  const [invoiceDetails, setInvoiceDetails] = useState({
+    ...staticForm,
+    itemList,
   });
-
-  //   //?? ///////////////////////////////////////////////
-  // HANDLE SUBMIT
-  //   //?? ///////////////////////////////////////////////
 
   //   //?? ///////////////////////////////////////////////
   // VALUE UPDATE FUNC
   //   //?? ///////////////////////////////////////////////
 
-  const updatedValues = (
+  const updateInvoiceDetails = (
     newValue: string | boolean | number,
     inputName: any
   ) => {
-    setDetails((PREV_VALUES: any) => ({
-      ...PREV_VALUES,
-      [inputName]: newValue,
-    }));
+    setInvoiceDetails((prev: {}) => ({ ...prev, [inputName]: newValue }));
+    if (id) {
+      console.log(invoiceDetails, inputName, newValue);
+      // return dispatch(
+      //   updateInvoiceInformation({ ...invoiceDetails, itemList: invoiceItem })
+      // );
+    }
   };
 
   //   //?? ///////////////////////////////////////////////
   //DELETE ITEM
   //   //?? ///////////////////////////////////////////////
+
   const handleDelete = (id: number, invoiceId?: number) => {
     if (!invoiceItem) {
       setItem(itemList.filter((item) => item.itemID != id));
@@ -183,7 +164,7 @@ export default function useTemplateController({
     setItem,
     itemList,
     handleView,
-    updatedValues,
+    updateInvoiceDetails,
     invoiceDetails,
     addNewItem,
     inputs,
@@ -199,5 +180,7 @@ export default function useTemplateController({
     id,
     invoiceItem,
     editingInvoiceTotal,
+    invoiceInformation,
+    staticForm,
   };
 }

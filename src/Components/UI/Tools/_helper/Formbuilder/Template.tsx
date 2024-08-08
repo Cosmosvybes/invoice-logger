@@ -17,9 +17,9 @@ import { SendFast } from "react-huge-icons/bulk";
 
 const Template = ({ reciepient, sender, item }: FORM) => {
   const {
-    updatedValues,
+    updateInvoiceDetails,
     TOTAL,
-    invoiceDetails,
+    staticForm,
     inputs,
     addNewItem,
     updateValues,
@@ -33,9 +33,11 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     id,
     invoiceItem,
     editingInvoiceTotal,
+    invoiceDetails,
+    invoiceInformation,
   } = useTemplateController({ reciepient, sender, item });
 
-  let invoice = { ...invoiceDetails, itemList };
+  let invoice = { ...staticForm, itemList };
 
   const btns = [
     {
@@ -76,7 +78,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               type="checkbox"
               className="max-sm:w-auto"
               value={invoiceDetails[name]}
-              onChange={(e) => updatedValues(e.currentTarget.checked, name)}
+              onChange={(e) =>
+                updateInvoiceDetails(e.currentTarget.checked, name)
+              }
             />
           </div>
         );
@@ -93,7 +97,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
               value={invoiceDetails[name]}
               placeholder={placeholder}
-              onChange={(e) => updatedValues(e.target.value, name)}
+              onChange={(e) => updateInvoiceDetails(e.target.value, name)}
             />
           </div>
         );
@@ -115,7 +119,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               className="max-sm:w-auto"
               value={invoiceDetails[input.name]}
               onChange={(e) =>
-                updatedValues(e.currentTarget.checked, input.name)
+                updateInvoiceDetails(e.currentTarget.checked, input.name)
               }
             />
           </div>
@@ -134,7 +138,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               type="date"
               className="max-sm:w-auto bg-inherit px-3  text-gray-400 border-none py-1"
               value={invoiceDetails[input.name]}
-              onChange={(e) => updatedValues(e.target.value, input.name)}
+              onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
           </div>
         );
@@ -146,7 +150,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               type="text"
               value={invoiceDetails[input.name]}
               placeholder={input.placeholder}
-              onChange={(e) => updatedValues(e.target.value, input.name)}
+              onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
           </div>
         );
@@ -160,7 +164,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block">
       <Input
-        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-sm font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+        className="px-2 py-3 text-xl max-sm:text-sm max-md:text- font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -229,7 +233,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           <ViewModal
             TOTAL={invoiceItem?.length! > 0 ? editingInvoiceTotal : TOTAL}
             isEditList={item}
-            data={{ ...invoiceDetails, itemList }}
+            data={
+              item ? { ...invoiceInformation } : { ...invoiceDetails, itemList }
+            }
             callback={() => setViewMode(!viewMode)}
           />
         )}
@@ -249,7 +255,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
             <button
               onClick={() => {
-                dispatch(createInvoice({ ...invoice, TOTAL }));
+                dispatch(createInvoice({ ...invoiceDetails, TOTAL }));
 
                 toast.success("Invoice added", { theme: "dark" });
               }}
