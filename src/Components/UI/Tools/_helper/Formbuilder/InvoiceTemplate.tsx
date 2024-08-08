@@ -24,10 +24,10 @@ const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
         </div>
 
         <div className="relative w-full flex justify-between px-2">
-          <p>ID- {invoice.id}</p> <p>${invoice.TOTAL}</p>
+          <p className="text-black font-normal">ID- {invoice.id}</p> <p className="text-black font-normal">${invoice.TOTAL}</p>
         </div>
         <div className="relative h-auto w-full flex text-sm  justify-between px-2">
-          <p>
+          <p className="text-black font-normal">
             Last Updated:{" "}
             {new Date().toLocaleString("en-US", {
               day: "2-digit",

@@ -19,7 +19,7 @@ const AccountDetails = () => {
     {
       id: 35,
       title: "Revenue ",
-      value: revenue,
+      value: "$" + `${revenue}` + ".00",
     },
   ]);
   return (
@@ -37,7 +37,7 @@ const AccountDetails = () => {
                   className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-28 max-sm:h-24 gap-5 rounded-lg border border-gray-500"
                   key={information.id}
                 >
-                  <p className="text-gray-500 text-xl font-light">
+                  <p className="text-gray-500 text-xl font-bold">
                     {information.title}
                   </p>
                   <h1 className="text-black text-xl font-extrabold">
@@ -52,10 +52,7 @@ const AccountDetails = () => {
               <p className="text-gray-600 text-xl font-light ">
                 Latest Invoice
               </p>{" "}
-              <Link
-                to={"/drafts"}
-                className="text-gray-600 text-xl  font-light"
-              >
+              <Link to={"/"} className="text-gray-600 text-xl  font-light">
                 View Invoice
               </Link>{" "}
             </div>
@@ -85,7 +82,7 @@ const AccountDetails = () => {
               {" "}
               Recent Invoices
             </p>{" "}
-            <Link to={"/drafts"} className="text-gray-600 text-xl  font-light">
+            <Link to={"/"} className="text-gray-600 text-xl  font-light">
               View All <ArrowRight className="text-black text-4xl inline" />
             </Link>{" "}
           </div>

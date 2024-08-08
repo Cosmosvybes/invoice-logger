@@ -229,16 +229,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             </div>
           ))}
 
-          <button
-            onClick={() => {
-              dispatch(createInvoice({ ...invoiceDetails, TOTAL }));
-              toast.success("Invoice added", { theme: "dark" });
-            }}
-            className="w-44 h-full max-sm:w-28 shadow-md border   text-center flex justify-center items-center transition duration-500 px-2  text-gray-black text-sm font-normal rounded-md"
-          >
-            <MailArrowLeft className="text-4xl  mt-0.5 inline text-black" />
-            DRAFT
-          </button>
+         
           <button
             onClick={() => {
               console.log(staticForm);
