@@ -29,9 +29,9 @@ const Nav = () => {
           ))}
         </div>
 
-        <div className="relative w-24 flex justify-center items-center rounded-xl h-12 bg-gray-100 mr-36 max-sm:mr-2">
-          <p className="text-gray-400 text-2xl">AA</p>
-          <MenuLineHorizontal className="text-4xl text-gray-500" />
+        <div className="relative w-24 flex justify-center items-center rounded-xl h-12 bg-gray-100 mr-32 max-sm:mr-2">
+          <p className="text-gray-600 font-normal text-2xl">AA</p>
+          <MenuLineHorizontal className="text-5xl text-gray-500" />
         </div>
       </div>
     </>
