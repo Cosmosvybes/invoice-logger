@@ -157,7 +157,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block">
       <Input
-        className="px-2 py-3 text-sm max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+        className="px-2 py-3 text-sm max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-gray-900  font-normal w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -171,16 +171,16 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
       key={i}
     >
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.description}
       </p>
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.quantity}
       </p>
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.unit_price}
       </p>
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.amount}
       </p>
       {deleteBtn.map((btn) => (
@@ -196,16 +196,16 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
       key={i}
     >
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.description}
       </p>
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.quantity}
       </p>
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.unit_price}
       </p>
-      <p className="text-black font-light text-sm max-sm:text-xs">
+      <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.amount}
       </p>
       {deleteBtn.map((btn) => (
@@ -304,7 +304,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           <div className="relative flex-col flex items-center gap-3">
             <p className="text-3xl font-normal underline">Total</p>
 
-            <p className="text-xl mt-3">
+            <p className="text-xl mt-3 text-black  font-normal">
               {" "}
               $
               {invoiceItem?.length! > 0
