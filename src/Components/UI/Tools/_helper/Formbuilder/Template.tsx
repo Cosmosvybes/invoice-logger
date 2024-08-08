@@ -14,6 +14,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const {
     updateInvoiceDetails,
     TOTAL,
+    id,
     staticForm,
     inputs,
     addNewItem,
@@ -25,7 +26,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     setViewMode,
     handleView,
     dispatch,
-    id,
     invoiceItem,
     editingInvoiceTotal,
     invoiceDetails,
@@ -44,12 +44,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       text: "ADD ITEM",
       icon: <PlusThin className="text-3xl mt-1 text-black inline" />,
       func: () => addNewItem(),
-    },
-  ];
-  const deleteBtn = [
-    {
-      text: "REMOVE",
-      icon: <TrashBent className="text-3xl text-black inline" />,
     },
   ];
 
@@ -87,7 +81,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               title="check"
               type="text"
-              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
               value={invoiceDetails[name]}
               placeholder={placeholder}
               onChange={(e) => updateInvoiceDetails(e.target.value, name)}
@@ -139,7 +133,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         return (
           <div className="relative" key={index}>
             <Input
-              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
               type="text"
               value={invoiceDetails[input.name]}
               placeholder={input.placeholder}
@@ -157,7 +151,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block">
       <Input
-        className="px-2 py-3 text-sm max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-gray-900  font-normal w-96 max-sm:w-full"
+        className="px-2 py-3 text-sm max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-black  font-normal w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -183,11 +177,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.amount}
       </p>
-      {deleteBtn.map((btn) => (
-        <div className="relative h-12 w-auto " key={btn.text}>
-          <Btn icon={btn.icon} callback={() => handleDelete(item.itemID)} />
-        </div>
-      ))}{" "}
+      <TrashBent
+        className="text-3xl text-black inline"
+        onClick={() => handleDelete(item.itemID)}
+      />
     </div>
   ));
 
@@ -208,14 +201,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       <p className="text-black  font-normal text-sm max-sm:text-xs">
         {item.amount}
       </p>
-      {deleteBtn.map((btn) => (
-        <div className="relative h-12 w-auto " key={btn.text}>
-          <Btn
-            icon={btn.icon}
-            callback={() => handleDelete(item.itemID, Number(id))}
-          />
-        </div>
-      ))}{" "}
+      <TrashBent
+        className="text-3xl text-black inline"
+        onClick={() => handleDelete(item.itemID, Number(id))}
+      />
     </div>
   ));
 
