@@ -157,7 +157,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block">
       <Input
-        className="px-2 py-3 text-xl max-sm:text-sm max-md:text- font-normal outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
+        className="px-2 py-3 text-sm max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-gray-600 w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -221,7 +221,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
   return (
     <>
-      <section className="flex relative transition duration-700 justify-start w-full h-full flex-col max-sm:py-5 px-1 max-sm:px-1">
+      <section className="flex relative transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
         {viewMode && (
           <ViewModal
             TOTAL={invoiceItem?.length! > 0 ? editingInvoiceTotal : TOTAL}
@@ -233,7 +233,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           />
         )}
 
-        <div className="relative flex justify-end gap-2  items-center  h-14 mb-4">
+        <div className="relative flex justify-end gap-1  items-center  h-14 mb-4">
           {btns.map((btn) => (
             <div className="relative h-14 w-auto " key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />

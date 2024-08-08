@@ -24,8 +24,8 @@ const AccountDetails = () => {
   ]);
   return (
     <>
-      <div className="relative h-auto  w-full   flex-col duration-1000 transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
-        <div className="relative h-auto boder-black w-full  py-10 max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-1  font-bold">
+      <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
+        <div className="relative h-auto  w-full  max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-1  font-bold">
           <div className="w-full  mt-5 block relative">
             <p className="text-black px-3 text-xl max-sm:text-sm font-light ">
               Overview
