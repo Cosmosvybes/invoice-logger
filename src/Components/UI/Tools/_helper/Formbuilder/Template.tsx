@@ -180,7 +180,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
     <div className="relative px-2 flex gap-1 items-center " key={input.id}>
       <Input
-        className="px-2 py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-md bg-inherit text-black  font-normal w-24  max-sm:w-full"
+        className="px-2 py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-sm bg-inherit text-black  font-normal w-24  max-sm:w-full "
         type={input.type}
         placeholder={input.name}
         value={discount_tax_states[input.name]}
@@ -314,16 +314,18 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         </div>
         <hr className="w-full border-black" />
 
-        <div className="relative w-full  py-2 flex items-center justify-start border">
-          <div className="relative  w-1/3  flex justify-start  items-center  gap-0.5">
+        <div className="relative w-full flex items-center justify-start py-2">
+          <div className="relative  w-1/3 max-sm:w-full  flex justify-start  items-center  gap-0.5">
             {VAT_DISCOUNT_INPUT}
           </div>
         </div>
-
-        <div className="relative w-full flex justify-end  items-center">
-          <div className="relative grid grid-cols-2 items-center gap-3">
+        <hr className="w-full border-black" />
+        <div className="relative w-full flex justify-end  max-sm:grid grid-cols-2 max-sm:px-5 items-center">
+          <div className="relative grid grid-cols-2 items-center gap-2">
             <div className="relative flex justify-between items-center   gap-2 ">
-              <p className="text-xl text-gray-500 font-normal ">Discount</p>
+              <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                Discount
+              </p>
 
               <p className="text-xl  text-black  font-normal">
                 {" "}
@@ -335,7 +337,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             </div>
 
             <div className="relative flex justify-between items-center   gap-2 ">
-              <p className="text-xl text-gray-500 font-normal ">Vat</p>
+              <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                Vat
+              </p>
 
               <p className="text-xl  text-black  font-normal">
                 {" "}
@@ -345,12 +349,14 @@ const Template = ({ reciepient, sender, item }: FORM) => {
                 $
               </p>
             </div>
-
+            <hr className="w-full border-black" />
             <div className="relative flex justify-between items-center   gap-2 ">
-              <p className="text-xl text-gray-500 font-normal ">Total</p>
+              <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                Total
+              </p>
               <p className="text-xl  text-black  font-normal">
                 {" "}
-                {invoiceItem?.length! > 0
+               $ {invoiceItem?.length! > 0
                   ? (
                       editingInvoiceTotal! -
                       discountAndTaxRate.discount +
