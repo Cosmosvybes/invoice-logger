@@ -68,7 +68,7 @@ const Nav = () => {
               </div>
             </div>
 
-            <div className="relative px-3">
+            <div className="relative px-5">
               {sideMenu.map(({ title, children }) => (
                 <SideNav title={title} children={children} />
               ))}
