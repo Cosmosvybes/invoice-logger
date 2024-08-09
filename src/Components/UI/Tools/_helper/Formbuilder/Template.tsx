@@ -28,6 +28,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     editingInvoiceTotal,
     invoiceDetails,
     invoiceInformation,
+    tax_discount_input,
+    discount_tax_states,
+    handleTaxDiscountUpdate,
+    discountAndTaxRate,
   } = useTemplateController({ reciepient, sender, item });
 
   const btns = [
@@ -163,14 +167,26 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   //   //?? ///////////////////////////////////////////////
 
   const ADDITEM = inputs.map((input: any) => (
-    <div className="relative block">
+    <div className="relative block" key={input.id}>
       <Input
-        className="px-2 py-3 text-sm max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-black  font-normal w-96 max-sm:w-full"
+        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-black  font-normal w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
         onChange={(e) => updateValues(e.target.value, input.name)}
       />
+    </div>
+  ));
+  const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
+    <div className="relative px-2 flex gap-1 items-center " key={input.id}>
+      <Input
+        className="px-2 py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-md bg-inherit text-black  font-normal w-24  max-sm:w-full"
+        type={input.type}
+        placeholder={input.name}
+        value={discount_tax_states[input.name]}
+        onChange={(e) => handleTaxDiscountUpdate(e.target.value, input.name)}
+      />
+      <p className="text-gray-900 text-xl inline">%</p>
     </div>
   ));
 
@@ -224,15 +240,19 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
   return (
     <>
-      <section className="flex relative transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
+      <section className="flex bg-white relative transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
         {viewMode && (
           <ViewModal
-            TOTAL={invoiceItem?.length! > 0 ? editingInvoiceTotal : TOTAL}
+            TOTAL={
+              Number(TOTAL.toFixed(2)) -
+              (discountAndTaxRate.discount + discountAndTaxRate.vat)
+            }
             isEditList={item}
             data={
               item ? { ...invoiceInformation } : { ...invoiceDetails, itemList }
             }
             callback={() => setViewMode(!viewMode)}
+            taxAndDiscount={discount_tax_states}
           />
         )}
 
@@ -293,40 +313,51 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           {ADDITEM}
         </div>
         <hr className="w-full border-black" />
+
+        <div className="relative w-full  py-2 flex items-center justify-start border">
+          <div className="relative  w-1/3  flex justify-start  items-center  gap-0.5">
+            {VAT_DISCOUNT_INPUT}
+          </div>
+        </div>
+
         <div className="relative w-full flex justify-end  items-center">
           <div className="relative grid grid-cols-2 items-center gap-3">
-            <div className="relative flex justify-between items-center   gap-2 ">
-              <p className="text-xl text-gray-500 font-normal ">Vat</p>
-
-              <p className="text-xl  text-black  font-normal">
-                {" "}
-                {invoiceItem?.length! > 0
-                  ? editingInvoiceTotal
-                  : TOTAL.toFixed(2)}
-                %
-              </p>
-            </div>
-
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal ">Discount</p>
 
               <p className="text-xl  text-black  font-normal">
                 {" "}
                 {invoiceItem?.length! > 0
-                  ? editingInvoiceTotal
-                  : TOTAL.toFixed(2)}
-                %
+                  ? invoiceInformation.Discount
+                  : discountAndTaxRate.discount.toFixed(2)}
+                $
+              </p>
+            </div>
+
+            <div className="relative flex justify-between items-center   gap-2 ">
+              <p className="text-xl text-gray-500 font-normal ">Vat</p>
+
+              <p className="text-xl  text-black  font-normal">
+                {" "}
+                {invoiceItem?.length! > 0
+                  ? invoiceInformation.VAT
+                  : discountAndTaxRate.vat.toFixed(2)}
+                $
               </p>
             </div>
 
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal ">Total</p>
-
               <p className="text-xl  text-black  font-normal">
                 {" "}
                 {invoiceItem?.length! > 0
-                  ? editingInvoiceTotal
-                  : TOTAL.toFixed(2)}
+                  ? (
+                      editingInvoiceTotal! -
+                      discountAndTaxRate.discount +
+                      discountAndTaxRate.vat
+                    ).toFixed(2)
+                  : Number(TOTAL.toFixed(2)) -
+                    (discountAndTaxRate.discount + discountAndTaxRate.vat)}
               </p>
             </div>
           </div>

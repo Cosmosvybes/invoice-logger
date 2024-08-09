@@ -41,3 +41,10 @@ export interface Reciept {
   IssuedBy: string;
   "Save Text Doc": boolean;
 }
+
+export interface VAT_DISCOUNT {
+  type: string;
+  value: string | number;
+  name: string;
+  id: number;
+}

@@ -1,8 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
-import { deletingItemId, Invoice, Invoices, Item, item, itemToDelete, keyValue } from "./invoice.types";
-
+import {
+  deletingItemId,
+  Invoice,
+  Invoices,
+  Item,
+  item,
+  itemToDelete,
+  keyValue,
+  taxAndDiscount,
+} from "./invoice.types";
 
 const { combinedForm } = useModalController();
 
@@ -20,10 +28,6 @@ const initialState: Invoices = {
   staticForm: invoiceStaticValue,
 };
 
-
-
-
-
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
@@ -32,7 +36,6 @@ const invoiceSlice = createSlice({
       const { id }: deletingItemId = action.payload;
       const invoice = state.invoices.find((inv) => inv.id == id);
       state.invoices.splice(state.invoices.indexOf(invoice!), 1);
-      console.log(state.invoices.length);
     },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
@@ -72,6 +75,30 @@ const invoiceSlice = createSlice({
       );
       invoiceItem!.TOTAL -= item.amount;
     },
+
+    updateDiscountAndTaxRate: (
+      state,
+      action: PayloadAction<taxAndDiscount>
+    ) => {
+      const { invoiceId, key, value }: taxAndDiscount = action.payload;
+
+      let invoice: Invoice | any = state.invoices.find(
+        (inv) => inv.id == String(invoiceId)
+      );
+      if (Number(value) === 0 || String(value) === "") {
+        let allItemsAmount: any = invoice.itemList.reduce(
+          (acc: any, curr: any) => acc + curr.amount,
+          0
+        );
+        invoice["TOTAL"] = allItemsAmount;
+        return;
+      }
+
+      invoice[key] = Number(value).toFixed(2);
+      let updatedTotal =
+        invoice["TOTAL"] - (Number(invoice[key]) / 100) * invoice["TOTAL"];
+      invoice["TOTAL"] = updatedTotal;
+    },
   },
 });
 
@@ -82,4 +109,5 @@ export const {
   updateInvoiceItems,
   updateInvoiceInformation,
   deleteInvoice,
+  updateDiscountAndTaxRate,
 } = invoiceSlice.actions;

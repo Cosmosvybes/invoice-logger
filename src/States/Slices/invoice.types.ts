@@ -14,47 +14,51 @@ export interface deletingItemId {
 }
 
 export interface Item {
-    description: string;
-    amount: number;
-    unit_price: string;
-    itemID: number | string;
-  }
+  description: string;
+  amount: number;
+  unit_price: string;
+  quantity: string | number;
+  itemID: number | string;
+}
 
+export interface taxAndDiscount {
+  key: string;
+  value: string;
+  invoiceId: string | number;
+}
 
+export interface Invoice {
+  TOTAL: number;
+  id: string | number;
+  AdditionalInfo: string;
+  Business: string;
+  BusinessAddress: string;
+  BusinessState: string;
+  BusinessCountry: string;
+  City: string;
+  State: string;
+  Client: string;
+  ClientAddress: string;
+  ClientCity: string;
+  Country: string;
+  clientState: string;
+  DateDue: string;
+  DateIssued: string;
+  IssuedBy: string;
+  itemList: Item[];
+  VAT: number | string;
+  Discount: string | number;
+  Notes: string;
+  paymentInformation: string;
+}
 
-
-
-  
-  export interface Invoice {
-    TOTAL: number;
-    id: string | number;
-    AdditionalInfo: string;
-    Business: string;
-    BusinessAddress: string;
-    BusinessState: string;
-    BusinessCountry: string;
-    City: string;
-    state: string;
-    Client: string;
-    ClientAddress: string;
-    ClientCity: string;
-    Country: string;
-    clientState: string;
-    DateDue: string;
-    DateIssued: string;
-    IssuedBy: string;
-    itemList: Item[];
-  }
-
-
-
-  export interface item {
-    id: string | number;
-    item: Item;
-  }
-  export interface Invoices {
-    invoices: Invoice[];
-    sent: [];
-    revenue: number;
-    staticForm: object | any;
-  }
+export interface item {
+  id: string | number;
+  item: Item;
+}
+export interface Invoices {
+  invoices: Invoice[];
+  sent: [];
+  revenue: number;
+  staticForm: object | any;
+}

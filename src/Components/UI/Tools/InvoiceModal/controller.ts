@@ -19,7 +19,7 @@ export const forms = [
   },
   {
     type_: "text",
-    name: "state",
+    name: "State",
     value: "",
     placeholder: "State",
   },
@@ -50,9 +50,9 @@ export const forms = [
   },
   {
     type_: "text",
-    name: "OtherInformation",
+    name: "paymentInformation",
     value: "",
-    placeholder: "Other Information",
+    placeholder: "payment Information",
   },
   {
     type_: "text",
@@ -60,6 +60,18 @@ export const forms = [
     value: "",
     placeholder: "Transaction  Notes",
   },
+  // {
+  //   type_: "text",
+  //   name: "VAT",
+  //   value: "",
+  //   placeholder: "Add Tax",
+  // },
+  // {
+  //   type_: "text",
+  //   name: "Discount",
+  //   value: "",
+  //   placeholder: "Transaction Discount",
+  // },
 ];
 
 export const senderInfo = [
