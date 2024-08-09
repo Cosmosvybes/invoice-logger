@@ -13,6 +13,7 @@ const SideNav = ({ title, children }: Main) => {
         <div className="relative flex flex-col">
           {children.map(({ title, path, icon }) => (
             <Link
+              key={icon}
               to={`/${path}`}
               className="text-gray-900 font-normal gap-2 flex justify-start items-center"
             >
