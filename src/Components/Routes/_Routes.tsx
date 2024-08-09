@@ -7,7 +7,6 @@ const _Routes = () => {
     <>
       <Routes>
         <Route path="/" element={<Dashboard />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/invoice" element={<Main />}></Route>
         <Route path="/invoice/update/:id" element={<Main />}></Route>
       </Routes>

@@ -1,18 +1,9 @@
-import { useState } from "react";
 import NavLink from "./NavLink";
 import { MenuLineHorizontal } from "react-huge-icons/outline";
+import useNavMenu from "./links.menu";
 
 const Nav = () => {
-  const [links] = useState([
-    { id: 1, path: "", name: "Home" },
-    { id: 2, path: "invoice", name: "Invoice" },
-    { id: 3, path: "Clients", name: "Clients" },
-  ]);
-  const [active, setActive] = useState(links[0].id);
-  const handleActive = (id: number) => {
-    setActive(id);
-  };
-
+  const { active, handleActive, links } = useNavMenu();
   return (
     <>
       <div className="  index-10 flex justify-between  items-center shadow-md shadow-gray-50 left-0 border px-2  h-28 max-sm:h-16 ">

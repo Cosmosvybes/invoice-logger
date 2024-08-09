@@ -1,12 +1,10 @@
 import { ArrowRight } from "react-huge-icons/outline";
-import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/InvoiceTemplate";
 const AccountDetails = () => {
   const { invoices, sent, revenue } = useAppSelector((state) => state.invoice);
 
-  useLayoutEffect(() => {}, [invoices.length, sent.length, revenue]);
   return (
     <>
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
@@ -17,7 +15,7 @@ const AccountDetails = () => {
             </p>
 
             <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-1 grid-cols-3   max-sm:grid-cols-1">
-              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500">
+              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-auto items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500 ">
                 <p className="text-gray-500 text-xl font-bold">All invoice</p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
                   {invoices.length}
@@ -78,7 +76,7 @@ const AccountDetails = () => {
               View All <ArrowRight className="text-black text-4xl inline" />
             </Link>{" "}
           </div>
-          <div className="relative w-full flex border  flex-col gap-0.5">
+          <div className="relative w-full max-sm:w-auto flex border   flex-col gap-0.5">
             <div className="relative  bg-black items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-auto">
               <p className="text-gray-100  font-light px-2 text-xl max-sm:text-xs">
                 Number

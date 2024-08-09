@@ -21,11 +21,6 @@ const icons = [
 ];
 
 import useDashboardController from ".";
-// import Link_ from "../../../Tools/Layout/Link";
-// import {
-//   Data,
-//   Item,
-// } from "../../../Tools/_helper/Formbuilder/invoiceTemplate.types";
 import Account from "../../../Tools/InvoiceModal/Account";
 //
 const Dashboard = () => {
@@ -48,7 +43,7 @@ const Dashboard = () => {
   });
   return (
     <>
-      <div className="relative  w-full  h-auto px-28 max-sm:px-0 border">
+      <div className="relative  w-full  h-auto px-28 max-sm:px-0  max-sm:w-full max-md:w-full">
         <div className="relative ">{VIEWS_}</div>
       </div>
     </>

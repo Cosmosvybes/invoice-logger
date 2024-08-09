@@ -1,4 +1,4 @@
-import BreadCrumb from "../Layout/Nav/BreadCrumb";
+import BreadCrumb from "../Layout/BreadCrumb";
 import AccountDetails from "./AccountDetails";
 
 const Account = () => {
