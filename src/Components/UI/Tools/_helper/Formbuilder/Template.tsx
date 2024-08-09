@@ -320,11 +320,15 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           </div>
         </div>
         <hr className="w-full border-black" />
-        <div className="relative w-full flex justify-end  max-sm:grid grid-cols-2 max-sm:px-5 items-center">
-          <div className="relative grid grid-cols-2 items-center gap-2">
+
+
+        <div className="relative w-full flex justify-end  max-sm:grid grid-cols-1 max-sm:px-5 items-center">
+        
+        
+          <div className="relative grid grid-cols-1 items-center gap-2">
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
-                Discount
+                discount
               </p>
 
               <p className="text-xl  text-black  font-normal">
@@ -338,7 +342,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
-                Vat
+                Tax
               </p>
 
               <p className="text-xl  text-black  font-normal">
@@ -349,7 +353,11 @@ const Template = ({ reciepient, sender, item }: FORM) => {
                 $
               </p>
             </div>
+
+
             <hr className="w-full border-black" />
+
+
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
                 Total
