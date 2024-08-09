@@ -32,7 +32,7 @@ const AccountDetails = () => {
               <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500">
                 <p className="text-gray-500 text-xl font-bold">Revenue</p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
-                  {revenue}
+                  ${revenue}
                 </h1>
               </div>
             </div>

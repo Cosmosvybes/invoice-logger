@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
-export default function useNavMenu() {
+export default function useNavMenu(icons: any) {
   const [links] = useState([
     { id: 1, path: "", name: "Home" },
     { id: 2, path: "invoice", name: "Invoice" },
@@ -10,10 +10,91 @@ export default function useNavMenu() {
     setActive(id);
   };
   const [active, setActive] = useState(links[0].id);
+  const [viewMode, setMode] = useState(false);
+  const sideMenu = [
+    {
+      id: 1,
+      title: "Creator",
+      children: [
+        {
+          id: 1,
+          title: "Invoice",
+          path: "",
+          icon: icons[0],
+        },
+        {
+          id: 2,
+          title: "New Invoice",
+          path: "invoice",
+          icon: icons[1],
+        },
+        {
+          id: 1,
+          title: "Clients",
+          path: "clients",
+          icon: icons[2],
+        },
+        {
+          id: 1,
+          title: "Add Client",
+          path: "clients",
+          icon: icons[3],
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "Account",
+      children: [
+        {
+          id: 1,
+          title: "Profile",
+          path: "profile",
+          icon: icons[4],
+        },
+        {
+          id: 2,
+          title: "Subscription",
+          path: "subscription",
+          icon: icons[5],
+        },
+        {
+          id: 1,
+          title: "Settings",
+          path: "settings",
+          icon: icons[6],
+        },
+        {
+          id: 1,
+          title: "Log out",
+          path: "",
+          icon: icons[7],
+        },
+      ],
+    },
+  ];
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const handleCloseNav = (e: Event) => {
+    if (navRef.current && !navRef.current.contains(e.target as Node)) {
+      setMode(false);
+    }
+  };
+
+  useLayoutEffect(() => {
+    document.body.addEventListener("mousedown", handleCloseNav);
+    return () => {
+      document.body.removeEventListener("mousedown", handleCloseNav);
+    };
+  }, []);
 
   return {
     links,
     active,
+    navRef,
     handleActive,
+    sideMenu,
+    viewMode,
+    setMode,
   };
 }
