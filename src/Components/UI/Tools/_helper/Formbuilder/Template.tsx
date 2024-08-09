@@ -294,16 +294,41 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         </div>
         <hr className="w-full border-black" />
         <div className="relative w-full flex justify-end  items-center">
-          <div className="relative flex-col flex items-center gap-3">
-            <p className="text-3xl font-normal underline">Total</p>
+          <div className="relative grid grid-cols-2 items-center gap-3">
+            <div className="relative flex justify-between items-center   gap-2 ">
+              <p className="text-xl text-gray-500 font-normal ">Vat</p>
 
-            <p className="text-xl mt-3 text-black  font-normal">
-              {" "}
-              $
-              {invoiceItem?.length! > 0
-                ? editingInvoiceTotal
-                : TOTAL.toFixed(2)}
-            </p>
+              <p className="text-xl  text-black  font-normal">
+                {" "}
+                {invoiceItem?.length! > 0
+                  ? editingInvoiceTotal
+                  : TOTAL.toFixed(2)}
+                %
+              </p>
+            </div>
+
+            <div className="relative flex justify-between items-center   gap-2 ">
+              <p className="text-xl text-gray-500 font-normal ">Discount</p>
+
+              <p className="text-xl  text-black  font-normal">
+                {" "}
+                {invoiceItem?.length! > 0
+                  ? editingInvoiceTotal
+                  : TOTAL.toFixed(2)}
+                %
+              </p>
+            </div>
+
+            <div className="relative flex justify-between items-center   gap-2 ">
+              <p className="text-xl text-gray-500 font-normal ">Total</p>
+
+              <p className="text-xl  text-black  font-normal">
+                {" "}
+                {invoiceItem?.length! > 0
+                  ? editingInvoiceTotal
+                  : TOTAL.toFixed(2)}
+              </p>
+            </div>
           </div>
         </div>
       </section>

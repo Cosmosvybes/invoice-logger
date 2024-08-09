@@ -19,6 +19,12 @@ export interface Item {
     unit_price: string;
     itemID: number | string;
   }
+
+
+
+
+
+  
   export interface Invoice {
     TOTAL: number;
     id: string | number;
@@ -39,6 +45,9 @@ export interface Item {
     IssuedBy: string;
     itemList: Item[];
   }
+
+
+
   export interface item {
     id: string | number;
     item: Item;
