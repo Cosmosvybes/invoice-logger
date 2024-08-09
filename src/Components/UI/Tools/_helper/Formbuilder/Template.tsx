@@ -305,12 +305,12 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         </div>
 
         <div className="relative w-full flex justify-between items-center mt-2 gap-0.5">
+          {ADDITEM}
           {addNew.map((btn) => (
             <div className="relative h-12 w-auto " key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
             </div>
           ))}{" "}
-          {ADDITEM}
         </div>
         <hr className="w-full border-black" />
 
@@ -321,10 +321,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         </div>
         <hr className="w-full border-black" />
 
-
         <div className="relative w-full flex justify-end  max-sm:grid grid-cols-1 max-sm:px-5 items-center">
-        
-        
           <div className="relative grid grid-cols-1 items-center gap-2">
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
@@ -354,9 +351,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               </p>
             </div>
 
-
             <hr className="w-full border-black" />
-
 
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
@@ -364,7 +359,8 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               </p>
               <p className="text-xl  text-black  font-normal">
                 {" "}
-               $ {invoiceItem?.length! > 0
+                ${" "}
+                {invoiceItem?.length! > 0
                   ? (
                       editingInvoiceTotal! -
                       discountAndTaxRate.discount +
