@@ -219,7 +219,6 @@ export default function useTemplateController({ item }: FORM) {
     staticForm,
     updateDiscount,
     updateVAT,
-    // handleTaxDiscountUpdate,
     updatedBalance,
   };
 }

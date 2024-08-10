@@ -26,7 +26,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     updateDiscount,
     updateVAT,
     dispatch,
-    updatedBalance,
   } = useTemplateController({ reciepient, sender, item });
 
   const btns = [
