@@ -94,7 +94,8 @@ const invoiceSlice = createSlice({
         0
       );
       invoice!.Discount = value;
-      invoice!.TOTAL = subtotal - invoice!.Discount + invoice!.VAT;
+      invoice!.TOTAL =
+        subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value }: taxAndDiscount = action.payload;
@@ -104,7 +105,8 @@ const invoiceSlice = createSlice({
         0
       );
       invoice!.VAT = value;
-      invoice!.TOTAL = subtotal - invoice!.Discount + value;
+      invoice!.TOTAL =
+        subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
     },
   },
 });
