@@ -17,7 +17,15 @@ const BreadCrumb = ({
   const handleNewInvoice = () => {
     localStorage.setItem("id", String(Date.now()));
 
-    dispatch(createInvoice({ ...staticForm, itemList: [], TOTAL: 0 }));
+    dispatch(
+      createInvoice({
+        ...staticForm,
+        itemList: [],
+        TOTAL: 0,
+        VAT: "",
+        Discount: "",
+      })
+    );
   };
 
   return (

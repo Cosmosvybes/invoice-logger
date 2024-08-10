@@ -4,20 +4,15 @@ import { Invoice } from "../../../../../States/Slices/invoice.types";
 const ViewModal = ({
   data,
   callback,
-  TOTAL,
-  isEditList,
-  taxAndDiscount,
 }: {
   data: Invoice;
-  TOTAL: number | any;
+
   callback(): void;
-  taxAndDiscount: { VAT: any; Discount: any };
-  isEditList?: any[];
 }) => {
   return (
     <>
-      <div className="absolute h-auto max-sm:h-auto w-full flex  max-sm:px-0 max-sm:py-10 justify-center items-center">
-        <div className="relative  bg-white  rounded-xl  z-30 flex flex-col py-5 px-5 ">
+      <div className="absolute h-auto max-sm:h-auto w-full flex   max-sm:px-0 max-sm:py-10 justify-center items-center">
+        <div className="relative  bg-white shadow-md  rounded-xl  z-30 flex flex-col py-5 px-5 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-normal text-black">Invoice Preview</h1>
 
@@ -80,33 +75,18 @@ const ViewModal = ({
               <p className="text-black  font-normal">Sub-total</p>
             </div>
             <div className="relative">
-              {isEditList?.length! > 0 ? (
-                <div className="relative flex-col flex">
-                  {isEditList?.map(
-                    ({ description, amount, unit_price, quantity }, i) => (
-                      <div className="relative grid grid-cols-4 gap-1" key={i}>
-                        <p className="text-black  font-normal">{description}</p>
-                        <p className="text-black  font-normal">{quantity}</p>
-                        <p className="text-black  font-normal">{unit_price}</p>
-                        <p className="text-black  font-normal">{amount}</p>
-                      </div>
-                    )
-                  )}
-                </div>
-              ) : (
-                <div className="relative flex-col flex text-black">
-                  {data.itemList.map(
-                    ({ description, amount, unit_price, quantity }, i) => (
-                      <div className="relative grid grid-cols-4 gap-1" key={i}>
-                        <p className="text-black font-normal">{description}</p>
-                        <p className="text-black  font-normal">{quantity}</p>
-                        <p className="text-black  font-normal">{unit_price}</p>
-                        <p className="text-black  font-normal">{amount}</p>
-                      </div>
-                    )
-                  )}
-                </div>
-              )}
+              <div className="relative flex-col flex">
+                {data.itemList?.map(
+                  ({ description, amount, unit_price, quantity }, i) => (
+                    <div className="relative grid grid-cols-4 gap-1" key={i}>
+                      <p className="text-black  font-normal">{description}</p>
+                      <p className="text-black  font-normal">{quantity}</p>
+                      <p className="text-black  font-normal">{unit_price}</p>
+                      <p className="text-black  font-normal">{amount}</p>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           </div>
           <hr className="w-full border border-black" />
@@ -114,20 +94,16 @@ const ViewModal = ({
             <div className="relative flex  justify-start items-center">
               <p className="text-black  font-normal">Discount- </p>
               <p className="underline text-black  font-normal">
-                {isEditList ? data.Discount : taxAndDiscount.Discount / 100}%
+                {data.Discount}%
               </p>
             </div>
             <div className="relative  flex justify-start items-center">
               <p className="text-black  font-normal">Tax- </p>
-              <p className="underline text-black  font-normal">
-                {isEditList ? data.VAT : taxAndDiscount.VAT / 100}%
-              </p>
+              <p className="underline text-black  font-normal">{data.VAT}%</p>
             </div>
             <div className="relative flex justify-start gap-1 items-center">
               <p className="text-black  font-normal">Total - </p>
-              <p className="underline text-black  font-normal">
-                ${isEditList ? data.TOTAL.toFixed(2) : TOTAL}
-              </p>
+              <p className="underline text-black  font-normal">${data.TOTAL}</p>
             </div>
           </div>
           <Like

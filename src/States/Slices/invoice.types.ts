@@ -22,8 +22,7 @@ export interface Item {
 }
 
 export interface taxAndDiscount {
-  key: string;
-  value: string;
+  value: number;
   invoiceId: string | number;
 }
 
@@ -46,8 +45,8 @@ export interface Invoice {
   DateIssued: string;
   IssuedBy: string;
   itemList: Item[];
-  VAT: number | string;
-  Discount: string | number;
+  VAT: number;
+  Discount: number;
   Notes: string;
   paymentInformation: string;
 }

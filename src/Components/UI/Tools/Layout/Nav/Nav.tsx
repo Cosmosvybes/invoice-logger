@@ -43,7 +43,7 @@ const Nav = () => {
           ))}
         </div>
 
-        <div className="relative w-24 flex justify-center items-center rounded-xl h-12 bg-gray-100 mr-32 max-sm:mr-2">
+        <div className="relative w-24 flex justify-center items-center rounded-md h-12 bg-gray-100 mr-32 max-sm:mr-2">
           <p className="text-gray-600 font-normal text-2xl">AA</p>
           <MenuLineHorizontal
             className="text-5xl text-gray-500"
@@ -68,9 +68,11 @@ const Nav = () => {
               </div>
             </div>
 
-            <div className="relative px-5">
+            <div className="relative px-5 shadow-md">
               {sideMenu.map(({ title, children }) => (
-                <SideNav title={title} children={children} />
+                <div className="relative" key={title}>
+                  <SideNav title={title} children={children} />
+                </div>
               ))}
             </div>
           </div>

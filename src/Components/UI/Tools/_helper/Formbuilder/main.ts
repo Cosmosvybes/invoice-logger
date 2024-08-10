@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import "react-toastify/ReactToastify.css";
 import { FORM, ItemsType, VAT_DISCOUNT } from "./type";
 import { toast } from "react-toastify";
@@ -7,7 +7,8 @@ import {
   updateInvoiceItems,
   deleteInvoiceItems,
   updateInvoiceInformation,
-  updateDiscountAndTaxRate,
+  updateDiscount,
+  updateVAT,
 } from "../../../../../States/Slices/invoice";
 
 import { useParams } from "react-router-dom";
@@ -18,65 +19,33 @@ export default function useTemplateController({ item }: FORM) {
 
   const { id } = useParams();
   let invoiceItem = item;
-  let editingInvoiceTotal;
   let invoiceInformation: any;
   //invoice state
 
   const { invoices, staticForm } = useAppSelector((state) => state.invoice);
   if (id) {
     invoiceInformation = invoices?.find((invoice) => invoice.id == id)!;
-    editingInvoiceTotal = invoices?.find((invoice) => invoice.id == id)!.TOTAL;
+  } else {
+    invoiceInformation = invoices?.find(
+      (invoice) => invoice.id == localStorage.getItem("id")
+    )!;
   }
 
   const [tax_discount_input] = useState<VAT_DISCOUNT[]>([
     //invoice discounts form fields
     {
-      type: "text",
+      type: "number",
       value: "",
       name: "Discount",
       id: 2,
     },
     {
-      type: "text",
+      type: "number",
       value: "",
       name: "VAT",
       id: 3,
     },
   ]);
-
-  let tax_discount_values: any = tax_discount_input.reduce(
-    (allValues, currValue) => ({
-      ...allValues,
-      [currValue.name]: currValue.value,
-    }),
-    {}
-  );
-
-  const [discount_tax_states, setDiscountTaxValues] =
-    useState<any>(tax_discount_values);
-
-  const handleTaxDiscountUpdate = (newValue: string, name: string) => {
-    setDiscountTaxValues((prev_values: any) => ({
-      ...prev_values,
-      [name]: newValue,
-    }));
-
-    return !id
-      ? dispatch(
-          updateDiscountAndTaxRate({
-            invoiceId: Number(localStorage.getItem("id")),
-            key: name,
-            value: newValue,
-          })
-        )
-      : dispatch(
-          updateDiscountAndTaxRate({
-            invoiceId: Number(id),
-            key: name,
-            value: newValue,
-          })
-        );
-  };
 
   //form vfied values
   const dispatch = useAppDispatch(); //state dispatcher
@@ -129,36 +98,6 @@ export default function useTemplateController({ item }: FORM) {
   }, [items["quantity"], items["unit_price"]]);
 
   //?? ///// update total supply
-  const [TOTAL, setTotal] = useState(0);
-
-  const [discountAndTaxRate, setDiscountAndTaxRate] = useState({
-    vat: 0,
-    discount: 0,
-  });
-
-  useLayoutEffect(() => {
-    let taxVal = (Number(discount_tax_states["VAT"]) / 100) * TOTAL!;
-    let discountVal = (Number(discount_tax_states["Discount"]) / 100) * TOTAL!;
-    let newDiscountTaxRate_ = { vat: taxVal, discount: discountVal };
-    setDiscountAndTaxRate(newDiscountTaxRate_);
-
-    if (invoiceItem || id) {
-      let taxVal =
-        (Number(discount_tax_states["VAT"]) / 100) * editingInvoiceTotal!;
-      let discountVal =
-        (Number(discount_tax_states["Discount"]) / 100) * editingInvoiceTotal!;
-      let newDiscountTaxRate = { vat: taxVal, discount: discountVal };
-      setDiscountAndTaxRate(newDiscountTaxRate);
-    }
-  }, [TOTAL, discount_tax_states, editingInvoiceTotal]);
-
-  useLayoutEffect(() => {
-    function updateTotalSupply() {
-      let total_ = itemList.reduce((acc, curr) => acc + curr.amount, 0);
-      setTotal(total_);
-    }
-    updateTotalSupply();
-  }, [itemList]);
 
   const updateValues = (newValue: string | number, name: string) => {
     setItems((prev: any) => ({ ...prev, [name]: newValue }));
@@ -223,18 +162,33 @@ export default function useTemplateController({ item }: FORM) {
         );
   };
 
+  let updatedBalance = useMemo(() => {
+    let values = (
+      invoiceInformation.TOTAL -
+      (Number(invoiceInformation.Discount) / 100) * invoiceInformation.TOTAL +
+      (Number(invoiceInformation.VAT) / 100) * invoiceInformation.TOTAL
+    ).toFixed(2);
+    return values;
+  }, [
+    invoiceInformation.VAT,
+    invoiceInformation.Discount,
+    invoiceInformation.itemList,
+  ]);
+
   //   //?? ///////////////////////////////////////////////
   //DELETE ITEM
   //   //?? ///////////////////////////////////////////////
 
-  const handleDelete = (id: number, invoiceId?: number) => {
-    if (!invoiceItem) {
-      setItem(itemList.filter((item) => item.itemID != id));
-      return;
-    }
-    // if its an editing invoice
-    dispatch(deleteInvoiceItems({ invoiceId: Number(invoiceId), itemID: id }));
+  const handleDelete = (id_: number) => {
+    dispatch(
+      deleteInvoiceItems({
+        invoiceId: id ? Number(id) : Number(localStorage.getItem("id")),
+        itemID: id_,
+      })
+    );
+    setItem(itemList.filter((item) => item.itemID != id));
     toast.success("invoice item removed", { theme: "dark" });
+    return;
   };
 
   const handleView = () => {
@@ -258,17 +212,14 @@ export default function useTemplateController({ item }: FORM) {
     handleDelete,
     viewMode,
     setViewMode,
-    TOTAL,
     setIsCreatingNewInvoice,
     isCreatingNewInvoice,
     dispatch,
-    id,
-    invoiceItem,
-    editingInvoiceTotal,
     invoiceInformation,
     staticForm,
-    discount_tax_states,
-    handleTaxDiscountUpdate,
-    discountAndTaxRate,
+    updateDiscount,
+    updateVAT,
+    // handleTaxDiscountUpdate,
+    updatedBalance,
   };
 }

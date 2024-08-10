@@ -7,7 +7,7 @@ interface Main {
 const SideNav = ({ title, children }: Main) => {
   return (
     <>
-      <div className="relative flex flex-col py-2 gap-2" key={title}>
+      <div className="relative flex flex-col py-2  gap-2" key={title}>
         <h6 className="font-bold text-gray-600">{title}</h6>
 
         <div className="relative flex flex-col">

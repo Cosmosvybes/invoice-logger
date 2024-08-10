@@ -12,26 +12,21 @@ import { SendFast } from "react-huge-icons/bulk";
 const Template = ({ reciepient, sender, item }: FORM) => {
   const {
     updateInvoiceDetails,
-    TOTAL,
-    id,
     staticForm,
     inputs,
     addNewItem,
     updateValues,
     items,
-    itemList,
     handleDelete,
     viewMode,
     setViewMode,
     handleView,
-    invoiceItem,
-    editingInvoiceTotal,
-    invoiceDetails,
     invoiceInformation,
     tax_discount_input,
-    discount_tax_states,
-    handleTaxDiscountUpdate,
-    discountAndTaxRate,
+    updateDiscount,
+    updateVAT,
+    dispatch,
+    updatedBalance,
   } = useTemplateController({ reciepient, sender, item });
 
   const btns = [
@@ -66,9 +61,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               title="check"
               type="checkbox"
               className="max-sm:w-auto"
-              value={
-                invoiceItem ? invoiceInformation[name] : invoiceDetails[name]
-              }
+              value={invoiceInformation[name]}
               onChange={(e) =>
                 updateInvoiceDetails(e.currentTarget.checked, name)
               }
@@ -86,9 +79,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               title="check"
               type="text"
               className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
-              value={
-                invoiceItem ? invoiceInformation[name] : invoiceDetails[name]
-              }
+              value={invoiceInformation[name]}
               placeholder={placeholder}
               onChange={(e) => updateInvoiceDetails(e.target.value, name)}
             />
@@ -110,11 +101,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               title="check"
               type="checkbox"
               className="max-sm:w-auto"
-              value={
-                invoiceItem
-                  ? invoiceInformation[input.name]
-                  : invoiceDetails[input.name]
-              }
+              value={invoiceInformation[input.name]}
               onChange={(e) =>
                 updateInvoiceDetails(e.currentTarget.checked, input.name)
               }
@@ -134,11 +121,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               title="date"
               type="date"
               className="max-sm:w-auto bg-inherit px-3 font-bold  text-black border-none py-1"
-              value={
-                invoiceItem
-                  ? invoiceInformation[input.name]
-                  : invoiceDetails[input.name]
-              }
+              value={invoiceInformation[input.name]}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
           </div>
@@ -149,11 +132,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
               type="text"
-              value={
-                invoiceItem
-                  ? invoiceInformation[input.name]
-                  : invoiceDetails[input.name]
-              }
+              value={invoiceInformation[input.name]}
               placeholder={input.placeholder}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
@@ -183,14 +162,28 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         className="px-2 py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-sm bg-inherit text-black  font-normal w-24  max-sm:w-full "
         type={input.type}
         placeholder={input.name}
-        value={discount_tax_states[input.name]}
-        onChange={(e) => handleTaxDiscountUpdate(e.target.value, input.name)}
+        value={invoiceInformation[input.name]}
+        onChange={(e) =>
+          input.name == "Discount"
+            ? dispatch(
+                updateDiscount({
+                  invoiceId: invoiceInformation.id,
+                  value: Number(e.target.value),
+                })
+              )
+            : dispatch(
+                updateVAT({
+                  invoiceId: invoiceInformation.id,
+                  value: Number(e.target.value),
+                })
+              )
+        }
       />
       <p className="text-gray-900 text-xl inline">%</p>
     </div>
   ));
 
-  const ITEMLIST = itemList.map((item: any, i: any) => (
+  const ITEMLIST = invoiceInformation.itemList.map((item: any, i: any) => (
     <div
       className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
       key={i}
@@ -214,45 +207,13 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     </div>
   ));
 
-  const EDIT_ITEM_LIST = invoiceItem?.map((item: any, i: any) => (
-    <div
-      className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
-      key={i}
-    >
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
-        {item.description}
-      </p>
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
-        {item.quantity}
-      </p>
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
-        {item.unit_price}
-      </p>
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
-        {item.amount}
-      </p>
-      <TrashBent
-        className="text-3xl text-black inline"
-        onClick={() => handleDelete(item.itemID, Number(id))}
-      />
-    </div>
-  ));
-
   return (
     <>
       <section className="flex bg-white relative transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
         {viewMode && (
           <ViewModal
-            TOTAL={
-              Number(TOTAL.toFixed(2)) -
-              (discountAndTaxRate.discount + discountAndTaxRate.vat)
-            }
-            isEditList={item}
-            data={
-              item ? { ...invoiceInformation } : { ...invoiceDetails, itemList }
-            }
+            data={{ ...invoiceInformation }}
             callback={() => setViewMode(!viewMode)}
-            taxAndDiscount={discount_tax_states}
           />
         )}
 
@@ -301,7 +262,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               Sub-Total
             </p>
           </div>
-          {item?.length! > 0 ? EDIT_ITEM_LIST : ITEMLIST}
+          {ITEMLIST}
         </div>
 
         <div className="relative w-full flex justify-between items-center mt-2 gap-0.5">
@@ -329,11 +290,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               </p>
 
               <p className="text-xl  text-black  font-normal">
-                {" "}
-                {invoiceItem?.length! > 0
-                  ? invoiceInformation.Discount
-                  : discountAndTaxRate.discount.toFixed(2)}
-                $
+                {Number(invoiceInformation.Discount)}%
               </p>
             </div>
 
@@ -344,10 +301,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
               <p className="text-xl  text-black  font-normal">
                 {" "}
-                {invoiceItem?.length! > 0
-                  ? invoiceInformation.VAT
-                  : discountAndTaxRate.vat.toFixed(2)}
-                $
+                {Number(invoiceInformation.VAT)}%
               </p>
             </div>
 
@@ -358,16 +312,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
                 Total
               </p>
               <p className="text-xl  text-black  font-normal">
-                {" "}
-                ${" "}
-                {invoiceItem?.length! > 0
-                  ? (
-                      editingInvoiceTotal! -
-                      discountAndTaxRate.discount +
-                      discountAndTaxRate.vat
-                    ).toFixed(2)
-                  : Number(TOTAL.toFixed(2)) -
-                    (discountAndTaxRate.discount + discountAndTaxRate.vat)}
+                ${invoiceInformation.TOTAL}
               </p>
             </div>
           </div>

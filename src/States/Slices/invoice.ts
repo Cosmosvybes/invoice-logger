@@ -21,6 +21,10 @@ let invoiceStaticValue = combinedForm.reduce(
   }),
   { id: Date.now() }
 );
+export interface invoiceTotalUpdate {
+  invoiceID: number;
+  value: number;
+}
 const initialState: Invoices = {
   invoices: [],
   sent: [],
@@ -76,28 +80,31 @@ const invoiceSlice = createSlice({
       invoiceItem!.TOTAL -= item.amount;
     },
 
-    updateDiscountAndTaxRate: (
-      state,
-      action: PayloadAction<taxAndDiscount>
-    ) => {
-      const { invoiceId, key, value }: taxAndDiscount = action.payload;
+    updateInvoiceTotal: (state, action: PayloadAction<invoiceTotalUpdate>) => {
+      const { invoiceID, value }: invoiceTotalUpdate = action.payload;
+      let invoice = state.invoices.find((inv: Invoice) => inv.id == invoiceID);
+      invoice!.TOTAL = value;
+    },
 
-      let invoice: Invoice | any = state.invoices.find(
-        (inv) => inv.id == String(invoiceId)
+    updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
+      const { invoiceId, value }: taxAndDiscount = action.payload;
+      let invoice = state.invoices.find((inv: Invoice) => inv.id == invoiceId);
+      let subtotal = invoice!.itemList.reduce(
+        (acc, curr) => acc + curr.amount,
+        0
       );
-      if (Number(value) === 0 || String(value) === "") {
-        let allItemsAmount: any = invoice.itemList.reduce(
-          (acc: any, curr: any) => acc + curr.amount,
-          0
-        );
-        invoice["TOTAL"] = allItemsAmount;
-        return;
-      }
-
-      invoice[key] = Number(value).toFixed(2);
-      let updatedTotal =
-        invoice["TOTAL"] - (Number(invoice[key]) / 100) * invoice["TOTAL"];
-      invoice["TOTAL"] = updatedTotal;
+      invoice!.Discount = value;
+      invoice!.TOTAL = subtotal - invoice!.Discount + invoice!.VAT;
+    },
+    updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
+      const { invoiceId, value }: taxAndDiscount = action.payload;
+      let invoice = state.invoices.find((inv: Invoice) => inv.id == invoiceId);
+      let subtotal = invoice!.itemList.reduce(
+        (acc, curr) => acc + curr.amount,
+        0
+      );
+      invoice!.VAT = value;
+      invoice!.TOTAL = subtotal - invoice!.Discount + value;
     },
   },
 });
@@ -109,5 +116,7 @@ export const {
   updateInvoiceItems,
   updateInvoiceInformation,
   deleteInvoice,
-  updateDiscountAndTaxRate,
+  updateDiscount,
+  updateInvoiceTotal,
+  updateVAT,
 } = invoiceSlice.actions;
