@@ -50,6 +50,8 @@ export interface Invoice {
   Notes: string;
   paymentInformation: string;
   shippingAddress: string;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export interface item {

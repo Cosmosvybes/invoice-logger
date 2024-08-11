@@ -51,6 +51,14 @@ const invoiceSlice = createSlice({
 
     createInvoice: (state, action: PayloadAction<Invoice>) => {
       let invoice: Invoice = action.payload;
+      invoice.createdAt = new Date().toLocaleString("en-GB", {
+        month: "long",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h24",
+        hour12: true,
+      });
       state.invoices.push({ ...invoice, id: localStorage.getItem("id")! });
     },
 
@@ -61,6 +69,15 @@ const invoiceSlice = createSlice({
       );
       invoice!.itemList.push(item);
       invoice!.TOTAL += item.amount;
+      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        dayPeriod: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h24",
+        hour12: true,
+      });
     },
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
@@ -96,6 +113,15 @@ const invoiceSlice = createSlice({
       invoice!.Discount = value;
       invoice!.TOTAL =
         subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
+      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        dayPeriod: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h24",
+        hour12: true,
+      });
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value }: taxAndDiscount = action.payload;
@@ -107,6 +133,15 @@ const invoiceSlice = createSlice({
       invoice!.VAT = value;
       invoice!.TOTAL =
         subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
+      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        dayPeriod: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h24",
+        hour12: true,
+      });
     },
   },
 });

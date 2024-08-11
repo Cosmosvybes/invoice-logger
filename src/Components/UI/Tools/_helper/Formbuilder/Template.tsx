@@ -224,10 +224,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
           <button
             onClick={() => {
-              // console.log(invoiceInformation);
+              console.log(invoiceInformation);
               // dispatch(createInvoice({ ...invoice, TOTAL }));
 
-              toast.success("Invoice added", { theme: "dark" });
+              // toast.success("Invoice added", { theme: "dark" });
             }}
             className="w-44 h-full max-sm:w-28 shadow-md border   text-center flex justify-center items-center transition duration-500 px-2  text-gray-black text-sm font-normal rounded-md "
           >

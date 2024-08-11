@@ -1,10 +1,10 @@
 import { Edit } from "react-huge-icons/outline";
-import { Data } from "./invoiceTemplate.types";
+import { Invoice } from "../../../../../States/Slices/invoice.types";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../States/Slices/invoice";
 
-const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
+const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
   const dispatch = useAppDispatch();
   return (
     <>
@@ -34,18 +34,16 @@ const InvoiceTemplate = ({ invoice }: { invoice: Data }) => {
           <p className="text-black font-normal">ID- {invoice.id}</p>{" "}
           <p className="text-black font-normal">${invoice.TOTAL}</p>
         </div>
-        <div className="relative h-auto w-full flex text-sm  justify-between px-2">
+        <div className="relative h-auto w-full flex text-sm flex-col  justify-between px-2">
           <p className="text-black font-normal">
-            Last Updated:{" "}
-            {new Date().toLocaleString("en-US", {
-              day: "2-digit",
-              month: "long",
-              dayPeriod: "short",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            Created At: {invoice.createdAt}
           </p>
-          <Edit className="text-2xl " />
+          <p className="text-black font-normal">
+            Last Updated: {invoice.updatedAt}
+          </p>
+          <div className="relative w-full flex justify-end">
+            <Edit className="text-2xl " />
+          </div>
         </div>
       </div>
     </>
