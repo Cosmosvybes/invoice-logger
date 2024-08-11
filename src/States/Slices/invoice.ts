@@ -43,7 +43,7 @@ const invoiceSlice = createSlice({
     },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
-      const { key, value, invoiceID } = action.payload;
+      const { key, value, invoiceID } = action.payload; 
       let invoice: string | number | boolean | any = state.invoices.find(
         (invoice) => invoice.id == invoiceID
       );
