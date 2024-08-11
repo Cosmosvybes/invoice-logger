@@ -61,7 +61,7 @@ const AccountDetails = () => {
               <p className="text-gray-600 text-xl font-light ">
                 Latest Invoice
               </p>{" "}
-              <Link to={"/"} className="text-gray-600 text-xl  font-light">
+              <Link to={"/invoices"} className="text-gray-600 text-xl  font-light">
                 View Invoice
               </Link>{" "}
             </div>
@@ -99,7 +99,7 @@ const AccountDetails = () => {
               {" "}
               Recent Invoices
             </p>{" "}
-            <Link to={"/"} className="text-gray-600 text-xl  font-light">
+            <Link to={"/invoices"} className="text-gray-600 text-xl  font-light">
               View All <ArrowRight className="text-black text-4xl inline" />
             </Link>{" "}
           </div>
