@@ -1,5 +1,3 @@
-
-
 import { Invoice } from "../../../../../States/Slices/invoice.types";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
@@ -31,34 +29,34 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
   return (
     <>
-      <div className="relative w-full py-5 gap-5 flex-col  border rounded-md   border-gray-300 h-auto  flex justify-between items-center">
+      <div className="relative w-full py-6 gap-5 flex-col  border rounded-md    border-gray-300 h-auto  flex justify-between items-center">
         {showOptions && (
           <div
             ref={invoiceOptions}
-            className="absolute right-0 bottom-0  transition duration-500 flex justify-start gap-2  flex-col w-auto h-auto  bg-black  text-center z-20"
+            className="absolute right-1 bottom-1  shadow-md   transition duration-500 flex justify-start gap-2  flex-col w-auto h-auto  bg-gray-50  text-center z-20"
           >
             <button
-              className="text-white hover:bg-gray-200 hover:text-black text-xl text-center font-light px-2 w-full"
+              className="text-black hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
               onClick={() => console.log(invoice)}
             >
               Send
             </button>
             <Link
               to={`/${"invoice/update"}/${invoice.id}`}
-              className="text-white hover:bg-gray-200 hover:text-black text-xl text-center font-light px-2 w-full"
+              className="text-black hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
             >
               Edit
             </Link>
             <button
               onClick={() => dispatch(deleteInvoice({ id: invoice.id }))}
-              className="text-white hover:bg-gray-200 hover:text-black text-xl text-center 0 font-light px-2 w-full"
+              className="text-black hover:bg-black hover:text-gray-50 text-xl text-center 0 font-light px-2 w-full"
             >
               Delete
             </button>
           </div>
         )}
 
-        <div className="relative w-full flex justify-between px-2 max-sm:px-2">
+        <div className="relative -mt-2 w-full flex justify-between px-2 max-sm:px-2">
           <p className="text-black font-normal">ID- {invoice.id}</p>{" "}
           <p className="text-black font-normal mr-2">${invoice.TOTAL}</p>
         </div>
