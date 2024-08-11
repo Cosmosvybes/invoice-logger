@@ -32,13 +32,13 @@ const AccountDetails = () => {
             </p>
 
             <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-1 grid-cols-3   max-sm:grid-cols-1">
-              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-auto items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500 ">
+              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-auto items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-300 ">
                 <p className="text-gray-500 text-xl font-bold">All invoice</p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
                   {invoices.length}
                 </h1>
               </div>
-              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500">
+              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-300">
                 <p className="text-gray-500 text-xl font-bold">
                   Outgoing invoices
                 </p>
@@ -46,7 +46,7 @@ const AccountDetails = () => {
                   {sent.length}
                 </h1>
               </div>
-              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-32 max-sm:h-24 gap-5 rounded-lg border border-gray-500">
+              <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-300">
                 <p className="text-gray-500 text-xl font-bold">Revenue</p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
                   ${revenue}

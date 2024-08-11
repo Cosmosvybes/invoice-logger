@@ -15,7 +15,7 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
 
   return (
     <>
-      <ul className="flex justify-start flex-wrap gap-0">
+      <ul className="flex justify-start gap-2 px-1 flex-wrap ">
         {pageLinks.map((linkNumber) => (
           <li
             onClick={() => {
@@ -23,7 +23,7 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
               paginateHandler(linkNumber);
             }}
             key={linkNumber}
-            className={`border w-8 rounded-md h-auto duration-700 transition cursor-pointer ${
+            className={`border w-8 rounded-lg h-auto duration-700 transition cursor-pointer ${
               active == linkNumber && "bg-black"
             } ${
               active == linkNumber && "text-white"
