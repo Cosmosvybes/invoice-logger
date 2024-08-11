@@ -76,7 +76,7 @@ const AccountDetails = () => {
             {invoices.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <div className="relative block w-1/3 max-sm:w-full">
+              <div className="relative block border py-2 rounded-lg w-1/3 max-sm:w-full">
                 <div className="relative w-full gap-1 h-auto py-2 flex flex-col-reverse    ">
                   {currentInvoices.map((invoice: any) => (
                     <div className="relative" key={invoice.id}>

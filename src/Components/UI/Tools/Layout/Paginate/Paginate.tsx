@@ -17,20 +17,20 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
     <>
       <ul className="flex justify-start gap-2 px-1 flex-wrap ">
         {pageLinks.map((linkNumber) => (
-          <li
+          <button
             onClick={() => {
               switchActive(linkNumber);
               paginateHandler(linkNumber);
             }}
             key={linkNumber}
-            className={`border w-8 rounded-lg h-auto duration-700 transition cursor-pointer ${
-              active == linkNumber && "bg-black"
+            className={` w-8 rounded-lg border-2 border-gray-300 h-auto duration-700 transition cursor-pointer ${
+              active == linkNumber && "bg-gray-400"
             } ${
               active == linkNumber && "text-white"
             } text-black px-1 rounded-sm text-center`}
           >
             {linkNumber}
-          </li>
+          </button>
         ))}
       </ul>
     </>

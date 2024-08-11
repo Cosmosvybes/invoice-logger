@@ -29,14 +29,14 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const btns = [
     {
       text: "VIEW",
-      icon: <EyeLightDouble className="text-3xl text-black inline" />,
+      icon: <EyeLightDouble className="text-3xl text-gray-50 inline" />,
       func: () => handleView(),
     },
   ];
   const addNew = [
     {
       text: "ADD ITEM",
-      icon: <PlusThin className="text-3xl mt-1 text-black inline" />,
+      icon: <PlusThin className="text-3xl  text-gray-50  inline" />,
       func: () => addNewItem(),
     },
   ];
@@ -154,9 +154,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     </div>
   ));
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
-    <div className="relative px-2 flex gap-1 items-center " key={input.id}>
+    <div className="relative  max-sm:px-0 flex gap-1 items-center " key={input.id}>
       <Input
-        className="px-2 py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-sm bg-inherit text-black  font-normal w-24  max-sm:w-full "
+        className=" py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-sm text-black  font-normal w-28  max-sm:w-24"
         type={input.type}
         placeholder={input.placeholder}
         value={invoiceInformation[input.name]}
@@ -262,7 +262,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           {ITEMLIST}
         </div>
 
-        <div className="relative w-full flex justify-between items-center mt-2 gap-0.5">
+        <div className="relative w-full flex justify-between items-center mt-2 gap-1">
           {ADDITEM}
           {addNew.map((btn) => (
             <div className="relative h-12  w-auto" key={btn.text}>
@@ -270,23 +270,23 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             </div>
           ))}{" "}
         </div>
-        <hr className="w-full border-black" />
+        <hr className="w-full border-gray-300" />
 
         <div className="relative w-full flex items-center justify-start py-2">
           <div className="relative  w-1/3 max-sm:w-full  flex justify-start  items-center  gap-0.5">
             {VAT_DISCOUNT_INPUT}
           </div>
         </div>
-        <hr className="w-full border-black" />
+        <hr className="w-full border-gray-300" />
 
-        <div className="relative w-full flex justify-end  max-sm:grid grid-cols-1 max-sm:px-5 items-center">
-          <div className="relative grid grid-cols-1 items-center gap-2">
-            <div className="relative flex justify-between items-center   gap-2 ">
+        <div className="relative w-full flex justify-end   max-sm:grid grid-cols-1 max-sm:px-0 items-center">
+          <div className="relative grid grid-cols-1 items-center w-1/2 max-sm:w-full  gap-2">
+            <div className="relative flex justify-between items-center max-sm:w-full">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
                 discount
               </p>
 
-              <p className="text-xl  text-black  font-normal">
+              <p className="text-xl  text-gray-500 mr-2  font-normal">
                 {Number(invoiceInformation.Discount)}%
               </p>
             </div>
@@ -296,19 +296,19 @@ const Template = ({ reciepient, sender, item }: FORM) => {
                 Tax
               </p>
 
-              <p className="text-xl  text-black  font-normal">
+              <p className="text-xl  text-gray-500 mr-2  font-normal">
                 {" "}
                 {Number(invoiceInformation.VAT)}%
               </p>
             </div>
 
-            <hr className="w-full border-black" />
+            <hr className="w-full border-gray-300" />
 
             <div className="relative flex justify-between items-center   gap-2 ">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
                 Total
               </p>
-              <p className="text-xl  text-black  font-normal">
+              <p className="text-xl  text-gray-500 mr-2  font-normal">
                 ${invoiceInformation.TOTAL}
               </p>
             </div>
