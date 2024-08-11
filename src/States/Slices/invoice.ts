@@ -43,7 +43,7 @@ const invoiceSlice = createSlice({
     },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
-      const { key, value, invoiceID } = action.payload; 
+      const { key, value, invoiceID } = action.payload;
       let invoice: string | number | boolean | any = state.invoices.find(
         (invoice) => invoice.id == invoiceID
       );
@@ -79,7 +79,7 @@ const invoiceSlice = createSlice({
         (invoice: { id: string | number }) => invoice.id == id
       );
       invoice!.itemList.push(item);
-      invoice!.TOTAL += item.amount;
+      invoice!.TOTAL += Number(item.amount);
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "long",
@@ -105,6 +105,18 @@ const invoiceSlice = createSlice({
       let invoiceItem = state.invoices.find(
         (invoice) => invoice.id == invoiceId
       );
+      let invoice: Invoice = state.invoices.find(
+        (invoice) => invoice.id == invoiceId
+      )!;
+      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        dayPeriod: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h24",
+        hour12: true,
+      });
       invoiceItem!.TOTAL -= item.amount;
     },
 
@@ -124,6 +136,7 @@ const invoiceSlice = createSlice({
       invoice!.Discount = value;
       invoice!.TOTAL =
         subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
+   
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "long",
@@ -144,6 +157,7 @@ const invoiceSlice = createSlice({
       invoice!.VAT = value;
       invoice!.TOTAL =
         subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
+  
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "long",

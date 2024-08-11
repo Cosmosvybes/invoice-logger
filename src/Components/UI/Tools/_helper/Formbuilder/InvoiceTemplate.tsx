@@ -29,7 +29,7 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
   return (
     <>
-      <div className="relative w-full py-4 gap-5 flex-col  border-b   border-gray-300 h-auto  flex justify-between items-center">
+      <div className="relative w-full  gap-2 flex-col  border-b   border-gray-300 h-auto  flex justify-between items-center">
         {showOptions && (
           <div
             ref={invoiceOptions}
@@ -55,10 +55,18 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
             </button>
           </div>
         )}
+        <div className="relative w-full flex justify-end">
+          <MoreVertical
+            className="text-4xl text-black "
+            onClick={() => setShowOptions(true)}
+          />
+        </div>
 
-        <div className="relative -mt-2 w-full flex justify-between px-2 max-sm:px-2">
+        <div className="relative w-full flex justify-between px-2 max-sm:px-2">
           <p className="text-black font-normal">ID- {invoice.id}</p>{" "}
-          <p className="text-black font-normal mr-2">${invoice.TOTAL}</p>
+          <h1 className="text-gray-500 text-2xl font-extrabold ">
+            ${invoice.TOTAL}
+          </h1>
         </div>
         <div className="relative h-auto w-full flex text-sm flex-col  justify-between px-2">
           <p className="text-black font-normal">
@@ -68,12 +76,6 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           <p className="text-black font-normal">
             Last Updated: {invoice.updatedAt}
           </p>
-          <div className="relative w-full flex justify-end">
-            <MoreVertical
-              className="text-4xl text-black "
-              onClick={() => setShowOptions(true)}
-            />
-          </div>
         </div>
       </div>
     </>

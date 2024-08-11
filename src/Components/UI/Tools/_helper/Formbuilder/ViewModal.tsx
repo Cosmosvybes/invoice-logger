@@ -11,7 +11,7 @@ const ViewModal = ({
 }) => {
   return (
     <>
-      <div className="absolute h-auto max-sm:h-auto w-full flex   max-sm:px-0 max-sm:py-10 justify-center items-center">
+      <div className="absolute h-auto max-sm:h-auto w-full flex   max-sm:px-0 max-sm:py-0 justify-center items-center">
         <div className="relative  bg-white shadow-md  rounded-xl  z-30 flex flex-col py-5 px-5 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-normal text-black">Invoice Preview</h1>
@@ -66,7 +66,9 @@ const ViewModal = ({
                 Payment information - {data.paymentInformation}
               </p>
               <p className="text-black  font-normal">Note - {data.Notes}</p>
-              <p className="text-black  font-normal">Shipping Address - {data.shippingAddress}</p>
+              <p className="text-black  font-normal">
+                Shipping Address - {data.shippingAddress}
+              </p>
             </div>
           </div>
           <div className="relative block mt-2">
@@ -95,7 +97,7 @@ const ViewModal = ({
             </div>
           </div>
           <hr className="w-full border border-black" />
-          <div className="relative w-full h-auto grid grid-cols-3  gap-3 mt-5 text-black">
+          <div className="relative w-full h-auto grid grid-cols-1  gap-3 mt-5 text-black">
             <div className="relative flex  justify-start items-center">
               <p className="text-black  font-normal">Discount- </p>
               <p className="underline text-black  font-normal">

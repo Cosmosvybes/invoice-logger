@@ -47,9 +47,9 @@ const Nav = () => {
         </div>
 
         <div className="relative w-24 flex justify-center items-center rounded-md h-12 bg-gray-100 mr-32 max-sm:mr-2">
-          <p className="text-gray-600 font-normal text-2xl">AA</p>
+          <p className="text-black font-normal rounded-full text-2xl">AA</p>
           <MenuLineHorizontal
-            className="text-5xl text-gray-500"
+            className="text-5xl text-black"
             onClick={() => setMode(!viewMode)}
           />
         </div>
