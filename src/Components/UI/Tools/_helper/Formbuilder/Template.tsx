@@ -145,7 +145,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block py-2" key={input.id}>
       <Input
-        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-sm bg-gray-200 text-black  font-normal w-96 max-sm:w-full"
+        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-sm bg-gray-200 border border-black text-black  font-normal w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -214,7 +214,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           />
         )}
 
-        <div className="relative flex justify-end gap-1  items-center  h-14 mb-4">
+        <div className="relative flex justify-end gap-2  items-center px-2 h-14 mb-4">
           {btns.map((btn) => (
             <div className="relative h-14 w-auto " key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
@@ -228,9 +228,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
               // toast.success("Invoice added", { theme: "dark" });
             }}
-            className="w-44 h-full max-sm:w-28 shadow-md border   text-center flex justify-center items-center transition duration-500 px-2  text-gray-black text-sm font-normal rounded-md "
+            className="w-44 h-full max-sm:w-28 shadow-md border border-black  text-center flex justify-center items-center transition duration-500 px-2  text-gray-black text-sm font-normal rounded-md "
           >
-            <SendFast className="text-4xl  mt-0.5 inline text-black" />
+            <SendFast className="text-4xl  mt-0.5 inline text-black " />
             SEND
           </button>
         </div>
