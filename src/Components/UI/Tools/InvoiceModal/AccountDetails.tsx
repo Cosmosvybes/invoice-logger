@@ -2,9 +2,28 @@ import { ArrowRight } from "react-huge-icons/outline";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/InvoiceTemplate";
+import { useState } from "react";
+import Paginate from "../Layout/Paginate/Paginate";
+
+
+
 const AccountDetails = () => {
   const { invoices, sent, revenue } = useAppSelector((state) => state.invoice);
+  const [invoicesPerPage] = useState(2);
+  const [currrentPage, setCurrentPage] = useState(1);
+  let indexOfLastInvoice = currrentPage * invoicesPerPage;
+  let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
 
+  const currentInvoices = invoices.slice(
+    indexOfFirstInvoice,
+    indexOfLastInvoice
+  );
+
+  const handlePaginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // const currentInvoices = ?
   return (
     <>
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
@@ -56,14 +75,22 @@ const AccountDetails = () => {
             {invoices.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <div className="relative w-1/3 gap-1 h-auto py-2 flex flex-col-reverse  max-sm:w-full  ">
-                {invoices.map((invoice: any) => (
-                  <div className="relative" key={invoice.id}>
-                    <InvoiceTemplate invoice={invoice} />
-                  </div>
-                ))}
+              <div className="relative block w-1/3 max-sm:w-full">
+                <div className="relative w-full gap-1 h-auto py-2 flex flex-col-reverse    ">
+                  {currentInvoices.map((invoice: any) => (
+                    <div className="relative" key={invoice.id}>
+                      <InvoiceTemplate invoice={invoice} />
+                    </div>
+                  ))}
+                </div>
+                <Paginate
+                  invoices={invoices}
+                  postsPerPage={invoicesPerPage}
+                  paginateHandler={handlePaginate}
+                />
               </div>
             )}
+
             {/* //invoice drfats */}
           </div>{" "}
           {/* //Latest invoiceF */}
