@@ -1,11 +1,9 @@
-import { ArrowRight, MoreVertical } from "react-huge-icons/outline";
+import { ArrowRight } from "react-huge-icons/outline";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/InvoiceTemplate";
 import { useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
-
-
 
 const AccountDetails = () => {
   const { invoices, sent, revenue } = useAppSelector((state) => state.invoice);
@@ -61,7 +59,10 @@ const AccountDetails = () => {
               <p className="text-gray-600 text-xl font-light ">
                 Latest Invoice
               </p>{" "}
-              <Link to={"/invoices"} className="text-gray-600 text-xl  font-light">
+              <Link
+                to={"/invoices"}
+                className="text-gray-600 text-xl  font-light"
+              >
                 View Invoice
               </Link>{" "}
             </div>
@@ -99,7 +100,10 @@ const AccountDetails = () => {
               {" "}
               Recent Invoices
             </p>{" "}
-            <Link to={"/invoices"} className="text-gray-600 text-xl  font-light">
+            <Link
+              to={"/invoices"}
+              className="text-gray-600 text-xl  font-light"
+            >
               View All <ArrowRight className="text-black text-4xl inline" />
             </Link>{" "}
           </div>
