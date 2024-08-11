@@ -14,6 +14,7 @@ import {
   Dashboard,
 } from "react-huge-icons/bulk";
 
+
 const Nav = () => {
   const icons = [
     <Invoice className="inline text-xl" />,
