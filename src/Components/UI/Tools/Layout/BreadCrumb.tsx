@@ -36,7 +36,7 @@ const BreadCrumb = ({
 
       {useLink && (
         <Link
-          to={"/invoice"}
+          to={"/new/invoice"}
           onClick={() => handleNewInvoice()}
           className="bg-black h-16 max-sm:h-12 max-sm:text-sm font-normal flex justify-center items-center rounded-md text-gray-50 w-52 max-sm:w-32"
         >

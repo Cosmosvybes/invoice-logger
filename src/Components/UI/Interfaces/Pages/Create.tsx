@@ -4,7 +4,7 @@ import useModalController from "../../Tools/InvoiceModal/controller";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import BreadCrumb from "../../Tools/Layout/BreadCrumb";
 
-const Main = () => {
+const Create = () => {
   const { forms, senderInfo } = useModalController();
   const { id } = useParams();
   const { invoices } = useAppSelector((state) => state.invoice);
@@ -16,11 +16,11 @@ const Main = () => {
   return (
     <>
       <div className="relative px-28 max-sm:px-0 ">
-        <BreadCrumb useLink={false} title={"Invoice"} />
+        <BreadCrumb useLink={false} title={"New invoice"} />
         <Template reciepient={forms} sender={senderInfo} item={itemsList} />
       </div>
     </>
   );
 };
 
-export default Main;
+export default Create;

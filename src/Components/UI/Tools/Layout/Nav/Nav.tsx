@@ -11,6 +11,7 @@ import {
   User,
   UserAdd,
   UsersDouble,
+  Dashboard,
 } from "react-huge-icons/bulk";
 
 const Nav = () => {
@@ -23,6 +24,7 @@ const Nav = () => {
     <CardAdd className="inline text-xl" />,
     <Setting className="inline text-xl" />,
     <Logout className="inline text-xl" />,
+    <Dashboard className="inline text-xl" />,
   ];
   const { active, handleActive, links, sideMenu, viewMode, setMode, navRef } =
     useNavMenu(icons);
@@ -54,7 +56,7 @@ const Nav = () => {
         {viewMode && (
           <div
             ref={navRef}
-            className="side-bar absolute right-28  py-2 max-sm:py-1 flex-col  bg-white max-sm:w-82 max-sm:left-0 max-sm:top-16 z-20 top-28 h-1/2 w-auto  flex"
+            className="side-bar absolute right-28 z-20  py-2 max-sm:py-1 flex-col border-r border-gray-300 shadow-md  bg-white max-sm:w-72 max-sm:left-0 max-sm:top-16  top-28 h-1/2 w-auto  flex"
           >
             <div className="relative flex px-3 h-20 border-b border-gray-300 w-full items-center gap-2  justify-start">
               <span className="bg-black text-white w-10 h-10 rounded-full text-center flex justify-center items-center font-normal">
@@ -68,7 +70,7 @@ const Nav = () => {
               </div>
             </div>
 
-            <div className="relative px-5 shadow-md">
+            <div className="relative px-5 ">
               {sideMenu.map(({ title, children }) => (
                 <div className="relative" key={title}>
                   <SideNav title={title} children={children} />

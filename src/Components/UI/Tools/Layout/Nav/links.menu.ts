@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 export default function useNavMenu(icons: any) {
   const [links] = useState([
     { id: 1, path: "", name: "Home" },
-    { id: 2, path: "invoice", name: "Invoice" },
+    { id: 2, path: "invoices", name: "Invoices" },
     { id: 3, path: "Clients", name: "Clients" },
   ]);
   const handleActive = (id: number) => {
@@ -18,14 +18,20 @@ export default function useNavMenu(icons: any) {
       children: [
         {
           id: 1,
-          title: "Invoice",
+          title: "Dashboard",
           path: "",
+          icon: icons[8],
+        },
+        {
+          id: 1,
+          title: "Invoices",
+          path: "invoices",
           icon: icons[0],
         },
         {
           id: 2,
-          title: "New Invoice",
-          path: "invoice",
+          title: "New invoice",
+          path: "new/invoice",
           icon: icons[1],
         },
         {
