@@ -7,9 +7,9 @@ import BreadCrumb from "../../Tools/Layout/BreadCrumb";
 const Create = () => {
   const { forms, senderInfo } = useModalController();
   const { id } = useParams();
-  const { invoices } = useAppSelector((state) => state.invoice);
+  const { draft } = useAppSelector((state) => state.invoice);
 
-  let itemsList = invoices.find(
+  let itemsList = draft.find(
     (invoice: any) => invoice.id == Number(id)
   )?.itemList;
 

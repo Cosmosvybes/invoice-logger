@@ -7,16 +7,13 @@ import Paginate from "../Layout/Paginate/Paginate";
 import InvoiceTable from "./InvoiceTable";
 
 const AccountDetails = () => {
-  const { invoices, sent, revenue } = useAppSelector((state) => state.invoice);
+  const { draft, sent, revenue } = useAppSelector((state) => state.invoice);
   const [invoicesPerPage] = useState(2);
   const [currrentPage, setCurrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
   let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
 
-  const currentInvoices = invoices.slice(
-    indexOfFirstInvoice,
-    indexOfLastInvoice
-  );
+  const currentInvoices = draft.slice(indexOfFirstInvoice, indexOfLastInvoice);
 
   const handlePaginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -36,7 +33,7 @@ const AccountDetails = () => {
               <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-auto items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-400 ">
                 <p className="text-gray-500 text-xl font-bold">All invoice</p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
-                  {invoices.length}
+                  {draft.length}
                 </h1>
               </div>
               <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-400">
@@ -74,7 +71,7 @@ const AccountDetails = () => {
           </div>
           {/* //invoice drfats */}
           <div className="relative w-full flex justify-end ">
-            {invoices.length == 0 ? (
+            {draft.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
               <div className="relative block border border-gray-400 py-2 rounded-lg w-1/3 max-sm:w-full">
@@ -86,7 +83,7 @@ const AccountDetails = () => {
                   ))}
                 </div>
                 <Paginate
-                  invoices={invoices}
+                  invoices={draft}
                   postsPerPage={invoicesPerPage}
                   paginateHandler={handlePaginate}
                 />

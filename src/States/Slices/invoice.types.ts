@@ -52,6 +52,7 @@ export interface Invoice {
   shippingAddress: string;
   updatedAt: string;
   createdAt: string;
+  status: string;
 }
 
 export interface item {
@@ -59,7 +60,7 @@ export interface item {
   item: Item;
 }
 export interface Invoices {
-  invoices: Invoice[];
+  draft: Invoice[];
   sent: [];
   revenue: number;
   staticForm: object | any;

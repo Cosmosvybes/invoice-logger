@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NavBtn from "./NavBtn";
 
-const InvoiceNav = () => {
+const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
   const [buttonData] = useState([
     { id: 1, text: "Sent" },
     { id: 2, text: "Draft" },
@@ -11,14 +11,17 @@ const InvoiceNav = () => {
   const [active, setActive] = useState(buttonData[0].id);
   return (
     <>
-      <div className="relative w-full border-b h-5 flex py-5 gap-10 max-sm:gap-14 justify-center items-center mt-5">
+      <div className="relative w-full border-b h-5 flex py-10 gap-10 max-sm:gap-14 justify-center items-center mt-5">
         {buttonData.map((nav) => (
           <div className="realtive" key={nav.id}>
             <NavBtn
               node={nav.text}
               id={nav.id}
               active={active}
-              func={() => setActive(nav.id)}
+              func={() => {
+                switchTab(nav.text);
+                setActive(nav.id);
+              }}
             />
           </div>
         ))}

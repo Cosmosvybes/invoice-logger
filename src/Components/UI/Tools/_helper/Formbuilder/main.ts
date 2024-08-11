@@ -22,11 +22,11 @@ export default function useTemplateController({ item }: FORM) {
   let invoiceInformation: any;
   //invoice state
 
-  const { invoices, staticForm } = useAppSelector((state) => state.invoice);
+  const {draft, staticForm } = useAppSelector((state) => state.invoice);
   if (id) {
-    invoiceInformation = invoices?.find((invoice) => invoice.id == id)!;
+    invoiceInformation =draft?.find((invoice) => invoice.id == id)!;
   } else {
-    invoiceInformation = invoices?.find(
+    invoiceInformation = draft?.find(
       (invoice) => invoice.id == localStorage.getItem("id")
     )!;
   }

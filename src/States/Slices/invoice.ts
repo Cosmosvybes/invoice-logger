@@ -26,7 +26,7 @@ export interface invoiceTotalUpdate {
   value: number;
 }
 const initialState: Invoices = {
-  invoices: [],
+  draft: [],
   sent: [],
   revenue: 0,
   staticForm: invoiceStaticValue,
@@ -38,13 +38,13 @@ const invoiceSlice = createSlice({
   reducers: {
     deleteInvoice: (state, action: PayloadAction<deletingItemId>) => {
       const { id }: deletingItemId = action.payload;
-      const invoice = state.invoices.find((inv) => inv.id == id);
-      state.invoices.splice(state.invoices.indexOf(invoice!), 1);
+      const invoice = state.draft.find((inv) => inv.id == id);
+      state.draft.splice(state.draft.indexOf(invoice!), 1);
     },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
       const { key, value, invoiceID } = action.payload;
-      let invoice: string | number | boolean | any = state.invoices.find(
+      let invoice: string | number | boolean | any = state.draft.find(
         (invoice) => invoice.id == invoiceID
       );
       invoice[key] = value;
@@ -70,12 +70,17 @@ const invoiceSlice = createSlice({
         hourCycle: "h24",
         hour12: true,
       });
-      state.invoices.push({ ...invoice, id: localStorage.getItem("id")! });
+      state.draft.push({
+        ...invoice,
+        id: localStorage.getItem("id")!,
+        status: "Awaiting",
+      });
     },
 
+    
     updateInvoiceItems: (state, action: PayloadAction<item>) => {
       const { id, item }: item = action.payload;
-      let invoice = state.invoices.find(
+      let invoice = state.draft.find(
         (invoice: { id: string | number }) => invoice.id == id
       );
       invoice!.itemList.push(item);
@@ -93,7 +98,7 @@ const invoiceSlice = createSlice({
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
       const { invoiceId, itemID }: itemToDelete = action.payload;
-      let invoiceItemList: Item[] = state.invoices.find(
+      let invoiceItemList: Item[] = state.draft.find(
         (invoice) => invoice.id == invoiceId
       )!.itemList!;
 
@@ -102,10 +107,8 @@ const invoiceSlice = createSlice({
       );
       let invoiceIndex = invoiceItemList!.indexOf(item);
       invoiceItemList!.splice(Number(invoiceIndex), 1);
-      let invoiceItem = state.invoices.find(
-        (invoice) => invoice.id == invoiceId
-      );
-      let invoice: Invoice = state.invoices.find(
+      let invoiceItem = state.draft.find((invoice) => invoice.id == invoiceId);
+      let invoice: Invoice = state.draft.find(
         (invoice) => invoice.id == invoiceId
       )!;
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
@@ -122,13 +125,13 @@ const invoiceSlice = createSlice({
 
     updateInvoiceTotal: (state, action: PayloadAction<invoiceTotalUpdate>) => {
       const { invoiceID, value }: invoiceTotalUpdate = action.payload;
-      let invoice = state.invoices.find((inv: Invoice) => inv.id == invoiceID);
+      let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceID);
       invoice!.TOTAL = value;
     },
 
     updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value }: taxAndDiscount = action.payload;
-      let invoice = state.invoices.find((inv: Invoice) => inv.id == invoiceId);
+      let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
       let subtotal = invoice!.itemList.reduce(
         (acc, curr) => acc + curr.amount,
         0
@@ -136,7 +139,7 @@ const invoiceSlice = createSlice({
       invoice!.Discount = value;
       invoice!.TOTAL =
         subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
-   
+
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "long",
@@ -149,7 +152,7 @@ const invoiceSlice = createSlice({
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value }: taxAndDiscount = action.payload;
-      let invoice = state.invoices.find((inv: Invoice) => inv.id == invoiceId);
+      let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
       let subtotal = invoice!.itemList.reduce(
         (acc, curr) => acc + curr.amount,
         0
@@ -157,7 +160,7 @@ const invoiceSlice = createSlice({
       invoice!.VAT = value;
       invoice!.TOTAL =
         subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
-  
+
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "long",
