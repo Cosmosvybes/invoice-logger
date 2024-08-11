@@ -40,13 +40,13 @@ export const forms = [
     type_: "date",
     name: "DateIssued",
     value: "",
-    placeholder: "Issued on",
+    placeholder: "Begin on",
   },
   {
     type_: "date",
     name: "DateDue",
     value: "",
-    placeholder: "Date Due",
+    placeholder: "Due on",
   },
   {
     type_: "text",
@@ -59,6 +59,12 @@ export const forms = [
     name: "Notes",
     value: "",
     placeholder: "Transaction  Notes",
+  },
+  {
+    type_: "text",
+    name: "shippingAddress",
+    value: "",
+    placeholder: "Shipping Address",
   },
   // {
   //   type_: "text",

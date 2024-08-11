@@ -12,7 +12,6 @@ import { SendFast } from "react-huge-icons/bulk";
 const Template = ({ reciepient, sender, item }: FORM) => {
   const {
     updateInvoiceDetails,
-    staticForm,
     inputs,
     addNewItem,
     updateValues,
@@ -92,10 +91,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       case "checkbox":
         return (
           <div
-            className="relative items-center gap-2 px-3 py-3 flex justify-start"
+            className="relative items-center  px-3 py-3 gap-1 flex justify-between"
             key={input.placeholder}
           >
-            <p className="text-gray-500">{input.placeholder}</p>
+            <p className="text-gray-500 inline">{input.placeholder}</p>
             <Input
               title="check"
               type="checkbox"
@@ -110,10 +109,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       case "date":
         return (
           <div
-            className="relative ml-3 items-center gap-1 py-3 flex justify-start"
+            className="relative ml-2 items-center gap-1 py-3 flex justify-start"
             key={index}
           >
-            <p className="text-gray-400 font-normal text-xl max-sm:text-sm">
+            <p className="text-gray-400 font-normal text-xl inline max-sm:text-sm">
               {input.placeholder}
             </p>
             <Input
@@ -145,9 +144,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   //   //?? ///////////////////////////////////////////////
 
   const ADDITEM = inputs.map((input: any) => (
-    <div className="relative block" key={input.id}>
+    <div className="relative block py-2" key={input.id}>
       <Input
-        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-md bg-inherit text-black  font-normal w-96 max-sm:w-full"
+        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-sm bg-gray-200 text-black  font-normal w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -160,7 +159,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       <Input
         className="px-2 py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-sm bg-inherit text-black  font-normal w-24  max-sm:w-full "
         type={input.type}
-        placeholder={input.name}
+        placeholder={input.placeholder}
         value={invoiceInformation[input.name]}
         onChange={(e) =>
           input.name == "Discount"
@@ -187,16 +186,16 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
       key={i}
     >
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
+      <p className="text-black text-center  font-normal text-xl max-sm:text-xs">
         {item.description}
       </p>
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
+      <p className="text-black text-center   font-normal text-xl max-sm:text-xs">
         {item.quantity}
       </p>
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
+      <p className="text-black  text-center  font-normal text-xl max-sm:text-xs">
         {item.unit_price}
       </p>
-      <p className="text-black  font-normal text-xl max-sm:text-xs">
+      <p className="text-black  text-center  font-normal text-xl max-sm:text-xs">
         {item.amount}
       </p>
       <TrashBent
@@ -225,7 +224,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
           <button
             onClick={() => {
-              console.log(staticForm);
+              // console.log(invoiceInformation);
               // dispatch(createInvoice({ ...invoice, TOTAL }));
 
               toast.success("Invoice added", { theme: "dark" });
@@ -248,17 +247,17 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         </Form>
         <div className="relative w-full flex border  flex-col gap-0.5">
           <div className="relative  bg-black items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-auto">
-            <p className="text-white  font-light px-2 text-xl max-sm:text-xs">
+            <p className="text-white text-center  font-light px-2 text-xl max-sm:text-xs">
               Description
             </p>
-            <p className="text-white font-light text-xl max-sm:text-xs">
+            <p className="text-white text-center  font-light text-xl max-sm:text-xs">
               Quantity
             </p>
-            <p className="text-white font-light text-xl max-sm:text-xs">
+            <p className="text-white text-center  font-light text-xl max-sm:text-xs">
               Unit price
             </p>
-            <p className="text-white font-light text-xl max-sm:text-xs">
-              Sub-Total
+            <p className="text-white text-center  font-light text-xl max-sm:text-xs">
+              Unit total
             </p>
           </div>
           {ITEMLIST}
@@ -267,7 +266,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         <div className="relative w-full flex justify-between items-center mt-2 gap-0.5">
           {ADDITEM}
           {addNew.map((btn) => (
-            <div className="relative h-12 w-auto " key={btn.text}>
+            <div className="relative h-12  w-auto" key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
             </div>
           ))}{" "}

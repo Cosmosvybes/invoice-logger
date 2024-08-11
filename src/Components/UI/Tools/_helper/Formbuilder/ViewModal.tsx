@@ -62,6 +62,11 @@ const ViewModal = ({
               <p className="text-black  font-normal">
                 Due Date - {data.DateDue}
               </p>
+              <p className="text-black  font-normal">
+                Payment information - {data.paymentInformation}
+              </p>
+              <p className="text-black  font-normal">Note - {data.Notes}</p>
+              <p className="text-black  font-normal">Shipping Address - {data.shippingAddress}</p>
             </div>
           </div>
           <div className="relative block mt-2">

@@ -37,12 +37,14 @@ export default function useTemplateController({ item }: FORM) {
       type: "number",
       value: "",
       name: "Discount",
+      placeholder: "Discount",
       id: 2,
     },
     {
       type: "number",
       value: "",
       name: "VAT",
+      placeholder: "VAT",
       id: 3,
     },
   ]);

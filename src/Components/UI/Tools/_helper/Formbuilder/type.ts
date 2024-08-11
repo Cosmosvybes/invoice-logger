@@ -47,4 +47,5 @@ export interface VAT_DISCOUNT {
   value: string | number;
   name: string;
   id: number;
+  placeholder: string;
 }

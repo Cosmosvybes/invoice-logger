@@ -49,6 +49,7 @@ export interface Invoice {
   Discount: number;
   Notes: string;
   paymentInformation: string;
+  shippingAddress: string;
 }
 
 export interface item {
