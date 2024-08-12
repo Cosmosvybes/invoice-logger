@@ -17,9 +17,9 @@ const NavLink = ({
     <>
       <Link
         onClick={() => activeCallback()}
-        className={`text-black w-28  text-center px-2 border-b  font-semibold transition duration-1000 border-black  py-3 hover:text-black ${
-          active == id && "bg-gray-200"
-        }  ${ active == id && "text-gray-900"} `    }
+        className={`text-black w-28  text-center px-2 border-b  font-semibold transition duration-1000   py-3 hover:text-black ${
+          active == id ? "border-black" : "border-none"
+        }  ${active == id && "text-gray-900"} `}
         to={`/${to}`}
       >
         {name}
