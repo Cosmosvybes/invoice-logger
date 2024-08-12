@@ -1,7 +1,6 @@
-
-
+import { CheckMarkCircle } from "react-huge-icons/outline";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
-import { MoreHorizontal } from "react-huge-icons/bulk";
+import { MoreHorizontal, LoadingDashed } from "react-huge-icons/bulk";
 
 const List = ({ currentData }: { currentData: Invoice[] }) => {
   return (
@@ -22,13 +21,13 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
               {invoice.Client}
             </p>
 
-            <p className="text-black bg-yellow-100 rounded-md max-sm:w-auto px-2 py-2 w-auto text-center  font-normal text-xl max-sm:text-sm">
-              {invoice.status}
+            <p className="text-black  rounded-md max-sm:w-auto px-2 py-2  text-center  w-auto font-normal text-xl max-sm:text-sm">
+              {invoice.status == "Awaiting" ? "Draft" : "Sent"}
             </p>
             <p className="text-black font-normal text-center text-xl max-sm:text-sm">
               ${invoice.TOTAL}
             </p>
-           
+
             <p className="text-black font-normal text-center text-xl max-sm:text-sm">
               {invoice.createdAt}
             </p>
