@@ -9,7 +9,7 @@ const Invoices = () => {
   const { currentData, handleInvoiceFilter } = useInvoiceController();
   return (
     <>
-      <div className="relative px-28 max-sm:px-0">
+      <div className="relative px-28 max-sm:px-0 overflow-x-scroll">
         <BreadCrumb useLink={true} title="Invoices" />
         <InvoiceNav switchTab={handleInvoiceFilter} />
         <InvoiceTable />

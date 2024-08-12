@@ -50,12 +50,10 @@ const invoiceSlice = createSlice({
       invoice[key] = value;
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         dayPeriod: "short",
         hour: "2-digit",
         minute: "2-digit",
-        hourCycle: "h24",
-        hour12: true,
       });
     },
 
@@ -63,12 +61,10 @@ const invoiceSlice = createSlice({
       let invoice: Invoice = action.payload;
       invoice.createdAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         dayPeriod: "short",
         hour: "2-digit",
         minute: "2-digit",
-        hourCycle: "h24",
-        hour12: true,
       });
       state.draft.push({
         ...invoice,
@@ -77,7 +73,6 @@ const invoiceSlice = createSlice({
       });
     },
 
-    
     updateInvoiceItems: (state, action: PayloadAction<item>) => {
       const { id, item }: item = action.payload;
       let invoice = state.draft.find(
@@ -87,12 +82,10 @@ const invoiceSlice = createSlice({
       invoice!.TOTAL += Number(item.amount);
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         dayPeriod: "short",
         hour: "2-digit",
         minute: "2-digit",
-        hourCycle: "h24",
-        hour12: true,
       });
     },
 
@@ -113,12 +106,10 @@ const invoiceSlice = createSlice({
       )!;
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         dayPeriod: "short",
         hour: "2-digit",
         minute: "2-digit",
-        hourCycle: "h24",
-        hour12: true,
       });
       invoiceItem!.TOTAL -= item.amount;
     },
@@ -142,12 +133,10 @@ const invoiceSlice = createSlice({
 
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         dayPeriod: "short",
         hour: "2-digit",
         minute: "2-digit",
-        hourCycle: "h24",
-        hour12: true,
       });
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
@@ -163,12 +152,10 @@ const invoiceSlice = createSlice({
 
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         dayPeriod: "short",
         hour: "2-digit",
         minute: "2-digit",
-        hourCycle: "h24",
-        hour12: true,
       });
     },
   },
