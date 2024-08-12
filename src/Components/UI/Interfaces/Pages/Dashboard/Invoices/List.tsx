@@ -1,6 +1,5 @@
-import { CheckMarkCircle } from "react-huge-icons/outline";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
-import { MoreHorizontal, LoadingDashed } from "react-huge-icons/bulk";
+import { MoreHorizontal } from "react-huge-icons/bulk";
 
 const List = ({ currentData }: { currentData: Invoice[] }) => {
   return (
