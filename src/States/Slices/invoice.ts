@@ -51,9 +51,6 @@ const invoiceSlice = createSlice({
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
       });
     },
 
@@ -62,9 +59,6 @@ const invoiceSlice = createSlice({
       invoice.createdAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
       });
       state.draft.push({
         ...invoice,
@@ -83,9 +77,6 @@ const invoiceSlice = createSlice({
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
       });
     },
 
@@ -107,9 +98,6 @@ const invoiceSlice = createSlice({
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
       });
       invoiceItem!.TOTAL -= item.amount;
     },
@@ -134,9 +122,6 @@ const invoiceSlice = createSlice({
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
       });
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
@@ -153,9 +138,6 @@ const invoiceSlice = createSlice({
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
       });
     },
   },
