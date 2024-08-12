@@ -14,7 +14,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
             key={invoice.id}
           >
             <p className="text-black font-normal text-xl max-sm:text-sm">
-              {String(invoice.id).slice(6, 14)}
+              {String(invoice.id).slice(6, 11)}
             </p>
             <p className="text-black font-normal text-center text-xl max-sm:text-sm">
               {invoice.Client}
