@@ -14,8 +14,8 @@ const NavBtn = ({
   return (
     <div>
       <Button
-        className={`text-black font-semibold text-2xl w-28 transition duration-500 max-sm:w-auto   mt-12 max-sm:mt-13 max-sm:text-xl border-b ${
-          active == id ? "border-black" : "border-gray-300"
+        className={`text-black font-semibold text-2xl w-28 transition duration-500 max-sm:w-auto  max-sm:mt-1 max-sm:text-sm border-b-2 ${
+          active == id ? "border-black" : "border-none"
         } `}
         onClick={() => func()}
       >

@@ -10,7 +10,7 @@ const InvoiceTable = () => {
             <th className="text-center w-20 max-sm:text-sm ">Client</th>
             <th className="text-center w-20  max-sm:text-sm">Status</th>
             <th className="text-center w-20  max-sm:text-sm ">Amount</th>
-            <th className="text-center w-20 max-sm:text-sm ">Modified At</th>
+            <th className="text-center w-20 max-sm:text-sm ">Updated</th>
             <th className="text-center w-20 max-sm:text-sm "></th>
           </tr>
         </thead>
