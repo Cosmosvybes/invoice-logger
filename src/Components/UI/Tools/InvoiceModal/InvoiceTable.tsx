@@ -6,13 +6,12 @@ const InvoiceTable = () => {
       <Table className="w-full mt-5 border-collapse">
         <thead className=" w-full ">
           <tr>
-            <th className="text-center w-20 ">S/N</th>
-            <th className="text-center w-20 ">Client</th>
-            <th className="text-center w-20 ">Status</th>
-            <th className="text-center w-20  ">Amount</th>
-            <th className="text-center w-20 ">Created</th>
-            <th className="text-center w-20  ">Modified</th>
-            <th className="text-center w-20  "></th>
+            <th className="text-center w-20 max-sm:text-sm ">S/N</th>
+            <th className="text-center w-20 max-sm:text-sm ">Client</th>
+            <th className="text-center w-20  max-sm:text-sm">Status</th>
+            <th className="text-center w-20  max-sm:text-sm ">Amount</th>
+            <th className="text-center w-20 max-sm:text-sm ">Modified At</th>
+            <th className="text-center w-20 max-sm:text-sm "></th>
           </tr>
         </thead>
       </Table>
