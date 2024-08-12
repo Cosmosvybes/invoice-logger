@@ -1,44 +1,46 @@
+import { Table } from "reactstrap";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
-import { MoreHorizontal } from "react-huge-icons/bulk";
+import { MoreVertical } from "react-huge-icons/bulk";
 
 const List = ({ currentData }: { currentData: Invoice[] }) => {
   return (
     <>
-      {" "}
-      <div className="relative overflow-x-scroll ">
-        {currentData.map((invoice, index) => (
-          <div
-            className={` ${
-              index % 2 == 0 ? "bg-gray-100" : "bg-gray-200"
-            } relative items-center grid grid-cols-7 py-3  overflow-x-visible  border-b px-2 border-gray-100  gap-2 max-sm:gap-2 w-auto max-sm:w-full`}
-            key={invoice.id}
-          >
-            <p className="text-black font-normal text-xl max-sm:text-sm">
-              {String(invoice.id).slice(6, 11)}
-            </p>
-            <p className="text-black font-normal text-center text-xl max-sm:text-sm">
-              {invoice.Client}
-            </p>
+      <Table className="w-full border-collapse overflow-x-auto">
+        <tbody>
+          {currentData.map((invoice, index) => (
+            <tr
+              className={` ${
+                index % 2 == 0 ? "bg-gray-100" : "bg-gray-200"
+              } py-4 px-3  `}
+              key={invoice.id}
+            >
+              <td className="text-black text-center font-normal py-4 w-20">
+                {String(invoice.id).slice(6, 11)}
+              </td>
+              <td className="text-black text-center font-normal py-4  w-20">
+                {invoice.Client}
+              </td>
 
-            <p className="text-black  rounded-md max-sm:w-auto px-2 py-2  text-center  w-auto font-normal text-xl max-sm:text-sm">
-              {invoice.status == "Awaiting" ? "Draft" : "Sent"}
-            </p>
-            <p className="text-black font-normal text-center text-xl max-sm:text-sm">
-              ${invoice.TOTAL}
-            </p>
+              <td className="text-black text-center  font-normal py-4 w-20">
+                {invoice.status == "Awaiting" ? "Draft" : "Sent"}
+              </td>
+              <td className="text-black text-center font-normal py-4  w-20">
+                ${invoice.TOTAL}
+              </td>
 
-            <p className="text-black font-normal text-center text-xl max-sm:text-sm">
-              {invoice.createdAt}
-            </p>
-            <p className="text-black font-normal text-center text-xl max-sm:text-sm">
-              {invoice.updatedAt}
-            </p>
-            <p className="text-black font-normal text-center text-xl max-sm:text-sm">
-              <MoreHorizontal className="text-5xl text-center " />{" "}
-            </p>
-          </div>
-        ))}
-      </div>
+              <td className="text-black text-center  font-normal py-4 w-20">
+                {invoice.createdAt}
+              </td>
+              <td className="text-black text-center  font-normal py-4 w-20">
+                {invoice.updatedAt}
+              </td>
+              <td className="text-black text-center  font-normal py-4 w-20">
+                <MoreVertical className="text-5xl" />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </>
   );
 };
