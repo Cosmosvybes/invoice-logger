@@ -57,7 +57,7 @@ const Nav = () => {
         {viewMode && (
           <div
             ref={navRef}
-            className="side-bar absolute right-28 z-20  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-72 max-sm:left-0 max-sm:top-16  top-28 h-1/2 w-auto  flex"
+            className="side-bar absolute right-28 z-20  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-72 max-sm:left-0 max-sm:top-16  top-28 h-auto w-auto  flex"
           >
             <div className="relative flex px-3 h-20 border-b border-gray-300 w-full items-center gap-2  justify-start">
               <span className="bg-black text-white w-10 h-10 rounded-full text-center flex justify-center items-center font-normal">
