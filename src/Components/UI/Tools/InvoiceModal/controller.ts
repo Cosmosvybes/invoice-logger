@@ -113,11 +113,45 @@ export const senderInfo = [
   },
 ];
 
+const newCLientsFormField = [
+  {
+    type: "text",
+    name: "Name",
+    value: "",
+    placeholder: "Client's name",
+  },
+  {
+    type: "text",
+    name: "Email",
+    value: "",
+    placeholder: "Email",
+  },
+  {
+    type: "text",
+    name: "Address",
+    value: "",
+    placeholder: "Address",
+  },
+  {
+    type: "text",
+    name: "City_Postal_State",
+    value: "",
+    placeholder: "City or Postal , State",
+  },
+  {
+    type: "text",
+    name: "Country",
+    value: "",
+    placeholder: "Country",
+  },
+];
+
 export default function useModalController() {
   let combinedForm = [...senderInfo, ...forms];
   return {
     forms,
     senderInfo,
     combinedForm,
+    newCLientsFormField,
   };
 }

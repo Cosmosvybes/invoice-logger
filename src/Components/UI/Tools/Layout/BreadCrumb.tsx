@@ -6,9 +6,11 @@ import { createInvoice } from "../../../../States/Slices/invoice";
 const BreadCrumb = ({
   useLink,
   title,
+  linkTitle,
 }: {
   title: string;
   useLink: boolean;
+  linkTitle: string;
 }) => {
   const { staticForm } = useAppSelector((state) => state.invoice);
   const dispatch = useAppDispatch();
@@ -36,12 +38,13 @@ const BreadCrumb = ({
 
       {useLink && (
         <Link
-          to={"/new/invoice"}
+          to={`/${linkTitle}`}
           onClick={() => handleNewInvoice()}
           className="bg-black h-16 max-sm:h-12 max-sm:text-sm font-normal flex justify-center items-center rounded-md text-gray-50 w-52 max-sm:w-32"
         >
           <p className="flex items-center justify-center text-white font-normal">
-            <PlusThin className="inline text-2xl" /> new invoice{" "}
+            <PlusThin className="inline text-2xl" /> new{" "}
+            {linkTitle == "client/new" ? "client" : "invoice"}
           </p>
         </Link>
       )}

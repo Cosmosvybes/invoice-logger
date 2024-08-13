@@ -11,7 +11,7 @@ const Invoices = () => {
   return (
     <>
       <div className="relative px-28 max-sm:px-0 overflow-x-scroll overflow-y-clip h-screen max-sm:h-auto">
-        <BreadCrumb useLink={true} title="Invoices" />
+        <BreadCrumb useLink={true} title="Invoices"  linkTitle="new/invoice"/>
         <InvoiceNav switchTab={handleInvoiceFilter} />
         <InvoiceTable />
         <Body currentData={currentData} />

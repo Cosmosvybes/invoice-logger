@@ -22,7 +22,6 @@ let invoiceStaticValue = combinedForm.reduce(
   { id: Date.now() }
 );
 
-
 export interface invoiceTotalUpdate {
   invoiceID: number;
   value: number;
@@ -73,7 +72,7 @@ const invoiceSlice = createSlice({
       state.draft.push({
         ...invoice,
         id: localStorage.getItem("id")!,
-        status: "Awaiting",
+        status: "Draft",
       });
     },
 

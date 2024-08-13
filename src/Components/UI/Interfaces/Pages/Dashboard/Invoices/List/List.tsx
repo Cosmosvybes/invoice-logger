@@ -27,7 +27,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
               key={invoice.id}
             >
               <td className="text-black text-center max-sm:text-sm font-normal py-4 w-20 max-sm:w-16 ">
-                {String(invoice.id).slice(6, 11)}
+                {String(invoice.id).slice(9, 16)}
               </td>
               <td className="text-black text-center max-sm:text-sm font-normal py-4  w-20 max-sm:w-16 ">
                 {invoice.Client}
@@ -41,7 +41,8 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
               </td>
 
               <td className="text-black text-center max-sm:text-sm   font-normal py-4 w-20 max-sm:w-16 ">
-                {invoice.updatedAt}
+                {String(invoice.updatedAt).length > 10 &&
+                  String(invoice.updatedAt).slice(0, 14) + "..."}
               </td>
               <td className="text-black text-center max-sm:text-sm   font-normal py-4 w-20 max-sm:w-16 ">
                 <button>
