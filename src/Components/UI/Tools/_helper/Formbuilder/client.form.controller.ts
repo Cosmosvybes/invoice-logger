@@ -2,6 +2,7 @@ import { useState } from "react";
 import useModalController from "../../InvoiceModal/controller";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import { add } from "../../../../../States/Slices/ClientSlice/clientSlice";
+import { toast } from "react-toastify";
 
 type FormValues = {
   [key: string]: string;
@@ -41,7 +42,8 @@ export default function useClientFormController() {
         id: Date.now(),
       })
     );
-    Object.keys(clientFormValues).map((name) => updateClientForm("", name)); //clear input values
+    Object.keys(clientFormValues).map((name) => updateClientForm("", name));
+    toast.success("New Client added",{theme:"light"}) //clear input values
   };
 
   return {

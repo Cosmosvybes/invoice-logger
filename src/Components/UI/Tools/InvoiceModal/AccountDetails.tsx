@@ -10,7 +10,7 @@ import Body from "../../Interfaces/Pages/Dashboard/Invoices/List/Body";
 const AccountDetails = () => {
   const { draft, sent, revenue } = useAppSelector((state) => state.invoice);
   const [invoicesPerPage] = useState(2);
-  
+
   const [currrentPage, setCurrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
   let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
@@ -21,7 +21,6 @@ const AccountDetails = () => {
     setCurrentPage(pageNumber);
   };
 
-  // const currentInvoices = ?
   return (
     <>
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">

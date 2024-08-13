@@ -38,7 +38,9 @@ const ClientFormBuilder = () => {
           Cancel
         </Button>
         <Button
-          onClick={() => handleAddNewClient()}
+          onClick={() => {
+            handleAddNewClient();
+          }}
           className="bg-black w-1/6 max-sm:w-auto max-sm:py-2 py-5 px-3 rounded-md text-white"
         >
           Add client

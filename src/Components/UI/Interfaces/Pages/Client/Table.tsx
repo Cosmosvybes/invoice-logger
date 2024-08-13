@@ -5,12 +5,19 @@ import Empty from "../Dashboard/Invoices/Empty";
 const Table_ = () => {
   const { clients, search, handleSearch } = useTableController();
 
+
+
+  
+
   const TABLE_BODY = clients
     .filter((user) =>
       search == ""
         ? clients
         : user.name.toLowerCase().includes(search.toLowerCase()) ||
-          String(user.id).includes(search)
+          String(user.id).includes(search) ||
+          user.address.toLowerCase().includes(search.toLowerCase()) ||
+          user.cityStatePostal.toLowerCase().includes(search.toLowerCase()) ||
+          user.country.toLowerCase().includes(search.toLowerCase())
     )
     .map((row, i) => (
       <tr key={i} className={`${i % 2 == 0 ? "bg-gray-100" : "bg-gray-200"}`}>
@@ -40,7 +47,7 @@ const Table_ = () => {
         <div className="relative flex justify-start max-sm:w-full h-auto w-full mt-5 max-sm:px-1 max-sm:mt-3">
           <Input
             className="w-1/4 max-sm:w-full border px-3 py-3 outline-none rounded-md"
-            placeholder="Search client name or ID"
+            placeholder="Search client name, ID, city or country"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
           />
