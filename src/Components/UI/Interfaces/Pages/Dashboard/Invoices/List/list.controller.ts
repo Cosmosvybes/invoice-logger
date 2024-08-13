@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { Invoice } from "../../../../../../../States/Slices/invoice.types";
 
-export default function useInvoiceListController() {
+export default function useInvoiceListController(invoices: Invoice[]) {
   const [currentRowDataID, setCurrentRowDataID] = useState<null | number>(null);
 
   const [showActions, setShowActions] = useState(false);
@@ -21,11 +22,28 @@ export default function useInvoiceListController() {
     };
   }, []);
 
+  const [listPerTable] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleNextList = (id: number) => {
+    setCurrentPage(id);
+  };
+
+  const lastInvoiceIndex = listPerTable * currentPage;
+  const firstInvoiceIndex = lastInvoiceIndex - listPerTable;
+  const currentInvoiceList = invoices.slice(
+    firstInvoiceIndex,
+    lastInvoiceIndex
+  );
+
   return {
     showActions,
     actionCard,
     setCurrentRowDataID,
     currentRowDataID,
     setShowActions,
+    listPerTable,
+    currentInvoiceList,
+    handleNextList,
   };
 }

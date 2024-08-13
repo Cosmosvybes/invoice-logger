@@ -21,6 +21,8 @@ let invoiceStaticValue = combinedForm.reduce(
   }),
   { id: Date.now() }
 );
+
+
 export interface invoiceTotalUpdate {
   invoiceID: number;
   value: number;

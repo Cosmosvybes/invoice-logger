@@ -10,6 +10,7 @@ import Body from "../../Interfaces/Pages/Dashboard/Invoices/List/Body";
 const AccountDetails = () => {
   const { draft, sent, revenue } = useAppSelector((state) => state.invoice);
   const [invoicesPerPage] = useState(2);
+  
   const [currrentPage, setCurrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
   let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
