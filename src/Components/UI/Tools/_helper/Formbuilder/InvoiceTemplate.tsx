@@ -64,16 +64,16 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
         <div className="relative w-full flex justify-between px-2 max-sm:px-2">
           <p className="text-slate-950 ">ID- {invoice.id}</p>{" "}
-          <h1 className="text-slate-800 text-2xl font-extrabold ">
+          <h1 className="text-slate-950 text-2xl font-extrabold ">
             ${invoice.TOTAL}
           </h1>
         </div>
         <div className="relative h-auto w-full flex text-sm flex-col gap-5  justify-between px-2">
-          <p className="text-slate-950 ">
+          <p className="text-slate-950 font-semibold ">
             Created At: {invoice.createdAt}
           </p>
 
-          <p className="text-slate-950">
+          <p className="text-slate-950  font-semibold">
             Last Updated: {invoice.updatedAt}
           </p>
         </div>
