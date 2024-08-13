@@ -36,20 +36,20 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
             className="absolute right-1 bottom-1  shadow-md   transition duration-500 flex justify-start gap-2  flex-col w-auto h-auto  bg-gray-50  text-center z-20"
           >
             <button
-              className="text-black hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
+              className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
               onClick={() => console.log(invoice)}
             >
               Send
             </button>
             <Link
               to={`/${"invoice/update"}/${invoice.id}`}
-              className="text-black hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
+              className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
             >
               Edit
             </Link>
             <button
               onClick={() => dispatch(deleteInvoice({ id: invoice.id }))}
-              className="text-black hover:bg-black hover:text-gray-50 text-xl text-center 0 font-light px-2 w-full"
+              className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center 0 font-light px-2 w-full"
             >
               Delete
             </button>
@@ -57,23 +57,23 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
         )}
         <div className="relative w-full flex justify-end">
           <MoreVertical
-            className="text-4xl text-black "
+            className="text-4xl text-slate-950 "
             onClick={() => setShowOptions(true)}
           />
         </div>
 
         <div className="relative w-full flex justify-between px-2 max-sm:px-2">
-          <p className="text-black font-normal">ID- {invoice.id}</p>{" "}
-          <h1 className="text-gray-500 text-2xl font-extrabold ">
+          <p className="text-slate-950 ">ID- {invoice.id}</p>{" "}
+          <h1 className="text-slate-800 text-2xl font-extrabold ">
             ${invoice.TOTAL}
           </h1>
         </div>
-        <div className="relative h-auto w-full flex text-sm flex-col  justify-between px-2">
-          <p className="text-black font-normal">
+        <div className="relative h-auto w-full flex text-sm flex-col gap-5  justify-between px-2">
+          <p className="text-slate-950 ">
             Created At: {invoice.createdAt}
           </p>
 
-          <p className="text-black font-normal">
+          <p className="text-slate-950">
             Last Updated: {invoice.updatedAt}
           </p>
         </div>

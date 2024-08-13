@@ -4,7 +4,7 @@ import AccountDetails from "./AccountDetails";
 const Account = () => {
   return (
     <>
-      <BreadCrumb useLink={true} title="Account" linkTitle="" />
+      <BreadCrumb useLink={true} title="Account" linkTitle="new/invoice" />
       <AccountDetails />
     </>
   );

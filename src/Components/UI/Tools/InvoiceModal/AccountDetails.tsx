@@ -27,19 +27,19 @@ const AccountDetails = () => {
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
         <div className="relative h-auto  w-full  max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-1  font-bold">
           <div className="w-full  mt-5 block relative">
-            <p className="text-black px-3 text-xl max-sm:text-sm font-light ">
+            <p className="text-slate-900 px-3 text-xl max-sm:text-sm font-light ">
               Overview
             </p>
 
             <div className="relative w-full grid gap-5 max-md:gap-5 py-5 px-1 grid-cols-3   max-sm:grid-cols-1">
               <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-auto items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-400 ">
-                <p className="text-gray-500 text-xl font-bold">All invoice</p>
+                <p className="text-slate-950 text-xl font-bold">All invoice</p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
                   {draft.length}
                 </h1>
               </div>
               <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-400">
-                <p className="text-gray-500 text-xl font-bold">
+                <p className="text-slate-950 text-xl font-bold">
                   Outgoing invoices
                 </p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
@@ -47,7 +47,7 @@ const AccountDetails = () => {
                 </h1>
               </div>
               <div className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-5 rounded-lg border border-gray-400">
-                <p className="text-gray-500 text-xl font-bold">Revenue</p>
+                <p className="text-slate-950 text-xl font-bold">Revenue</p>
                 <h1 className="text-black text-4xl max-sm:text-xl font-extrabold">
                   ${revenue}
                 </h1>

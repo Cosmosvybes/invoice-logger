@@ -28,9 +28,9 @@ const SideNav = ({ title, children }: Main) => {
   return (
     <>
       <div className="relative flex flex-col py-2  gap-2" key={title}>
-        <h6 className="font-bold text-gray-500 ml-1">{title}</h6>
+        <h6 className="font-bold text-gray-500 ml-1 mb-2">{title}</h6>
 
-        <div className="relative flex flex-col">
+        <div className="relative flex gap-7 flex-col">
           {children.map(({ title, path, icon }) => (
             <Link
               onClick={() =>

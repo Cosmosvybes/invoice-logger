@@ -49,12 +49,12 @@ const Table_ = () => {
         <Table className="w-full border-collapse border-b px-3  mt-5 max-sm:w-full">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Address</th>
-              <th>City</th>
-              <th>Country</th>
+              <th className="text-slate-800">ID</th>
+              <th className="text-slate-800">Name</th>
+              <th className="text-slate-800">Email</th>
+              <th className="text-slate-800">Address</th>
+              <th className="text-slate-800">City</th>
+              <th className="text-slate-800">Country</th>
             </tr>
           </thead>
           <tbody>{TABLE_BODY}</tbody>
