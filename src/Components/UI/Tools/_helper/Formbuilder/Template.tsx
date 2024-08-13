@@ -145,7 +145,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block py-2" key={input.id}>
       <Input
-        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-sm bg-gray-200 border border-black text-black  font-normal w-96 max-sm:w-full"
+        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -154,11 +154,14 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     </div>
   ));
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
-    <div className="relative  max-sm:px-0 flex gap-1 items-center " key={input.id}>
+    <div
+      className="relative   max-sm:px-0 flex  items-center "
+      key={input.id}
+    >
       <Input
-        className=" py-2 text-xl max-sm:text-sm bg-gray-300 max-md:text-md  outline-none rounded-sm text-black  font-normal w-28  max-sm:w-24"
+        className=" py-2 text-xl text-center max-sm:text-sm bg-gray-200 max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-28"
         type={input.type}
-        placeholder={input.placeholder}
+        placeholder={`${input.placeholder} %`}
         value={invoiceInformation[input.name]}
         onChange={(e) =>
           input.name == "Discount"
@@ -176,7 +179,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               )
         }
       />
-      <p className="text-gray-900 text-xl inline">%</p>
+      {/* <p className="text-gray-900 text-xl inline">%</p> */}
     </div>
   ));
 
@@ -273,7 +276,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         <hr className="w-full border-gray-300" />
 
         <div className="relative w-full flex items-center justify-start py-2">
-          <div className="relative  w-1/3 max-sm:w-full  flex justify-start  items-center  gap-0.5">
+          <div className="relative  w-1/3 max-sm:w-full  flex justify-start  items-center  gap-3">
             {VAT_DISCOUNT_INPUT}
           </div>
         </div>
