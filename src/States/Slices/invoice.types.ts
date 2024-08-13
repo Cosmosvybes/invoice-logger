@@ -61,7 +61,9 @@ export interface item {
 }
 export interface Invoices {
   draft: Invoice[];
-  sent: [];
+  sent: Invoice[];
+  overdue: Invoice[];
+  paid: Invoice[];
   revenue: number;
   staticForm: object | any;
 }

@@ -6,6 +6,7 @@ const Account = () => {
     <>
       <BreadCrumb useLink={true} title="Account" />
       <AccountDetails />
+      
     </>
   );
 };

@@ -5,6 +5,7 @@ import InvoiceTemplate from "../_helper/Formbuilder/InvoiceTemplate";
 import { useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
 import InvoiceTable from "./InvoiceTable";
+import Body from "../../Interfaces/Pages/Dashboard/Invoices/List/Body";
 
 const AccountDetails = () => {
   const { draft, sent, revenue } = useAppSelector((state) => state.invoice);
@@ -106,6 +107,7 @@ const AccountDetails = () => {
             </Link>{" "}
           </div>
           <InvoiceTable />
+          <Body currentData={sent} />
         </div>
       </div>
     </>

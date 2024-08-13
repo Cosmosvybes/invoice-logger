@@ -1,8 +1,9 @@
 import InvoiceTable from "../../../../Tools/InvoiceModal/InvoiceTable";
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
-import Empty from "./Empty";
+
 import InvoiceNav from "./InvoiceNav";
-import List from "./List/List";
+import Body from "./List/Body";
+
 import useInvoiceController from "./invoice.controller";
 
 const Invoices = () => {
@@ -13,14 +14,7 @@ const Invoices = () => {
         <BreadCrumb useLink={true} title="Invoices" />
         <InvoiceNav switchTab={handleInvoiceFilter} />
         <InvoiceTable />
-
-        <div className="relative h-screen ">
-          {currentData.length == 0 ? (
-            <Empty />
-          ) : (
-            <List currentData={currentData} />
-          )}
-        </div>
+        <Body currentData={currentData} />
       </div>
     </>
   );

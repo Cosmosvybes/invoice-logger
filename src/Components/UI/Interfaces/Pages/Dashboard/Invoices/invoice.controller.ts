@@ -3,7 +3,9 @@ import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
 //custom hook
 export default function useInvoiceController() {
-  const { draft, sent } = useAppSelector((state) => state.invoice);
+  const { draft, sent, paid, overdue } = useAppSelector(
+    (state) => state.invoice
+  );
   const [currentData, setFilter] = useState<Invoice[]>(sent);
 
   //filter func
@@ -14,6 +16,12 @@ export default function useInvoiceController() {
         break;
       case "Sent":
         setFilter(sent);
+        break;
+      case "Paid":
+        setFilter(paid);
+        break;
+      case "Overdue":
+        setFilter(overdue);
         break;
       default:
         break;

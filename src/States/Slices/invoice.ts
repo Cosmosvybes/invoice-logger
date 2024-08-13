@@ -28,6 +28,8 @@ export interface invoiceTotalUpdate {
 const initialState: Invoices = {
   draft: [],
   sent: [],
+  overdue: [],
+  paid: [],
   revenue: 0,
   staticForm: invoiceStaticValue,
 };
