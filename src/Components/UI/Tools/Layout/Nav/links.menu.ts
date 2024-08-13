@@ -43,7 +43,7 @@ export default function useNavMenu(icons: any) {
         {
           id: 1,
           title: "Add Client",
-          path: "clients",
+          path: "client/new",
           icon: icons[3],
         },
       ],
