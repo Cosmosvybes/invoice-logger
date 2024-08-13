@@ -14,23 +14,23 @@ const Table_ = () => {
     )
     .map((row, i) => (
       <tr key={i} className={`${i % 2 == 0 ? "bg-gray-100" : "bg-gray-200"}`}>
-        <td className="text-center max-sm:text-sm   py-4">
+        <td className="text-center max-sm:text-sm gap-2   py-4">
           {String(row.id).slice(10, 15)}
         </td>
-        <td className="text-center max-sm:text-sm  py-4">{row.name}</td>
-        <td className="text-center max-sm:text-sm  py-4">
+        <td className="text-center max-sm:text-xs  py-4">{row.name}</td>
+        <td className="text-center max-sm:text-xs  py-4">
           {String(row.email).length > 10 &&
             String(row.email).slice(0, 9) + "..."}
         </td>
-        <td className="text-center max-sm:text-sm  py-4">
+        <td className="text-center max-sm:text-xs  py-4">
           {String(row.address).length > 10
-            ? String(row.address).slice(0, 10) + "..."
+            ? String(row.address).slice(0, 9) + "..."
             : row.address}
         </td>
-        <td className="text-center max-sm:text-sm  py-4">
+        <td className="text-center max-sm:text-xs  py-4">
           {row.cityStatePostal}
         </td>
-        <td className="text-center max-sm:text-sm  py-4">{row.country}</td>
+        <td className="text-center max-sm:text-xs  py-4">{row.country}</td>
       </tr>
     ));
 
