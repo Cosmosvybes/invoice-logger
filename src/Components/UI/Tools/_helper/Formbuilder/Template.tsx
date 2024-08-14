@@ -117,7 +117,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               title="date"
               type="date"
-              className="max-sm:w-auto bg-inherit px-3 font-bold  text-black border-none py-1"
+              className="max-sm:w-auto bg-inherit px-3 font-bold  text-slate-400 border-none py-1"
               value={invoiceInformation[input.name]}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
