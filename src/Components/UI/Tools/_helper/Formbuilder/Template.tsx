@@ -118,7 +118,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               title="date"
               type="date"
-              className=" bg-inherit font-bold border  max-sm:text-xs text-slate-400 border-none"
+              className=" bg-inherit px-1 font-bold border  max-sm:text-xs text-slate-400 border-none"
               value={invoiceInformation[input.name]}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
@@ -242,7 +242,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           </Form>
         </div>
 
-        <Form className="grid grid-cols-3 max-md:grid-cols-1 max-sm:grid-cols-2 w-full  gap-2 max-sm:gap-2">
+        <Form className="grid grid-cols-3 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-2 max-sm:gap-2">
           {CUSTOMER_}
         </Form>
         <div className="relative w-full flex border  flex-col gap-0.5">
