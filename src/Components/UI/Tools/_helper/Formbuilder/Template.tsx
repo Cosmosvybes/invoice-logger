@@ -50,7 +50,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       case "checkbox":
         return (
           <div
-            className="relative items-center gap-1 py-3 flex justify-start"
+            className="relative items-center gap-1 py-3 flex justify-start max-sm:text-xs"
             key={index}
           >
             <strong className="text-gray-500">{name}</strong>
@@ -75,7 +75,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               title="check"
               type="text"
-              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
+              className="px-2 py-3 text-xl font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
               value={invoiceInformation[name]}
               placeholder={placeholder}
               onChange={(e) => updateInvoiceDetails(e.target.value, name)}
@@ -97,7 +97,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               title="check"
               type="checkbox"
-              className="max-sm:w-auto"
+              className="max-sm:w-auto max-sm:text-xs"
               value={invoiceInformation[input.name]}
               onChange={(e) =>
                 updateInvoiceDetails(e.currentTarget.checked, input.name)
@@ -108,27 +108,27 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       case "date":
         return (
           <div
-            className="relative ml-2 max-sm:ml-0 max-md:items-start max-md:ml-0 gap-1 py-3 flex flex-col items-center justify-start"
+            className="relative  ml-2 max-sm:ml-0 max-md:items-start max-md:ml-0 gap-1 flex flex-col items-center justify-start"
             key={index}
           >
-           
+            {" "}
+            <p className="text-gray-400 font-normal px-2 text-xl inline max-sm:text-sm">
+              {input.placeholder}
+            </p>
             <Input
               title="date"
               type="date"
-              className=" bg-inherit px-1 font-bold border  text-slate-400 border-none py-1"
+              className=" bg-inherit font-bold border  max-sm:text-xs text-slate-400 border-none"
               value={invoiceInformation[input.name]}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
-             <p className="text-gray-400 font-normal text-xl inline max-sm:text-sm">
-              {input.placeholder}
-            </p>
           </div>
         );
       default:
         return (
           <div className="relative" key={index}>
             <Input
-              className="px-2 py-3 text-xl font-normal outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
+              className="px-2 py-3 text-xl font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
               type="text"
               value={invoiceInformation[input.name]}
               placeholder={input.placeholder}
@@ -146,7 +146,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block py-2" key={input.id}>
       <Input
-        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -155,12 +155,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     </div>
   ));
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
-    <div
-      className="relative   max-sm:px-0 flex  items-center "
-      key={input.id}
-    >
+    <div className="relative   max-sm:px-0 flex  items-center " key={input.id}>
       <Input
-        className=" py-2 text-xl text-center max-sm:text-sm bg-gray-200 max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-28"
+        className=" py-2 text-xl text-center max-sm:text-xs  bg-gray-200 max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-28"
         type={input.type}
         placeholder={`${input.placeholder} %`}
         value={invoiceInformation[input.name]}
@@ -218,7 +215,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           />
         )}
 
-        <div className="relative flex justify-end gap-2  items-center px-0 h-14 mb-4">
+        <div className="relative flex justify-end gap-5  items-center px-0 h-14 mb-4">
           {btns.map((btn) => (
             <div className="relative h-14 w-auto" key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
@@ -232,7 +229,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
               // toast.success("Invoice added", { theme: "dark" });
             }}
-            className="w-44 h-full max-sm:w-28 shadow-md border border-black  text-center flex justify-center items-center transition duration-500 px-2  text-gray-black text-sm font-normal rounded-md "
+            className="w-44 h-full max-sm:w-28 shadow-md border border-black  text-center flex justify-center items-center transition duration-500 px-2 mr-5  text-gray-black text-sm font-normal rounded-md "
           >
             <SendFast className="text-4xl  mt-0.5 inline text-black " />
             SEND
