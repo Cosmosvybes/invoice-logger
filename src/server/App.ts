@@ -7,7 +7,6 @@
 //   collection,
 // } from "firebase/firestore";
 
-
 // const firebaseConfig = {
 //   apiKey: "AIzaSyBjFopa9GEVKbRQlMSNZ6WTO6Sr4g155UY",
 //   authDomain: "etherbill-4e92b.firebaseapp.com",
@@ -21,4 +20,5 @@
 // const db = getFirestore();
 // const colRef = collection(db, "users");
 
-// // export function 
+// // export function
+export default {};
