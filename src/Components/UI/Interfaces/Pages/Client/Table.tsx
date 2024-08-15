@@ -5,7 +5,7 @@ import Empty from "../Dashboard/Invoices/Empty";
 import Paginate from "./Paginate";
 
 import useClientDataController from "./client.controller";
-import { FilterEnable, FilterTwoLineVertical } from "react-huge-icons/bulk";
+import { FilterTwoLineVertical } from "react-huge-icons/bulk";
 const Table_ = () => {
   const { clients, search, handleSearch } = useTableController();
 
