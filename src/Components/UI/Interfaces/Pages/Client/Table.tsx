@@ -5,6 +5,7 @@ import Empty from "../Dashboard/Invoices/Empty";
 import Paginate from "./Paginate";
 
 import useClientDataController from "./client.controller";
+import { FilterEnable, FilterTwoLineVertical } from "react-huge-icons/bulk";
 const Table_ = () => {
   const { clients, search, handleSearch } = useTableController();
 
@@ -74,13 +75,14 @@ const Table_ = () => {
   return (
     <>
       <div className="relative max-sm:w-full">
-        <div className="relative flex justify-start max-sm:w-full h-auto w-full mt-5 max-sm:px-1 max-sm:mt-3">
+        <div className="relative flex justify-start items-center gap-3 max-sm:w-full h-auto w-full mt-5 max-sm:px-1 max-sm:mt-3">
+          <FilterTwoLineVertical className="text-4xl" />
           <Input
             className="w-1/4 max-sm:w-full border px-3 py-3 outline-none rounded-md"
             placeholder="Search client name, ID, city or country"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-          />
+          />{" "}
         </div>
 
         <Table className="w-full border-collapse border-b px-3  mt-5 max-sm:w-full">

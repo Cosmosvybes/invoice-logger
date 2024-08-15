@@ -108,19 +108,20 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       case "date":
         return (
           <div
-            className="relative ml-2 items-center gap-1 py-3 flex justify-start"
+            className="relative ml-2 max-sm:ml-0 max-md:items-start max-md:ml-0 gap-1 py-3 flex flex-col items-center justify-start"
             key={index}
           >
-            <p className="text-gray-400 font-normal text-xl inline max-sm:text-sm">
-              {input.placeholder}
-            </p>
+           
             <Input
               title="date"
               type="date"
-              className="max-sm:w-auto bg-inherit px-3 font-bold  text-slate-400 border-none py-1"
+              className=" bg-inherit px-1 font-bold border  text-slate-400 border-none py-1"
               value={invoiceInformation[input.name]}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
+             <p className="text-gray-400 font-normal text-xl inline max-sm:text-sm">
+              {input.placeholder}
+            </p>
           </div>
         );
       default:
@@ -145,7 +146,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block py-2" key={input.id}>
       <Input
-        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md  outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-sm:w-full"
+        className="px-2 py-3 text-xl max-sm:text-sm max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
@@ -209,7 +210,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
 
   return (
     <>
-      <section className="flex bg-white relative transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
+      <section className="flex bg-white relative  transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
         {viewMode && (
           <ViewModal
             data={{ ...invoiceInformation }}
@@ -217,9 +218,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           />
         )}
 
-        <div className="relative flex justify-end gap-2  items-center px-2 h-14 mb-4">
+        <div className="relative flex justify-end gap-2  items-center px-0 h-14 mb-4">
           {btns.map((btn) => (
-            <div className="relative h-14 w-auto " key={btn.text}>
+            <div className="relative h-14 w-auto" key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
             </div>
           ))}
@@ -244,11 +245,11 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           </Form>
         </div>
 
-        <Form className="grid grid-cols-3 max-sm:grid-cols-2 w-full  gap-2 max-sm:gap-2">
+        <Form className="grid grid-cols-3 max-md:grid-cols-1 max-sm:grid-cols-2 w-full  gap-2 max-sm:gap-2">
           {CUSTOMER_}
         </Form>
         <div className="relative w-full flex border  flex-col gap-0.5">
-          <div className="relative  bg-black items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-auto">
+          <div className="relative  bg-black items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-full">
             <p className="text-white text-center  font-light px-2 text-xl max-sm:text-xs">
               Description
             </p>
@@ -265,10 +266,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           {ITEMLIST}
         </div>
 
-        <div className="relative w-full flex justify-between items-center mt-2 gap-1">
+        <div className="relative w-full max-md:grid max-md:grid-cols-2 max-sm:grid-cols-2 py-2 flex justify-between items-center mt-2 gap-1">
           {ADDITEM}
           {addNew.map((btn) => (
-            <div className="relative h-12  w-auto" key={btn.text}>
+            <div className="relative h-12 max-md:w-full w-auto" key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
             </div>
           ))}{" "}
@@ -282,8 +283,8 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         </div>
         <hr className="w-full border-gray-300" />
 
-        <div className="relative w-full flex justify-end   max-sm:grid grid-cols-1 max-sm:px-0 items-center">
-          <div className="relative grid grid-cols-1 items-center w-1/2 max-sm:w-full  gap-2">
+        <div className="relative w-full flex justify-end  max-md:w-full  max-sm:grid grid-cols-1 max-sm:px-0 items-center">
+          <div className="relative grid grid-cols-1 items-center w-1/2 max-md:w-full max-sm:w-full  gap-2">
             <div className="relative flex justify-between items-center max-sm:w-full">
               <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
                 discount

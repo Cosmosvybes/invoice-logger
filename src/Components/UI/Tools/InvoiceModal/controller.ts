@@ -36,18 +36,7 @@ export const forms = [
     value: "",
     placeholder: "Additional Information",
   },
-  {
-    type_: "date",
-    name: "DateIssued",
-    value: "",
-    placeholder: "Begin on",
-  },
-  {
-    type_: "date",
-    name: "DateDue",
-    value: "",
-    placeholder: "Due on",
-  },
+
   {
     type_: "text",
     name: "paymentInformation",
@@ -65,6 +54,18 @@ export const forms = [
     name: "shippingAddress",
     value: "",
     placeholder: "Shipping Address",
+  },
+  {
+    type_: "date",
+    name: "DateIssued",
+    value: "",
+    placeholder: "Begin on",
+  },
+  {
+    type_: "date",
+    name: "DateDue",
+    value: "",
+    placeholder: "Due on",
   },
   // {
   //   type_: "text",

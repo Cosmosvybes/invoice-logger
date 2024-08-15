@@ -5,6 +5,7 @@ import Create from "../UI/Interfaces/Pages/Create";
 import Invoices from "../UI/Interfaces/Pages/Dashboard/Invoices/Invoices";
 import ClientPage from "../UI/Interfaces/Pages/Client/ClientPage";
 import AddClient from "../UI/Interfaces/Pages/Client/AddClient";
+import Profile from "../UI/Interfaces/Pages/Profile/Profile";
 
 const _Routes = () => {
   return (
@@ -16,6 +17,7 @@ const _Routes = () => {
         <Route path="/new/invoice" element={<Create />}></Route>
         <Route path="/clients" element={<ClientPage />}></Route>
         <Route path="/client/new" element={<AddClient />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
         <Route path="/invoice/update/:id" element={<Create />}></Route>
       </Routes>
     </>
