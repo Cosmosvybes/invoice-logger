@@ -27,7 +27,7 @@ const ClientFormBuilder = () => {
       <div className="relative block px-4 max-sm:text-sm mt-2">
         <p>Adding a client makes it easy to send them invoice.</p>
       </div>
-      <div className="relative px-4  grid grid-cols-2 gap-7 mt-5 max-sm:grid-cols-1 ">
+      <div className="relative px-4  grid grid-cols-1 gap-7 mt-5 max-sm:grid-cols-1 ">
         {CLIENT_FORM}
       </div>
       <div className="relative flex mt-4  gap-3  px-4 w-1/2 max-sm:w-full max-md:w-full justify-start  max-sm:justify-end">

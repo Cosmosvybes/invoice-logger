@@ -15,7 +15,7 @@ const Create = () => {
 
   return (
     <>
-      <div className="relative px-28 max-sm:px-0 ">
+      <div className="relative px-28  max-sm:px-0 max-md:w-full ">
         <BreadCrumb useLink={false} title={"New invoice"} linkTitle="invoice" />
         <Template reciepient={forms} sender={senderInfo} item={itemsList} />
       </div>
