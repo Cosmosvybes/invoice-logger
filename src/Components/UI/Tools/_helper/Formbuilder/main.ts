@@ -52,6 +52,10 @@ export default function useTemplateController({ item }: FORM) {
 
   //form vfied values
   const dispatch = useAppDispatch(); //state dispatcher
+
+
+
+  //
   const [inputs] = useState<ItemsType[]>([
     //invoice items formFields
     {
@@ -81,10 +85,15 @@ export default function useTemplateController({ item }: FORM) {
     },
   ]);
 
+
+  
+  //
   let reducerVal: object = inputs.reduce(
     (acc, curr) => ({ ...acc, [curr.name]: curr.value }), // invoice formFields value
     {}
   );
+
+
 
   const [items, setItems]: any = useState<object>(reducerVal); //a single item object with amount, description and its unit price
   const [itemList, setItem] = useState<(typeof items)[]>([]); //list of products/ or items of the invoice

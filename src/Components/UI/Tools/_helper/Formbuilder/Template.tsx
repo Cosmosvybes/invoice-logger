@@ -139,21 +139,47 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     }
   });
 
-  //   //?? ///////////////////////////////////////////////
+  ////?? ///////////////////////////////////////////////
   // ITEM MODAL
-  //   //?? ///////////////////////////////////////////////
+  ////?? ///////////////////////////////////////////////
 
   const ADDITEM = inputs.map((input: any) => (
     <div className="relative block py-2" key={input.id}>
+
+       <Input
+        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+        type={input.type}
+        placeholder={input.name}
+        value={input.name}
+        // onChange={(e) => updateValues(e.target.value, input.name)}
+      />
       <Input
+        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+        type={input.type}
+        placeholder={input.name}
+        value={items[input.name]}
+        // onChange={(e) => updateValues(e.target.value, input.name)}
+      />
+       <Input
         className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
         type={input.type}
         placeholder={input.name}
         value={items[input.name]}
         onChange={(e) => updateValues(e.target.value, input.name)}
       />
+       <Input
+        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+        type={input.type}
+        placeholder={input.name}
+        value={items[input.name]}
+        onChange={(e) => updateValues(e.target.value, input.name)}
+      />
+
     </div>
   ));
+
+
+
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
     <div className="relative   max-sm:px-0 flex  items-center " key={input.id}>
       <Input
