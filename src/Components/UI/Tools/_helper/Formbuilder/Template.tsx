@@ -182,7 +182,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           <button
             onClick={() => {
               console.log(invoiceInformation);
-              // dispatch(createInvoice({ ...invoice, TOTAL }));
             }}
             className="w-44 h-full mb-2 max-sm:w-28 shadow-md border border-gray-50  text-center flex justify-center items-center transition duration-500 px-2 mr-5  text-gray-black text-sm font-normal rounded-md "
           >
