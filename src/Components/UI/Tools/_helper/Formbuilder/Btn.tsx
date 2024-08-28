@@ -13,7 +13,7 @@ const Btn = ({
     <>
       <Button
         onClick={() => callback()}
-        className="w-44 h-full max-sm:w-28 max-md:w-auto rounded-md  bg-black text-gray-50  text-center flex justify-center items-center transition duration-500 px-2  max-sm:text-xs text-gray-black text-sm font-normal"
+        className="w-44 h-12 max-sm:w-28 max-md:w-auto rounded-md  bg-black text-gray-50  text-center flex justify-center items-center transition duration-500 px-2  max-sm:text-xs text-gray-black text-sm font-normal"
       >
         {icon}
         {text}

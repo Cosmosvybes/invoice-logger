@@ -9,11 +9,11 @@ import {
   updateInvoiceInformation,
   updateDiscount,
   updateVAT,
-
 } from "../../../../../States/Slices/invoice";
 
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
+import { Item } from "../../../../../States/Slices/invoice.types";
 
 export default function useTemplateController({ item }: FORM) {
   // invoice id from req.params
@@ -23,15 +23,16 @@ export default function useTemplateController({ item }: FORM) {
   let invoiceInformation: any;
   //invoice state
 
-  const {draft, staticForm } = useAppSelector((state) => state.invoice);
+  const { draft, staticForm } = useAppSelector((state) => state.invoice);
   if (id) {
-    invoiceInformation =draft?.find((invoice) => invoice.id == id)!;
+    invoiceInformation = draft?.find((invoice) => invoice.id == id)!;
   } else {
     invoiceInformation = draft?.find(
       (invoice) => invoice.id == localStorage.getItem("id")
     )!;
   }
 
+  //
   const [tax_discount_input] = useState<VAT_DISCOUNT[]>([
     //invoice discounts form fields
     {
@@ -52,8 +53,6 @@ export default function useTemplateController({ item }: FORM) {
 
   //form vfied values
   const dispatch = useAppDispatch(); //state dispatcher
-
-
 
   //
   const [inputs] = useState<ItemsType[]>([
@@ -85,15 +84,11 @@ export default function useTemplateController({ item }: FORM) {
     },
   ]);
 
-
-  
   //
   let reducerVal: object = inputs.reduce(
     (acc, curr) => ({ ...acc, [curr.name]: curr.value }), // invoice formFields value
     {}
   );
-
-
 
   const [items, setItems]: any = useState<object>(reducerVal); //a single item object with amount, description and its unit price
   const [itemList, setItem] = useState<(typeof items)[]>([]); //list of products/ or items of the invoice
@@ -210,9 +205,9 @@ export default function useTemplateController({ item }: FORM) {
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
 
-
-
-
+  const [products, setProducts] = useState<Item[]>([
+    ...invoiceInformation.itemList,
+  ]);
 
   return {
     setItem,
@@ -236,5 +231,7 @@ export default function useTemplateController({ item }: FORM) {
     updateDiscount,
     updateVAT,
     updatedBalance,
+    products,
+    setProducts,
   };
 }

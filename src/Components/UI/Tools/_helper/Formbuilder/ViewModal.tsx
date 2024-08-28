@@ -84,12 +84,15 @@ const ViewModal = ({
             <div className="relative">
               <div className="relative flex-col flex">
                 {data.itemList?.map(
-                  ({ description, amount, unit_price, quantity }, i) => (
+                  (
+                    { description, unitPrice, unitTotal, quantity },
+                    i
+                  ) => (
                     <div className="relative grid grid-cols-4 gap-1" key={i}>
                       <p className="text-black  font-normal">{description}</p>
                       <p className="text-black  font-normal">{quantity}</p>
-                      <p className="text-black  font-normal">{unit_price}</p>
-                      <p className="text-black  font-normal">{amount}</p>
+                      <p className="text-black  font-normal">{unitPrice}</p>
+                      <p className="text-black  font-normal">{unitTotal}</p>
                     </div>
                   )
                 )}

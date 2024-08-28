@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
 import {
   deletingItemId,
@@ -9,6 +8,7 @@ import {
   item,
   itemToDelete,
   keyValue,
+  productKeyValue,
   taxAndDiscount,
 } from "./invoice.types";
 
@@ -76,13 +76,28 @@ const invoiceSlice = createSlice({
       });
     },
 
+    addItem: (state, action: PayloadAction<productKeyValue>) => {
+      const { key, value, index, id }: productKeyValue = action.payload;
+      let invoice = state.draft.find((invoice) => invoice.id == id);
+      invoice!.itemList[index][key] = value;
+      const total =
+        Number(invoice!.itemList[index].unitPrice) *
+        Number(invoice!.itemList[index].quantity);
+      invoice!.itemList[index].unitTotal = total;
+      const total_ = invoice!.itemList.reduce(
+        (acc, curr) => acc + curr.unitTotal,
+        0
+      );
+      invoice!.TOTAL = Number(total_);
+    },
+
     updateInvoiceItems: (state, action: PayloadAction<item>) => {
       const { id, item }: item = action.payload;
       let invoice = state.draft.find(
         (invoice: { id: string | number }) => invoice.id == id
       );
       invoice!.itemList.push(item);
-      invoice!.TOTAL += Number(item.amount);
+      invoice!.TOTAL += Number(item.unitTotal);
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
@@ -97,12 +112,13 @@ const invoiceSlice = createSlice({
       let invoiceItemList: Item[] = state.draft.find(
         (invoice) => invoice.id == invoiceId
       )!.itemList!;
-
       let item: any = invoiceItemList?.find(
         (data: Item) => data!.itemID == itemID
       );
       let invoiceIndex = invoiceItemList!.indexOf(item);
       invoiceItemList!.splice(Number(invoiceIndex), 1);
+
+      //
       let invoiceItem = state.draft.find((invoice) => invoice.id == invoiceId);
       let invoice: Invoice = state.draft.find(
         (invoice) => invoice.id == invoiceId
@@ -114,7 +130,7 @@ const invoiceSlice = createSlice({
         hour: "2-digit",
         minute: "2-digit",
       });
-      invoiceItem!.TOTAL -= item.amount;
+      invoiceItem!.TOTAL -= item.unitTotal;
     },
 
     updateInvoiceTotal: (state, action: PayloadAction<invoiceTotalUpdate>) => {
@@ -122,12 +138,11 @@ const invoiceSlice = createSlice({
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceID);
       invoice!.TOTAL = value;
     },
-
     updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value }: taxAndDiscount = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
       let subtotal = invoice!.itemList.reduce(
-        (acc, curr) => acc + curr.amount,
+        (acc, curr) => acc + curr.unitTotal,
         0
       );
       invoice!.Discount = value;
@@ -146,7 +161,7 @@ const invoiceSlice = createSlice({
       const { invoiceId, value }: taxAndDiscount = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
       let subtotal = invoice!.itemList.reduce(
-        (acc, curr) => acc + curr.amount,
+        (acc, curr) => acc + curr.unitTotal,
         0
       );
       invoice!.VAT = value;
@@ -164,6 +179,7 @@ const invoiceSlice = createSlice({
   },
 });
 
+// 
 export default invoiceSlice.reducer;
 export const {
   createInvoice,
@@ -174,4 +190,5 @@ export const {
   updateDiscount,
   updateInvoiceTotal,
   updateVAT,
+  addItem,
 } = invoiceSlice.actions;

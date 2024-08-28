@@ -25,6 +25,15 @@ export type ItemsType = {
   id: number;
   status?: boolean;
 };
+
+export type IProducts = {
+  description: string | any;
+  unitPrice: number | any;
+  unitTotal: string | any;
+  quantity: string | any;
+  itemID: number | any;
+};
+
 export interface Reciept {
   AdditionalInfo: string;
   Amount: string;

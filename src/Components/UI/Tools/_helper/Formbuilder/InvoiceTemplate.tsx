@@ -2,7 +2,7 @@ import { Invoice } from "../../../../../States/Slices/invoice.types";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../States/Slices/invoice";
-import { MoreVertical } from "react-huge-icons/bulk";
+import { AppsCircle, ArchiveDocument, ChartRoofHome, LoadingDoted, MoreVertical, PieChart, PixelGridCircle } from "react-huge-icons/bulk";
 import { useLayoutEffect, useRef, useState } from "react";
 
 const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
@@ -55,16 +55,20 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
             </button>
           </div>
         )}
-        <div className="relative w-full flex justify-end">
+        <div className="relative w-full px-2 flex justify-between">
+        
+        <ArchiveDocument className="text-3xl"/>
           <MoreVertical
             className="text-4xl text-slate-950 "
             onClick={() => setShowOptions(true)}
           />
         </div>
-
+       
+ 
         <div className="relative w-full flex justify-between px-2 max-sm:px-2">
+         
           <p className="text-slate-950 ">ID- {invoice.id}</p>{" "}
-          <h1 className="text-slate-950 text-2xl font-extrabold ">
+          <h1 className="text-slate-950 text-2xl mr-2 font-extrabold ">
             ${invoice.TOTAL}
           </h1>
         </div>

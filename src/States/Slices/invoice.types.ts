@@ -14,11 +14,12 @@ export interface deletingItemId {
 }
 
 export interface Item {
-  description: string;
-  amount: number;
-  unit_price: string;
-  quantity: string | number;
-  itemID: number | string;
+  description: string | any;
+  unitPrice: number | any;
+  unitTotal: string | any;
+  quantity: string | any;
+  itemID: number | any;
+  [key: string]: string | number;
 }
 
 export interface taxAndDiscount {
@@ -66,4 +67,10 @@ export interface Invoices {
   paid: Invoice[];
   revenue: number;
   staticForm: object | any;
+}
+export interface productKeyValue {
+  id: number;
+  key: string;
+  value: string | number;
+  index: number;
 }

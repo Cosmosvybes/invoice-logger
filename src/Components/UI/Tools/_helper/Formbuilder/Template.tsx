@@ -2,20 +2,18 @@ import { Form, Input } from "reactstrap";
 import { FORM } from "./type";
 
 import useTemplateController from "./main";
-import { EyeLightDouble, PlusThin, TrashBent } from "react-huge-icons/outline";
+import { EyeLightDouble } from "react-huge-icons/outline";
 
 import Btn from "./Btn";
 import ViewModal from "./ViewModal";
 import { SendFast } from "react-huge-icons/bulk";
+import ProductsList from "./ProductsList";
 
 const Template = ({ reciepient, sender, item }: FORM) => {
   const {
     updateInvoiceDetails,
-    inputs,
-    addNewItem,
-    updateValues,
-    items,
-    handleDelete,
+    products,
+    setProducts,
     viewMode,
     setViewMode,
     handleView,
@@ -31,13 +29,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       text: "VIEW",
       icon: <EyeLightDouble className="text-3xl text-gray-50 inline" />,
       func: () => handleView(),
-    },
-  ];
-  const addNew = [
-    {
-      text: "ADD ITEM",
-      icon: <PlusThin className="text-3xl  text-gray-50  inline" />,
-      func: () => addNewItem(),
     },
   ];
 
@@ -108,11 +99,11 @@ const Template = ({ reciepient, sender, item }: FORM) => {
       case "date":
         return (
           <div
-            className="relative  ml-2 max-sm:ml-0 max-md:items-start max-md:ml-0 gap-1 flex flex-col items-center justify-start"
+            className="relative  justify-start   max-sm:ml-0 max-md:items-start max-md:ml-0 gap-1 flex flex-col  max-sm:justify-start"
             key={index}
           >
             {" "}
-            <p className="text-gray-400 font-normal px-2 text-xl inline max-sm:text-sm">
+            <p className="text-gray-400 ml-0 font-normal px-2 text-xl max-sm:inline  block max-sm:text-sm">
               {input.placeholder}
             </p>
             <Input
@@ -143,43 +134,6 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   // ITEM MODAL
   ////?? ///////////////////////////////////////////////
 
-  const ADDITEM = inputs.map((input: any) => (
-    <div className="relative block py-2" key={input.id}>
-
-       <Input
-        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
-        type={input.type}
-        placeholder={input.name}
-        value={input.name}
-        // onChange={(e) => updateValues(e.target.value, input.name)}
-      />
-      <Input
-        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
-        type={input.type}
-        placeholder={input.name}
-        value={items[input.name]}
-        // onChange={(e) => updateValues(e.target.value, input.name)}
-      />
-       <Input
-        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
-        type={input.type}
-        placeholder={input.name}
-        value={items[input.name]}
-        onChange={(e) => updateValues(e.target.value, input.name)}
-      />
-       <Input
-        className="px-2 py-3 text-xl max-sm:text-xs  max-md:text-md   outline-none rounded-sm bg-gray-200 border border-gray-300 text-black  font-normal w-96 max-md:w-full max-sm:w-full"
-        type={input.type}
-        placeholder={input.name}
-        value={items[input.name]}
-        onChange={(e) => updateValues(e.target.value, input.name)}
-      />
-
-    </div>
-  ));
-
-
-
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
     <div className="relative   max-sm:px-0 flex  items-center " key={input.id}>
       <Input
@@ -203,33 +157,10 @@ const Template = ({ reciepient, sender, item }: FORM) => {
               )
         }
       />
-      {/* <p className="text-gray-900 text-xl inline">%</p> */}
     </div>
   ));
 
-  const ITEMLIST = invoiceInformation.itemList.map((item: any, i: any) => (
-    <div
-      className="relative  items-center grid grid-cols-5 px-2 bg-gray-100 py-1 w-full"
-      key={i}
-    >
-      <p className="text-black text-center  font-normal text-xl max-sm:text-xs">
-        {item.description}
-      </p>
-      <p className="text-black text-center   font-normal text-xl max-sm:text-xs">
-        {item.quantity}
-      </p>
-      <p className="text-black  text-center  font-normal text-xl max-sm:text-xs">
-        {item.unit_price}
-      </p>
-      <p className="text-black  text-center  font-normal text-xl max-sm:text-xs">
-        {item.amount}
-      </p>
-      <TrashBent
-        className="text-3xl text-black inline"
-        onClick={() => handleDelete(item.itemID)}
-      />
-    </div>
-  ));
+  //
 
   return (
     <>
@@ -241,7 +172,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
           />
         )}
 
-        <div className="relative flex justify-end gap-5  items-center px-0 h-14 mb-4">
+        <div className="relative flex justify-end gap-5  items-center px-0 h-12 mb-4 ">
           {btns.map((btn) => (
             <div className="relative h-14 w-auto" key={btn.text}>
               <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
@@ -252,10 +183,8 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             onClick={() => {
               console.log(invoiceInformation);
               // dispatch(createInvoice({ ...invoice, TOTAL }));
-
-              // toast.success("Invoice added", { theme: "dark" });
             }}
-            className="w-44 h-full max-sm:w-28 shadow-md border border-black  text-center flex justify-center items-center transition duration-500 px-2 mr-5  text-gray-black text-sm font-normal rounded-md "
+            className="w-44 h-full mb-2 max-sm:w-28 shadow-md border border-gray-50  text-center flex justify-center items-center transition duration-500 px-2 mr-5  text-gray-black text-sm font-normal rounded-md "
           >
             <SendFast className="text-4xl  mt-0.5 inline text-black " />
             SEND
@@ -263,7 +192,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         </div>
 
         <div className="relative flex justify-between -mt-7">
-          <Form className="relative flex flex-col justify-between w-full max-sm:w-full">
+          <Form className="relative grid grid-cols-2 justify-between w-full max-sm:w-full">
             {OWNER_}
           </Form>
         </div>
@@ -271,33 +200,9 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         <Form className="grid grid-cols-3 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-2 max-sm:gap-2">
           {CUSTOMER_}
         </Form>
-        <div className="relative w-full flex border  flex-col gap-0.5">
-          <div className="relative  bg-black items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-full">
-            <p className="text-white text-center  font-light px-2 text-xl max-sm:text-xs">
-              Description
-            </p>
-            <p className="text-white text-center  font-light text-xl max-sm:text-xs">
-              Quantity
-            </p>
-            <p className="text-white text-center  font-light text-xl max-sm:text-xs">
-              Unit price
-            </p>
-            <p className="text-white text-center  font-light text-xl max-sm:text-xs">
-              Unit total
-            </p>
-          </div>
-          {ITEMLIST}
-        </div>
+        <ProductsList products={products} setProducts={setProducts} />
 
-        <div className="relative w-full max-md:grid max-md:grid-cols-2 max-sm:grid-cols-2 py-2 flex justify-between items-center mt-2 gap-1">
-          {ADDITEM}
-          {addNew.map((btn) => (
-            <div className="relative h-12 max-md:w-full w-auto" key={btn.text}>
-              <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
-            </div>
-          ))}{" "}
-        </div>
-        <hr className="w-full border-gray-300" />
+        <br className="w-full border-gray-300" />
 
         <div className="relative w-full flex items-center justify-start py-2">
           <div className="relative  w-1/3 max-sm:w-full  flex justify-start  items-center  gap-3">

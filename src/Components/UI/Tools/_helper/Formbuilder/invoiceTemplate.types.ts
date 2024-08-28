@@ -1,9 +1,9 @@
 export interface Item {
-  description: string;
-  amount: number;
-  unit_price: string;
-  id: number | string;
-  itemID: string | number;
+  description: string | any;
+  unitPrice: number | any;
+  unitTotal: string | any;
+  quantity: string | any;
+  itemID: number | any;
 }
 export type Data = {
   TOTAL: number;
