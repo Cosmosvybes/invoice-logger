@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Template from "../../Tools/_helper/Formbuilder/Template";
+import Template from "../../Tools/_helper/Formbuilder/InvoiceTemplate/Template";
 import useModalController from "../../Tools/InvoiceModal/controller";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import BreadCrumb from "../../Tools/Layout/BreadCrumb";

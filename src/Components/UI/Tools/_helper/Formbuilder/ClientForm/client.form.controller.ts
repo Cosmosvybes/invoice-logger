@@ -1,15 +1,14 @@
 import { useState } from "react";
-import useModalController from "../../InvoiceModal/controller";
-import { useAppDispatch } from "../../../../../States/hoooks/hook";
-import { add } from "../../../../../States/Slices/ClientSlice/clientSlice";
 import { toast } from "react-toastify";
+import { add } from "../../../../../../States/Slices/ClientSlice/clientSlice";
+import { useAppDispatch } from "../../../../../../States/hoooks/hook";
+import useModalController from "../../../InvoiceModal/controller";
 
 type FormValues = {
   [key: string]: string;
 };
 
 export default function useClientFormController() {
-    
   const { newCLientsFormField } = useModalController();
   const dispatch = useAppDispatch();
 
@@ -43,7 +42,7 @@ export default function useClientFormController() {
       })
     );
     Object.keys(clientFormValues).map((name) => updateClientForm("", name));
-    toast.success("New Client added",{theme:"light"}) //clear input values
+    toast.success("New Client added", { theme: "light" }); //clear input values
   };
 
   return {

@@ -89,10 +89,10 @@ const ViewModal = ({
                     i
                   ) => (
                     <div className="relative grid grid-cols-4 gap-1" key={i}>
-                      <p className="text-black  font-normal">{description}</p>
-                      <p className="text-black  font-normal">{quantity}</p>
-                      <p className="text-black  font-normal">{unitPrice}</p>
-                      <p className="text-black  font-normal">{unitTotal}</p>
+                      <p className="text-black text-center font-normal">{description}</p>
+                      <p className="text-black text-center  font-normal">{quantity}</p>
+                      <p className="text-black text-center  font-normal">{unitPrice}</p>
+                      <p className="text-black text-center  font-normal">{unitTotal}</p>
                     </div>
                   )
                 )}
