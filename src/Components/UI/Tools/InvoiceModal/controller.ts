@@ -30,12 +30,12 @@ export const forms = [
     placeholder: "Country",
   },
 
-  {
-    type_: "text",
-    name: "AdditionalInfo",
-    value: "",
-    placeholder: "Additional Information",
-  },
+  // {
+  //   type_: "text",
+  //   name: "AdditionalInfo",
+  //   value: "",
+  //   placeholder: "Additional Information",
+  // },
 
   {
     type_: "text",
@@ -67,18 +67,6 @@ export const forms = [
     value: "",
     placeholder: "Due on",
   },
-  // {
-  //   type_: "text",
-  //   name: "VAT",
-  //   value: "",
-  //   placeholder: "Add Tax",
-  // },
-  // {
-  //   type_: "text",
-  //   name: "Discount",
-  //   value: "",
-  //   placeholder: "Transaction Discount",
-  // },
 ];
 
 export const senderInfo = [
@@ -104,13 +92,13 @@ export const senderInfo = [
     type: "text",
     name: "BusinessState",
     value: "",
-    placeholder: "state",
+    placeholder: "Business state",
   },
   {
     type: "text",
     name: "BusinessCountry",
     value: "",
-    placeholder: "country",
+    placeholder: "Country",
   },
 ];
 

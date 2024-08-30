@@ -12,9 +12,9 @@ const NavBtn = ({
   func(): void;
 }) => {
   return (
-    <div>
+    <div className="h-full ">
       <Button
-        className={`text-black font-normal text-2xl w-auto transition duration-500 max-sm:w-auto  max-sm:mt-1 max-sm:text-sm border-b-2 ${
+        className={`text-black h-full  font-normal text-2xl w-auto transition duration-500 max-sm:w-auto  max-sm:mt-1 border-b max-sm:text-sm  ${
           active == id ? "border-black" : "border-none"
         } `}
         onClick={() => func()}

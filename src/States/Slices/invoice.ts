@@ -79,6 +79,7 @@ const invoiceSlice = createSlice({
     addItem: (state, action: PayloadAction<productKeyValue>) => {
       const { key, value, index, id }: productKeyValue = action.payload;
       let invoice = state.draft.find((invoice) => invoice.id == id);
+
       invoice!.itemList[index][key] = value;
       const total =
         Number(invoice!.itemList[index].unitPrice) *
@@ -117,7 +118,6 @@ const invoiceSlice = createSlice({
       );
       let invoiceIndex = invoiceItemList!.indexOf(item);
       invoiceItemList!.splice(Number(invoiceIndex), 1);
-
       //
       let invoiceItem = state.draft.find((invoice) => invoice.id == invoiceId);
       let invoice: Invoice = state.draft.find(
@@ -179,7 +179,7 @@ const invoiceSlice = createSlice({
   },
 });
 
-// 
+//
 export default invoiceSlice.reducer;
 export const {
   createInvoice,

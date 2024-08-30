@@ -1,7 +1,7 @@
 import { ArrowRight } from "react-huge-icons/outline";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
-import InvoiceTemplate from "../_helper/Formbuilder/InvoiceTemplate";
+import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
 import { useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
 import InvoiceTable from "./InvoiceTable";

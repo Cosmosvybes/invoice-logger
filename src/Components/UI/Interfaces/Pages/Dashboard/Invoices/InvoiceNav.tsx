@@ -11,9 +11,9 @@ const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
   const [active, setActive] = useState(buttonData[0].id);
   return (
     <>
-      <div className="relative w-full  h-5 flex py-10 gap-10 max-sm:gap-14 justify-center items-center ">
+      <div className="relative w-full border-b h-auto max-sm:h-auto flex  gap-10 max-sm:gap-14 justify-evenly items-center ">
         {buttonData.map((nav) => (
-          <div className="realtive" key={nav.id}>
+          <div className="relative mt-10" key={nav.id}>
             <NavBtn
               node={nav.text}
               id={nav.id}

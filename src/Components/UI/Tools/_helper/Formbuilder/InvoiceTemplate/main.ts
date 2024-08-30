@@ -1,28 +1,23 @@
 import { useLayoutEffect, useMemo, useState } from "react";
 import "react-toastify/ReactToastify.css";
-import { FORM, ItemsType, VAT_DISCOUNT } from "./type";
-import { toast } from "react-toastify";
-import { useAppDispatch } from "../../../../../States/hoooks/hook";
+import { ItemsType, VAT_DISCOUNT } from "../type";
+
+import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import {
-  updateInvoiceItems,
-  deleteInvoiceItems,
   updateInvoiceInformation,
   updateDiscount,
   updateVAT,
-} from "../../../../../States/Slices/invoice";
+} from "../../../../../../States/Slices/invoice";
 
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../../../../States/hoooks/hook";
-import { Item } from "../../../../../States/Slices/invoice.types";
+import { useAppSelector } from "../../../../../../States/hoooks/hook";
 
-export default function useTemplateController({ item }: FORM) {
+export default function useTemplateController() {
   // invoice id from req.params
 
   const { id } = useParams();
-  let invoiceItem = item;
   let invoiceInformation: any;
   //invoice state
-
   const { draft, staticForm } = useAppSelector((state) => state.invoice);
   if (id) {
     invoiceInformation = draft?.find((invoice) => invoice.id == id)!;
@@ -110,34 +105,6 @@ export default function useTemplateController({ item }: FORM) {
     setItems((prev: any) => ({ ...prev, [name]: newValue }));
   };
 
-  //   //?? ///////////////////////////////////////////////
-  // ADD NEW ITEM AND CLEAR INPUT
-  //   //?? ///////////////////////////////////////////////
-
-  const addNewItem = () => {
-    let hasEmptyInput =
-      Object.values(items).filter((inputValue) => inputValue === "").length > 0;
-    if (hasEmptyInput) {
-      toast.warning("Missing item details");
-      return;
-    }
-    const item = { ...items, itemID: Date.now() };
-
-    if (invoiceItem) {
-      dispatch(updateInvoiceItems({ id: Number(id), item }));
-      Object.keys(items).map((item: string) => updateValues("", item));
-      toast.success("Invoice updated", { theme: "dark" });
-      return;
-    }
-
-    setItem([...itemList, item]);
-    dispatch(
-      updateInvoiceItems({ id: Number(localStorage.getItem("id")), item })
-    );
-    Object.keys(items).map((item: string) => updateValues("", item));
-    toast.success("New item listed", { theme: "dark" });
-  };
-
   const [invoiceDetails, setInvoiceDetails] = useState({
     ...staticForm,
   });
@@ -182,22 +149,6 @@ export default function useTemplateController({ item }: FORM) {
     invoiceInformation.itemList,
   ]);
 
-  //   //?? ///////////////////////////////////////////////
-  //DELETE ITEM
-  //   //?? ///////////////////////////////////////////////
-
-  const handleDelete = (id_: number) => {
-    dispatch(
-      deleteInvoiceItems({
-        invoiceId: id ? Number(id) : Number(localStorage.getItem("id")),
-        itemID: id_,
-      })
-    );
-    setItem(itemList.filter((item) => item.itemID != id));
-    toast.success("invoice item removed", { theme: "dark" });
-    return;
-  };
-
   const handleView = () => {
     return setViewMode(true);
   };
@@ -205,22 +156,16 @@ export default function useTemplateController({ item }: FORM) {
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
 
-  const [products, setProducts] = useState<Item[]>([
-    ...invoiceInformation.itemList,
-  ]);
-
   return {
     setItem,
     itemList,
     handleView,
     updateInvoiceDetails,
     invoiceDetails,
-    addNewItem,
     inputs,
     tax_discount_input,
     updateValues,
     items,
-    handleDelete,
     viewMode,
     setViewMode,
     setIsCreatingNewInvoice,
@@ -231,7 +176,5 @@ export default function useTemplateController({ item }: FORM) {
     updateDiscount,
     updateVAT,
     updatedBalance,
-    products,
-    setProducts,
   };
 }

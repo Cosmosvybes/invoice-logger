@@ -1,5 +1,5 @@
 import { Button, Input } from "reactstrap";
-import useModalController from "../../InvoiceModal/controller";
+import useModalController from "../../../InvoiceModal/controller";
 import useClientFormController from "./client.form.controller";
 
 const ClientFormBuilder = () => {

@@ -1,4 +1,4 @@
-import ClientFormBuilder from "../../../Tools/_helper/Formbuilder/ClientFormBuilder";
+import ClientFormBuilder from "../../../Tools/_helper/Formbuilder/ClientForm/ClientFormBuilder";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import user from "./../../../../../assets/User.svg";
 const AddClient = () => {

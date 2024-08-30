@@ -1,19 +1,17 @@
 import { Form, Input } from "reactstrap";
-import { FORM } from "./type";
+import { FORM } from "../type";
 
 import useTemplateController from "./main";
 import { EyeLightDouble } from "react-huge-icons/outline";
 
-import Btn from "./Btn";
-import ViewModal from "./ViewModal";
+import Btn from "../Btn";
+import ViewModal from "../View/ViewModal";
 import { SendFast } from "react-huge-icons/bulk";
-import ProductsList from "./ProductsList";
+import ProductsList from "../ProductsList/ProductsList";
 
-const Template = ({ reciepient, sender, item }: FORM) => {
+const Template = ({ reciepient, sender }: FORM) => {
   const {
     updateInvoiceDetails,
-    products,
-    setProducts,
     viewMode,
     setViewMode,
     handleView,
@@ -22,7 +20,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
     updateDiscount,
     updateVAT,
     dispatch,
-  } = useTemplateController({ reciepient, sender, item });
+  } = useTemplateController();
 
   const btns = [
     {
@@ -109,7 +107,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
             <Input
               title="date"
               type="date"
-              className=" bg-inherit px-1 font-bold border  max-sm:text-xs text-slate-400 border-none"
+              className=" bg-inherit px-1 font-bold border w-44 max-sm:w-auto  max-sm:text-xs text-slate-400 border-none"
               value={invoiceInformation[input.name]}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
@@ -137,7 +135,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
     <div className="relative   max-sm:px-0 flex  items-center " key={input.id}>
       <Input
-        className=" py-2 text-xl text-center max-sm:text-xs  bg-gray-200 max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-28"
+        className=" py-2 text-xl text-center max-sm:text-xs  border-b max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-28"
         type={input.type}
         placeholder={`${input.placeholder} %`}
         value={invoiceInformation[input.name]}
@@ -199,7 +197,7 @@ const Template = ({ reciepient, sender, item }: FORM) => {
         <Form className="grid grid-cols-3 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-2 max-sm:gap-2">
           {CUSTOMER_}
         </Form>
-        <ProductsList products={products} setProducts={setProducts} />
+        <ProductsList />
 
         <br className="w-full border-gray-300" />
 
