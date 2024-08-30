@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
 import {
   deletingItemId,
+  ICURRENCY,
   Invoice,
   Invoices,
   Item,
@@ -39,6 +40,12 @@ const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
+    changeCurrency: (state, action: PayloadAction<ICURRENCY>) => {
+      const { id, currency }: ICURRENCY = action.payload;
+      let invoice = state.draft.find((invoice) => invoice.id == id);
+      invoice!.currency = currency;
+    },
+
     deleteInvoice: (state, action: PayloadAction<deletingItemId>) => {
       const { id }: deletingItemId = action.payload;
       const invoice = state.draft.find((inv) => inv.id == id);
@@ -191,4 +198,5 @@ export const {
   updateInvoiceTotal,
   updateVAT,
   addItem,
+  changeCurrency,
 } = invoiceSlice.actions;

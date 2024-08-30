@@ -5,7 +5,6 @@ import useInvoiceListController from "./list.controller";
 import Paginate from "../../../../../Tools/Layout/Paginate/Paginate";
 
 const List = ({ currentData }: { currentData: Invoice[] }) => {
-
   const {
     actionCard,
     showActions,
@@ -15,7 +14,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
     handleNextList,
     listPerTable,
   } = useInvoiceListController(currentData);
- 
+
   return (
     <>
       <Table className="w-full border-collapse">
@@ -38,7 +37,8 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
                 {invoice.status == "Awaiting" ? "Draft" : "Sent"}
               </td>
               <td className="text-black text-center max-sm:text-sm font-normal py-4  w-20 max-sm:w-16 ">
-                ${invoice.TOTAL}
+                {invoice.currency != "--select--" && invoice.currency + " "}
+                {invoice.TOTAL}
               </td>
 
               <td className="text-black text-center max-sm:text-sm   font-normal py-4 w-20 max-sm:w-16 ">

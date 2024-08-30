@@ -1,5 +1,5 @@
 import { Like } from "react-huge-icons/bulk";
-import { Invoice } from "../../../../../States/Slices/invoice.types";
+import { Invoice } from "../../../../../../States/Slices/invoice.types";
 
 const ViewModal = ({
   data,
@@ -84,15 +84,20 @@ const ViewModal = ({
             <div className="relative">
               <div className="relative flex-col flex">
                 {data.itemList?.map(
-                  (
-                    { description, unitPrice, unitTotal, quantity },
-                    i
-                  ) => (
+                  ({ description, unitPrice, unitTotal, quantity }, i) => (
                     <div className="relative grid grid-cols-4 gap-1" key={i}>
-                      <p className="text-black text-center font-normal">{description}</p>
-                      <p className="text-black text-center  font-normal">{quantity}</p>
-                      <p className="text-black text-center  font-normal">{unitPrice}</p>
-                      <p className="text-black text-center  font-normal">{unitTotal}</p>
+                      <p className="text-black text-center font-normal">
+                        {description}
+                      </p>
+                      <p className="text-black text-center  font-normal">
+                        {quantity}
+                      </p>
+                      <p className="text-black text-center  font-normal">
+                        {unitPrice}
+                      </p>
+                      <p className="text-black text-center  font-normal">
+                        {unitTotal}
+                      </p>
                     </div>
                   )
                 )}
@@ -113,7 +118,10 @@ const ViewModal = ({
             </div>
             <div className="relative flex justify-start gap-1 items-center">
               <p className="text-black  font-normal">Total - </p>
-              <p className="underline text-black  font-normal">${data.TOTAL}</p>
+              <p className="underline text-black  font-normal">
+                {data.TOTAL.toFixed(2) + " "}{" "}
+                {data.currency != "--select--" && data.currency}
+              </p>
             </div>
           </div>
           <Like

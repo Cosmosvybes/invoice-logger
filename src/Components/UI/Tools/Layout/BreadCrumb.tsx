@@ -26,6 +26,7 @@ const BreadCrumb = ({
         TOTAL: 0,
         VAT: "",
         Discount: "",
+        currency: "USD",
       })
     );
   };

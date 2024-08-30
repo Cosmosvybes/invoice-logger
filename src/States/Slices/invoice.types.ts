@@ -54,6 +54,7 @@ export interface Invoice {
   updatedAt: string;
   createdAt: string;
   status: string;
+  currency: string;
 }
 
 export interface item {
@@ -73,4 +74,9 @@ export interface productKeyValue {
   key: string;
   value: string | number;
   index: number;
+}
+
+export interface ICURRENCY {
+  id: number;
+  currency: string;
 }
