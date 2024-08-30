@@ -4,7 +4,7 @@ import { PlusThin, TrashBent } from "react-huge-icons/bulk";
 import { Item } from "../../../../../../States/Slices/invoice.types";
 
 const ProductsList = () => {
-  const { addNew, remove, handleChange, products } =
+  const { addNew, remove, handleChange, invoiceInformation } =
     useProductsListController();
 
   //
@@ -31,33 +31,33 @@ const ProductsList = () => {
       </div>
 
       <div className="relative w-full flex flex-col gap-1 mt-2 mb-2">
-        {products.map((_: Item, i: number) => (
+        {invoiceInformation.itemList.map((_: Item, i: number) => (
           <div className="relative grid grid-cols-5 gap-1" key={i}>
             <Input
-              className="px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b border-black text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
-              placeholder={_.description}
+              placeholder={"Description"}
               value={_.description}
               onChange={(e) => handleChange(e, i, "description")}
             />
             <Input
-              className="px-2 py-3 text-xl max-sm:text-xs  text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b border-black text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
-              placeholder={_.quantity}
+              placeholder={"Quantity"}
               value={_.quantity}
               onChange={(e) => handleChange(e, i, "quantity")}
             />
             <Input
-              className="px-2 py-3 text-xl max-sm:text-xs  text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b border-black text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
-              placeholder={String(_.unitPrice)}
+              placeholder={"Unit price"}
               value={_.unitPrice}
               onChange={(e) => handleChange(e, i, "unitPrice")}
             />
             <Input
-              className="px-2 py-3 text-xl max-sm:text-xs text-center  max-md:text-md   outline-none rounded-sm bg-inherit border-b border-black text-black  font-normal w-96 max-md:w-full max-sm:w-full"
+              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
-              placeholder={_.unitTotal}
+              placeholder={"Sub Total"}
               value={_.unitTotal}
               onChange={(e) => handleChange(e, i, "unitTotal")}
             />

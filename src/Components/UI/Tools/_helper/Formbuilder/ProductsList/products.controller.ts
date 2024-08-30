@@ -47,15 +47,6 @@ export default function useProductsListController() {
     index: number,
     key: "description" | "quantity" | "unitPrice" | "unitTotal"
   ) => {
-    //
-    if (!products && !setProducts) return;
-    let allPoducts = [...products];
-    allPoducts[index][key] = e.target.value;
-    const total =
-      Number(allPoducts[index]["unitPrice"]) *
-      Number(allPoducts[index]["quantity"]);
-    allPoducts[index]["unitTotal"] = String(total);
-    setProducts(allPoducts);
     // //  //
     return !id
       ? dispatch(

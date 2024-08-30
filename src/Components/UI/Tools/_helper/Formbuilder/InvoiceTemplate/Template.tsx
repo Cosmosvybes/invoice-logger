@@ -135,7 +135,7 @@ const Template = ({ reciepient, sender }: FORM) => {
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
     <div className="relative   max-sm:px-0 flex  items-center " key={input.id}>
       <Input
-        className=" py-2 text-xl text-center max-sm:text-xs  bg-gray-200 max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-28"
+        className=" py-2 text-xl text-center max-sm:text-xs  border-b max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-28"
         type={input.type}
         placeholder={`${input.placeholder} %`}
         value={invoiceInformation[input.name]}
