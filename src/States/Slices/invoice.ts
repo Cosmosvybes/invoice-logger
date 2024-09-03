@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
+
 import {
   deletingItemId,
   ICURRENCY,
   Invoice,
-  Invoices,
+  ACCOUNT,
   Item,
   item,
   itemToDelete,
@@ -12,6 +13,7 @@ import {
   productKeyValue,
   taxAndDiscount,
 } from "./invoice.types";
+import { toast } from "react-toastify";
 
 const { combinedForm } = useModalController();
 
@@ -26,14 +28,37 @@ let invoiceStaticValue = combinedForm.reduce(
 export interface invoiceTotalUpdate {
   invoiceID: number;
   value: number;
+  token: string;
 }
-const initialState: Invoices = {
+
+export const getUser = createAsyncThunk(
+  "user/getUser",
+  async (token: string) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/user", {
+        headers: { Authorization: `Bearer ${token}` },
+        method: "GET",
+      });
+      const user = await response.json();
+      return user;
+    } catch (error: any) {
+      if (error.response && error.response.status == 401) {
+        toast.error("session expired", { theme: "colored" });
+        return location.replace("/");
+      }
+    }
+  }
+);
+
+const initialState: ACCOUNT = {
   draft: [],
   sent: [],
   overdue: [],
   paid: [],
   revenue: 0,
   staticForm: invoiceStaticValue,
+  loading: false,
+  isLoggedIn: false,
 };
 
 const invoiceSlice = createSlice({
@@ -41,9 +66,29 @@ const invoiceSlice = createSlice({
   initialState,
   reducers: {
     changeCurrency: (state, action: PayloadAction<ICURRENCY>) => {
-      const { id, currency }: ICURRENCY = action.payload;
+      const { id, currency, token }: ICURRENCY = action.payload;
       let invoice = state.draft.find((invoice) => invoice.id == id);
       invoice!.currency = currency;
+
+      fetch("http://localhost:8080/api/invoice/updates", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            return location.replace("/");
+          }
+        });
     },
 
     deleteInvoice: (state, action: PayloadAction<deletingItemId>) => {
@@ -53,7 +98,7 @@ const invoiceSlice = createSlice({
     },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
-      const { key, value, invoiceID } = action.payload;
+      const { key, value, invoiceID, token } = action.payload;
       let invoice: string | number | boolean | any = state.draft.find(
         (invoice) => invoice.id == invoiceID
       );
@@ -65,26 +110,65 @@ const invoiceSlice = createSlice({
         hour: "2-digit",
         minute: "2-digit",
       });
+
+      // console.log(invoice);
+      fetch("http://localhost:8080/api/invoice/updates", {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          if (result.status != 200) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            return (location.href = "/");
+          }
+        });
     },
 
     createInvoice: (state, action: PayloadAction<Invoice>) => {
       let invoice: Invoice = action.payload;
-      invoice.createdAt = new Date().toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
       state.draft.push({
         ...invoice,
-        id: localStorage.getItem("id")!,
-        status: "Draft",
       });
+
+      fetch("http://localhost:8080/api/new/invoice", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${invoice.token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify({ ...invoice }),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .then((_) => {
+          toast.success("New Invoice created", { theme: "colored" });
+        })
+        .catch((err) => {
+          if (err.response && err.status == 401) {
+            return location.replace("/");
+          }
+        });
     },
 
     addItem: (state, action: PayloadAction<productKeyValue>) => {
-      const { key, value, index, id }: productKeyValue = action.payload;
+      const { key, value, index, id, token }: productKeyValue = action.payload;
       let invoice = state.draft.find((invoice) => invoice.id == id);
 
       invoice!.itemList[index][key] = value;
@@ -97,6 +181,26 @@ const invoiceSlice = createSlice({
         0
       );
       invoice!.TOTAL = Number(total_);
+      fetch("http://localhost:8080/api/invoice/updates", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          if (result.status == 403 || result.status == 401) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     updateInvoiceItems: (state, action: PayloadAction<item>) => {
@@ -116,7 +220,7 @@ const invoiceSlice = createSlice({
     },
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
-      const { invoiceId, itemID }: itemToDelete = action.payload;
+      const { invoiceId, itemID, token }: itemToDelete = action.payload;
       let invoiceItemList: Item[] = state.draft.find(
         (invoice) => invoice.id == invoiceId
       )!.itemList!;
@@ -138,15 +242,55 @@ const invoiceSlice = createSlice({
         minute: "2-digit",
       });
       invoiceItem!.TOTAL -= item.unitTotal;
+      fetch("http://localhost:8080/api/invoice/updates", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            return location.replace("/");
+          }
+          console.log(err);
+        });
     },
 
     updateInvoiceTotal: (state, action: PayloadAction<invoiceTotalUpdate>) => {
-      const { invoiceID, value }: invoiceTotalUpdate = action.payload;
+      const { invoiceID, value, token }: invoiceTotalUpdate = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceID);
+      fetch("http://localhost:8080/api/invoice/updates", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            return location.replace("/");
+          }
+          console.log(err);
+        });
       invoice!.TOTAL = value;
     },
     updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
-      const { invoiceId, value }: taxAndDiscount = action.payload;
+      const { invoiceId, value, token }: taxAndDiscount = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
       let subtotal = invoice!.itemList.reduce(
         (acc, curr) => acc + curr.unitTotal,
@@ -163,9 +307,28 @@ const invoiceSlice = createSlice({
         hour: "2-digit",
         minute: "2-digit",
       });
+      fetch("http://localhost:8080/api/invoice/updates", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            return location.replace("/");
+          }
+        });
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
-      const { invoiceId, value }: taxAndDiscount = action.payload;
+      const { invoiceId, value, token }: taxAndDiscount = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
       let subtotal = invoice!.itemList.reduce(
         (acc, curr) => acc + curr.unitTotal,
@@ -182,7 +345,44 @@ const invoiceSlice = createSlice({
         hour: "2-digit",
         minute: "2-digit",
       });
+      fetch("http://localhost:8080/api/invoice/updates", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            return location.replace("/");
+          }
+        });
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(getUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      state.loading = false;
+      const { draft, sent, revenue } = action.payload;
+
+      state.draft = draft;
+      state.sent = sent;
+      state.revenue = revenue;
+      state.isLoggedIn = true;
+    });
+    builder.addCase(getUser.rejected, (state) => {
+      state.loading = false;
+    });
   },
 });
 

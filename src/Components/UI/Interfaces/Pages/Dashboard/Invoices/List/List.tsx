@@ -34,7 +34,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
               </td>
 
               <td className="text-black text-center max-sm:text-sm  font-normal py-4 w-20 max-sm:w-16 ">
-                {invoice.status == "Awaiting" ? "Draft" : "Sent"}
+                {invoice.status}
               </td>
               <td className="text-black text-center max-sm:text-sm font-normal py-4  w-20 max-sm:w-16 ">
                 {invoice.currency != "--select--" && invoice.currency + " "}
@@ -72,7 +72,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
       {showActions && (
         <div
           ref={actionCard}
-          className="absolute right-20 top-5  shadow-md  transition duration-500 flex justify-start gap-2  flex-col w-auto h-auto  bg-gray-50  text-center z-50"
+          className="absolute right-20 top-5  shadow-md  transition duration-500 flex justify-start gap-2  flex-col w-40 h-auto  bg-gray-50  text-center z-50"
         >
           <button className="text-black hover:bg-black hover:text-gray-50 text-xl max-sm:text-xs text-left font-light px-2 w-full">
             Mark as paid

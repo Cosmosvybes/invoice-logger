@@ -1,7 +1,6 @@
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import "react-toastify/ReactToastify.css";
 import { ItemsType, VAT_DISCOUNT } from "../type";
-
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import {
   updateInvoiceInformation,
@@ -12,21 +11,25 @@ import {
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 
-export default function useTemplateController() {
-  // invoice id from req.params
 
+export default function useTemplateController() {
   const { id } = useParams();
+
   let invoiceInformation: any;
   //invoice state
   const { draft, staticForm } = useAppSelector((state) => state.invoice);
+
   if (id) {
     invoiceInformation = draft?.find((invoice) => invoice.id == id)!;
   } else {
+    // console.log(draft);
     invoiceInformation = draft?.find(
       (invoice) => invoice.id == localStorage.getItem("id")
     )!;
   }
 
+  const token = String(localStorage.getItem("token"));
+ 
   //
   const [tax_discount_input] = useState<VAT_DISCOUNT[]>([
     //invoice discounts form fields
@@ -124,6 +127,7 @@ export default function useTemplateController() {
           updateInvoiceInformation({
             value: newValue,
             key: inputName,
+            token,
             invoiceID: Number(localStorage.getItem("id")),
           })
         )
@@ -132,6 +136,7 @@ export default function useTemplateController() {
             value: newValue,
             key: inputName,
             invoiceID: id,
+            token,
           })
         );
   };
@@ -176,5 +181,6 @@ export default function useTemplateController() {
     updateDiscount,
     updateVAT,
     updatedBalance,
+    token,
   };
 }

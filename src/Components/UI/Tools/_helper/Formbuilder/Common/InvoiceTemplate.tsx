@@ -4,10 +4,13 @@ import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../../States/Slices/invoice";
 import { MoreVertical } from "react-huge-icons/bulk";
 import { useLayoutEffect, useRef, useState } from "react";
+import { useAppSelector } from "../../../../../../States/hoooks/hook";
 
+
+// 
 const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
   const dispatch = useAppDispatch();
-
+  const { userToken } = useAppSelector((state) => state.userSlice);
   const invoiceOptions = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -48,7 +51,9 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
               Edit
             </Link>
             <button
-              onClick={() => dispatch(deleteInvoice({ id: invoice.id }))}
+              onClick={() =>
+                dispatch(deleteInvoice({ id: invoice.id, token: userToken }))
+              }
               className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center 0 font-light px-2 w-full"
             >
               Delete
@@ -59,8 +64,8 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           <div className="relative justify-start items-center ">
             {" "}
             <h1 className="text-slate-950 text-2xl inline font-semibold">
-            
-              {invoice.TOTAL.toFixed(2)}     {invoice.currency != "--select--" && invoice.currency}
+              {Number(invoice.TOTAL).toFixed(2)}{" "}
+              {invoice.currency != "--select--" && invoice.currency}
             </h1>{" "}
           </div>
 

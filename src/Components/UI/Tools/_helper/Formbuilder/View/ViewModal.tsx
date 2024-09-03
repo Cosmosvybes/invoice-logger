@@ -119,7 +119,7 @@ const ViewModal = ({
             <div className="relative flex justify-start gap-1 items-center">
               <p className="text-black  font-normal">Total - </p>
               <p className="underline text-black  font-normal">
-                {data.TOTAL.toFixed(2) + " "}{" "}
+                {Number(data.TOTAL).toFixed(2) + " "}{" "}
                 {data.currency != "--select--" && data.currency}
               </p>
             </div>

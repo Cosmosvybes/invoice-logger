@@ -1,5 +1,16 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import { useAppDispatch } from "../../../../../States/hoooks/hook";
+import { getUser } from "../../../../../States/Slices/ClientSlice/useAuth/user";
+
+//
 export default function useDashboardController(icon: any[]) {
+  const dispatch = useAppDispatch();
+
+
+  useLayoutEffect(() => {
+    dispatch(getUser(localStorage.getItem("token")!));
+  }, []);
+
   const [currentView, setCurrentView] = useState("invoice");
   const [links] = useState([
     {

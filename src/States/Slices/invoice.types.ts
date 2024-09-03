@@ -1,16 +1,19 @@
 export interface itemToDelete {
   invoiceId: number;
   itemID: number | string;
+  token: string | undefined;
 }
 
 export interface keyValue {
   key: string | number | boolean | any;
   value: string | number | boolean;
   invoiceID: number | string | any;
+  token: string | undefined;
 }
 
 export interface deletingItemId {
   id: number | string;
+  token: string | undefined;
 }
 
 export interface Item {
@@ -25,6 +28,7 @@ export interface Item {
 export interface taxAndDiscount {
   value: number;
   invoiceId: string | number;
+  token: string | undefined;
 }
 
 export interface Invoice {
@@ -55,28 +59,35 @@ export interface Invoice {
   createdAt: string;
   status: string;
   currency: string;
+  token: string | undefined;
+  [key: string]: string | any;
 }
 
 export interface item {
   id: string | number;
   item: Item;
+  token: string | undefined;
 }
-export interface Invoices {
+export interface ACCOUNT {
   draft: Invoice[];
   sent: Invoice[];
   overdue: Invoice[];
   paid: Invoice[];
   revenue: number;
   staticForm: object | any;
+  loading: boolean;
+  isLoggedIn: boolean;
 }
 export interface productKeyValue {
   id: number;
   key: string;
   value: string | number;
   index: number;
+  token: string | undefined;
 }
 
 export interface ICURRENCY {
   id: number;
   currency: string;
+  token: string | undefined;
 }

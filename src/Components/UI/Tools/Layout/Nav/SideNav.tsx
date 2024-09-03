@@ -14,13 +14,26 @@ const SideNav = ({ title, children }: Main) => {
 
   const handleCreateDefaultInvoice = () => {
     localStorage.setItem("id", String(Date.now()));
+    const token = localStorage.getItem("token");
+    localStorage.setItem("id", String(Date.now()));
     dispatch(
       createInvoice({
         ...staticForm,
         itemList: [],
+        id: localStorage.getItem("id"),
         TOTAL: 0,
         VAT: "",
         Discount: "",
+        currency: "USD",
+        status: "Draft",
+        token,
+        createdAt: new Date().toLocaleString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          dayPeriod: "short",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       })
     );
   };

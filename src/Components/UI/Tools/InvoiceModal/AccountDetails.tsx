@@ -15,7 +15,7 @@ const AccountDetails = () => {
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
   let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
 
-  const currentInvoices = draft.slice(indexOfFirstInvoice, indexOfLastInvoice);
+  const currentInvoices = draft?.slice(indexOfFirstInvoice, indexOfLastInvoice);
 
   const handlePaginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -74,12 +74,12 @@ const AccountDetails = () => {
           </div>
           {/* //invoice drfats */}
           <div className="relative w-full flex justify-end ">
-            {draft.length == 0 ? (
+            {draft?.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <div className="relative block border border-gray-400 py-2 rounded-lg w-1/3 max-md:w-full max-sm:w-full">
-                <div className="relative w-full gap-1 h-auto py-2 flex flex-col-reverse    ">
-                  {currentInvoices.map((invoice: any) => (
+              <div className="relative flex flex-col  border border-gray-400 py-2 rounded-lg w-1/3 max-md:w-full max-sm:w-full">
+                <div className="relative w-full gap-1 h-auto py-2 flex flex-col-reverse ">
+                  {currentInvoices.reverse().map((invoice: any) => (
                     <div className="relative" key={invoice.id}>
                       <InvoiceTemplate invoice={invoice} />
                     </div>

@@ -2,6 +2,7 @@ import { useAppDispatch } from "../../../../../../../States/hoooks/hook";
 
 import { changeCurrency } from "../../../../../../../States/Slices/invoice";
 import { useParams } from "react-router-dom";
+
 const Currency = () => {
   const { id } = useParams();
 
@@ -15,6 +16,7 @@ const Currency = () => {
       changeCurrency({
         id: id ? Number(id) : Number(localStorage.getItem("id")),
         currency: selectDoc.value,
+        token: String(localStorage.getItem("token")),
       })
     );
   };

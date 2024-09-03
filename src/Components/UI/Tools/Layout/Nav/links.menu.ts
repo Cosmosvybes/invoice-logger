@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 
 export default function useNavMenu(icons: any) {
   const [links] = useState([
-    { id: 1, path: "", name: "Home" },
+    { id: 1, path: "dashboard", name: "Home" },
     { id: 2, path: "invoices", name: "Invoices" },
     { id: 3, path: "Clients", name: "Clients" },
   ]);
@@ -19,7 +19,7 @@ export default function useNavMenu(icons: any) {
         {
           id: 1,
           title: "Dashboard",
-          path: "",
+          path: "dashboard",
           icon: icons[8],
         },
         {

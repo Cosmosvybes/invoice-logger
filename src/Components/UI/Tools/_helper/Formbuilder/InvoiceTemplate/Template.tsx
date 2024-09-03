@@ -21,6 +21,7 @@ const Template = ({ reciepient, sender }: FORM) => {
     updateDiscount,
     updateVAT,
     dispatch,
+    token,
   } = useTemplateController();
 
   const btns = [
@@ -146,10 +147,12 @@ const Template = ({ reciepient, sender }: FORM) => {
                 updateDiscount({
                   invoiceId: invoiceInformation.id,
                   value: Number(e.target.value),
+                  token,
                 })
               )
             : dispatch(
                 updateVAT({
+                  token,
                   invoiceId: invoiceInformation.id,
                   value: Number(e.target.value),
                 })
@@ -243,7 +246,8 @@ const Template = ({ reciepient, sender }: FORM) => {
                   </p>
                   <p className="text-xl  text-gray-500 mr-2  font-normal">
                     {Number(invoiceInformation.TOTAL).toFixed(2)}{" "}
-                    {invoiceInformation.currency != "--select--" && invoiceInformation.currency}
+                    {invoiceInformation.currency != "--select--" &&
+                      invoiceInformation.currency}
                   </p>
                 </div>
               </div>

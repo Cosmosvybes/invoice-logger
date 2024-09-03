@@ -18,7 +18,7 @@ export default function useProductsListController() {
   if (id) {
     _id_ = Number(id);
   }
-
+  const token = String(localStorage.getItem("token"));
   const { draft } = useAppSelector((state) => state.invoice);
   if (id) {
     invoiceInformation = draft?.find((invoice) => invoice.id == id)!;
@@ -39,7 +39,7 @@ export default function useProductsListController() {
     allProducts.splice(index, 1);
     setProducts(allProducts);
     const invoiceId: any = id ? _id_ : localStorage.getItem("id");
-    dispatch(deleteInvoiceItems({ invoiceId, itemID }));
+    dispatch(deleteInvoiceItems({ invoiceId, itemID, token }));
   };
 
   const handleChange = (
@@ -51,6 +51,7 @@ export default function useProductsListController() {
     return !id
       ? dispatch(
           addItem({
+            token,
             id: Number(localStorage.getItem("id")),
             index,
             key,
@@ -59,6 +60,7 @@ export default function useProductsListController() {
         )
       : dispatch(
           addItem({
+            token,
             id: _id_,
             index,
             key,
@@ -84,6 +86,7 @@ export default function useProductsListController() {
     return !id
       ? dispatch(
           updateInvoiceItems({
+            token,
             id: Number(localStorage.getItem("id")),
             item: {
               itemID: Date.now(),
@@ -96,6 +99,7 @@ export default function useProductsListController() {
         )
       : dispatch(
           updateInvoiceItems({
+            token,
             id: _id_,
             item: {
               itemID: Date.now(),
