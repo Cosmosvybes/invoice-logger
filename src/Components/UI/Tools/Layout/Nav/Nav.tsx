@@ -45,7 +45,7 @@ const Nav = () => {
           ))}
         </div>
 
-        <div className="relative  w-28 px-1 py-1 flex justify-center items-center rounded-md h-12 bg-gray-100 mr-32 max-md:mr-2 max-sm:mr-2">
+        <div className="relative  w-28 px-1 py-1 flex justify-center items-center rounded-sm h-12 bg-gray-100 mr-32 max-md:mr-2 max-sm:ml-2">
           <div className="relative rounded-full h-auto w-auto  bg-slate-200 py-1 px-1">
             {" "}
             <p className="text-gray-500 rounded-full text-2xl">AA</p>

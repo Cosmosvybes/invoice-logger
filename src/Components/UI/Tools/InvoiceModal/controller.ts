@@ -1,76 +1,5 @@
 export const forms = [
   {
-    type_: "text",
-    name: "Client",
-    value: "",
-    placeholder: "Client's name",
-  },
-  {
-    type_: "text",
-    name: "ClientAddress",
-    value: "",
-    placeholder: "Client's address",
-  },
-  {
-    type_: "text",
-    name: "City",
-    value: "",
-    placeholder: "City/Postal",
-  },
-  {
-    type_: "text",
-    name: "State",
-    value: "",
-    placeholder: "State",
-  },
-  {
-    type_: "text",
-    name: "Country",
-    value: "",
-    placeholder: "Country",
-  },
-
-  // {
-  //   type_: "text",
-  //   name: "AdditionalInfo",
-  //   value: "",
-  //   placeholder: "Additional Information",
-  // },
-
-  {
-    type_: "text",
-    name: "paymentInformation",
-    value: "",
-    placeholder: "payment Information",
-  },
-  {
-    type_: "text",
-    name: "Notes",
-    value: "",
-    placeholder: "Transaction  Notes",
-  },
-  {
-    type_: "text",
-    name: "shippingAddress",
-    value: "",
-    placeholder: "Shipping Address",
-  },
-  {
-    type_: "date",
-    name: "DateIssued",
-    value: "",
-    placeholder: "Begin on",
-  },
-  {
-    type_: "date",
-    name: "DateDue",
-    value: "",
-    placeholder: "Due on",
-  },
-];
-
-export const senderInfo = [
-  {
     type: "text",
     name: "Business",
     value: "",
@@ -99,6 +28,68 @@ export const senderInfo = [
     name: "BusinessCountry",
     value: "",
     placeholder: "Country",
+  },
+
+  {
+    type: "text",
+    name: "Client",
+    value: "",
+    placeholder: "Client's name",
+  },
+  {
+    type: "text",
+    name: "ClientAddress",
+    value: "",
+    placeholder: "Client's address",
+  },
+  {
+    type: "text",
+    name: "City",
+    value: "",
+    placeholder: "City/Postal",
+  },
+  {
+    type: "text",
+    name: "State",
+    value: "",
+    placeholder: "State",
+  },
+  {
+    type: "text",
+    name: "Country",
+    value: "",
+    placeholder: "Country",
+  },
+
+  {
+    type: "text",
+    name: "paymentInformation",
+    value: "",
+    placeholder: "payment Information",
+  },
+  {
+    type: "text",
+    name: "Notes",
+    value: "",
+    placeholder: "Transaction  Notes",
+  },
+  {
+    type: "text",
+    name: "shippingAddress",
+    value: "",
+    placeholder: "Shipping Address",
+  },
+  {
+    type: "date",
+    name: "DateIssued",
+    value: "",
+    placeholder: "Begin on",
+  },
+  {
+    type: "date",
+    name: "DateDue",
+    value: "",
+    placeholder: "Due on",
   },
 ];
 
@@ -136,10 +127,9 @@ const newCLientsFormField = [
 ];
 
 export default function useModalController() {
-  let combinedForm = [...senderInfo, ...forms];
+  let combinedForm = [...forms];
   return {
     forms,
-    senderInfo,
     combinedForm,
     newCLientsFormField,
   };

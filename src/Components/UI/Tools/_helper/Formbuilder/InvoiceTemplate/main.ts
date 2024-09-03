@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import "react-toastify/ReactToastify.css";
 import { ItemsType, VAT_DISCOUNT } from "../type";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
@@ -7,29 +7,31 @@ import {
   updateDiscount,
   updateVAT,
 } from "../../../../../../States/Slices/invoice";
-
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 
 
 export default function useTemplateController() {
+
+  // 
   const { id } = useParams();
+  const { draft, staticForm, loading } = useAppSelector(
+    (state) => state.invoice
+  );
 
   let invoiceInformation: any;
   //invoice state
-  const { draft, staticForm } = useAppSelector((state) => state.invoice);
 
   if (id) {
     invoiceInformation = draft?.find((invoice) => invoice.id == id)!;
   } else {
-    // console.log(draft);
     invoiceInformation = draft?.find(
       (invoice) => invoice.id == localStorage.getItem("id")
     )!;
   }
 
   const token = String(localStorage.getItem("token"));
- 
+
   //
   const [tax_discount_input] = useState<VAT_DISCOUNT[]>([
     //invoice discounts form fields
@@ -141,19 +143,6 @@ export default function useTemplateController() {
         );
   };
 
-  let updatedBalance = useMemo(() => {
-    let values = (
-      invoiceInformation.TOTAL -
-      (Number(invoiceInformation.Discount) / 100) * invoiceInformation.TOTAL +
-      (Number(invoiceInformation.VAT) / 100) * invoiceInformation.TOTAL
-    ).toFixed(2);
-    return values;
-  }, [
-    invoiceInformation.VAT,
-    invoiceInformation.Discount,
-    invoiceInformation.itemList,
-  ]);
-
   const handleView = () => {
     return setViewMode(true);
   };
@@ -179,8 +168,8 @@ export default function useTemplateController() {
     invoiceInformation,
     staticForm,
     updateDiscount,
-    updateVAT,
-    updatedBalance,
     token,
+    loading,
+    updateVAT,
   };
 }

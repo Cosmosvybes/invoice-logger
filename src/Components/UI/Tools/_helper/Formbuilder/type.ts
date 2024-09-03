@@ -1,22 +1,3 @@
-type InputModel = {
-  type_: string;
-  name: string | any;
-  value: string | boolean;
-  placeholder?: string;
-};
-
-export type SENDER_ = {
-  type: string;
-  name: string;
-  value: string;
-  placeholder: string;
-};
-
-export interface FORM {
-  reciepient: InputModel[];
-  sender: SENDER_[];
-  item?: object[];
-}
 
 export type ItemsType = {
   type: string;
