@@ -1,19 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../UI/Interfaces/Pages/Dashboard/Dashboard";
 import Nav from "../UI/Tools/Layout/Nav/Nav";
-import Create from "../UI/Interfaces/Pages/Create";
+import Create from "../UI/Interfaces/Pages/Dashboard/Create-F/Create";
 import Invoices from "../UI/Interfaces/Pages/Dashboard/Invoices/Invoices";
 import ClientPage from "../UI/Interfaces/Pages/Client/ClientPage";
 import AddClient from "../UI/Interfaces/Pages/Client/AddClient";
 import Profile from "../UI/Interfaces/Pages/Profile/Profile";
 import SignIn from "../UI/Interfaces/Pages/Onboard/signin/SignIn";
-import { useAppSelector } from "../../States/hoooks/hook";
-const _Routes = () => {
-  const { isLoggedIn } = useAppSelector((state) => state.invoice);
 
+const _Routes = () => {
   return (
     <>
-      {isLoggedIn && <Nav />}
+      <Nav />
       <Routes>
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>

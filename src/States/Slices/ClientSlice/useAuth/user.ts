@@ -1,22 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { initialStateI, userToken } from "./types";
+import { toast } from "react-toastify";
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async (token: string | undefined) => {
+  async (token: string) => {
     try {
-      const response = await fetch("http://localhost:8080/api/user/", {
+      const response = await fetch("http://localhost:8080/api/user", {
         headers: { Authorization: `Bearer ${token}` },
+        method: "GET",
       });
       if (response.status != 200) {
         return location.replace("/");
       }
-      const userData = await response.json();
-      return userData;
+      const user = await response.json();
+      return user;
     } catch (error: any) {
-        if (error.response.status == 200) {
-          return location.replace("/");
-        }
+      toast.error("session expired", { theme: "colored" });
+      return location.replace("/");
     }
   }
 );
@@ -25,12 +26,16 @@ const initialState: initialStateI = {
   userToken: "",
   isLoggedIn: false,
   loading: false,
+  account: {},
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    switchAuth: (state) => {
+      state.isLoggedIn = false;
+    },
     setIsLoggedIn: (state, action: PayloadAction<userToken>) => {
       const { token }: userToken = action.payload;
       state.userToken = token;
@@ -39,6 +44,7 @@ const userSlice = createSlice({
     logOut: (state) => {
       state.isLoggedIn = false;
       state.userToken = undefined;
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -47,12 +53,12 @@ const userSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-      state.isLoggedIn = true;
       const { token } = action.payload;
       state.userToken = token;
+      state.account = action.payload;
     });
   },
 });
 
 export default userSlice.reducer;
-export const { setIsLoggedIn } = userSlice.actions;
+export const { setIsLoggedIn, logOut } = userSlice.actions;

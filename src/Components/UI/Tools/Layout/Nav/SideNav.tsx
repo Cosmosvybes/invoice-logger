@@ -6,7 +6,13 @@ import {
 import { createInvoice } from "../../../../../States/Slices/invoice";
 interface Main {
   title: string;
-  children: { title: string; id: number; path: string; icon: any }[];
+  children: {
+    title: string;
+    id: number;
+    path: string;
+    icon: any;
+    onclick?: any;
+  }[];
 }
 const SideNav = ({ title, children }: Main) => {
   const { staticForm } = useAppSelector((state) => state.invoice);
@@ -44,10 +50,12 @@ const SideNav = ({ title, children }: Main) => {
         <h6 className="font-bold text-gray-500 ml-1 mb-2">{title}</h6>
 
         <div className="relative flex gap-7 flex-col">
-          {children.map(({ title, path, icon }) => (
+          {children.map(({ title, path, icon, onclick }) => (
             <Link
               onClick={() =>
-                title == "New invoice" && handleCreateDefaultInvoice()
+                title == "New invoice"
+                  ? handleCreateDefaultInvoice()
+                  : onclick()
               }
               key={title}
               to={`/${path}`}

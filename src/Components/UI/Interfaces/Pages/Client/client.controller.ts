@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Client } from "../../../../../States/Slices/ClientSlice/client.types";
+import { setIsLoggedIn } from "../../../../../States/Slices/ClientSlice/useAuth/user";
+import { useAppDispatch } from "../../../../../States/hoooks/hook";
 
 export default function useClientDataController(clients: Client[]) {
+  const dispatch = useAppDispatch()
+  dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   const [notFound] = useState([
     { id: 1, text: "Empty" },
     { id: 1, text: "Empty" },

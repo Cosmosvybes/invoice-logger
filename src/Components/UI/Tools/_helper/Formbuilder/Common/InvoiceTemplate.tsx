@@ -4,13 +4,11 @@ import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../../States/Slices/invoice";
 import { MoreVertical } from "react-huge-icons/bulk";
 import { useLayoutEffect, useRef, useState } from "react";
-import { useAppSelector } from "../../../../../../States/hoooks/hook";
 
 
-// 
+//
 const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
   const dispatch = useAppDispatch();
-  const { userToken } = useAppSelector((state) => state.userSlice);
   const invoiceOptions = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -52,7 +50,12 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
             </Link>
             <button
               onClick={() =>
-                dispatch(deleteInvoice({ id: invoice.id, token: userToken }))
+                dispatch(
+                  deleteInvoice({
+                    id: invoice.id,
+                    token: String(localStorage.getItem("token")),
+                  })
+                )
               }
               className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center 0 font-light px-2 w-full"
             >

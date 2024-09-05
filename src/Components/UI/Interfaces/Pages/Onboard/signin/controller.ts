@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../../../../../States/hoooks/hook";
-import { setIsLoggedIn } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
+
 
 //
 export default function useSigninController() {
-  const dispatch = useAppDispatch();
   const [formFields] = useState([
     {
       id: 1,
@@ -34,6 +32,7 @@ export default function useSigninController() {
   );
 
   const [formValues, setFormValues]: any = useState(values);
+
   const handleChange = (newValue: string, inputName: string) => {
     setFormValues((prev: any) => ({
       ...prev,
@@ -64,9 +63,8 @@ export default function useSigninController() {
       });
 
       if (response.status == 200) {
-        location.replace("/dashboard");
         localStorage.setItem("token", token);
-        dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+        location.replace("/dashboard");
       }
     }
   };

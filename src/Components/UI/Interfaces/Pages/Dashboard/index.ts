@@ -1,14 +1,17 @@
 import { useLayoutEffect, useState } from "react";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
-import { getUser } from "../../../../../States/Slices/ClientSlice/useAuth/user";
+import {
+  getUser,
+  setIsLoggedIn,
+} from "../../../../../States/Slices/ClientSlice/useAuth/user";
 
 //
 export default function useDashboardController(icon: any[]) {
   const dispatch = useAppDispatch();
 
-
   useLayoutEffect(() => {
     dispatch(getUser(localStorage.getItem("token")!));
+    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);
 
   const [currentView, setCurrentView] = useState("invoice");

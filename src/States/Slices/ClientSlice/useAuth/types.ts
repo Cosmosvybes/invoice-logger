@@ -5,4 +5,5 @@ export interface initialStateI {
   userToken: string | undefined;
   isLoggedIn: boolean;
   loading: boolean;
+  account: object | any;
 }

@@ -39,13 +39,14 @@ export const getUser = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
         method: "GET",
       });
+      if (response.status != 200) {
+        return location.replace("/");
+      }
       const user = await response.json();
       return user;
     } catch (error: any) {
-      if (error.response && error.response.status == 401) {
-        toast.error("session expired", { theme: "colored" });
-        return location.replace("/");
-      }
+      toast.error("session expired", { theme: "colored" });
+      return location.replace("/");
     }
   }
 );
@@ -58,7 +59,7 @@ const initialState: ACCOUNT = {
   revenue: 0,
   staticForm: invoiceStaticValue,
   loading: false,
-  isLoggedIn: false,
+  currentInvoice: {},
 };
 
 const invoiceSlice = createSlice({
@@ -92,9 +93,29 @@ const invoiceSlice = createSlice({
     },
 
     deleteInvoice: (state, action: PayloadAction<deletingItemId>) => {
-      const { id }: deletingItemId = action.payload;
+      const { id, token }: deletingItemId = action.payload;
       const invoice = state.draft.find((inv) => inv.id == id);
       state.draft.splice(state.draft.indexOf(invoice!), 1);
+
+      fetch(`http://localhost:8080/api/invoice/delete/?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
+        .then((result) => {
+          if (result.status == 403) {
+            return location.replace("/");
+          }
+          return result.json();
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            return location.replace("/");
+          }
+        });
     },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
@@ -143,6 +164,7 @@ const invoiceSlice = createSlice({
         ...invoice,
       });
 
+      sessionStorage.setItem("draft", JSON.stringify(state.draft));
       fetch("http://localhost:8080/api/new/invoice", {
         method: "POST",
         headers: {
@@ -158,6 +180,7 @@ const invoiceSlice = createSlice({
           return result.json();
         })
         .then((_) => {
+          localStorage.setItem("invoiceInformation", JSON.stringify(invoice));
           toast.success("New Invoice created", { theme: "colored" });
         })
         .catch((err) => {
@@ -374,11 +397,9 @@ const invoiceSlice = createSlice({
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
       const { draft, sent, revenue } = action.payload;
-
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
-      state.isLoggedIn = true;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;

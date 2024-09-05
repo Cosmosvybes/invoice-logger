@@ -115,12 +115,12 @@ export default function useProductsListController() {
   return {
     draft,
     invoiceInformation,
-    dispatch,
     id,
     _id_,
+    products,
+    dispatch,
     remove,
     handleChange,
-    products,
     addNew,
   };
 }

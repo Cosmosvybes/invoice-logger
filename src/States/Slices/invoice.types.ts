@@ -76,7 +76,7 @@ export interface ACCOUNT {
   revenue: number;
   staticForm: object | any;
   loading: boolean;
-  isLoggedIn: boolean;
+  currentInvoice: any;
 }
 export interface productKeyValue {
   id: number;

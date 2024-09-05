@@ -2,7 +2,7 @@ import { ArrowRight } from "react-huge-icons/outline";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
 import InvoiceTable from "./InvoiceTable";
 import Body from "../../Interfaces/Pages/Dashboard/Invoices/List/Body";
@@ -14,18 +14,20 @@ const AccountDetails = () => {
   const [currrentPage, setCurrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
   let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
-
   const currentInvoices = draft?.slice(indexOfFirstInvoice, indexOfLastInvoice);
 
   const handlePaginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+  useEffect(() => {
+    if (typeof draft == undefined) {
+      location.replace("/");
+    }
+  }, []);
 
   return (
     <>
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
-
-
         <div className="relative h-auto  w-full  max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-1  font-bold">
           <div className="w-full  mt-5 block relative">
             <p className="text-slate-900 px-3 text-xl max-sm:text-sm font-light ">
