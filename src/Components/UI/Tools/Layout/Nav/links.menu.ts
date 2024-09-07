@@ -1,8 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../States/hoooks/hook";
+import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import { logOut } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 
 export default function useNavMenu(icons: any) {
@@ -20,8 +17,7 @@ export default function useNavMenu(icons: any) {
 
   const handleSignOut = () => {
     dispatch(logOut());
-    location.href = "/";
-    // location.assign('/')
+    location.assign("/");
   };
 
   const sideMenu = [
@@ -30,14 +26,14 @@ export default function useNavMenu(icons: any) {
       title: "Creator",
       children: [
         {
-          id: 1,
+          id: 18,
           title: "Dashboard",
           path: "dashboard",
           icon: icons[8],
           onclick: "",
         },
         {
-          id: 1,
+          id: 13,
           title: "Invoices",
           path: "invoices",
           icon: icons[0],
@@ -51,14 +47,14 @@ export default function useNavMenu(icons: any) {
           onclick: "",
         },
         {
-          id: 1,
+          id: 19,
           title: "Clients",
           path: "clients",
           icon: icons[2],
           onclick: "",
         },
         {
-          id: 1,
+          id: 190,
           title: "Add Client",
           path: "client/new",
           icon: icons[3],
@@ -71,7 +67,7 @@ export default function useNavMenu(icons: any) {
       title: "Account",
       children: [
         {
-          id: 1,
+          id: 16,
           title: "Profile",
           path: "profile",
           icon: icons[4],
@@ -85,18 +81,11 @@ export default function useNavMenu(icons: any) {
           onclick: "",
         },
         {
-          id: 1,
+          id: 3,
           title: "Settings",
           path: "settings",
           icon: icons[6],
           onclick: "",
-        },
-        {
-          id: 1,
-          title: "Log out",
-          path: "",
-          icon: icons[7],
-          onclick: handleSignOut,
         },
       ],
     },
@@ -116,14 +105,6 @@ export default function useNavMenu(icons: any) {
     };
   }, []);
 
-  // useLayoutEffect(() => {
-  //   if (!isLoggedIn) {
-  //     return;
-  //   } else {
-  //     location.replace("/");
-  //   }
-  // }, [isLoggedIn]);
-
   return {
     links,
     active,
@@ -132,5 +113,6 @@ export default function useNavMenu(icons: any) {
     sideMenu,
     viewMode,
     setMode,
+    handleSignOut,
   };
 }

@@ -57,9 +57,9 @@ const initialState: ACCOUNT = {
   overdue: [],
   paid: [],
   revenue: 0,
+  clients: [],
   staticForm: invoiceStaticValue,
   loading: false,
-  currentInvoice: {},
 };
 
 const invoiceSlice = createSlice({
@@ -164,7 +164,6 @@ const invoiceSlice = createSlice({
         ...invoice,
       });
 
-      sessionStorage.setItem("draft", JSON.stringify(state.draft));
       fetch("http://localhost:8080/api/new/invoice", {
         method: "POST",
         headers: {
@@ -396,10 +395,11 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-      const { draft, sent, revenue } = action.payload;
+      const { draft, sent, revenue, clients } = action.payload;
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
+      state.clients = clients;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;

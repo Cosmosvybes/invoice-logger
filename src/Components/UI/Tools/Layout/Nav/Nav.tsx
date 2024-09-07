@@ -27,8 +27,16 @@ const Nav = () => {
     <Logout className="inline text-xl" />,
     <Dashboard className="inline text-xl" />,
   ];
-  const { active, handleActive, links, sideMenu, viewMode, setMode, navRef } =
-    useNavMenu(icons);
+  const {
+    active,
+    handleActive,
+    handleSignOut,
+    links,
+    sideMenu,
+    viewMode,
+    setMode,
+    navRef,
+  } = useNavMenu(icons);
   const { isLoggedIn, account } = useAppSelector((state) => state.userSlice);
 
   return (
@@ -80,12 +88,19 @@ const Nav = () => {
                 </div>
               </div>
 
-              <div className="relative px-5 ">
+              <div className="relative px-5">
                 {sideMenu.map(({ title, children }) => (
                   <div className="relative" key={title}>
                     <SideNav title={title} children={children!} />
                   </div>
                 ))}
+                <button
+                  onClick={handleSignOut}
+                  className=" py-1 w-auto px-1 border bg-gray-100 flex justify-start items-center gap-2 mt-4  rounded-sm mb-4 text-gray-600"
+                >
+                  {" "}
+                  <Logout className="text-black inline text-xl" /> Sign out
+                </button>
               </div>
             </div>
           )}

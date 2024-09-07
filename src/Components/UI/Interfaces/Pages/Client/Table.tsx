@@ -24,10 +24,10 @@ const Table_ = () => {
             .includes(search.toLowerCase().trim()) ||
           user.country.toLowerCase().includes(search.toLowerCase().trim())
     ).length == 0 ? (
-      <tr className="text-center row-span-full max-sm:text-xs ">
+      <tr className="text-center row-span-full max-sm:text-xs font-light text-black ">
         {notFound.map((_, i) => (
           <td className="text-gray-400" key={i}>
-            {_.text}
+            {""}
           </td>
         ))}
       </tr>
@@ -49,25 +49,25 @@ const Table_ = () => {
         .map((row, i) => (
           <tr
             key={i}
-            className={`${i % 2 == 0 ? "bg-gray-100" : "bg-gray-200"}`}
+            className={`${i % 2 == 0 ? "bg-gray-50" : "bg-gray-100"}`}
           >
             <td className="text-center max-sm:text-sm gap-2   py-4">
               {String(row.id).slice(10, 15)}
             </td>
-            <td className="text-center max-sm:text-xs  py-4">{row.name}</td>
-            <td className="text-center max-sm:text-xs  py-4">
+            <td className="text-center max-sm:text-xs font-light text-black   py-4">{row.name}</td>
+            <td className="text-center max-sm:text-xs font-light text-black  py-4">
               {String(row.email).length > 10 &&
                 String(row.email).slice(0, 9) + "..."}
             </td>
-            <td className="text-center max-sm:text-xs  py-4">
+            <td className="text-center max-sm:text-xs font-light text-black  py-4">
               {String(row.address).length > 10
                 ? String(row.address).slice(0, 9) + "..."
                 : row.address}
             </td>
-            <td className="text-center max-sm:text-xs  py-4">
+            <td className="text-center max-sm:text-xs font-light text-black  py-4">
               {row.cityStatePostal}
             </td>
-            <td className="text-center max-sm:text-xs  py-4">{row.country}</td>
+            <td className="text-center max-sm:text-xs font-light text-black  py-4">{row.country}</td>
           </tr>
         ))
     );

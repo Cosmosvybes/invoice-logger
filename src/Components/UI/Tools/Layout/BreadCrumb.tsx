@@ -13,7 +13,6 @@ const BreadCrumb = ({
   linkTitle: string;
 }) => {
   const { staticForm } = useAppSelector((state) => state.invoice);
-
   const dispatch = useAppDispatch();
 
   //new invoice
@@ -51,7 +50,7 @@ const BreadCrumb = ({
       {useLink && (
         <Link
           to={`/${linkTitle}`}
-          onClick={() => handleNewInvoice()}
+          onClick={() => linkTitle == "new/invoice" && handleNewInvoice()}
           className="bg-black h-16 max-sm:h-12 max-sm:text-sm font-normal flex justify-center items-center rounded-md text-gray-50 w-52 max-sm:w-32"
         >
           <p className="flex items-center justify-center text-white font-normal">

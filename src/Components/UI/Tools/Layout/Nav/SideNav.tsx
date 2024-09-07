@@ -14,7 +14,9 @@ interface Main {
     onclick?: any;
   }[];
 }
+
 const SideNav = ({ title, children }: Main) => {
+
   const { staticForm } = useAppSelector((state) => state.invoice);
   const dispatch = useAppDispatch();
 
@@ -50,12 +52,10 @@ const SideNav = ({ title, children }: Main) => {
         <h6 className="font-bold text-gray-500 ml-1 mb-2">{title}</h6>
 
         <div className="relative flex gap-7 flex-col">
-          {children.map(({ title, path, icon, onclick }) => (
+          {children.map(({ title, path, icon }) => (
             <Link
               onClick={() =>
-                title == "New invoice"
-                  ? handleCreateDefaultInvoice()
-                  : onclick()
+                title == "New invoice" && handleCreateDefaultInvoice()
               }
               key={title}
               to={`/${path}`}

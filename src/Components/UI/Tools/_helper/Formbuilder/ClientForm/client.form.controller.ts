@@ -29,20 +29,32 @@ export default function useClientFormController() {
     }));
   };
 
-  const handleAddNewClient = () => {
+  const token = localStorage.getItem("token");
+  const handleAddNewClient = async () => {
     const { Name, Email, City_Postal_State, Country, Address } = formValues;
-    dispatch(
-      add({
-        name: Name,
-        email: Email,
-        address: Address,
-        country: Country,
-        cityStatePostal: City_Postal_State,
-        id: Date.now(),
-      })
-    );
+    const client = {
+      name: Name,
+      email: Email,
+      address: Address,
+      country: Country,
+      cityStatePostal: City_Postal_State,
+      id: Date.now(),
+    };
+
+    const response = await fetch("http://localhost:8080/api/client/new", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify(client),
+    });
+    if (!response.ok) {
+      location.replace("/");
+    }
+    toast.success("New Client added", { theme: "light" });
     Object.keys(clientFormValues).map((name) => updateClientForm("", name));
-    toast.success("New Client added", { theme: "light" }); //clear input values
+    return dispatch(add({ ...client })); //clear input values
   };
 
   return {

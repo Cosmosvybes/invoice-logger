@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-
 //
 export default function useSigninController() {
   const [formFields] = useState([
@@ -56,6 +55,8 @@ export default function useSigninController() {
       return toast.warning(result.response, { theme: "colored" });
     } else if (response.status == 404) {
       return toast.warning(result.response, { theme: "dark" });
+    } else if (response.status == 500) {
+      return toast.error(result.response, { theme: "dark" });
     } else {
       const response = await fetch(`http://localhost:8080/api/dashboard`, {
         headers: { Authorization: `Bearer ${token}` },
