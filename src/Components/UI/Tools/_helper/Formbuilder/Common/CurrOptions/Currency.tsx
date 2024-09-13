@@ -28,7 +28,7 @@ const Currency = () => {
         <select
           onChange={handleCurrencyChange}
           id="currencies"
-          className="px-2 w-auto py-2"
+          className="px-2 w-auto py-1"
         >
           <option>--select--</option>
           <option>NGN</option>

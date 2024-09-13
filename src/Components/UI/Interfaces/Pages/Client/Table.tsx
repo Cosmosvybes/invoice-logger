@@ -3,9 +3,7 @@ import { Input, Table } from "reactstrap";
 import useTableController from "./table.controller";
 import Empty from "../Dashboard/Invoices/Empty";
 import Paginate from "./Paginate";
-
 import useClientDataController from "./client.controller";
-import { FilterTwoLineVertical } from "react-huge-icons/bulk";
 const Table_ = () => {
   const { clients, search, handleSearch } = useTableController();
 
@@ -76,7 +74,6 @@ const Table_ = () => {
     <>
       <div className="relative max-sm:w-full">
         <div className="relative flex justify-start items-center gap-3 max-sm:w-full h-auto w-full mt-5 max-sm:px-1 max-sm:mt-3">
-          <FilterTwoLineVertical className="text-4xl" />
           <Input
             className="w-1/4 max-sm:w-full border px-3 py-3 outline-none rounded-md"
             placeholder="Search client name, ID, city or country"
@@ -89,7 +86,7 @@ const Table_ = () => {
           <thead>
             <tr>
               {tableColums.map((_, i) => (
-                <th className="text-slate-800" key={i}>
+                <th className="text-slate-800 text-center" key={i}>
                   {_.text}
                 </th>
               ))}

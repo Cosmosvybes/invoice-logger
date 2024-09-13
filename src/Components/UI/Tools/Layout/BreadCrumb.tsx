@@ -27,7 +27,7 @@ const BreadCrumb = ({
         TOTAL: 0,
         VAT: "",
         Discount: "",
-        currency: "USD",
+        currency: "",
         status: "Draft",
         token,
         createdAt: new Date().toLocaleString("en-GB", {

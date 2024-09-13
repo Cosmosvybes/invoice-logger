@@ -60,7 +60,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
           ))}
         </tbody>
       </Table>
-      <hr className="bg-gray-600" />
+    
       <div className="relative flex justify-end max-sm:justify-start items-center w-full mt-2">
         <Paginate
           invoices={currentData}

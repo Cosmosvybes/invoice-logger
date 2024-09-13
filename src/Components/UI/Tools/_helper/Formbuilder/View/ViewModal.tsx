@@ -12,11 +12,11 @@ const ViewModal = ({
   return (
     <>
       <div className="absolute h-auto max-sm:h-auto w-full flex   max-sm:px-0 max-sm:py-0 justify-center items-center">
-        <div className="relative  bg-white shadow-md  rounded-xl  z-30 flex flex-col py-5 px-5 ">
+        <div className="relative bg-white shadow-md  rounded-xl  z-30 flex flex-col px-5 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-normal text-black">Invoice Preview</h1>
 
-            <div className="relative block mt-2">
+            <div className="relative block">
               <p className="text-black  font-normal">Invoice ID- {data.id}</p>
               <h1 className="text-2xl font-normal text-black underline">
                 Business Details
@@ -96,7 +96,7 @@ const ViewModal = ({
                         {unitPrice}
                       </p>
                       <p className="text-black text-center  font-normal">
-                        {unitTotal}
+                        {Number(unitTotal).toFixed(2)}
                       </p>
                     </div>
                   )
@@ -105,7 +105,7 @@ const ViewModal = ({
             </div>
           </div>
           <hr className="w-full border border-black" />
-          <div className="relative w-full h-auto grid grid-cols-1  gap-3 mt-5 text-black">
+          <div className="relative w-full h-auto grid grid-cols-1  gap-3 mt-2 text-black">
             <div className="relative flex  justify-start items-center">
               <p className="text-black  font-normal">Discount- </p>
               <p className="underline text-black  font-normal">
@@ -119,7 +119,7 @@ const ViewModal = ({
             <div className="relative flex justify-start gap-1 items-center">
               <p className="text-black  font-normal">Total - </p>
               <p className="underline text-black  font-normal">
-                {Number(data.TOTAL).toFixed(2) + " "}{" "}
+                {Number(data.TOTAL).toLocaleString() + " "}{" "}
                 {data.currency != "--select--" && data.currency}
               </p>
             </div>

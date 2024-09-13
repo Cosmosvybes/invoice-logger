@@ -1,8 +1,8 @@
-import { Card, CardBody, Form, Input } from "reactstrap";
+import { Button, Card, CardBody, Form, Input } from "reactstrap";
 import useTemplateController from "./main";
 import { EyeLightDouble } from "react-huge-icons/outline";
 import useModalController from "../../../InvoiceModal/controller";
-import Btn from "../Btn";
+
 import ViewModal from "../View/ViewModal";
 import { SendFast } from "react-huge-icons/bulk";
 import ProductsList from "../ProductsList/ProductsList";
@@ -24,14 +24,6 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
     token,
     // loading,
   } = useTemplateController();
-
-  const btns = [
-    {
-      text: "PREVIEW",
-      icon: <EyeLightDouble className="text-3xl text-gray-50 inline" />,
-      func: () => handleView(),
-    },
-  ];
 
   //   //?? ///////////////////////////////////////////////
   // FORM BUILDER TEMPLATE
@@ -70,7 +62,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
             <Input
               title="date"
               type="date"
-              className=" bg-inherit px-1 font-bold border w-44 max-sm:w-auto  max-sm:text-xs text-slate-400 border-none"
+              className=" bg-inherit px-1 font-bold border w-52   max-sm:w-full  max-sm:text-xs text-slate-400 border-none"
               value={invoiceInformation[input.name]}
               onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
             />
@@ -80,7 +72,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
         return (
           <div className="relative" key={index}>
             <Input
-              className="px-2 py-3 text-xl font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-black w-96 max-sm:w-full"
+              className="px-2 border-none py-2 text-xl  font-normal max-sm:text-xs outline-none rounded-sm bg-inherit text-black w-96 max-sm:w-full"
               type="text"
               value={invoiceInformation[input.name]}
               placeholder={input.placeholder}
@@ -92,9 +84,9 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
   });
 
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
-    <div className="relative   max-sm:px-0 flex  items-center " key={input.id}>
+    <div className="relative   max-sm:px-0 flex  items-center" key={input.id}>
       <Input
-        className=" py-2 text-xl text-center max-sm:text-xs  border-b max-md:text-md  outline-none rounded-sm text-black  font-normal w-36  max-sm:w-full"
+        className=" py-2 text-xl text-center max-sm:text-xs  border-b max-md:text-md  outline-none rounded-sm text-black px-0 font-normal w-36  max-sm:w-full"
         type={input.type}
         placeholder={`${input.placeholder} %`}
         value={invoiceInformation[input.name]}
@@ -123,7 +115,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
 
   return (
     <>
-      <Card>
+      <Card className="border-none">
         <CardBody>
           <section className="flex bg-white relative  transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
             {viewMode && (
@@ -133,25 +125,29 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               />
             )}
 
-            <div className="relative flex justify-end gap-5  items-center px-0 h-12 mb-4 ">
-              {btns.map((btn) => (
-                <div className="relative h-14 w-auto" key={btn.text}>
-                  <Btn text={btn.text} icon={btn.icon} callback={btn.func} />
-                </div>
-              ))}
+            <div className="relative flex justify-end items-center px-0 h-12 mb-4 gap-2">
+              <Button
+               
+                onClick={() => handleView()}
+                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black   text-center flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
+              >
+                <EyeLightDouble className="text-3xl text-white inline" />
+                Preview
+              </Button>
 
-              <button
+              <Button
+               
                 onClick={() => {
                   console.log(invoiceInformation);
                 }}
-                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border border-gray-50  text-center flex justify-center items-center transition duration-500 px-2 mr-5  text-gray-black text-sm font-normal rounded-md "
+                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black  text-center flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
               >
-                <SendFast className="text-4xl  mt-0.5 inline text-black " />
+                <SendFast className="text-4xl  mt-0.5 inline text-white " />
                 SEND
-              </button>
+              </Button>
             </div>
 
-            <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-5 max-sm:gap-2">
+            <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-2 max-sm:gap-2">
               {FORM}
             </Form>
 
@@ -196,7 +192,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                     Total
                   </p>
                   <p className="text-xl  text-gray-500 mr-2  font-normal">
-                    {Number(invoiceInformation.TOTAL).toFixed(2)}{" "}
+                    {Number(invoiceInformation.TOTAL).toLocaleString()}{" "}
                     {invoiceInformation.currency != "--select--" &&
                       invoiceInformation.currency}
                   </p>

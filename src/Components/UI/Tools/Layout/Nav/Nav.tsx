@@ -42,7 +42,7 @@ const Nav = () => {
   return (
     <>
       {isLoggedIn && (
-        <div className="max-md:px-0 index-10 border flex justify-between  items-center shadow-md shadow-gray-50 left-0  h-28 max-sm:h-16 ">
+        <div className="max-md:px-0 index-10  flex justify-between  items-center shadow-md shadow-gray-50 left-0  h-28 max-sm:h-16 ">
           <div className="relative flex  px-28 gap-4 justify-start w-1/4 max-sm:hidden">
             {links.map((link) => (
               <NavLink
@@ -73,7 +73,7 @@ const Nav = () => {
           {viewMode && (
             <div
               ref={navRef}
-              className="side-bar absolute right-28 z-20 max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-72 max-sm:left-0 max-sm:top-16  top-28 h-auto w-auto  flex"
+              className="side-bar absolute right-28 z-20 max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-82 max-sm:left-0 max-sm:top-16  top-28 h-auto w-96  flex"
             >
               <div className="relative  flex px-3 h-20 border-b border-gray-300 w-full items-center gap-2  justify-start">
                 <span className="bg-black text-white w-10 h-10 rounded-full text-center flex justify-center items-center font-normal">
@@ -88,7 +88,7 @@ const Nav = () => {
                 </div>
               </div>
 
-              <div className="relative px-5">
+              <div className="relative px-3 z-20">
                 {sideMenu.map(({ title, children }) => (
                   <div className="relative" key={title}>
                     <SideNav title={title} children={children!} />

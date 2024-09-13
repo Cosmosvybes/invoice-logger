@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../../States/Slices/invoice";
 import { MoreVertical } from "react-huge-icons/bulk";
 import { useLayoutEffect, useRef, useState } from "react";
+// import { Card, CardBody } from "reactstrap";
 
 
 //
@@ -63,7 +64,10 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
             </button>
           </div>
         )}
-        <div className="relative w-full px-2 flex justify-between items-center">
+  
+
+    
+        <div className="relative w-full h-auto flex justify-between items-center">
           <div className="relative justify-start items-center ">
             {" "}
             <h1 className="text-slate-950 text-2xl inline font-semibold">
@@ -78,10 +82,10 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           />
         </div>
 
-        <div className="relative w-full flex justify-between px-2 max-sm:px-2">
+        <div className="relative w-full flex justify-between ">
           <p className="text-slate-950 ">ID- {invoice.id}</p>{" "}
         </div>
-        <div className="relative h-auto w-full flex text-sm flex-col gap-5  justify-between px-2">
+        <div className="relative h-auto w-full flex text-sm flex-col gap-2  justify-between ">
           <p className="text-slate-950 font-semibold ">
             Created At: {invoice.createdAt}
           </p>

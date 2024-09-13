@@ -11,7 +11,7 @@ const ProductsList = () => {
 
   return (
     <>
-      <h1 className="text-2xl mt-3 px-3 mb-2 ">Products List</h1>
+      <h1 className="text-2xl mt-3 px-2 mb-2 ">Products List</h1>
       <div className="relative bg-gray-50 items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-full">
         <p className="text-black text-center  font-light px-2 text-xl max-sm:text-xs">
           Description
@@ -34,31 +34,31 @@ const ProductsList = () => {
         {invoiceInformation.itemList.map((_: Item, i: number) => (
           <div className="relative grid grid-cols-5 gap-1" key={i}>
             <Input
-              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Description"}
               value={_.description}
               onChange={(e) => handleChange(e, i, "description")}
             />
             <Input
-              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Quantity"}
               value={_.quantity}
               onChange={(e) => handleChange(e, i, "quantity")}
             />
             <Input
-              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Unit price"}
               value={_.unitPrice}
               onChange={(e) => handleChange(e, i, "unitPrice")}
             />
             <Input
-              className={`px-2 py-3 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Sub Total"}
-              value={_.unitTotal}
+              value={Number(_.unitTotal).toFixed(2)}
               onChange={(e) => handleChange(e, i, "unitTotal")}
             />
 

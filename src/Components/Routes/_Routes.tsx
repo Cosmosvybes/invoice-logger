@@ -7,6 +7,7 @@ import ClientPage from "../UI/Interfaces/Pages/Client/ClientPage";
 import AddClient from "../UI/Interfaces/Pages/Client/AddClient";
 import Profile from "../UI/Interfaces/Pages/Profile/Profile";
 import SignIn from "../UI/Interfaces/Pages/Onboard/signin/SignIn";
+import Settings from "../UI/Interfaces/Pages/Settings/Settings";
 
 const _Routes = () => {
   return (
@@ -20,6 +21,7 @@ const _Routes = () => {
         <Route path="/clients" element={<ClientPage />}></Route>
         <Route path="/client/new" element={<AddClient />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/account/settings" element={<Settings />}></Route>
         <Route path="/invoice/update/:id" element={<Create />}></Route>
       </Routes>
     </>

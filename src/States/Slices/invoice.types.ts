@@ -77,6 +77,19 @@ export interface ACCOUNT {
   staticForm: object | any;
   loading: boolean;
   clients: any[];
+  settings: {
+    tokenBalanceNotification: boolean;
+    invoiceSentNotication: boolean;
+    defaultCurrency: boolean;
+    applyTax: boolean;
+    defaultPaymentTerms: boolean;
+    revenueNotification: boolean;
+    sharingToken: boolean;
+    autoRenewal: boolean;
+    businessName: string;
+    businessAddress: string;
+    [key: string]: boolean | string;
+  };
 }
 export interface productKeyValue {
   id: number;

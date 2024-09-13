@@ -9,25 +9,25 @@ export const forms = [
     type: "text",
     name: "BusinessAddress",
     value: "",
-    placeholder: "business address",
+    placeholder: "Your address",
   },
   {
     type: "text",
     name: "ClientCity",
     value: "",
-    placeholder: "city/postal",
+    placeholder: "Your city/postal",
   },
   {
     type: "text",
     name: "BusinessState",
     value: "",
-    placeholder: "Business state",
+    placeholder: "Your state",
   },
   {
     type: "text",
     name: "BusinessCountry",
     value: "",
-    placeholder: "Country",
+    placeholder: "Your country",
   },
 
   {
@@ -46,26 +46,26 @@ export const forms = [
     type: "text",
     name: "City",
     value: "",
-    placeholder: "City/Postal",
+    placeholder: "Client's city/Postal",
   },
   {
     type: "text",
     name: "State",
     value: "",
-    placeholder: "State",
+    placeholder: "Client's state",
   },
   {
     type: "text",
     name: "Country",
     value: "",
-    placeholder: "Country",
+    placeholder: "Client's country",
   },
 
   {
     type: "text",
     name: "paymentInformation",
     value: "",
-    placeholder: "payment Information",
+    placeholder: "Payment Information",
   },
   {
     type: "text",
@@ -78,6 +78,12 @@ export const forms = [
     name: "shippingAddress",
     value: "",
     placeholder: "Shipping Address",
+  },
+  {
+    type: "text",
+    name: "otherInformation",
+    value: "",
+    placeholder: "Other Information",
   },
   {
     type: "date",

@@ -1,4 +1,4 @@
-import { Button } from "reactstrap";
+
 
 const NavBtn = ({
   node,
@@ -12,15 +12,15 @@ const NavBtn = ({
   func(): void;
 }) => {
   return (
-    <div className="h-full ">
-      <Button
-        className={`text-black h-full  font-normal text-2xl w-auto transition duration-500 max-sm:w-auto  max-sm:mt-1 border-b max-sm:text-sm  ${
+    <div className="h-full">
+      <button 
+        className={`text-black h-full bg-inherit border-b font-normal text-2xl w-auto transition duration-500 max-sm:w-auto  max-sm:mt-1  max-sm:text-sm  ${
           active == id ? "border-black" : "border-none"
         } `}
         onClick={() => func()}
       >
         {node}
-      </Button>
+      </button>
     </div>
   );
 };

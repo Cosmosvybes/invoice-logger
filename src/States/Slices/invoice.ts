@@ -31,6 +31,11 @@ export interface invoiceTotalUpdate {
   token: string;
 }
 
+export interface settingsI {
+  value: boolean | string;
+  key: string;
+  [key: string]: string | boolean;
+}
 export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
@@ -60,12 +65,28 @@ const initialState: ACCOUNT = {
   clients: [],
   staticForm: invoiceStaticValue,
   loading: false,
+  settings: {
+    tokenBalanceNotification: true,
+    invoiceSentNotication: true,
+    defaultCurrency: true,
+    applyTax: false,
+    defaultPaymentTerms: false,
+    revenueNotification: true,
+    sharingToken: false,
+    autoRenewal: false,
+    businessName: "",
+    businessAddress: "",
+  },
 };
 
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
+    updateSettings: (state, action: PayloadAction<settingsI>) => {
+      const { value, key }: settingsI = action.payload;
+      state.settings[key] = value;
+    },
     changeCurrency: (state, action: PayloadAction<ICURRENCY>) => {
       const { id, currency, token }: ICURRENCY = action.payload;
       let invoice = state.draft.find((invoice) => invoice.id == id);
@@ -395,11 +416,12 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-      const { draft, sent, revenue, clients } = action.payload;
+      const { draft, sent, revenue, clients, settings } = action.payload;
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
       state.clients = clients;
+      state.settings = settings;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
@@ -420,4 +442,5 @@ export const {
   updateVAT,
   addItem,
   changeCurrency,
+  updateSettings,
 } = invoiceSlice.actions;

@@ -83,7 +83,7 @@ export default function useNavMenu(icons: any) {
         {
           id: 3,
           title: "Settings",
-          path: "settings",
+          path: "account/settings",
           icon: icons[6],
           onclick: "",
         },
