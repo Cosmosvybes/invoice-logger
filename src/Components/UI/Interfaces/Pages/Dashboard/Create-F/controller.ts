@@ -14,8 +14,8 @@ export default function useCreateController() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
     dispatch(getUser(localStorage.getItem("token")!));
+    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);
 
   const { draft } = useAppSelector((state) => state.invoice);

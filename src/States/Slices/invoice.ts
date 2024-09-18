@@ -212,8 +212,8 @@ const invoiceSlice = createSlice({
           return result.json();
         })
         .then((_) => {
-          localStorage.setItem("invoiceInformation", JSON.stringify(invoice));
-          toast.success("New Invoice created", { theme: "colored" });
+          // localStorage.setItem("invoiceInformation", JSON.stringify(invoice));
+          toast.success("New Invoice created", { theme: "light" });
         })
         .catch((err) => {
           if (err.response && err.status == 401) {
