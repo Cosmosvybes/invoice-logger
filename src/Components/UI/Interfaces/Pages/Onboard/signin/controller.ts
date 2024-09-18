@@ -64,13 +64,10 @@ export default function useSigninController() {
       setLoading(false);
       return toast.error(result.response, { theme: "dark" });
     } else {
-      const response = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/dashboard`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          method: "GET",
-        }
-      );
+      const response = await fetch(`https://ether-bill-server-1.onrender.com/api/dashboard`, {
+        headers: { Authorization: `Bearer ${token}` },
+        method: "GET",
+      });
 
       if (response.status == 200) {
         localStorage.setItem("token", token);

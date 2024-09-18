@@ -120,7 +120,7 @@ export default function useSettingsController() {
   const handleSubmit = async () => {
     try {
       const response_ = await fetch(
-        "http://localhost:8080/api/account/settings",
+        "https://ether-bill-server-1.onrender.com/api/account/settings",
         {
           method: "POST",
           headers: {

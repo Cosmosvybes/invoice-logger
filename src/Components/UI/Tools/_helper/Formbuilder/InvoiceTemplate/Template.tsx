@@ -136,7 +136,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               />
             )}
 
-            <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
+            <div className="relative  flex justify-end items-center px-0 h-auto border  gap-2">
               <Button
                 onClick={() => handleView()}
                 className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black  text-center flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
