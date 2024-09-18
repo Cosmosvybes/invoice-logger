@@ -7,7 +7,7 @@ const InvoiceTable = () => {
         <thead className=" w-full  gap-4 ">
           <tr>
             <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
-              S/N
+              ID
             </th>
             <th className="text-center w-20 max-sm:w-16 max-sm:text-sm  ">
               Client

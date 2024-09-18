@@ -1,10 +1,12 @@
-import { Button, Input } from "reactstrap";
+import { ArrowRight } from "react-huge-icons/outline";
+import { Button, Input, Spinner } from "reactstrap";
 
 const OBTemplate = ({
   formFields,
   handleChange,
   formValues,
   handleSubmit,
+  isLoading,
 }: {
   formFields: {
     id: number;
@@ -17,6 +19,7 @@ const OBTemplate = ({
   formValues: { [key: string]: string };
   handleChange(value: string, inputName: string): void;
   handleSubmit(e: any): void;
+  isLoading: boolean;
 }) => {
   const FORM = formFields.map((_, i) => {
     switch (_.type) {
@@ -26,14 +29,14 @@ const OBTemplate = ({
       default:
         return (
           <div className="relative" key={i}>
-            <label> {_.name}</label>
+            <label className="mb-1 text-xl"> {_.name}</label>
             <Input
               type="text"
               placeholder={_.placeholder}
               value={formValues[_.name]}
               required={_.required}
               onChange={(e) => handleChange(e.target.value, _.name)}
-              className="block w-full outline-none border px-3 py-2"
+              className="block w-full outline-none border mb-2 px-2 py-3"
             />
           </div>
         );
@@ -42,11 +45,16 @@ const OBTemplate = ({
 
   return (
     <>
-      <div className="relative w-full gap-2 px-10  max-sm:h-96">
+      <div className="relative w-full gap-5 px-10  max-sm:h-96">
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
-          <Button className=" bg-black mt-2 text-white text-center py-3 px-2 w-full">
-            Sign in
+          <Button className=" bg-black mt-2 flex justify-center items-center gap-2 text-white font-bold text-2xl text-center py-3 px-2 w-full">
+            SIGN IN{" "}
+            {!isLoading ? (
+              <ArrowRight className="inline text-4xl" />
+            ) : (
+              <Spinner type="grow" color="light" size={"sm"} />
+            )}
           </Button>
         </form>
       </div>

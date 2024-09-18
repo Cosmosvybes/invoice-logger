@@ -3,15 +3,15 @@ import NavBtn from "./NavBtn";
 
 const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
   const [buttonData] = useState([
-    { id: 1, text: "Sent" },
-    { id: 2, text: "Draft" },
-    { id: 3, text: "Paid" },
-    { id: 4, text: "Overdue" },
+    { id: 1, text: "sent" },
+    { id: 2, text: "draft" },
+    { id: 3, text: "paid" },
+    { id: 4, text: "overdue" },
   ]);
   const [active, setActive] = useState(buttonData[0].id);
   return (
     <>
-      <div className="relative w-full border-b border-black  h-auto max-sm:h-auto flex  gap-10 max-sm:gap-14 justify-evenly items-center ">
+      <div className="relative w-full max-sm:w-auto  border-b border-gray-300  h-auto max-sm:h-auto px-3   gap-5  max-sm:px-7 max-sm:gap-14 justify-start flex">
         {buttonData.map((nav) => (
           <div className="relative mt-10" key={nav.id}>
             <NavBtn

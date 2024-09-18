@@ -31,21 +31,21 @@ const Settings = () => {
           <InputProvider
             settings={settings}
             handleSubmit={handleSubmit}
-            schema={subscriptionSchema}
-            data={fieldsValue}
-            title="Subscription Management"
-            handleChange={handleChange}
-          />
-          <InputProvider
-            settings={settings}
-            handleSubmit={handleSubmit}
             schema={[...settingsSchema, ...businessDetails]}
             data={fieldsValue}
             title="Profile & Account Info"
             handleChange={handleChange}
           />
+          <InputProvider
+            settings={settings}
+            handleSubmit={handleSubmit}
+            schema={subscriptionSchema}
+            data={fieldsValue}
+            title="Subscription Management"
+            handleChange={handleChange}
+          />
         </div>
-        <div className="relative h-52 w-full flex justify-start max-sm:justify-end mt-2 px-2 items-center">
+        <div className="relative h-52 max-sm:h-24 w-full flex justify-start max-sm:justify-end mt-2 px-2 items-center">
           <Button
             onClick={handleSubmit}
             color="primary"

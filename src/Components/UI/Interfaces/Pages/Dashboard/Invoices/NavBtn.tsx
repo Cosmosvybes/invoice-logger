@@ -14,12 +14,12 @@ const NavBtn = ({
   return (
     <div className="h-full">
       <button 
-        className={`text-black h-full bg-inherit border-b font-normal text-2xl w-auto transition duration-500 max-sm:w-auto  max-sm:mt-1  max-sm:text-sm  ${
-          active == id ? "border-black" : "border-none"
+        className={`text-gray-500 h-full bg-inherit text-center border-b-2 font-semibold text-2xl w-auto transition duration-500 max-sm:w-auto   max-sm:text-sm  ${
+          active == id ? "border-gray-400" : "border-none"
         } `}
         onClick={() => func()}
       >
-        {node}
+        {node.toUpperCase()}
       </button>
     </div>
   );

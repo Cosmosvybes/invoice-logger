@@ -6,16 +6,18 @@ import {
   updateInvoiceInformation,
   updateDiscount,
   updateVAT,
+  removeDraft,
 } from "../../../../../../States/Slices/invoice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
+import { toast } from "react-toastify";
 
 export default function useTemplateController() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { draft, loading } = useAppSelector((state) => state.invoice);
 
   let invoiceInformation: any;
-  // JSON.parse(localStorage.getItem("invoiceInformation")!);
 
   function setInvoiceInformation() {
     if (id) {
@@ -111,8 +113,48 @@ export default function useTemplateController() {
 
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  //
+  const handleSendInvoice = async (emailHtml: any) => {
+    const emailData = await emailHtml;
+    const emailObject = {
+      receipient: "alfredchrisayo@gmail.com",
+      htmlContent: emailData,
+      invoice: invoiceInformation,
+    };
+
+    try {
+      setLoading(true);
+      const responseInfo = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/send/invoice",
+        {
+          method: "POST",
+
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "Application/json",
+          },
+          body: JSON.stringify({ ...emailObject }),
+        }
+      );
+      if (!responseInfo.ok) {
+        throw new Error("Operation failed");
+      }
+      const response = await responseInfo.json();
+      toast.success(response.response, { theme: "light" });
+      navigate("/dashboard");
+      const invoiceID = invoiceInformation.id;
+      dispatch(removeDraft({ invoiceID }));
+      setLoading(false);
+    } catch (error: any) {
+      toast.error(error.message, { theme: "dark" });
+      setLoading(false);
+    }
+  };
 
   return {
+    handleSendInvoice,
     handleView,
     updateInvoiceDetails,
     setViewMode,
@@ -123,7 +165,7 @@ export default function useTemplateController() {
     viewMode,
     isCreatingNewInvoice,
     invoiceInformation,
-
+    isLoading,
     updateDiscount,
     token,
     loading,

@@ -1,6 +1,6 @@
 import { Input } from "reactstrap";
 import useProductsListController from "./products.controller";
-import { PlusThin, TrashBent } from "react-huge-icons/bulk";
+import { PlusRectangle, TrashBent } from "react-huge-icons/bulk";
 import { Item } from "../../../../../../States/Slices/invoice.types";
 
 const ProductsList = () => {
@@ -30,32 +30,35 @@ const ProductsList = () => {
         </p>
       </div>
 
-      <div className="relative w-full flex flex-col gap-1 mt-2 mb-2">
+      <div className="relative w-full flex flex-col gap-1 mt-2 mb-3">
         {invoiceInformation.itemList.map((_: Item, i: number) => (
-          <div className="relative grid grid-cols-5 gap-1" key={i}>
+          <div className="relative grid grid-cols-5 gap-4 max-sm:gap-0" key={i}>
             <Input
-              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2  text-xl max-sm:text-xs text-center max-md:text-md  outline-none rounded-md bg-inherit border-b bg-gray-300 py-2  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Description"}
               value={_.description}
               onChange={(e) => handleChange(e, i, "description")}
             />
             <Input
-              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-2  text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   bg-gray-200   text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Quantity"}
               value={_.quantity}
               onChange={(e) => handleChange(e, i, "quantity")}
             />
             <Input
-              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-2  text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   ${
+                i % 2 == 0 ? "bg-gray-100" : "bg-gray-200"
+              }  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Unit price"}
               value={_.unitPrice}
               onChange={(e) => handleChange(e, i, "unitPrice")}
             />
             <Input
-              className={`px-2 py-1 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-sm bg-inherit border-b  ${i%2==0?"border-gray-400":"border-gray-200"}  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              disabled
+              className={`px-2 py-2  text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit border-b text-black bg-gray-400   font-normal w-96 max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Sub Total"}
               value={Number(_.unitTotal).toFixed(2)}
@@ -73,7 +76,7 @@ const ProductsList = () => {
           </div>
         ))}
       </div>
-      <div className="relative grid grid-cols-5 ">
+      <div className="relative grid grid-cols-5  gap-4">
         {" "}
         <div></div>
         <div></div>
@@ -81,7 +84,7 @@ const ProductsList = () => {
         <div></div>
         <button onClick={addNew} color="primary" className="text-black">
           {" "}
-          <PlusThin className="inline text-4xl text-black" />
+          <PlusRectangle className="inline text-5xl text-gray-600" />
         </button>
       </div>
     </>

@@ -11,16 +11,16 @@ export default function useInvoiceController() {
   //filter func
   const handleInvoiceFilter = (arg: string) => {
     switch (arg) {
-      case "Draft":
+      case "draft":
         setFilter(draft);
         break;
-      case "Sent":
+      case "sent":
         setFilter(sent);
         break;
-      case "Paid":
+      case "paid":
         setFilter(paid);
         break;
-      case "Overdue":
+      case "overdue":
         setFilter(overdue);
         break;
       default:

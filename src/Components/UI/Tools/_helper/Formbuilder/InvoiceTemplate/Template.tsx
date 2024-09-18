@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Form, Input } from "reactstrap";
+import { Button, Card, CardBody, Form, Input, Spinner } from "reactstrap";
 import useTemplateController from "./main";
 import { EyeLightDouble } from "react-huge-icons/outline";
 import useModalController from "../../../InvoiceModal/controller";
@@ -8,6 +8,8 @@ import { SendFast } from "react-huge-icons/bulk";
 import ProductsList from "../ProductsList/ProductsList";
 import Currency from "../Common/CurrOptions/Currency";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
+import { render } from "@react-email/components";
+import Mailer from "../../../../../EMAIL/Mailer";
 
 const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
   const { forms } = useModalController();
@@ -22,12 +24,18 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
     updateVAT,
     viewMode,
     token,
+    handleSendInvoice,
     // loading,
+    isLoading,
   } = useTemplateController();
 
   //   //?? ///////////////////////////////////////////////
   // FORM BUILDER TEMPLATE
   //   //?? ///////////////////////////////////////////////
+
+  const emailHtml = render(<Mailer invoiceInforMation={invoiceInformation} />, {
+    pretty: true,
+  });
 
   const FORM = forms.map((input, index) => {
     switch (input.type) {
@@ -84,10 +92,13 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
   });
 
   const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
-    <div className="relative   max-sm:px-0 flex  items-center" key={input.id}>
+    <div
+      className="relative py-2  max-sm:px-0 flex  items-center"
+      key={input.id}
+    >
       <Input
-        className=" py-2 text-xl text-center max-sm:text-xs  border-b max-md:text-md  outline-none rounded-sm text-black px-0 font-normal w-36  max-sm:w-full"
-        type={input.type}
+        className="py-2 text-xl text-center max-sm:text-xs  max-md:text-md  outline-none rounded-sm text-black px-0 font-normal w-36  max-sm:w-full"
+        type={"text"}
         placeholder={`${input.placeholder} %`}
         value={invoiceInformation[input.name]}
         onChange={(e) =>
@@ -125,29 +136,36 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               />
             )}
 
-            <div className="relative flex justify-end items-center px-0 h-12 mb-4 gap-2">
+            <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
               <Button
-               
                 onClick={() => handleView()}
-                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black   text-center flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
+                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black  text-center flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
               >
-                <EyeLightDouble className="text-3xl text-white inline" />
-                Preview
+                <EyeLightDouble className="text-2xl text-white inline" />
+                PREVIEW
               </Button>
 
               <Button
-               
                 onClick={() => {
-                  console.log(invoiceInformation);
+                  handleSendInvoice(emailHtml);
                 }}
-                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black  text-center flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
+                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black  text-center flex py-2 justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
               >
-                <SendFast className="text-4xl  mt-0.5 inline text-white " />
+                {isLoading ? (
+                  <Spinner
+                    type="grow"
+                    color="light"
+                    size="sm"
+                    className="mr-0.5"
+                  ></Spinner>
+                ) : (
+                  <SendFast className="text-2xl inline text-white " />
+                )}
                 SEND
               </Button>
             </div>
 
-            <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-2 max-sm:gap-2">
+            <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-3 max-sm:gap-4">
               {FORM}
             </Form>
 
@@ -156,13 +174,13 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
             <br className="w-full border-gray-300" />
             <br className="w-full border-gray-300" />
             <div className="relative w-full flex items-center justify-start py-2">
-              <div className="relative  w-1/3 max-sm:w-full  mt-4 flex justify-start items-center  gap-3">
+              <div className="relative  w-1/3 max-sm:w-full  mt-1 flex justify-start items-center  gap-3">
                 {VAT_DISCOUNT_INPUT} <Currency />
               </div>
             </div>
-            <hr className="w-full border-gray-300" />
 
-            <div className="relative w-full flex justify-end  max-md:w-full  max-sm:grid grid-cols-1 max-sm:px-0 items-center">
+            <hr className="w-1/2" />
+            <div className="relative w-full flex justify-start  max-md:w-full  max-sm:grid grid-cols-1 max-sm:px-0 items-center">
               <div className="relative grid grid-cols-1 items-center w-1/2 max-md:w-full max-sm:w-full  gap-2">
                 <div className="relative flex justify-between items-center max-sm:w-full">
                   <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">

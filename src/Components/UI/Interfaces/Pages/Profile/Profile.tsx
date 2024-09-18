@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import user from "./../../../../../assets/User.svg";
 import {
@@ -12,17 +12,12 @@ import {
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(getUser(localStorage.getItem("token")!));
     dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);
   const { account, loading } = useAppSelector((state) => state.userSlice);
 
-  // const [userInfo] = useState({
-  //   BusinessName: "Flicks Solutions & Investments",
-  //   Address: "N0.52 Setback block, Tanke Road, Ilorin, Kwara State.",
-  //   ...account,
-  // });
   return (
     <>
       {!loading && (
@@ -37,25 +32,37 @@ const Profile = () => {
               <div className="grid grid-cols-1 gap-3 max-sm:gap-2 mt-5 max-sm:grid-cols-1">
                 <div className="relative w-full px-3 max-sm:px-0  border-b  rounded block">
                   <h4 className="text-slate-900 font-bold">Firstname</h4>
-                  <p className="text-slate-800 font-light"> {account.firstname}</p>
+                  <p className="text-slate-800 font-light">
+                    {" "}
+                    {account.firstname}
+                  </p>
                 </div>
                 <div className="relative w-full px-3 border-b  rounded block">
                   <h4 className="text-slate-900 font-bold">Lastname</h4>
-                  <p className="text-slate-800 font-light"> {account.lastname} </p>
+                  <p className="text-slate-800 font-light">
+                    {" "}
+                    {account.lastname}{" "}
+                  </p>
                 </div>
                 <div className="relative w-full px-3 border-b  rounded block">
                   <h4 className="text-slate-900 font-bold">Email</h4>
                   <p className="text-slate-800 font-light">{account.email}</p>
                 </div>
 
-                {/* <div className="relative w-full px-3 max-sm:px-2 py-3 border-b  rounded block">
+                <div className="relative w-full px-3 max-sm:px-2 py-3 border-b  rounded block">
                   <h4 className="text-slate-900 font-bold">Business name</h4>
-                  <p className="text-slate-800 font-light"> {account.BusinessName} </p>
+                  <p className="text-slate-800 font-light">
+                    {" "}
+                    {account.settings.businessName}{" "}
+                  </p>
                 </div>
                 <div className="relative w-full px-3 max-sm:px-2 py-3 border-b  rounded block">
                   <h4 className="text-slate-900 font-bold"> Address</h4>
-                  <p className="text-slate-800 font-light"> {account.Address} </p>
-                </div> */}
+                  <p className="text-slate-800 font-light">
+                    {" "}
+                    {account.settings.businessAddress}{" "}
+                  </p>
+                </div>
               </div>
             </div>
             <div className="relative w-1/3  max-sm:w-full h-auto flex px-3  py-2 max-sm:py-0 max-sm px-3:flex-col">

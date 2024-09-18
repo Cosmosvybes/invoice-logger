@@ -12,7 +12,7 @@ const Empty = ({ message }: { message: string }) => {
           //   to="/new/invoice"
           className="w-32 px-2 py-1 text-black font-normal border rounded-md"
         >
-          Create one
+          add now
         </button>
       </div>
     </>

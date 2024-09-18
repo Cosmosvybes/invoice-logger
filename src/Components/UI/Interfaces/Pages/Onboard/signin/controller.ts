@@ -39,12 +39,14 @@ export default function useSigninController() {
     }));
   };
 
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
 
     //// // //
+    setLoading(true);
     const response = await fetch(
-      `http://localhost:8080/api/sign-in?email=${encodeURIComponent(
+      `https://ether-bill-server-1.onrender.com/api/sign-in?email=${encodeURIComponent(
         formValues.Email
       )}&password=${encodeURIComponent(formValues.Password)}`,
       { method: "POST" }
@@ -52,16 +54,23 @@ export default function useSigninController() {
     const result = await response.json();
     const { token } = result;
     if (response.status == 403) {
+      setLoading(false);
       return toast.warning(result.response, { theme: "colored" });
     } else if (response.status == 404) {
+      setLoading(false);
       return toast.warning(result.response, { theme: "dark" });
+      setLoading(false);
     } else if (response.status == 500) {
+      setLoading(false);
       return toast.error(result.response, { theme: "dark" });
     } else {
-      const response = await fetch(`http://localhost:8080/api/dashboard`, {
-        headers: { Authorization: `Bearer ${token}` },
-        method: "GET",
-      });
+      const response = await fetch(
+        `https://ether-bill-server-1.onrender.com/api/dashboard`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          method: "GET",
+        }
+      );
 
       if (response.status == 200) {
         localStorage.setItem("token", token);
@@ -76,5 +85,6 @@ export default function useSigninController() {
     formValues,
     handleChange,
     handleSubmit,
+    loading,
   };
 }

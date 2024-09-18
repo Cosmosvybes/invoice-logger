@@ -7,7 +7,7 @@ const Body = ({ currentData }: { currentData: Invoice[] }) => {
     <>
       <div className="relative h-auto ">
         {currentData.length == 0 ? (
-          <Empty message="You haven't sent any invoice!" />
+          <Empty message="Nothing yet !" />
         ) : (
           <List currentData={currentData} />
         )}
