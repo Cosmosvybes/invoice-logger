@@ -4,18 +4,18 @@ import {
   useAppSelector,
 } from "../../../../../../States/hoooks/hook";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
-import { useEffect, useLayoutEffect } from "react";
-import { setIsLoggedIn } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
-import { getUser } from "../../../../../../States/Slices/invoice";
+import { useEffect } from "react";
+import {
+  getUser,
+  setIsLoggedIn,
+} from "../../../../../../States/Slices/ClientSlice/useAuth/user";
 
 export default function useCreateController() {
   const dispatch = useAppDispatch();
-  useLayoutEffect(() => {
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
-  }, []);
-  useEffect(() => {
-    dispatch(getUser(localStorage.getItem("token")!));
 
+  useEffect(() => {
+    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+    dispatch(getUser(localStorage.getItem("token")!));
   }, []);
 
   const { draft } = useAppSelector((state) => state.invoice);

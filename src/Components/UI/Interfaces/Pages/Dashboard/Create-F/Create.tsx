@@ -15,7 +15,9 @@ const Create = () => {
               title={"New invoice"}
               linkTitle="invoice"
             />
-            <Template invoiceInformation={invoiceInformation} />
+            {invoiceInformation && (
+              <Template invoiceInformation={invoiceInformation} />
+            )}
           </div>
         )}
       </div>
