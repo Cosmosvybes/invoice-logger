@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
+import { useEffect } from "react";
 // import { useEffect } from "react";
 // import {
 //   getUser,
@@ -18,6 +19,7 @@ export default function useCreateController() {
   const { draft } = useAppSelector((state) => state.invoice);
   const { id } = useParams();
   //
+
   let invoiceInformation: any;
   function setInvoiceInformation() {
     if (id) {
@@ -28,7 +30,10 @@ export default function useCreateController() {
       )!;
     }
   }
-  setInvoiceInformation();
+  useEffect(() => {
+    setInvoiceInformation();
+  }, []);
+
   return {
     invoiceInformation,
   };
