@@ -40,10 +40,13 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch("https://ether-bill-server-1.onrender.com/api/user", {
-        headers: { Authorization: `Bearer ${token}` },
-        method: "GET",
-      });
+      const response = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/user",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          method: "GET",
+        }
+      );
       if (response.status != 200) {
         return location.replace("/");
       }
@@ -83,6 +86,7 @@ const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
+    
     removeDraft: (
       state,
       action: PayloadAction<{ invoiceID: string | number }>
@@ -91,7 +95,6 @@ const invoiceSlice = createSlice({
       const invoice_ = state.draft.find((inv) => inv.id == invoiceID);
       const index = state.draft.indexOf(invoice_!);
       state.draft.splice(index, 1);
-  
     },
 
     updateSettings: (state, action: PayloadAction<settingsI>) => {
@@ -130,14 +133,17 @@ const invoiceSlice = createSlice({
       const invoice = state.draft.find((inv) => inv.id == id);
       state.draft.splice(state.draft.indexOf(invoice!), 1);
 
-      fetch(`https://ether-bill-server-1.onrender.com/api/invoice/delete/?id=${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify(invoice),
-      })
+      fetch(
+        `https://ether-bill-server-1.onrender.com/api/invoice/delete/?id=${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "Application/json",
+          },
+          body: JSON.stringify(invoice),
+        }
+      )
         .then((result) => {
           if (result.status == 403) {
             return location.replace("/");
@@ -165,7 +171,6 @@ const invoiceSlice = createSlice({
         minute: "2-digit",
       });
 
-      // console.log(invoice);
       fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
         method: "PUT",
         credentials: "include",
@@ -212,7 +217,6 @@ const invoiceSlice = createSlice({
           return result.json();
         })
         .then((_) => {
-          // localStorage.setItem("invoiceInformation", JSON.stringify(invoice));
           toast.success("New Invoice created", { theme: "light" });
         })
         .catch((err) => {
@@ -344,6 +348,9 @@ const invoiceSlice = createSlice({
         });
       invoice!.TOTAL = value;
     },
+
+
+
     updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value, token }: taxAndDiscount = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
