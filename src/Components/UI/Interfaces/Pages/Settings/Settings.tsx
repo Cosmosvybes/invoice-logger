@@ -49,7 +49,7 @@ const Settings = () => {
           <Button
             onClick={handleSubmit}
             color="primary"
-            className="w-52 max-sm:w-44"
+            className="w-52 max-sm:w-44 py-2"
           >
             Save
           </Button>

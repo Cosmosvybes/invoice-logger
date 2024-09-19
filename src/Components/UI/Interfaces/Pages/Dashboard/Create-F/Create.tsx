@@ -1,23 +1,28 @@
+import { Spinner } from "reactstrap";
 import Template from "../../../../Tools/_helper/Formbuilder/InvoiceTemplate/Template";
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
 import useCreateController from "./controller";
 
 const Create = () => {
-  const { invoiceInformation } = useCreateController();
+  const { invoiceInformation, loading } = useCreateController();
 
   return (
     <>
       <div className="relative px-28  max-sm:px-0 max-md:w-full ">
-        {invoiceInformation && (
+        {loading ? (
+          <div className="relative h-screen flex justify-center items-center">
+            <Spinner type="grow" color="dark" />
+            <p> Setting up, wait a momemt...</p>
+          </div>
+        ) : (
           <div className="relative">
             <BreadCrumb
               useLink={false}
               title={"New invoice"}
               linkTitle="invoice"
             />
-            {invoiceInformation && (
-              <Template invoiceInformation={invoiceInformation} />
-            )}
+
+            <Template invoiceInformation={invoiceInformation} />
           </div>
         )}
       </div>

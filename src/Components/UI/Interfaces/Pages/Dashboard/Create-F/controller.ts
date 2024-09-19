@@ -4,7 +4,7 @@ import {
   useAppSelector,
 } from "../../../../../../States/hoooks/hook";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 import {
   getUser,
@@ -19,7 +19,7 @@ export default function useCreateController() {
     dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);
 
-  const { draft } = useAppSelector((state) => state.invoice);
+  const { draft, loading } = useAppSelector((state) => state.invoice);
   const { id } = useParams();
   //
 
@@ -33,10 +33,15 @@ export default function useCreateController() {
       )!;
     }
   }
-
-  setInvoiceInformation();
+  useLayoutEffect(() => {
+    if (loading == false) {
+      return setInvoiceInformation();
+    }
+  }, []);
+ 
 
   return {
     invoiceInformation,
+    loading,
   };
 }
