@@ -220,7 +220,9 @@ const invoiceSlice = createSlice({
 
     createInvoice: (state, action: PayloadAction<Invoice>) => {
       let invoice: Invoice = action.payload;
-      state.draft.push({ ...invoice });
+      state.draft.push({
+        ...invoice,
+      });
 
       fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
         method: "POST",

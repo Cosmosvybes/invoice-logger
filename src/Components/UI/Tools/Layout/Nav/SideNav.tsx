@@ -23,6 +23,7 @@ const SideNav = ({ title, children }: Main) => {
     localStorage.setItem("id", String(Date.now()));
     const token = localStorage.getItem("token");
     localStorage.setItem("id", String(Date.now()));
+    
     dispatch(
       createInvoice({
         ...staticForm,
