@@ -223,7 +223,6 @@ const invoiceSlice = createSlice({
       state.draft.push({
         ...invoice,
       });
-
       fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
         method: "POST",
         headers: {
@@ -234,7 +233,6 @@ const invoiceSlice = createSlice({
       })
         .then((result) => {
           if (result.status == 403) {
-            state.loading = false;
             return location.replace("/");
           }
           return result.json();

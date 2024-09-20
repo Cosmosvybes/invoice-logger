@@ -16,6 +16,7 @@ interface Main {
 }
 
 const SideNav = ({ title, children }: Main) => {
+
   const { staticForm } = useAppSelector((state) => state.invoice);
   const dispatch = useAppDispatch();
 
@@ -23,7 +24,6 @@ const SideNav = ({ title, children }: Main) => {
     localStorage.setItem("id", String(Date.now()));
     const token = localStorage.getItem("token");
     localStorage.setItem("id", String(Date.now()));
-    
     dispatch(
       createInvoice({
         ...staticForm,

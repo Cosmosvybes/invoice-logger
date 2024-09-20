@@ -30,7 +30,7 @@ export default function useCreateController() {
   }
   setTimeout(() => {
     setInvoiceInformation();
-  }, 3000);
+  }, 1000);
 
   return { invoiceInformation, loading };
 }
