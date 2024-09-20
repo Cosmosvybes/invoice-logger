@@ -17,6 +17,7 @@ const BreadCrumb = ({
 
   //new invoice
   const handleNewInvoice = async () => {
+    localStorage.setItem("id", String(Date.now()));
     const token = localStorage.getItem("token");
     localStorage.setItem("id", String(Date.now()));
     dispatch(
