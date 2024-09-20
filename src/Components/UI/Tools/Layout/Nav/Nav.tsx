@@ -42,7 +42,7 @@ const Nav = () => {
   return (
     <>
       {isLoggedIn && (
-        <div className="max-md:px-0 index-10 sticky top-0 left-0  flex justify-between  items-center shadow-md shadow-gray-100   h-28 max-sm:h-16 ">
+        <div className="max-md:px-0 index-10  flex justify-between  items-center shadow-md shadow-gray-50 left-0  h-28 max-sm:h-16 ">
           <div className="relative flex  px-28 gap-4 justify-start w-1/4 max-sm:hidden">
             {links.map((link) => (
               <NavLink
