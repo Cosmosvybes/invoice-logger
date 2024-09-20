@@ -4,7 +4,6 @@ import {
   useAppDispatch,
 } from "../../../../../States/hoooks/hook";
 import { createInvoice } from "../../../../../States/Slices/invoice";
-import { Button } from "reactstrap";
 interface Main {
   title: string;
   children: {
@@ -53,7 +52,7 @@ const SideNav = ({ title, children }: Main) => {
 
         <div className="relative flex gap-7 flex-col">
           {children.map(({ title, path, icon }) => (
-            <Button
+            <Link
               onClick={() =>
                 title == "New invoice" && handleCreateDefaultInvoice()
               }
@@ -62,7 +61,7 @@ const SideNav = ({ title, children }: Main) => {
               className="text-gray-900 font-normal gap-2 flex justify-start items-center"
             >
               {icon} {title}
-            </Button>
+            </Link>
           ))}
         </div>
       </div>
