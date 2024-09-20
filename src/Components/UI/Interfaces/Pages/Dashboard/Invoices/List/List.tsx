@@ -38,9 +38,12 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
               </td>
               <td className="text-gray-200 text-center max-sm:text-sm font-normal py-2  w-20 max-sm:w-16 ">
                 {invoice.TOTAL}{" "}
-                {invoice.currency != "--select--" && invoice.currency.toLowerCase() + " "}
               </td>
 
+              <td className="text-gray-200 text-center max-sm:text-sm   font-normal py-2 w-20 max-sm:w-16 ">
+                {invoice.currency != "--select--" &&
+                  invoice.currency.toLowerCase() + " "}
+              </td>
               <td className="text-gray-200 text-center max-sm:text-sm   font-normal py-2 w-20 max-sm:w-16 ">
                 {String(invoice.updatedAt).length > 10 &&
                   String(invoice.updatedAt).slice(0, 8) + "..."}
@@ -74,13 +77,13 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
           ref={actionCard}
           className="absolute right-20 top-0  shadow-md  transition duration-500 flex justify-start gap-2  flex-col w-52 max-sm:w-auto h-auto  bg-gray-50  text-center z-50"
         >
-          <button className="text-black  hover:bg-gray-300 hover:text-gray-50 text-xl max-sm:text-sm text-left font-light px-2 w-full">
+          <button className="text-black  hover:bg-gray-300 hover:text-gray-50 text-xl max-sm:xl text-left font-light px-2 w-full">
             Mark as paid
           </button>
-          <button className="text-black hover:bg-gray-300 hover:text-gray-50 text-xl text-left  max-sm:text-sm font-light px-2 w-full">
+          <button className="text-black hover:bg-gray-300 hover:text-gray-50 text-xl text-left  max-sm:xl font-light px-2 w-full">
             Mark as overdue
           </button>
-          <button className="text-black  hover:bg-gray-300 hover:text-gray-50 text-xl text-left max-sm:text-sm  font-light px-2 w-full">
+          <button className="text-black  hover:bg-gray-300 hover:text-gray-50 text-xl text-left max-sm:xl  font-light px-2 w-full">
             Delete
           </button>
         </div>

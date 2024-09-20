@@ -6,9 +6,7 @@ const InvoiceTable = () => {
       <Table className="w-full mt-10 border-collapse text-center">
         <thead className=" w-full  gap-4 ">
           <tr>
-            <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
-              ID
-            </th>
+            <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">ID</th>
             <th className="text-center w-20 max-sm:w-16 max-sm:text-sm  ">
               Client
             </th>
@@ -17,6 +15,9 @@ const InvoiceTable = () => {
             </th>
             <th className="text-center w-20 max-sm:w-16  max-sm:text-sm  ">
               Amount
+            </th>
+            <th className="text-center w-20 max-sm:w-16  max-sm:text-sm  ">
+              Currency
             </th>
             <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
               Updated
