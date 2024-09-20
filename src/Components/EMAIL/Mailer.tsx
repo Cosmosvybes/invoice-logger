@@ -10,16 +10,17 @@ import {
   Container,
   Img,
 } from "@react-email/components";
+
 import { Invoice } from "../../States/Slices/invoice.types";
 
-const Mailer = ({ invoiceInforMation }: { invoiceInforMation: Invoice }) => {
+const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
   return (
     <>
       <Html>
         <Head />
         <Preview>
           Good day to you, find attached the invoice statement.{" "}
-          {String(invoiceInforMation.id)}{" "}
+          {String(invoiceInformation.id)}{" "}
         </Preview>
         <Tailwind>
           <Body className=" text-black py-5 px-2 border-5 border-gray-100 bg-gray-50 w-full">
@@ -42,26 +43,26 @@ const Mailer = ({ invoiceInforMation }: { invoiceInforMation: Invoice }) => {
 
               <Container className="block text-black  bg-white">
                 <p className="text-black font-normal  text-sm">
-                  REFERENCE ID- {invoiceInforMation.id}
+                  REFERENCE ID- {invoiceInformation.id}
                 </p>
                 <Hr className="border-gray-100 w-full" />
 
                 <p className="text-black text-sm font-normal">
                   COMPANY ADDRESS-{" "}
-                  {invoiceInforMation.BusinessAddress.toUpperCase()}{" "}
-                  {invoiceInforMation.ClientCity.toUpperCase()}{" "}
-                  {invoiceInforMation.BusinessState.toUpperCase()},
-                  {invoiceInforMation.BusinessCountry.toUpperCase()}.
+                  {invoiceInformation.BusinessAddress.toUpperCase()}{" "}
+                  {invoiceInformation.ClientCity.toUpperCase()}{" "}
+                  {invoiceInformation.BusinessState.toUpperCase()},
+                  {invoiceInformation.BusinessCountry.toUpperCase()}.
                 </p>
                 <Hr className="border-gray-100 w-full" />
                 <p className="text-black text-sm font-normal">
                   {" "}
-                  DATE ISSUED- {invoiceInforMation.DateIssued}{" "}
+                  DATE ISSUED- {invoiceInformation.DateIssued}{" "}
                 </p>
                 <Hr className="border-gray-100 w-full" />
                 <p className="text-black text-sm font-normal">
                   {" "}
-                  DUE DATE - {invoiceInforMation.DateDue}{" "}
+                  DUE DATE - {invoiceInformation.DateDue}{" "}
                 </p>
               </Container>
               <Container className="  text-gray-700">
@@ -93,7 +94,7 @@ const Mailer = ({ invoiceInforMation }: { invoiceInforMation: Invoice }) => {
                     </tr>
                   </thead>
                   <tbody className="w-full">
-                    {invoiceInforMation.itemList.map((_, i) => (
+                    {invoiceInformation.itemList.map((_: any, i: number) => (
                       <tr
                         key={i}
                         className={` ${
@@ -125,20 +126,20 @@ const Mailer = ({ invoiceInforMation }: { invoiceInforMation: Invoice }) => {
               <Container className="block px-2 bg-gray-50  text-gray-700 font-sans">
                 <div className="relative justify-end items-center flex-col">
                   <Text className="text-black font-thin text-xl">
-                    <p> Value added tax- {invoiceInforMation.VAT} % </p>
+                    <p> Value added tax- {invoiceInformation.VAT} % </p>
                     <Hr className="border-gray-100 w-full" />
                   </Text>
 
                   <Text className="text-black font-thin text-xl">
-                    <p> Discount- {invoiceInforMation.Discount} % </p>
+                    <p> Discount- {invoiceInformation.Discount} % </p>
                     <Hr className="border-gray-100 w-full" />
                   </Text>
 
                   <Text className="text-black font-thin text-xl">
                     <p>
                       {" "}
-                      TOTAL- {invoiceInforMation.TOTAL.toLocaleString()}{" "}
-                      {invoiceInforMation.currency}{" "}
+                      TOTAL- {invoiceInformation.TOTAL.toLocaleString()}{" "}
+                      {invoiceInformation.currency}{" "}
                     </p>
                     <Hr className="border-gray-100 w-full" />
                   </Text>
@@ -149,7 +150,7 @@ const Mailer = ({ invoiceInforMation }: { invoiceInforMation: Invoice }) => {
                   <Text className="text-black font-thin text-xl">
                     <p>
                       {" "}
-                      Shipping address - {invoiceInforMation.shippingAddress}
+                      Shipping address - {invoiceInformation.shippingAddress}
                     </p>
                   </Text>
                   <Hr className="border-gray-100 w-full" />
@@ -157,18 +158,18 @@ const Mailer = ({ invoiceInforMation }: { invoiceInforMation: Invoice }) => {
                     <p>
                       {" "}
                       Payment Information -{" "}
-                      {invoiceInforMation.paymentInformation}
+                      {invoiceInformation.paymentInformation}
                     </p>
                   </Text>
                   <Hr className="border-gray-100 w-full" />
                   <Text className="text-black font-thin text-xl">
-                    <p> Transaction notes -{invoiceInforMation.Notes}</p>
+                    <p> Transaction notes -{invoiceInformation.Notes}</p>
                   </Text>
                   <Hr className="border-gray-100 w-full" />
                   <Text className="text-black font-thin text-xl">
                     <p>
                       {" "}
-                      Other Information -{invoiceInforMation.otherInformation}
+                      Other Information -{invoiceInformation.otherInformation}
                     </p>
                   </Text>
                 </div>

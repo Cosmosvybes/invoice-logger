@@ -86,7 +86,7 @@ const InputProvider = ({
     <>
       <Card className="w-full border-none h-96 max-sm:h-auto shadow-md">
         <CardBody className="border-none">
-          <h1 className="text-2xl mb-2"> {title}</h1>
+          <h1 className="text-2xl max-sm:text-xl mb-2"> {title}</h1>
           <hr />
           <br />
           <Form

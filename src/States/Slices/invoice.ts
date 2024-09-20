@@ -40,13 +40,10 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/user",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          method: "GET",
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/user", {
+        headers: { Authorization: `Bearer ${token}` },
+        method: "GET",
+      });
       if (response.status != 200) {
         return location.replace("/");
       }
@@ -58,7 +55,29 @@ export const getUser = createAsyncThunk(
     }
   }
 );
+export const getInvoice = createAsyncThunk(
+  "user/getInvoice",
+  async (id: any) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/invoice?id=${id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          method: "GET",
+        }
+      );
+      if (response.status != 200) {
+        return location.replace("/");
+      }
+      const invoice = await response.json();
 
+      return invoice;
+    } catch (error: any) {
+      toast.error("session expired", { theme: "colored" });
+      return location.replace("/");
+    }
+  }
+);
 const initialState: ACCOUNT = {
   draft: [],
   sent: [],
@@ -68,6 +87,7 @@ const initialState: ACCOUNT = {
   clients: [],
   staticForm: invoiceStaticValue,
   loading: false,
+  currentInvoice: {},
   settings: {
     tokenBalanceNotification: true,
     invoiceSentNotication: true,
@@ -86,7 +106,6 @@ const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
-    
     removeDraft: (
       state,
       action: PayloadAction<{ invoiceID: string | number }>
@@ -133,17 +152,14 @@ const invoiceSlice = createSlice({
       const invoice = state.draft.find((inv) => inv.id == id);
       state.draft.splice(state.draft.indexOf(invoice!), 1);
 
-      fetch(
-        `https://ether-bill-server-1.onrender.com/api/invoice/delete/?id=${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "Application/json",
-          },
-          body: JSON.stringify(invoice),
-        }
-      )
+      fetch(`http://localhost:8080/api/invoice/delete/?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
         .then((result) => {
           if (result.status == 403) {
             return location.replace("/");
@@ -171,7 +187,7 @@ const invoiceSlice = createSlice({
         minute: "2-digit",
       });
 
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         credentials: "include",
         headers: {
@@ -202,7 +218,7 @@ const invoiceSlice = createSlice({
         ...invoice,
       });
 
-      fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
+      fetch("http://localhost:8080/api/new/invoice", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${invoice.token}`,
@@ -349,8 +365,6 @@ const invoiceSlice = createSlice({
       invoice!.TOTAL = value;
     },
 
-
-
     updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value, token }: taxAndDiscount = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
@@ -443,6 +457,13 @@ const invoiceSlice = createSlice({
       state.settings = settings;
     });
     builder.addCase(getUser.rejected, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getInvoice.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getInvoice.fulfilled, (state, action) => {
+      state.currentInvoice = action.payload;
       state.loading = false;
     });
   },

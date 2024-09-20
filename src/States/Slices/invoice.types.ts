@@ -77,6 +77,7 @@ export interface ACCOUNT {
   staticForm: object | any;
   loading: boolean;
   clients: any[];
+  currentInvoice: any;
   settings: {
     tokenBalanceNotification: boolean;
     invoiceSentNotication: boolean;

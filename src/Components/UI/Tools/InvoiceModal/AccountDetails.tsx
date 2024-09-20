@@ -29,13 +29,13 @@ const AccountDetails = () => {
   return (
     <>
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
-        <div className="relative h-auto  w-full  max-sm:w-full rounded-3xl   flex flex-col  gap-3 px-1  font-bold">
+        <div className="relative h-auto  w-full  max-sm:w-full rounded-3xl   flex flex-col  gap-1 px-1  font-bold">
           <div className="w-full  block relative">
-            <p className="text-slate-900 px-3 text-xl max-sm:text-xl font-light ">
+            <p className="text-slate-900 px-2 text-xl max-sm:text-xl font-light ">
               Overview
             </p>
 
-            <div className="relative w-full grid gap-2 max-md:gap-5 py-5 px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
+            <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
               <Card>
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
                   <p className="text-slate-950 text-xl font-bold">

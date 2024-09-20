@@ -1,19 +1,32 @@
-import { Button, Card, CardBody, Form, Input, Spinner } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  Form,
+  Input,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Spinner,
+} from "reactstrap";
 import useTemplateController from "./main";
-import { EyeLightDouble } from "react-huge-icons/outline";
+import { EyeLightDouble } from "react-huge-icons/bulk";
 import useModalController from "../../../InvoiceModal/controller";
 
 import ViewModal from "../View/ViewModal";
 import { SendFast } from "react-huge-icons/bulk";
 import ProductsList from "../ProductsList/ProductsList";
 import Currency from "../Common/CurrOptions/Currency";
-import { Invoice } from "../../../../../../States/Slices/invoice.types";
+
 import { render } from "@react-email/components";
 import Mailer from "../../../../../EMAIL/Mailer";
+import Spinner_ from "../../Loader/Spinner";
+import { useState } from "react";
 
-const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
+const Template = () => {
   const { forms } = useModalController();
-
+  const [modal, setModal] = useState(false);
   const {
     setViewMode,
     handleView,
@@ -24,16 +37,17 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
     updateVAT,
     viewMode,
     token,
+    loading,
     handleSendInvoice,
-    // loading,
     isLoading,
+    invoiceInformation,
   } = useTemplateController();
 
   //   //?? ///////////////////////////////////////////////
   // FORM BUILDER TEMPLATE
   //   //?? ///////////////////////////////////////////////
 
-  const emailHtml = render(<Mailer invoiceInforMation={invoiceInformation} />, {
+  const emailHtml = render(<Mailer invoiceInformation={invoiceInformation} />, {
     pretty: true,
   });
 
@@ -126,100 +140,123 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
 
   return (
     <>
-      <Card className="border-none">
-        <CardBody>
-          <section className="flex bg-white relative  transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
-            {viewMode && (
-              <ViewModal
-                data={{ ...invoiceInformation }}
-                callback={() => setViewMode(!viewMode)}
-              />
-            )}
+      {loading ? (
+        <Spinner_ />
+      ) : (
+        <Card className="border-none">
+          <CardBody>
+            <Modal isOpen={modal} toggle={() => setModal(!modal)} fade={true}>
+              <ModalHeader>Sending Invoice</ModalHeader>
+              <ModalBody>Do you want send this invoice ?</ModalBody>
+              <ModalFooter>
+                <Button color="danger" onClick={() => setModal(!modal)}>
+                  Cancel
+                </Button>{" "}
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    handleSendInvoice(emailHtml);
+                    setModal(!modal)
+                  }}
+                >
+                  Yes, I'm sending.
+                </Button>
+              </ModalFooter>
+            </Modal>
 
-            <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
-              <Button
-                onClick={() => handleView()}
-                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black  text-center flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
-              >
-                <EyeLightDouble className="text-2xl text-white inline" />
-                PREVIEW
-              </Button>
+            <section className="flex bg-white relative  transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
+              {viewMode && (
+                <ViewModal
+                  data={{ ...invoiceInformation }}
+                  callback={() => setViewMode(!viewMode)}
+                />
+              )}
 
-              <Button
-                onClick={() => {
-                  handleSendInvoice(emailHtml);
-                }}
-                className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-2 border-gray-400 bg-black  text-center flex py-2 justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-md "
-              >
-                {isLoading ? (
-                  <Spinner
-                    type="grow"
-                    color="light"
-                    size="sm"
-                    className="mr-0.5"
-                  ></Spinner>
-                ) : (
-                  <SendFast className="text-2xl inline text-white " />
-                )}
-                SEND
-              </Button>
-            </div>
+              <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
+                <Button
+                  onClick={() => handleView()}
+                  className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-none border-gray-400 bg-black  text-center py-2 flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-sm "
+                >
+                  <EyeLightDouble className="text-2xl text-white inline" />
+                  VIEW
+                </Button>
 
-            <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-3 max-sm:gap-4">
-              {FORM}
-            </Form>
-
-            <ProductsList />
-
-            <br className="w-full border-gray-300" />
-            <br className="w-full border-gray-300" />
-            <div className="relative w-full flex items-center justify-start py-2">
-              <div className="relative  w-1/3 max-sm:w-full  mt-1 flex justify-start items-center  gap-3">
-                {VAT_DISCOUNT_INPUT} <Currency />
+                <Button
+                  onClick={() => {
+                    setModal(!modal);
+                  }}
+                  className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-none border-gray-400 bg-black  text-center flex py-2 justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-sm "
+                >
+                  {isLoading ? (
+                    <Spinner
+                      type="grow"
+                      color="light"
+                      size="sm"
+                      className="mr-0.5"
+                    ></Spinner>
+                  ) : (
+                    <SendFast className="text-2xl inline text-white " />
+                  )}
+                  SEND
+                </Button>
               </div>
-            </div>
 
-            <hr className="w-1/2" />
-            <div className="relative w-full flex justify-start  max-md:w-full  max-sm:grid grid-cols-1 max-sm:px-0 items-center">
-              <div className="relative grid grid-cols-1 items-center w-1/2 max-md:w-full max-sm:w-full  gap-2">
-                <div className="relative flex justify-between items-center max-sm:w-full">
-                  <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
-                    discount
-                  </p>
+              <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-3 max-sm:gap-4">
+                {FORM}
+              </Form>
 
-                  <p className="text-xl  text-gray-500 mr-2  font-normal">
-                    {Number(invoiceInformation.Discount)}%
-                  </p>
-                </div>
+              <ProductsList />
 
-                <div className="relative flex justify-between items-center   gap-2 ">
-                  <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
-                    Tax
-                  </p>
-
-                  <p className="text-xl  text-gray-500 mr-2  font-normal">
-                    {" "}
-                    {Number(invoiceInformation.VAT)}%
-                  </p>
-                </div>
-
-                <hr className="w-full border-gray-300" />
-
-                <div className="relative flex justify-between items-center   gap-2 ">
-                  <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
-                    Total
-                  </p>
-                  <p className="text-xl  text-gray-500 mr-2  font-normal">
-                    {Number(invoiceInformation.TOTAL).toLocaleString()}{" "}
-                    {invoiceInformation.currency != "--select--" &&
-                      invoiceInformation.currency}
-                  </p>
+              <br className="w-full border-gray-300" />
+              <br className="w-full border-gray-300" />
+              <div className="relative w-full flex items-center justify-start py-2">
+                <div className="relative  w-1/3 max-sm:w-full  mt-1 flex justify-start items-center  gap-3">
+                  {VAT_DISCOUNT_INPUT} <Currency />
                 </div>
               </div>
-            </div>
-          </section>
-        </CardBody>
-      </Card>
+
+              <hr className="w-1/2" />
+              <div className="relative w-full flex justify-start  max-md:w-full  max-sm:grid grid-cols-1 max-sm:px-0 items-center">
+                <div className="relative grid grid-cols-1 items-center w-1/2 max-md:w-full max-sm:w-full  gap-2">
+                  <div className="relative flex justify-between items-center max-sm:w-full">
+                    <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                      discount
+                    </p>
+
+                    <p className="text-xl  text-gray-500 mr-2  font-normal">
+                      {Number(invoiceInformation.Discount)}%
+                    </p>
+                  </div>
+
+                  <div className="relative flex justify-between items-center   gap-2 ">
+                    <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                      Tax
+                    </p>
+
+                    <p className="text-xl  text-gray-500 mr-2  font-normal">
+                      {" "}
+                      {Number(invoiceInformation.VAT)}%
+                    </p>
+                  </div>
+
+                  <hr className="w-full border-gray-300" />
+
+                  <div className="relative flex justify-between items-center   gap-2 ">
+                    <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                      Total
+                    </p>
+                    <p className="text-xl  text-gray-500 mr-2  font-normal">
+                      {Number(invoiceInformation.TOTAL).toLocaleString()}{" "}
+                      {invoiceInformation.currency != "--select--" &&
+                        invoiceInformation.currency}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </CardBody>
+        </Card>
+      )}
     </>
   );
 };

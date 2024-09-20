@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-toastify/ReactToastify.css";
 import { ItemsType, VAT_DISCOUNT } from "../type";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
@@ -11,14 +11,20 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
+import { setIsLoggedIn } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
 
 export default function useTemplateController() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { draft, loading } = useAppSelector((state) => state.invoice);
+
+  useEffect(() => {
+    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+  }, []);
+
+  const { loading, draft } = useAppSelector((state) => state.invoice);
 
   let invoiceInformation: any;
-
   function setInvoiceInformation() {
     if (id) {
       invoiceInformation = draft?.find((invoice) => invoice.id == id)!;
@@ -29,10 +35,8 @@ export default function useTemplateController() {
     }
   }
   setInvoiceInformation();
-
   const token = String(localStorage.getItem("token"));
   const [tax_discount_input] = useState<VAT_DISCOUNT[]>([
-    //invoice discounts form fields
     {
       type: "number",
       value: "",
@@ -50,11 +54,9 @@ export default function useTemplateController() {
   ]);
 
   //form vfied values
-  const dispatch = useAppDispatch(); //state dispatcher
+  //state dispatcher
 
-  //
   const [inputs] = useState<ItemsType[]>([
-    //invoice items formFields
     {
       type: "text",
       value: "",
@@ -152,8 +154,9 @@ export default function useTemplateController() {
       setLoading(false);
     }
   };
-
+  // console.log(draft)
   return {
+    loading,
     handleSendInvoice,
     handleView,
     updateInvoiceDetails,
@@ -168,7 +171,6 @@ export default function useTemplateController() {
     isLoading,
     updateDiscount,
     token,
-    loading,
     updateVAT,
   };
 }
