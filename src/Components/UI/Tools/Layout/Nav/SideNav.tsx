@@ -44,6 +44,7 @@ const SideNav = ({ title, children }: Main) => {
         }),
       })
     );
+
     fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
       method: "POST",
       headers: {
