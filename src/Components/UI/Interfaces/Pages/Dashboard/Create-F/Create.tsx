@@ -1,9 +1,8 @@
 import Template from "../../../../Tools/_helper/Formbuilder/InvoiceTemplate/Template";
-import Spinner_ from "../../../../Tools/_helper/Loader/Spinner";
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
 import useCreateController from "./controller";
 const Create = () => {
-  const { invoiceInformation, loading } = useCreateController();
+  const { invoiceInformation } = useCreateController();
   return (
     <>
       {invoiceInformation && (
@@ -15,7 +14,9 @@ const Create = () => {
               linkTitle="invoice"
             />
 
-            {invoiceInformation && !loading ? <Template /> : <Spinner_ />}
+            {invoiceInformation && (
+              <Template invoiceInformation={invoiceInformation} />
+            )}
           </div>
         </div>
       )}

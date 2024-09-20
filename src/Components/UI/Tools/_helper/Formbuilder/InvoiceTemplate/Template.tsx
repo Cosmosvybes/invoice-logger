@@ -23,8 +23,9 @@ import { render } from "@react-email/components";
 import Mailer from "../../../../../EMAIL/Mailer";
 import Spinner_ from "../../Loader/Spinner";
 import { useState } from "react";
+import { Invoice } from "../../../../../../States/Slices/invoice.types";
 
-const Template = () => {
+const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
   const { forms } = useModalController();
   const [modal, setModal] = useState(false);
   const {
@@ -40,7 +41,6 @@ const Template = () => {
     loading,
     handleSendInvoice,
     isLoading,
-    invoiceInformation,
   } = useTemplateController();
 
   //   //?? ///////////////////////////////////////////////
@@ -156,7 +156,7 @@ const Template = () => {
                   color="primary"
                   onClick={() => {
                     handleSendInvoice(emailHtml);
-                    setModal(!modal)
+                    setModal(!modal);
                   }}
                 >
                   Yes, I'm sending.
