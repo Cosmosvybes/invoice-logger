@@ -6,7 +6,7 @@ const Create = () => {
   const { invoiceInformation, loading } = useCreateController();
   return (
     <>
-      {invoiceInformation ? (
+      {invoiceInformation && !loading ? (
         <div className="relative px-28  max-sm:px-0 max-md:w-full ">
           <div className="relative">
             <BreadCrumb
@@ -15,7 +15,7 @@ const Create = () => {
               linkTitle="invoice"
             />
 
-            {!invoiceInformation || loading ? <Spinner_ /> : <Template />}
+            {invoiceInformation && !loading ? <Template /> : <Spinner_ />}
           </div>
         </div>
       ) : (
