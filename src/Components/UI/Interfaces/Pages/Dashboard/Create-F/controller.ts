@@ -15,7 +15,7 @@ export default function useCreateController() {
   }, []);
 
   //
-  const { draft } = useAppSelector((state) => state.invoice);
+  const { draft, loading } = useAppSelector((state) => state.invoice);
   const { id } = useParams();
 
   let invoiceInformation: any;
@@ -30,5 +30,5 @@ export default function useCreateController() {
   }
 
   setInvoiceInformation();
-  return { invoiceInformation };
+  return { invoiceInformation , loading};
 }

@@ -3,7 +3,7 @@ import Spinner_ from "../../../../Tools/_helper/Loader/Spinner";
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
 import useCreateController from "./controller";
 const Create = () => {
-  const { invoiceInformation } = useCreateController();
+  const { invoiceInformation, loading } = useCreateController();
   return (
     <>
       {invoiceInformation && (
@@ -15,7 +15,7 @@ const Create = () => {
               linkTitle="invoice"
             />
 
-            {!invoiceInformation ? <Spinner_ /> : <Template />}
+            {!invoiceInformation || loading ? <Spinner_ /> : <Template />}
           </div>
         </div>
       )}
