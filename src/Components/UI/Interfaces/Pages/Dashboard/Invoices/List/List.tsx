@@ -30,10 +30,10 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
                 {String(invoice.id).slice(9, 16)}
               </td>
               <td className="text-gray-200 text-center max-sm:text-sm font-normal py-2  w-20 max-sm:w-16 ">
-                {invoice.Client.slice(0, 10)}
+                {invoice.Client.slice(0, 8)}
               </td>
 
-              <td className="text-gray-200 text-center max-sm:text-sm  font-normal py-2 w-20 max-sm:w-16 ">
+              <td className="text-green-500  text-center max-sm:text-sm  font-normal py-2 w-20 max-sm:w-16 ">
                 {invoice.status.toLowerCase()}
               </td>
               <td className="text-gray-200 text-center max-sm:text-sm font-normal py-2  w-20 max-sm:w-16 ">
@@ -46,7 +46,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
               </td>
               <td className="text-gray-200 text-center max-sm:text-sm   font-normal py-2 w-20 max-sm:w-16 ">
                 {String(invoice.updatedAt).length > 10 &&
-                  String(invoice.updatedAt).slice(0, 8) + "..."}
+                  String(invoice.updatedAt).slice(0, 6) + "..."}
               </td>
               <td className="text-black text-center max-sm:text-sm   font-normal py-2 w-20 max-sm:w-16 ">
                 <button>

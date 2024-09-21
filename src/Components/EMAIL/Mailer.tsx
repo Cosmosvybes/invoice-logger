@@ -41,14 +41,14 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 <p className="block text-xl">You have got an invoice.</p>
               </Container>
 
-              <Container className="block text-black  bg-white">
+              <Container className="block text-black">
                 <p className="text-black font-normal  text-sm">
-                  REFERENCE ID- {invoiceInformation.id}
+                  Reference ID- {invoiceInformation.id}
                 </p>
                 <Hr className="border-gray-100 w-full" />
 
                 <p className="text-black text-sm font-normal">
-                  COMPANY ADDRESS-{" "}
+                  Sender address -{" "}
                   {invoiceInformation.BusinessAddress.toUpperCase()}{" "}
                   {invoiceInformation.ClientCity.toUpperCase()}{" "}
                   {invoiceInformation.BusinessState.toUpperCase()},
@@ -57,12 +57,12 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 <Hr className="border-gray-100 w-full" />
                 <p className="text-black text-sm font-normal">
                   {" "}
-                  DATE ISSUED- {invoiceInformation.DateIssued}{" "}
+                  Date issued- {invoiceInformation.DateIssued}{" "}
                 </p>
                 <Hr className="border-gray-100 w-full" />
                 <p className="text-black text-sm font-normal">
                   {" "}
-                  DUE DATE - {invoiceInformation.DateDue}{" "}
+                Date due - {invoiceInformation.DateDue}{" "}
                 </p>
               </Container>
               <Container className="  text-gray-700">

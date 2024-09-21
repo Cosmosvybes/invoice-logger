@@ -223,30 +223,7 @@ const invoiceSlice = createSlice({
       state.draft.push({
         ...invoice,
       });
-      fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${invoice.token}`,
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify({ ...invoice }),
-      })
-        .then((result) => {
-          if (result.status == 403) {
-            return location.replace("/");
-          }
-          return result.json();
-        })
-        .then((_) => {
-          state.loading = false;
-          toast.success("New Invoice created", { theme: "light" });
-        })
-        .catch((err) => {
-          state.loading = false;
-          if (err.response && err.status == 401) {
-            return location.replace("/");
-          }
-        });
+      
     },
 
     addItem: (state, action: PayloadAction<productKeyValue>) => {
