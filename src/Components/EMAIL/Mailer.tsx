@@ -127,7 +127,9 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
 
                 <p>
                   {" "}
-                  Total- {invoiceInformation.TOTAL.toLocaleString()}{" "}
+                  Total- {String(
+                    invoiceInformation.TOTAL.toLocaleString()
+                  )}{" "}
                   {invoiceInformation.currency}{" "}
                 </p>
                 <Hr className="border-gray-100 w-full" />
