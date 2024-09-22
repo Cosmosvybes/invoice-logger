@@ -34,28 +34,28 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 alt="logo"
               />
 
-              <p className="">
+              <p className="text-sm">
                 Hi there 👋, I'm Chris from etherbill. You have got an invoice.
               </p>
 
-              <p className="text-black font-normal  text-sm">
+              <p className="text-black font-normal">
                 Reference ID- {invoiceInformation.id}
               </p>
               <Hr className="border-gray-100 w-full" />
 
-              <p className="text-black text-sm font-normal">
+              <p className="text-black  font-normal">
                 Sender's address - {invoiceInformation.BusinessAddress}{" "}
                 {invoiceInformation.ClientCity}{" "}
-                {invoiceInformation.BusinessState},
+                {invoiceInformation.BusinessState}, {" "}
                 {invoiceInformation.BusinessCountry}.
               </p>
               <Hr className="border-gray-100 w-full" />
-              <p className="text-black text-sm font-normal">
+              <p className="text-black  font-normal">
                 {" "}
                 Date issued- {invoiceInformation.DateIssued}{" "}
               </p>
               <Hr className="border-gray-100 w-full" />
-              <p className="text-black text-sm font-normal">
+              <p className="text-black  font-normal">
                 {" "}
                 Date due - {invoiceInformation.DateDue}{" "}
               </p>
@@ -135,7 +135,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 <Hr className="border-gray-100 w-full" />
               </div>
 
-              <div className="relative justify-end items-center flex-col">
+              <div className="relative justify-end items-center px-2 flex-col">
                 <p> Shipping address - {invoiceInformation.shippingAddress}</p>
 
                 <Hr className="border-gray-100 w-full" />
@@ -170,7 +170,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                   All trademarks, service marks, and company names are the
                   property of Etherbill inc..
                 </p>
-                <Text className="font-normal text-sm text-gray-600 ">
+                <Text className="font-normal  text-gray-600 ">
                   {new Date().getFullYear()} Etherbill Inc &copy;.
                 </Text>
               </Container>
