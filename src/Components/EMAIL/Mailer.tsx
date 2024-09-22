@@ -19,7 +19,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
       <Html>
         <Head />
         <Preview>
-          Good day to you, find attached the invoice statement.{" "}
+          Good day to you, find attached, your invoice statement.{" "}
           {String(invoiceInformation.id)}{" "}
         </Preview>
         <Tailwind>
@@ -41,30 +41,29 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 <p className="block text-xl">You have got an invoice.</p>
               </Container>
 
-              <Container className="block text-gray-700">
-                <p className="text-black font-normal  text-sm">
-                  Reference ID- {invoiceInformation.id}
-                </p>
-                <Hr className="border-gray-100 w-full" />
+              <p className="text-black font-normal  text-sm">
+                Reference ID- {invoiceInformation.id}
+              </p>
+              <Hr className="border-gray-100 w-full" />
 
-                <p className="text-black text-sm font-normal">
-                  Sender address -{" "}
-                  {invoiceInformation.BusinessAddress.toUpperCase()}{" "}
-                  {invoiceInformation.ClientCity.toUpperCase()}{" "}
-                  {invoiceInformation.BusinessState.toUpperCase()},
-                  {invoiceInformation.BusinessCountry.toUpperCase()}.
-                </p>
-                <Hr className="border-gray-100 w-full" />
-                <p className="text-black text-sm font-normal">
-                  {" "}
-                  Date issued- {invoiceInformation.DateIssued}{" "}
-                </p>
-                <Hr className="border-gray-100 w-full" />
-                <p className="text-black text-sm font-normal">
-                  {" "}
+              <p className="text-black text-sm font-normal">
+                Sender address -{" "}
+                {invoiceInformation.BusinessAddress.toUpperCase()}{" "}
+                {invoiceInformation.ClientCity.toUpperCase()}{" "}
+                {invoiceInformation.BusinessState.toUpperCase()},
+                {invoiceInformation.BusinessCountry.toUpperCase()}.
+              </p>
+              <Hr className="border-gray-100 w-full" />
+              <p className="text-black text-sm font-normal">
+                {" "}
+                Date issued- {invoiceInformation.DateIssued}{" "}
+              </p>
+              <Hr className="border-gray-100 w-full" />
+              <p className="text-black text-sm font-normal">
+                {" "}
                 Date due - {invoiceInformation.DateDue}{" "}
-                </p>
-              </Container>
+              </p>
+
               <Container className="  text-gray-700">
                 <Heading className="">Products</Heading>
                 <table
@@ -123,55 +122,46 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               </Container>
               <br />
 
-              <Container className="block px-2 bg-gray-50  text-gray-700 font-sans">
-                <div className="relative justify-end items-center flex-col">
-                  <Text className="text-black font-thin text-xl">
-                    <p> Value added tax- {invoiceInformation.VAT} % </p>
-                    <Hr className="border-gray-100 w-full" />
-                  </Text>
+              <div className="relative justify-end items-center flex-col">
+                <p> Value added tax- {invoiceInformation.VAT} % </p>
+                <Hr className="border-gray-100 w-full" />
 
-                  <Text className="text-black font-thin text-xl">
-                    <p> Discount- {invoiceInformation.Discount} % </p>
-                    <Hr className="border-gray-100 w-full" />
-                  </Text>
+                <p> Discount- {invoiceInformation.Discount} % </p>
+                <Hr className="border-gray-100 w-full" />
 
-                  <Text className="text-black font-thin text-xl">
-                    <p>
-                      {" "}
-                      TOTAL- {invoiceInformation.TOTAL.toLocaleString()}{" "}
-                      {invoiceInformation.currency}{" "}
-                    </p>
-                    <Hr className="border-gray-100 w-full" />
-                  </Text>
-                </div>
-              </Container>
+                <p>
+                  {" "}
+                  TOTAL- {invoiceInformation.TOTAL.toLocaleString()}{" "}
+                  {invoiceInformation.currency}{" "}
+                </p>
+                <Hr className="border-gray-100 w-full" />
+              </div>
+
               <Container className="block px-2 text-gray-700 bg-gray-50 font-sans">
                 <div className="relative justify-end items-center flex-col">
-                  <Text className="text-black font-thin text-xl">
-                    <p>
-                      {" "}
-                      Shipping address - {invoiceInformation.shippingAddress}
-                    </p>
-                  </Text>
+                  <p>
+                    {" "}
+                    Shipping address - {invoiceInformation.shippingAddress}
+                  </p>
+
                   <Hr className="border-gray-100 w-full" />
-                  <Text className="text-black font-thin text-xl">
-                    <p>
-                      {" "}
-                      Payment Information -{" "}
-                      {invoiceInformation.paymentInformation}
-                    </p>
-                  </Text>
+
+                  <p>
+                    {" "}
+                    Payment Information -{" "}
+                    {invoiceInformation.paymentInformation}
+                  </p>
+
                   <Hr className="border-gray-100 w-full" />
-                  <Text className="text-black font-thin text-xl">
-                    <p> Transaction notes -{invoiceInformation.Notes}</p>
-                  </Text>
+
+                  <p> Transaction notes -{invoiceInformation.Notes}</p>
+
                   <Hr className="border-gray-100 w-full" />
-                  <Text className="text-black font-thin text-xl">
-                    <p>
-                      {" "}
-                      Other Information -{invoiceInformation.otherInformation}
-                    </p>
-                  </Text>
+
+                  <p>
+                    {" "}
+                    Other Information -{invoiceInformation.otherInformation}
+                  </p>
                 </div>
               </Container>
 
