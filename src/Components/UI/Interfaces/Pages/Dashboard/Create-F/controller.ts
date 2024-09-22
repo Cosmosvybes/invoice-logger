@@ -16,7 +16,7 @@ export default function useCreateController() {
   useLayoutEffect(() => {
     const timeOutId = setTimeout(() => {
       return location.reload();
-    }, 1000);
+    }, 3000);
     return () => clearTimeout(timeOutId);
   }, []);
 
