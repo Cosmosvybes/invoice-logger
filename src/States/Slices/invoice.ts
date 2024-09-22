@@ -223,7 +223,6 @@ const invoiceSlice = createSlice({
       state.draft.push({
         ...invoice,
       });
-      
     },
 
     addItem: (state, action: PayloadAction<productKeyValue>) => {
@@ -441,13 +440,6 @@ const invoiceSlice = createSlice({
       state.settings = settings;
     });
     builder.addCase(getUser.rejected, (state) => {
-      state.loading = false;
-    });
-    builder.addCase(getInvoice.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(getInvoice.fulfilled, (state, action) => {
-      state.currentInvoice = action.payload;
       state.loading = false;
     });
   },

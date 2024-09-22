@@ -17,7 +17,7 @@ export default function useTemplateController() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-
+  
   useEffect(() => {
     dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);

@@ -41,7 +41,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 <p className="block text-xl">You have got an invoice.</p>
               </Container>
 
-              <Container className="block text-black">
+              <Container className="block text-gray-700">
                 <p className="text-black font-normal  text-sm">
                   Reference ID- {invoiceInformation.id}
                 </p>

@@ -6,7 +6,6 @@ const Create = () => {
   const { invoiceInformation } = useCreateController();
   return (
     <>
-      {/* {invoiceInformation && ( */}
       <div className="relative px-28  max-sm:px-0 max-md:w-full ">
         <div className="relative">
           <BreadCrumb
@@ -22,7 +21,6 @@ const Create = () => {
           )}
         </div>
       </div>
-      {/* )} */}
     </>
   );
 };

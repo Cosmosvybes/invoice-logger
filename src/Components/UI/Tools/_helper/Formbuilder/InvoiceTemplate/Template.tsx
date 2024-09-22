@@ -140,7 +140,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
 
   return (
     <>
-      {loading ? (
+      {!invoiceInformation && loading ? (
         <Spinner_ />
       ) : (
         <Card className="border-none">

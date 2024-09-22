@@ -3,7 +3,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../../States/hoooks/hook";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { getUser } from "../../../../../../States/Slices/invoice";
 
 export default function useCreateController() {
@@ -13,6 +13,11 @@ export default function useCreateController() {
   useEffect(() => {
     dispatch(getUser(localStorage.getItem("token")!));
   }, []);
+
+  const timeOutId = setTimeout(() => {
+    location.reload();
+  }, 500);
+  clearTimeout(timeOutId);
 
   //
   const { draft, loading } = useAppSelector((state) => state.invoice);
