@@ -3,7 +3,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../../States/hoooks/hook";
-import { useEffect,  } from "react";
+import { useEffect } from "react";
 import { getUser } from "../../../../../../States/Slices/invoice";
 
 export default function useCreateController() {
@@ -15,7 +15,7 @@ export default function useCreateController() {
   }, []);
 
   const timeOutId = setTimeout(() => {
-    location.reload();
+    return location.reload();
   }, 500);
   clearTimeout(timeOutId);
 
