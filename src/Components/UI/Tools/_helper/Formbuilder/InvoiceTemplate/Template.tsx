@@ -208,7 +208,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                         placeholder="client email here.."
                         value={customEmail}
                         onChange={handleSetCustomEmail}
-                        className="py-2 px-3"
+                        className="py-3 px-3"
                       />
                     )}
                   </div>
