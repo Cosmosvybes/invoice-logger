@@ -149,11 +149,16 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               <ModalHeader>Sending Invoice</ModalHeader>
               <ModalBody>Do you want send this invoice ?</ModalBody>
               <ModalFooter>
-                <Button color="danger" onClick={() => setModal(!modal)}>
+                <Button
+                  className="p-2 py-2"
+                  color="danger"
+                  onClick={() => setModal(!modal)}
+                >
                   Cancel
                 </Button>{" "}
                 <Button
-                  color="primary"
+                  className="p-2 py-2"
+                  color="dark"
                   onClick={() => {
                     handleSendInvoice(emailHtml);
                     setModal(!modal);

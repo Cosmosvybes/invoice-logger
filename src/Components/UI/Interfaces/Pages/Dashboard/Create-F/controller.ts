@@ -12,12 +12,12 @@ export default function useCreateController() {
   //
   useEffect(() => {
     dispatch(getUser(localStorage.getItem("token")!));
-  }, []);
 
-  const timeOutId = setTimeout(() => {
-    return location.reload();
-  }, 500);
-  clearTimeout(timeOutId);
+    const timeOutId = setTimeout(() => {
+      return location.reload();
+    }, 1000);
+    return () => clearTimeout(timeOutId);
+  }, []);
 
   //
   const { draft, loading } = useAppSelector((state) => state.invoice);
