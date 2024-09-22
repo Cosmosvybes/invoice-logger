@@ -186,45 +186,6 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 />
               )}
               <hr />
-              <div className="relative flex  justify-start max-sm:justify-end">
-                <div className="relative flex flex-col  mb-1 w-full">
-                  <strong className="w-full text-2xl max-sm:text-xl mb-2 font-semibold">
-                    Sending to
-                  </strong>
-                  <div className="relative w-1/5 max-sm:w-full  h-auto ">
-                    {!useCustomChecked ? (
-                      <select
-                        id="client-list"
-                        className="py-3 px-4 w-full"
-                        onChange={handleSelectClient}
-                      >
-                        {[{ email: "--select--" }, ...clients].map((_, i) => (
-                          <option key={i}>{_.email}</option>
-                        ))}
-                      </select>
-                    ) : (
-                      <Input
-                        type="text"
-                        placeholder="client email here.."
-                        value={customEmail}
-                        onChange={handleSetCustomEmail}
-                        className="py-3 px-3"
-                      />
-                    )}
-                  </div>
-
-                  <FormGroup switch className="mt-1">
-                    <Input
-                      type="switch"
-                      onChange={(e) => {
-                        setUseCustom(e.currentTarget.checked);
-                      }}
-                    />
-                    <Label>Use custom email</Label>
-                  </FormGroup>
-                </div>
-              </div>
-
               <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
                 <Button
                   onClick={() => handleView()}
@@ -252,6 +213,47 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                   )}
                   SEND
                 </Button>
+              </div>
+
+              <div className="relative flex  justify-start max-sm:justify-end">
+                <div className="relative flex flex-col  mb-1 w-full">
+                  <strong className="w-full text-2xl max-sm:text-xl mb-2 font-semibold">
+                    Sending to:
+                  </strong>
+                  <div className="relative w-1/5 max-sm:w-full  h-auto ">
+                    {!useCustomChecked ? (
+                      <select
+                        id="client-list"
+                        className="py-3 px-4 w-full"
+                        onChange={handleSelectClient}
+                      >
+                        {[{ email: "--select--" }, ...clients].map((_, i) => (
+                          <option key={i}>{_.email}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      <Input
+                        type="text"
+                        placeholder="client email here.."
+                        value={customEmail}
+                        onChange={handleSetCustomEmail}
+                        className="py-3 px-3"
+                      />
+                    )}
+                  </div>
+
+                  <FormGroup switch className="mt-3">
+                    <Input
+                      type="switch"
+                      onChange={(e) => {
+                        setUseCustom(e.currentTarget.checked);
+                      }}
+                    />
+                    <Label className="max-sm:text-xs text-xl text-gray-400">
+                      use custom email
+                    </Label>
+                  </FormGroup>
+                </div>
               </div>
 
               <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-3 max-sm:gap-4">
