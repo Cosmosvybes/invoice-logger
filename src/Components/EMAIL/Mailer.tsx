@@ -4,7 +4,6 @@ import {
   Body,
   Head,
   Preview,
-  Text,
   Heading,
   Hr,
   Container,
