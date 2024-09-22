@@ -23,7 +23,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
           {String(invoiceInformation.id)}{" "}
         </Preview>
         <Tailwind>
-          <Body className=" text-black py-5 px-2 border-5 border-gray-100 bg-gray-50 w-full">
+          <Body className=" text-black py-5 px-2 border-5 border-gray-100 bg-gray-white  w-full">
             <Container className="py-auto border-3 border-gray-100 ">
               <Img
                 className="h-20 w-auto object-cover"
@@ -34,12 +34,9 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 alt="logo"
               />
 
-              <Container className="text-slate-700">
-                <p className="text-2xl">
-                  Hi there 👋, I'm Chris from etherbill.
-                </p>
-                <p className="block text-xl">You have got an invoice.</p>
-              </Container>
+              <p className="">
+                Hi there 👋, I'm Chris from etherbill. You have got an invoice.
+              </p>
 
               <p className="text-black font-normal  text-sm">
                 Reference ID- {invoiceInformation.id}
@@ -47,11 +44,10 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               <Hr className="border-gray-100 w-full" />
 
               <p className="text-black text-sm font-normal">
-                Sender address -{" "}
-                {invoiceInformation.BusinessAddress.toUpperCase()}{" "}
-                {invoiceInformation.ClientCity.toUpperCase()}{" "}
-                {invoiceInformation.BusinessState.toUpperCase()},
-                {invoiceInformation.BusinessCountry.toUpperCase()}.
+                Sender's address - {invoiceInformation.BusinessAddress}{" "}
+                {invoiceInformation.ClientCity}{" "}
+                {invoiceInformation.BusinessState},
+                {invoiceInformation.BusinessCountry}.
               </p>
               <Hr className="border-gray-100 w-full" />
               <p className="text-black text-sm font-normal">
@@ -63,8 +59,8 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                 {" "}
                 Date due - {invoiceInformation.DateDue}{" "}
               </p>
-
-              <Container className="  text-gray-700">
+              <Hr className="border-gray-100 w-full" />
+              <Container className=" text-gray-700">
                 <Heading className="">Products</Heading>
                 <table
                   border={0}
@@ -122,7 +118,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               </Container>
               <br />
 
-              <div className="relative justify-end items-center flex-col">
+              <div className="relative justify-end items-center px-2 flex-col">
                 <p> Value added tax- {invoiceInformation.VAT} % </p>
                 <Hr className="border-gray-100 w-full" />
 
@@ -131,39 +127,30 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
 
                 <p>
                   {" "}
-                  TOTAL- {invoiceInformation.TOTAL.toLocaleString()}{" "}
+                  Total- {invoiceInformation.TOTAL.toLocaleString()}{" "}
                   {invoiceInformation.currency}{" "}
                 </p>
                 <Hr className="border-gray-100 w-full" />
               </div>
 
-              <Container className="block px-2 text-gray-700 bg-gray-50 font-sans">
-                <div className="relative justify-end items-center flex-col">
-                  <p>
-                    {" "}
-                    Shipping address - {invoiceInformation.shippingAddress}
-                  </p>
+              <div className="relative justify-end items-center flex-col">
+                <p> Shipping address - {invoiceInformation.shippingAddress}</p>
 
-                  <Hr className="border-gray-100 w-full" />
+                <Hr className="border-gray-100 w-full" />
 
-                  <p>
-                    {" "}
-                    Payment Information -{" "}
-                    {invoiceInformation.paymentInformation}
-                  </p>
+                <p>
+                  {" "}
+                  Payment Information - {invoiceInformation.paymentInformation}
+                </p>
 
-                  <Hr className="border-gray-100 w-full" />
+                <Hr className="border-gray-100 w-full" />
 
-                  <p> Transaction notes -{invoiceInformation.Notes}</p>
+                <p> Transaction notes -{invoiceInformation.Notes}</p>
 
-                  <Hr className="border-gray-100 w-full" />
+                <Hr className="border-gray-100 w-full" />
 
-                  <p>
-                    {" "}
-                    Other Information -{invoiceInformation.otherInformation}
-                  </p>
-                </div>
-              </Container>
+                <p> Other Information -{invoiceInformation.otherInformation}</p>
+              </div>
 
               <Hr />
               <Heading className="text-black flex justify-start h-20 text-center ">
