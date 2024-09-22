@@ -46,7 +46,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               <p className="text-black  font-normal">
                 Sender's address - {invoiceInformation.BusinessAddress}{" "}
                 {invoiceInformation.ClientCity}{" "}
-                {invoiceInformation.BusinessState}, {" "}
+                {invoiceInformation.BusinessState},{" "}
                 {invoiceInformation.BusinessCountry}.
               </p>
               <Hr className="border-gray-100 w-full" />
@@ -118,24 +118,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               </Container>
               <br />
 
-              <div className="relative justify-end items-center px-2 flex-col">
-                <p> Value added tax- {invoiceInformation.VAT} % </p>
-                <Hr className="border-gray-100 w-full" />
-
-                <p> Discount- {invoiceInformation.Discount} % </p>
-                <Hr className="border-gray-100 w-full" />
-
-                <p>
-                  {" "}
-                  Total- {String(
-                    invoiceInformation.TOTAL.toLocaleString()
-                  )}{" "}
-                  {invoiceInformation.currency}{" "}
-                </p>
-                <Hr className="border-gray-100 w-full" />
-              </div>
-
-              <div className="relative justify-end items-center px-2 flex-col">
+              <div className="relative text-gray-700 justify-end items-center px-2 flex-col">
                 <p> Shipping address - {invoiceInformation.shippingAddress}</p>
 
                 <Hr className="border-gray-100 w-full" />
@@ -153,7 +136,22 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
 
                 <p> Other Information -{invoiceInformation.otherInformation}</p>
               </div>
+              <div className="relative  text-gray-700 justify-end items-center px-2 flex-col">
+                <p> Value added tax- {invoiceInformation.VAT} % </p>
+                <Hr className="border-gray-100 w-full" />
 
+                <p> Discount- {invoiceInformation.Discount} % </p>
+                <Hr className="border-gray-100 w-full" />
+
+                <p>
+                  {" "}
+                  Total- {String(
+                    invoiceInformation.TOTAL.toLocaleString()
+                  )}{" "}
+                  {invoiceInformation.currency}{" "}
+                </p>
+                <Hr className="border-gray-100 w-full" />
+              </div>
               <Hr />
               <Heading className="text-black flex justify-start h-20 text-center ">
                 <Img
@@ -168,11 +166,11 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               <Container className="px-2 text-gray-500">
                 <p>
                   All trademarks, service marks, and company names are the
-                  property of Etherbill inc..
+                  property of Etherbill Inc.
                 </p>
-                <Text className="font-normal  text-gray-600 ">
-                  {new Date().getFullYear()} Etherbill Inc &copy;.
-                </Text>
+                <p className="text-xl text-gray-700 opacity-50 font-extrabold">
+                  Etherbill Inc &copy; • {new Date().getFullYear()}
+                </p>
               </Container>
             </Container>
           </Body>
