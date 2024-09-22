@@ -65,7 +65,7 @@ export default function useSigninController() {
       return toast.error(result.response, { theme: "dark" });
     } else {
       const response = await fetch(
-        `http://localhost:8080/api/dashboard`,
+        `https://ether-bill-server-1.onrender.com/api/dashboard`,
         {
           headers: { Authorization: `Bearer ${token}` },
           method: "GET",
