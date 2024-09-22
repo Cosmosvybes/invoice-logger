@@ -147,7 +147,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
           <CardBody>
             <Modal isOpen={modal} toggle={() => setModal(!modal)} fade={true}>
               <ModalHeader>Sending Invoice</ModalHeader>
-              <ModalBody>Do you want send this invoice ?</ModalBody>
+              <ModalBody>Do you want send this invoice now ?</ModalBody>
               <ModalFooter>
                 <Button
                   className="p-2 py-2"
@@ -176,7 +176,10 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                   callback={() => setViewMode(!viewMode)}
                 />
               )}
+              <div className="relative">
 
+                
+              </div>
               <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
                 <Button
                   onClick={() => handleView()}
