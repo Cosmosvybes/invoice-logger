@@ -188,14 +188,14 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               <hr />
               <div className="relative flex  justify-start max-sm:justify-end">
                 <div className="relative flex flex-col  mb-1 w-full">
-                  <strong className="w-full text-2xl max-sm:text-xl mb-1 font-semibold">
+                  <strong className="w-full text-2xl max-sm:text-xl mb-2 font-semibold">
                     Sending to
                   </strong>
                   <div className="relative w-1/5 max-sm:w-full  h-auto ">
                     {!useCustomChecked ? (
                       <select
                         id="client-list"
-                        className="py-2 px-2 w-full"
+                        className="py-3 px-4 w-full"
                         onChange={handleSelectClient}
                       >
                         {[{ email: "--select--" }, ...clients].map((_, i) => (
@@ -208,6 +208,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                         placeholder="client email here.."
                         value={customEmail}
                         onChange={handleSetCustomEmail}
+                        className="py-2 px-3"
                       />
                     )}
                   </div>
