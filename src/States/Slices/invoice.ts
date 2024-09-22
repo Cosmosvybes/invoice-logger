@@ -41,7 +41,7 @@ export const getUser = createAsyncThunk(
   async (token: string) => {
     try {
       const response = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/user",
+        "http://localhost:8080/api/user",
         {
           headers: { Authorization: `Bearer ${token}` },
           method: "GET",
@@ -63,7 +63,7 @@ export const getInvoice = createAsyncThunk(
   async (id: any) => {
     try {
       const response = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/invoice?id=${id}`,
+        `http://localhost:8080/api/invoice?id=${id}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           method: "GET",

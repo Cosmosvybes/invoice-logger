@@ -17,12 +17,12 @@ export default function useTemplateController() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  
+
   useEffect(() => {
     dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);
 
-  const { loading, draft } = useAppSelector((state) => state.invoice);
+  const { loading, draft, clients } = useAppSelector((state) => state.invoice);
 
   let invoiceInformation: any;
   function setInvoiceInformation() {
@@ -116,12 +116,13 @@ export default function useTemplateController() {
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [recipient, setReceipient] = useState("");
 
   //
   const handleSendInvoice = async (emailHtml: any) => {
     const emailData = await emailHtml;
     const emailObject = {
-      receipient: "alfredchrisayo@gmail.com",
+      receipient: recipient,
       htmlContent: emailData,
       invoice: invoiceInformation,
     };
@@ -154,8 +155,28 @@ export default function useTemplateController() {
       setLoading(false);
     }
   };
-  // console.log(draft)
+  const [useCustomChecked, setUseCustom] = useState(false);
+  const [customEmail, setCustomEmail] = useState("");
+
+  const handleSetCustomEmail = (e: any) => {
+    setCustomEmail(e.target.value);
+    setReceipient(recipient);
+  };
+
+  const handleSelectClient = () => {
+    const selectDoc = document.querySelector(
+      "#client-list"
+    ) as HTMLSelectElement;
+    setReceipient(selectDoc.value);
+  };
+
   return {
+    handleSetCustomEmail,
+    customEmail,
+    setUseCustom,
+    handleSelectClient,
+    useCustomChecked,
+    clients,
     loading,
     handleSendInvoice,
     handleView,

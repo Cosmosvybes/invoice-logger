@@ -82,9 +82,9 @@ const ProductsList = () => {
         <div></div>
         <div></div>
         <div></div>
-        <button onClick={addNew} color="primary" className="text-black">
+        <button onClick={addNew} color="primary" className="text-black ">
           {" "}
-          <PlusRectangle className="inline text-5xl text-gray-600" />
+          <PlusRectangle className="inline text-5xl text-black" />
         </button>
       </div>
     </>
