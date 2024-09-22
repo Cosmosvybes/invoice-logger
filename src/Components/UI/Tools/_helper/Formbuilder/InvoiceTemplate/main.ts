@@ -160,7 +160,7 @@ export default function useTemplateController() {
 
   const handleSetCustomEmail = (e: any) => {
     setCustomEmail(e.target.value);
-    setReceipient(recipient);
+    setReceipient(e.target.value);
   };
 
   const handleSelectClient = () => {
