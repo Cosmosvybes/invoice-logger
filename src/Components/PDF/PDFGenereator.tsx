@@ -18,7 +18,7 @@ const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
     table: {
       display: "flex",
       position: "relative",
-      borderColor: "#bfbfbf",
+      borderColor: "grey",
       justifyContent: "flex-start",
     },
     tableRow: {
@@ -33,7 +33,7 @@ const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
     tableCol: {
       borderStyle: "dotted",
       display: "flex",
-      borderBottom: "black",
+      borderBottom: "grey",
       flexDirection: "column",
     },
     tableCell: {
@@ -81,7 +81,6 @@ const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
         <Text style={styles.title}>~ Invoice ref-11234567 </Text>
         <br />
         <Text style={styles.header}>
-        
           Received since,
           {new Date().toLocaleString("en-US", {
             day: "numeric",

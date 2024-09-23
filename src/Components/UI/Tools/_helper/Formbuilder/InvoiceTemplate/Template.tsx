@@ -32,6 +32,8 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
   const [modal, setModal] = useState(false);
   const {
     customEmail,
+    sendAsMessage,
+    setSetAsMessage,
     // setCustomEmail,
     handleSetCustomEmail,
     setUseCustom,
@@ -103,7 +105,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
         return (
           <div className="relative" key={index}>
             <Input
-              className="px-2 border-none py-2 text-xl  font-normal max-sm:text-xs outline-none rounded-sm bg-inherit text-black w-96 max-sm:w-full"
+              className="px-2 border-none py-2 text-xl  font-normal max-sm:text-xs outline-none rounded-sm bg-inherit text-gray-400 w-96 max-sm:w-full"
               type="text"
               value={invoiceInformation[input.name]}
               placeholder={input.placeholder}
@@ -120,7 +122,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
       key={input.id}
     >
       <Input
-        className="py-2 text-xl text-center max-sm:text-xs  max-md:text-md  outline-none rounded-sm text-black px-0 font-normal w-36  max-sm:w-full"
+        className="py-2 text-xl text-center max-sm:text-xs  max-md:text-md  outline-none rounded-sm text-gray-400 px-0 font-normal w-36  max-sm:w-full"
         type={"text"}
         placeholder={`${input.placeholder} %`}
         value={invoiceInformation[input.name]}
@@ -224,7 +226,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                     {!useCustomChecked ? (
                       <select
                         id="client-list"
-                        className="py-3 px-4 w-full"
+                        className="py-3 px-4 rounded-md bg-gray-100 w-full"
                         onChange={handleSelectClient}
                       >
                         {[{ email: "--select--" }, ...clients].map((_, i) => (
@@ -233,8 +235,9 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                       </select>
                     ) : (
                       <Input
+                        color="dark"
                         type="text"
-                        placeholder="client email here.."
+                        placeholder="Receipient email here..."
                         value={customEmail}
                         onChange={handleSetCustomEmail}
                         className="py-3 px-3"
@@ -242,8 +245,10 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                     )}
                   </div>
 
-                  <FormGroup switch className="mt-3">
+                  <FormGroup color="dark" switch className="mt-3">
                     <Input
+                      className="text-black"
+                      color="dark"
                       type="switch"
                       onChange={(e) => {
                         setUseCustom(e.currentTarget.checked);
@@ -251,6 +256,18 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                     />
                     <Label className="max-sm:text-xs text-xl text-gray-400">
                       use custom email
+                    </Label>
+                  </FormGroup>
+                  <FormGroup switch className="mt-3">
+                    <Input
+                      type="switch"
+                      checked={sendAsMessage}
+                      onChange={(e) => {
+                        setSetAsMessage(e.currentTarget.checked);
+                      }}
+                    />
+                    <Label className="max-sm:text-xs text-xl text-gray-400">
+                      send as direct message
                     </Label>
                   </FormGroup>
                 </div>

@@ -12,6 +12,7 @@ import {
   UserAdd,
   UsersDouble,
   Dashboard,
+  MailArrowDown,
 } from "react-huge-icons/bulk";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
 
@@ -26,6 +27,7 @@ const Nav = () => {
     <Setting className="inline text-xl" />,
     <Logout className="inline text-xl" />,
     <Dashboard className="inline text-xl" />,
+    <MailArrowDown className="inline text-xl" />,
   ];
   const {
     active,

@@ -37,7 +37,13 @@ const InvoicePiece = () => {
               file={
                 <GeneratePDF
                   invoiceInformation={staticForm}
-                  headers={["one", "two", "three", "four", "five"]}
+                  headers={[
+                    "ID",
+                    "Description",
+                    "Quantity",
+                    "Unit price",
+                    "Unit total",
+                  ]}
                 />
               }
             />
@@ -45,7 +51,7 @@ const InvoicePiece = () => {
             <Button
               color="success"
               onClick={toggle_}
-              className="text-green-500 border-none shadow-inner font-extrabold bg-inherit"
+              className=" border-none shadow-inner font-extrabold"
             >
               OPEN
             </Button>

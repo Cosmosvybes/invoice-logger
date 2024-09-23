@@ -33,6 +33,7 @@ const InputProvider = ({
             >
               <Label> {_.label}</Label>
               <Input
+                color="dark"
                 type="switch"
                 value={settings[_.name]}
                 checked={settings[_.name]}
@@ -52,6 +53,7 @@ const InputProvider = ({
             >
               <Label> {_.label}</Label>
               <Input
+                color="dark"
                 type="select"
                 value={settings[_.name]}
                 onChange={(e) => handleChange(_.name, e.currentTarget.checked)}
@@ -72,7 +74,7 @@ const InputProvider = ({
               <Label> {_.label}</Label>
               <Input
                 type="text"
-                className="form-control"
+                className="form-control text-gray-400"
                 value={settings[_.name]}
                 onChange={(e) => handleChange(_.name, e.target.value)}
               />
@@ -85,7 +87,7 @@ const InputProvider = ({
   return (
     <>
       <Card className="w-full border-none h-96 max-sm:h-auto shadow-md">
-        <CardBody className="border-none">
+        <CardBody className="border-none text-gray-400">
           <h1 className="text-2xl max-sm:text-xl mb-2"> {title}</h1>
           <hr />
           <br />

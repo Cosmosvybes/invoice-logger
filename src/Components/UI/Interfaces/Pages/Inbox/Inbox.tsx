@@ -3,18 +3,24 @@ import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import user from "./../../../../../assets/User.svg";
 import useInvoiceReceivedController from "./controller";
 const Inbox = () => {
-  const { list } = useInvoiceReceivedController();
+  const { inbox } = useInvoiceReceivedController();
 
   return (
     <>
       <div className="relative px-28 max-sm:px-2">
         <BreadCrumb title="Invoice received" linkTitle="" useLink={false} />
-        <div className="relative flex max-sm:flex-col mt-5 justify-between h-auto">
-          <div className="relative w-1/2 px-3 max-sm:w-full max-sm:px-3 flex gap-3 justify-start flex-col">
-            {list.map((_, i) => (
-              <InvoicePiece key={i} />
-            ))}
-          </div>
+        <div className="relative flex  max-sm:flex-col mt-5 justify-between h-auto">
+          {inbox.length < 1 ? (
+            <p className="text-gray-400 text-4xl max-sm:text-xl ml-5">
+              No invoice yet!
+            </p>
+          ) : (
+            <div className="relative w-1/2 px-3 max-sm:w-full max-sm:px-3 flex gap-3 justify-start flex-col">
+              {inbox.map((_, i) => (
+                <InvoicePiece key={i} />
+              ))}
+            </div>
+          )}
 
           <div className="relative w-1/3  max-sm:w-full h-auto flex px-3  py-2 max-sm:py-0 max-sm px-3:flex-col">
             {" "}

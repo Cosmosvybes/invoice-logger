@@ -21,13 +21,16 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
         <tbody>
           {currentInvoiceList.map((invoice, index) => (
             <tr
+              style={{
+                backgroundColor: `${index % 2 != 1 ? "grey" : "lightgray"}  `,
+              }}
               className={` ${
-                index % 2 == 0 ? "bg-gray-100" : "bg-black"
+                index % 2 != 0 ? "bg-gray-500" : "bg-black"
               } py-2 px-3 `}
               key={invoice.id}
             >
               <td className="text-gray-200 text-center max-sm:text-xs font-normal py-2 w-20 max-sm:w-16 ">
-                {String(invoice.id).slice(9, 16)}
+                {String(invoice.id).slice(0, 8)}
               </td>
               <td className="text-gray-200 text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">
                 {invoice.Client.slice(0, 8)}
@@ -37,7 +40,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
                 {invoice.status.toLowerCase()}
               </td>
               <td className="text-gray-200 text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">
-                {invoice.TOTAL}{" "}
+                {String(invoice.TOTAL.toLocaleString())}{" "}
               </td>
 
               <td className="text-gray-200 text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
@@ -46,7 +49,7 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
               </td>
               <td className="text-gray-200 text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
                 {String(invoice.updatedAt).length > 10 &&
-                  String(invoice.updatedAt).slice(0, 6) + "..."}
+                  String(invoice.updatedAt).slice(0, 17) + "..."}
               </td>
               <td className="text-black text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
                 <button>

@@ -1,8 +1,10 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import { logOut } from "../../../../../States/Slices/ClientSlice/useAuth/user";
+import { useNavigate } from "react-router-dom";
 
 export default function useNavMenu(icons: any) {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [links] = useState([
     { id: 1, path: "dashboard", name: "Home" },
@@ -17,7 +19,7 @@ export default function useNavMenu(icons: any) {
 
   const handleSignOut = () => {
     dispatch(logOut());
-    location.assign("/");
+    navigate("/");
   };
 
   const sideMenu = [
@@ -44,6 +46,13 @@ export default function useNavMenu(icons: any) {
           title: "New invoice",
           path: "new/invoice",
           icon: icons[1],
+          onclick: "",
+        },
+        {
+          id: 3,
+          title: "Inbox",
+          path: "account/invoice-received",
+          icon: icons[9],
           onclick: "",
         },
         {

@@ -117,7 +117,7 @@ export default function useTemplateController() {
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [recipient, setReceipient] = useState("");
-
+  const [sendAsMessage, setSetAsMessage] = useState(true);
   //
   const handleSendInvoice = async (emailHtml: any) => {
     const emailData = await emailHtml;
@@ -130,10 +130,9 @@ export default function useTemplateController() {
     try {
       setLoading(true);
       const responseInfo = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/send/invoice",
+        `http://localhost:8080/api/send/invoice?sendAsMessage=${sendAsMessage}`,
         {
           method: "POST",
-
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "Application/json",
@@ -162,7 +161,9 @@ export default function useTemplateController() {
     setCustomEmail(e.target.value);
     setReceipient(e.target.value);
   };
-
+  const handleSendAsMessage = (e: any) => {
+    setSetAsMessage(e.target.value);
+  };
   const handleSelectClient = () => {
     const selectDoc = document.querySelector(
       "#client-list"
@@ -171,6 +172,9 @@ export default function useTemplateController() {
   };
 
   return {
+    handleSendAsMessage,
+    setSetAsMessage,
+    sendAsMessage,
     handleSetCustomEmail,
     customEmail,
     setUseCustom,
