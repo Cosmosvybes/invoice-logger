@@ -130,7 +130,7 @@ export default function useTemplateController() {
     try {
       setLoading(true);
       const responseInfo = await fetch(
-        `http://localhost:8080/api/send/invoice?sendAsMessage=${sendAsMessage}`,
+        `https://ether-bill-server-1.onrender.com/api/send/invoice?sendAsMessage=${sendAsMessage}`,
         {
           method: "POST",
           headers: {
