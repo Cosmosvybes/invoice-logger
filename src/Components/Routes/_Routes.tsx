@@ -8,6 +8,7 @@ import AddClient from "../UI/Interfaces/Pages/Client/AddClient";
 import Profile from "../UI/Interfaces/Pages/Profile/Profile";
 import SignIn from "../UI/Interfaces/Pages/Onboard/signin/SignIn";
 import Settings from "../UI/Interfaces/Pages/Settings/Settings";
+import Inbox from "../UI/Interfaces/Pages/Inbox/Inbox";
 
 const _Routes = () => {
   return (
@@ -15,6 +16,7 @@ const _Routes = () => {
       <Nav />
       <Routes>
         <Route path="/" element={<SignIn />}></Route>
+        <Route path="/account/invoice-received" element={<Inbox />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/invoices" element={<Invoices />}></Route>
         <Route path="/new/invoice" element={<Create />}></Route>
