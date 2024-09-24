@@ -1,4 +1,4 @@
-import { Input, Table } from "reactstrap";
+import { Input } from "reactstrap";
 
 import useTableController from "./table.controller";
 import Empty from "../Dashboard/Invoices/Empty";
@@ -52,7 +52,9 @@ const Table_ = () => {
             <td className="text-center gap-2   py-3">
               {String(row.id).slice(10, 15)}
             </td>
-            <td className="text-center max-sm:text-sm font-light text-black   py-3">{row.name}</td>
+            <td className="text-center max-sm:text-sm font-light text-black   py-3">
+              {row.name}
+            </td>
             <td className="text-center max-sm:text-sm font-light text-black  py-3">
               {String(row.email).length > 10 &&
                 String(row.email).slice(0, 9) + "..."}
@@ -65,7 +67,9 @@ const Table_ = () => {
             <td className="text-center max-sm:text-sm font-light text-black  py-3">
               {row.cityStatePostal}
             </td>
-            <td className="text-center max-sm:text-sm font-light text-black  py-3">{row.country}</td>
+            <td className="text-center max-sm:text-sm font-light text-black  py-3">
+              {row.country}
+            </td>
           </tr>
         ))
     );
@@ -92,7 +96,7 @@ const Table_ = () => {
               ))}
             </tr>
           </thead>
-         <br/>
+          <br />
           <tbody>{TABLE_BODY}</tbody>
         </table>
 
