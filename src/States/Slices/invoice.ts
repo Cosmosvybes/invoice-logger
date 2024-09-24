@@ -40,10 +40,13 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch("https://ether-bill-server-1.onrender.com/api/user", {
-        headers: { Authorization: `Bearer ${token}` },
-        method: "GET",
-      });
+      const response = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/user",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          method: "GET",
+        }
+      );
       if (response.status != 200) {
         return location.replace("/");
       }
@@ -430,18 +433,21 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-      const { draft, sent, revenue, clients, settings } = action.payload;
+      const { draft, sent, revenue, clients, settings, inbox } = action.payload;
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
       state.clients = clients;
       state.settings = settings;
+      state.inbox = inbox;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
     });
   },
 });
+
+
 
 //
 export default invoiceSlice.reducer;

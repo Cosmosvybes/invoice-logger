@@ -1,5 +1,6 @@
 import InvoicePiece from "../../../Tools/_helper/Inbox/InvoicePiece";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
+import Empty from "../Dashboard/Invoices/Empty";
 import user from "./../../../../../assets/User.svg";
 import useInvoiceReceivedController from "./controller";
 const Inbox = () => {
@@ -11,9 +12,7 @@ const Inbox = () => {
         <BreadCrumb title="Invoice received" linkTitle="" useLink={false} />
         <div className="relative flex  max-sm:flex-col mt-5 justify-between h-auto">
           {inbox.length < 1 ? (
-            <p className="text-gray-400 text-4xl max-sm:text-xl ml-5">
-              No invoice yet!
-            </p>
+            <Empty message="Fold is currently empty!" />
           ) : (
             <div className="relative w-1/2 px-3 max-sm:w-full max-sm:px-3 flex gap-3 justify-start flex-col">
               {inbox.map((_, i) => (
