@@ -41,7 +41,7 @@ export default function useClientFormController() {
       id: Date.now(),
     };
 
-    const response = await fetch("http://localhost:8080/api/client/new", {
+    const response = await fetch("https://ether-bill-server-1.onrender.com/api/client/new", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
