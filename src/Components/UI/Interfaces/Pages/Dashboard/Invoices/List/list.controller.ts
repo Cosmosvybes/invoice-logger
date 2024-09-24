@@ -1,5 +1,8 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { Invoice } from "../../../../../../../States/Slices/invoice.types";
+import { toast } from "react-toastify";
+import { useAppDispatch } from "../../../../../../../States/hoooks/hook";
+import { markAsPaid } from "../../../../../../../States/Slices/invoice";
 
 export default function useInvoiceListController(invoices: Invoice[]) {
   const [currentRowDataID, setCurrentRowDataID] = useState<null | number>(null);
@@ -35,6 +38,25 @@ export default function useInvoiceListController(invoices: Invoice[]) {
     firstInvoiceIndex,
     lastInvoiceIndex
   );
+  const dispatch = useAppDispatch();
+
+  const handleMarkAsPaid = async (invoiceID: any) => {
+    const response = await fetch(
+      `https://ether-bill-server-1.onrender.com/api/invoice/mark-as-paid/?invoiceID=${invoiceID}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      toast.error("operation failed", { theme: "dark" });
+    }
+    const result = await response.json();
+    toast.success(result.response, { theme: "light" });
+    dispatch(markAsPaid({ invoiceID }));
+  };
 
   return {
     showActions,
@@ -45,5 +67,6 @@ export default function useInvoiceListController(invoices: Invoice[]) {
     listPerTable,
     currentInvoiceList,
     handleNextList,
+    handleMarkAsPaid,
   };
 }

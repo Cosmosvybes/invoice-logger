@@ -40,13 +40,10 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/user",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          method: "GET",
-        }
-      );
+      const response = await fetch("https://ether-bill-server-1.onrender.com/api/user", {
+        headers: { Authorization: `Bearer ${token}` },
+        method: "GET",
+      });
       if (response.status != 200) {
         return location.replace("/");
       }
@@ -110,6 +107,17 @@ const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
+    markAsPaid: (
+      state,
+      action: PayloadAction<{ invoiceID: string | number }>
+    ) => {
+      const { invoiceID } = action.payload;
+      let invoice = state.sent.find((invoice) => invoice.id == invoiceID);
+      const invoice_ = state.sent.find((inv) => inv.id == invoiceID);
+      const index = state.sent.indexOf(invoice_!);
+      state.paid.push(invoice!);
+      state.sent.splice(index, 1);
+    },
     removeDraft: (
       state,
       action: PayloadAction<{ invoiceID: string | number }>
@@ -433,21 +441,21 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-      const { draft, sent, revenue, clients, settings, inbox } = action.payload;
+      const { draft, sent, revenue, clients, settings, inbox, paid } =
+        action.payload;
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
       state.clients = clients;
       state.settings = settings;
       state.inbox = inbox;
+      state.paid = paid;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
     });
   },
 });
-
-
 
 //
 export default invoiceSlice.reducer;
@@ -464,4 +472,5 @@ export const {
   changeCurrency,
   updateSettings,
   removeDraft,
+  markAsPaid,
 } = invoiceSlice.actions;

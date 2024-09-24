@@ -10,7 +10,7 @@ import { Card, CardBody } from "reactstrap";
 
 const AccountDetails = () => {
   const { draft, sent, revenue } = useAppSelector((state) => state.invoice);
-  const [invoicesPerPage] = useState(2);
+  const [invoicesPerPage] = useState(1);
 
   const [currrentPage, setCurrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
@@ -36,6 +36,15 @@ const AccountDetails = () => {
             </p>
 
             <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
+            <Card>
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
+                  <p className="text-slate-950 text-xl font-bold">Revenue</p>
+                  <h1 className="text-black text-4xl max-sm:text-3xl font-extrabold">
+                    ${" "}
+                    {revenue.toLocaleString()}
+                  </h1>
+                </CardBody>
+              </Card>
               <Card>
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
                   <p className="text-slate-950 text-xl font-bold">
@@ -65,14 +74,7 @@ const AccountDetails = () => {
                   </h1>
                 </CardBody>
               </Card>
-              <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
-                  <p className="text-slate-950 text-xl font-bold">Revenue</p>
-                  <h1 className="text-black text-4xl max-sm:text-3xl font-extrabold">
-                    ${revenue}
-                  </h1>
-                </CardBody>
-              </Card>
+              
             </div>
           </div>
           <div className="relative w-full flex items-center  gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
@@ -106,12 +108,13 @@ const AccountDetails = () => {
                       </div>
                     ))}
                   </div>
-                  <Paginate
+                 
+                </CardBody>
+                <Paginate
                     invoices={draft}
                     postsPerPage={invoicesPerPage}
                     paginateHandler={handlePaginate}
                   />
-                </CardBody>
               </Card>
             )}
 

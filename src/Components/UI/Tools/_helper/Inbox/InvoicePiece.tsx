@@ -12,9 +12,14 @@ import {
 import { useState } from "react";
 import PDFDownloader from "../../../../PDF/Components/PDFDownloader";
 import GeneratePDF from "../../../../PDF/PDFGenereator";
-import { useAppSelector } from "../../../../../States/hoooks/hook";
-const InvoicePiece = () => {
-  const { staticForm } = useAppSelector((state) => state.invoice);
+
+import { Invoice } from "../../../../../States/Slices/invoice.types";
+// import ViewModal from "../Formbuilder/View/ViewModal";
+const InvoicePiece = ({
+  invoiceInformation,
+}: {
+  invoiceInformation: Invoice;
+}) => {
   const [modal, setModal] = useState(false);
   const toggle_ = () => {
     setModal(!modal);
@@ -29,14 +34,14 @@ const InvoicePiece = () => {
         </CardHeader>
         <CardBody className="border-none  flex justify-between ">
           <h1 className="text-green-400  font-normal flex justify-center items-center px-1">
-            Reference ID- 12345790F
+            Reference ID- {invoiceInformation.id}
           </h1>
           <div className="relative flex justify-center gap-1 max-sm:gap-3  items-center ">
             <PDFDownloader
-              reportType={"1234566776-invoice"}
+              reportType={`${invoiceInformation.id} - invoice`}
               file={
                 <GeneratePDF
-                  invoiceInformation={staticForm}
+                  invoiceInformation={invoiceInformation}
                   headers={[
                     "ID",
                     "Description",
@@ -60,10 +65,128 @@ const InvoicePiece = () => {
       </Card>
 
       <Modal isOpen={modal} toggle={toggle_}>
-        <ModalHeader>Invoice-12347432JT</ModalHeader>
+    
         <ModalBody>
-          <h1>Hello </h1>
-          {/* <ViewModal /> */}
+          <div className="relative flex flex-col gap-2">
+            <div className="relative block">
+              <p className="text-black  font-normal">
+                Invoice ID- {invoiceInformation.id}
+              </p>
+              <h1 className="text-2xl font-normal text-black underline">
+                Business Details
+              </h1>
+              <p className="text-black  font-normal">
+                Business name- {invoiceInformation.Business}
+              </p>
+              <p className="text-black  font-normal">
+                Business address- {invoiceInformation.BusinessAddress}
+              </p>
+              <p className="text-black  font-normal">
+                City/Postal- {invoiceInformation.ClientCity}
+              </p>
+              <p className="text-black  font-normal">
+                State- {invoiceInformation.BusinessState}
+              </p>
+              <p className="text-black  font-normal">
+                Country - {invoiceInformation.BusinessCountry}
+              </p>
+            </div>
+          </div>
+
+          <div className="relative block mt-2">
+            <h1 className="text-2xl font-normal text-black underline">
+              Client Details
+            </h1>
+            <div className="relative w-full grid grid-cols-1 text-black">
+              <p className="text-black  font-normal">
+                Client name- {invoiceInformation.Client}
+              </p>
+              <p className="text-black  font-normal">
+                Client Address- {invoiceInformation.ClientAddress}
+              </p>
+              <p className="text-black  font-normal">
+                City/Postal- {invoiceInformation.City}
+              </p>
+              <p className="text-black  font-normal">
+                State- {invoiceInformation.State}
+              </p>
+              <p className="text-black  font-normal">
+                Country - {invoiceInformation.Country}
+              </p>
+              <p className="text-black  font-normal">
+                Date Issued - {invoiceInformation.DateIssued}
+              </p>
+              <p className="text-black  font-normal">
+                Due Date - {invoiceInformation.DateDue}
+              </p>
+              <p className="text-black  font-normal">
+                Payment information - {invoiceInformation.paymentInformation}
+              </p>
+              <p className="text-black  font-normal">
+                Note - {invoiceInformation.Notes}
+              </p>
+              <p className="text-black  font-normal">
+                Shipping Address - {invoiceInformation.shippingAddress}
+              </p>
+            </div>
+          </div>
+          <div className="relative block mt-2">
+            <h1 className="text-2xl font-normal text-black underline">
+              Items List
+            </h1>
+            <div className="relative gap-1 grid grid-cols-4">
+              <p className="text-black text-center  font-normal">Description</p>
+              <p className="text-black text-center font-normal">Quantity</p>
+              <p className="text-black text-center  font-normal">Unit Price</p>
+              <p className="text-black  text-center font-normal">Sub-total</p>
+            </div>
+            <div className="relative">
+              <div className="relative flex-col flex">
+                {invoiceInformation.itemList?.map(
+                  ({ description, unitPrice, unitTotal, quantity }, i) => (
+                    <div className="relative grid grid-cols-4 gap-1" key={i}>
+                      <p className="text-black text-center font-normal">
+                        {description}
+                      </p>
+                      <p className="text-black text-center  font-normal">
+                        {quantity}
+                      </p>
+                      <p className="text-black text-center  font-normal">
+                        {unitPrice}
+                      </p>
+                      <p className="text-black text-center  font-normal">
+                        {Number(unitTotal).toFixed(2)}
+                      </p>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+
+          <hr className="w-full border border-black" />
+          <div className="relative w-full h-auto grid grid-cols-1  gap-3 mt-2 text-black">
+            <div className="relative flex  justify-start items-center">
+              <p className="text-black  font-normal">Discount- </p>
+              <p className="underline text-black  font-normal">
+                {invoiceInformation.Discount}%
+              </p>
+            </div>
+            <div className="relative  flex justify-start items-center">
+              <p className="text-black  font-normal">Tax- </p>
+              <p className="underline text-black  font-normal">
+                {invoiceInformation.VAT}%
+              </p>
+            </div>
+            <div className="relative flex justify-start gap-1 items-center">
+              <p className="text-black  font-normal">Total - </p>
+              <p className="underline text-black  font-normal">
+                {Number(invoiceInformation.TOTAL).toLocaleString() + " "}{" "}
+                {invoiceInformation.currency != "--select--" &&
+                  invoiceInformation.currency}
+              </p>
+            </div>
+          </div>
         </ModalBody>
       </Modal>
     </>

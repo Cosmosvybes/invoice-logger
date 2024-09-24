@@ -78,18 +78,22 @@ const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
     <Document>
       <Page size={"A4"} style={styles.body}>
         <Image src={logo} style={styles.logo} />
-        <Text style={styles.title}>~ Invoice ref-11234567 </Text>
+        <Text style={styles.title}>
+          ~ Invoice ref- {invoiceInformation.id}{" "}
+        </Text>
         <br />
         <Text style={styles.header}>
-          Received since,
-          {new Date().toLocaleString("en-US", {
-            day: "numeric",
-            month: "numeric",
-            year: "2-digit",
-            minute: "numeric",
-            hour: "numeric",
-          })}
+          Compan address -,
+          {invoiceInformation.BusinessAddress}
+          {""} , {invoiceInformation.ClientCity}, {""}
+          {invoiceInformation.BusinessState}.
         </Text>
+
+        <Text style={styles.header}>
+          Issued since,
+          {invoiceInformation.DateIssued}
+        </Text>
+
         <View style={styles.table}>
           <View style={styles.tableRow}>
             {headers.map((header: any) => (

@@ -9,7 +9,11 @@ const PDFDownloader = ({ file, reportType }: PDFtype) => {
   return (
     <PDFDownloadLink document={file} fileName={`${reportType}.pdf`}>
       {({ loading }) =>
-        loading ? <Button >Loading</Button> : <Button color="danger">Download</Button>
+        loading ? (
+          <Button>Loading</Button>
+        ) : (
+          <Button color="danger">DOWNLOAD</Button>
+        )
       }
     </PDFDownloadLink>
   );

@@ -71,7 +71,7 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           <div className="relative justify-start items-center ">
             {" "}
             <h1 className="text-slate-950 text-2xl inline font-semibold">
-              {Number(invoice.TOTAL).toFixed(2)}{" "}
+              {Number(invoice.TOTAL).toLocaleString()}{" "}
               {invoice.currency != "--select--" && invoice.currency}
             </h1>{" "}
           </div>

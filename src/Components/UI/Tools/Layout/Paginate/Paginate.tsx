@@ -23,8 +23,8 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
               paginateHandler(linkNumber);
             }}
             key={linkNumber}
-            className={` w-8 rounded-md border  h-auto duration-700 transition shadow-md cursor-pointer ${
-              active == linkNumber && "bg-gray-400"
+            className={` w-8 rounded-md border   h-auto duration-700 transition shadow-md cursor-pointer ${
+              active == linkNumber && "bg-gray-200"
             } ${
               active == linkNumber && "text-black"
             } text-black px-1 rounded-sm text-center`}

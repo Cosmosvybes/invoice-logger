@@ -156,7 +156,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
       ) : (
         <Card className="border-none">
           <CardBody>
-            <Modal isOpen={modal} toggle={() => setModal(!modal)} fade={true}>
+            <Modal centered={true} isOpen={modal} toggle={() => setModal(!modal)} fade={true}>
               <ModalHeader>Sending Invoice</ModalHeader>
               <ModalBody>Do you want send this invoice now ?</ModalBody>
               <ModalFooter>
@@ -224,7 +224,8 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                   </strong>
                   <div className="relative w-1/5 max-sm:w-full  h-auto ">
                     {!useCustomChecked ? (
-                      <select
+                      <Input
+                        type="select"
                         id="client-list"
                         className="py-3 px-4 rounded-md bg-gray-100 w-full"
                         onChange={handleSelectClient}
@@ -232,7 +233,7 @@ const Template = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                         {[{ email: "--select--" }, ...clients].map((_, i) => (
                           <option key={i}>{_.email}</option>
                         ))}
-                      </select>
+                      </Input>
                     ) : (
                       <Input
                         color="dark"

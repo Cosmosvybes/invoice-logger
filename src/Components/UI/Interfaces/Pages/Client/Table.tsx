@@ -22,7 +22,7 @@ const Table_ = () => {
             .includes(search.toLowerCase().trim()) ||
           user.country.toLowerCase().includes(search.toLowerCase().trim())
     ).length == 0 ? (
-      <tr className="text-center row-span-full max-sm:text-xs font-light text-black ">
+      <tr className="text-center row-span-full max-sm:text-sm font-light text-black ">
         {notFound.map((_, i) => (
           <td className="text-gray-400" key={i}>
             {""}
@@ -49,23 +49,23 @@ const Table_ = () => {
             key={i}
             className={`${i % 2 == 0 ? "bg-gray-50" : "bg-gray-100"}`}
           >
-            <td className="text-center max-sm:text-sm gap-2   py-2">
+            <td className="text-center gap-2   py-3">
               {String(row.id).slice(10, 15)}
             </td>
-            <td className="text-center max-sm:text-xs font-light text-black   py-2">{row.name}</td>
-            <td className="text-center max-sm:text-xs font-light text-black  py-2">
+            <td className="text-center max-sm:text-sm font-light text-black   py-3">{row.name}</td>
+            <td className="text-center max-sm:text-sm font-light text-black  py-3">
               {String(row.email).length > 10 &&
                 String(row.email).slice(0, 9) + "..."}
             </td>
-            <td className="text-center max-sm:text-xs font-light text-black  py-2">
+            <td className="text-center max-sm:text-sm font-light text-black  py-3">
               {String(row.address).length > 10
                 ? String(row.address).slice(0, 9) + "..."
                 : row.address}
             </td>
-            <td className="text-center max-sm:text-xs font-light text-black  py-2">
+            <td className="text-center max-sm:text-sm font-light text-black  py-3">
               {row.cityStatePostal}
             </td>
-            <td className="text-center max-sm:text-xs font-light text-black  py-2">{row.country}</td>
+            <td className="text-center max-sm:text-sm font-light text-black  py-3">{row.country}</td>
           </tr>
         ))
     );
@@ -82,8 +82,8 @@ const Table_ = () => {
           />{" "}
         </div>
 
-        <Table className="w-full border-collapse border-b px-3  mt-5 max-sm:w-full">
-          <thead>
+        <table className="w-full border-collapse border-b px-3  mt-5 max-sm:w-full">
+          <thead className="mb-2">
             <tr>
               {tableColums.map((_, i) => (
                 <th className="text-slate-800 text-center" key={i}>
@@ -92,8 +92,9 @@ const Table_ = () => {
               ))}
             </tr>
           </thead>
+         <br/>
           <tbody>{TABLE_BODY}</tbody>
-        </Table>
+        </table>
 
         <Paginate
           list={clients}

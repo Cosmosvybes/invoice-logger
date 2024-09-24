@@ -12,7 +12,7 @@ const ViewModal = ({
   return (
     <>
       <div className="absolute h-auto max-sm:h-auto w-full flex   max-sm:px-0 max-sm:py-0 justify-center items-center">
-        <div className="relative bg-white shadow-md  rounded-xl  z-30 flex flex-col px-5 ">
+        <div className="relative bg-white shadow-md  rounded-xl  z-30 flex flex-col px-2 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-normal text-black">Invoice Preview</h1>
 
@@ -38,6 +38,8 @@ const ViewModal = ({
               </p>
             </div>
           </div>
+
+
           <div className="relative block mt-2">
             <h1 className="text-2xl font-normal text-black underline">
               Client Details
