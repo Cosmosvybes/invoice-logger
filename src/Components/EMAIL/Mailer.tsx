@@ -18,7 +18,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
       <Html>
         <Head />
         <Preview>
-          Good day to you, find attached, your invoice statement.{" "}
+          Good day to you, find your invoice statement.{" "}
           {String(invoiceInformation.id)}{" "}
         </Preview>
         <Tailwind>
@@ -36,7 +36,7 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
               <p className="text-sm">
                 Hi there 👋, I'm Chris from etherbill. You have got an invoice.
               </p>
-
+              <Hr className="border-gray-100 w-full" />
               <p className="text-black font-normal">
                 Reference ID- {invoiceInformation.id}
               </p>
@@ -149,7 +149,6 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                   )}{" "}
                   {invoiceInformation.currency}{" "}
                 </p>
-                <Hr className="border-gray-100 w-full" />
               </div>
               <Hr />
               <Heading className="text-black flex justify-start h-20 text-center ">
@@ -167,8 +166,8 @@ const Mailer = ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
                   All trademarks, service marks, and company names are the
                   property of Etherbill Inc.
                 </p>
-                <p className="text-xl text-gray-700 opacity-50 font-extrabold">
-                  Etherbill Inc &copy; • {new Date().getFullYear()}
+                <p className="text-xl text-sky-900 opacity-50 font-normal">
+                  Etherbill Inc • {new Date().getFullYear()} &copy;
                 </p>
               </Container>
             </Container>

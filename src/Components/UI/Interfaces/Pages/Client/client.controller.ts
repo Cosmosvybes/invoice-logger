@@ -25,14 +25,15 @@ export default function useClientDataController(clients: Client[]) {
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [listPerPage] = useState(7);
-  const indexOfLastUser = currentPage * listPerPage;
-  const indexOfFirstUser = indexOfLastUser - listPerPage;
+  const [postPerPage] = useState(3);
+  const indexOfLastUser = currentPage * postPerPage;
+  const indexOfFirstUser = indexOfLastUser - postPerPage;
   const currentList = clients.slice(indexOfFirstUser, indexOfLastUser);
+
   return {
     setCurrentPage,
     currentList,
-    listPerPage,
+    postPerPage,
     notFound,
     tableColums,
   };

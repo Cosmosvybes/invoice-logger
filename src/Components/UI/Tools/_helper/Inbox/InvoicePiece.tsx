@@ -6,15 +6,13 @@ import {
   CardHeader,
   Modal,
   ModalBody,
-
+  ModalFooter,
 } from "reactstrap";
-// import ViewModal from "../Formbuilder/View/ViewModal";
 import { useState } from "react";
 import PDFDownloader from "../../../../PDF/Components/PDFDownloader";
 import GeneratePDF from "../../../../PDF/PDFGenereator";
 
 import { Invoice } from "../../../../../States/Slices/invoice.types";
-// import ViewModal from "../Formbuilder/View/ViewModal";
 const InvoicePiece = ({
   invoiceInformation,
 }: {
@@ -29,14 +27,14 @@ const InvoicePiece = ({
     <>
       <Card className="h-auto max-sm:w-full flex justify-between  b-l-secondary ribbon-wrapper-right shadow-md">
         <CardHeader className="flex justify-between items-center ">
-          <p className="text-green-500 text-4xl max-sm:text-xl"> ●●●</p>{" "}
+          <p className="text-gray-400 text-4xl max-sm:text-xl"> ●●●</p>{" "}
           <MailArrowLeft className="h-full text-gray-400 text-5xl max-sm:text-4xl" />{" "}
         </CardHeader>
         <CardBody className="border-none  flex justify-between ">
-          <h1 className="text-green-400  font-normal flex justify-center items-center px-1">
+          <h1 className="text-gray-400  font-normal flex justify-center items-center px-1">
             Reference ID- {invoiceInformation.id}
           </h1>
-          <div className="relative flex justify-center gap-1 max-sm:gap-3  items-center ">
+          <div className="relative flex justify-center gap-1 max-sm:gap-5  items-center ">
             <PDFDownloader
               reportType={`${invoiceInformation.id} - invoice`}
               file={
@@ -65,7 +63,6 @@ const InvoicePiece = ({
       </Card>
 
       <Modal isOpen={modal} toggle={toggle_}>
-    
         <ModalBody>
           <div className="relative flex flex-col gap-2">
             <div className="relative block">
@@ -188,6 +185,9 @@ const InvoicePiece = ({
             </div>
           </div>
         </ModalBody>
+        <ModalFooter>
+          <Button color="dark" onClick={toggle_}>Close</Button>
+        </ModalFooter>
       </Modal>
     </>
   );

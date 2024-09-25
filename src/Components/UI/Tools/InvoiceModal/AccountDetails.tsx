@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
 import InvoiceTable from "./InvoiceTable";
 import Body from "../../Interfaces/Pages/Dashboard/Invoices/List/Body";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, CardText, CardTitle } from "reactstrap";
 
 const AccountDetails = () => {
-  const { draft, sent, revenue } = useAppSelector((state) => state.invoice);
+  const { draft, sent, revenue, paid } = useAppSelector(
+    (state) => state.invoice
+  );
   const [invoicesPerPage] = useState(1);
 
   const [currrentPage, setCurrentPage] = useState(1);
@@ -36,45 +38,47 @@ const AccountDetails = () => {
             </p>
 
             <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
-            <Card>
+              <Card>
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
-                  <p className="text-slate-950 text-xl font-bold">Revenue</p>
-                  <h1 className="text-black text-4xl max-sm:text-3xl font-extrabold">
-                    ${" "}
-                    {revenue.toLocaleString()}
-                  </h1>
+                  <CardTitle className="text-slate-950 text-xl font-bold">
+                    Revenue
+                  </CardTitle>
+                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
+                    $ {revenue.toLocaleString()}
+                  </CardText>
                 </CardBody>
               </Card>
               <Card>
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
-                  <p className="text-slate-950 text-xl font-bold">
+                  <CardTitle className="text-slate-950 text-xl font-bold">
                     Total invoices
-                  </p>
-                  <h1 className="text-black text-4xl max-sm:text-3xl font-extrabold">
-                    {draft.length + sent.length}
-                  </h1>
+                  </CardTitle>
+                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
+                    {draft.length + sent.length + paid.length}
+                  </CardText>
                 </CardBody>
               </Card>
               <Card>
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
-                  <p className="text-slate-950 text-xl font-bold">Draft</p>
-                  <h1 className="text-black text-4xl max-sm:text-3xl font-extrabold">
+                  <CardTitle className="text-slate-950 text-xl font-bold">
+                    Draft
+                  </CardTitle>
+                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
                     {draft.length}
-                  </h1>
+                  </CardText>
                 </CardBody>
               </Card>
 
               <Card>
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
-                  <p className="text-slate-950 text-xl font-bold">
-                    Sent invoices
-                  </p>
-                  <h1 className="text-black text-4xl max-sm:text-3xl font-extrabold">
+                  <CardTitle className="text-slate-950 text-xl font-bold">
+                    Outgoing invoices
+                  </CardTitle>
+                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
                     {sent.length}
-                  </h1>
+                  </CardText>
                 </CardBody>
               </Card>
-              
             </div>
           </div>
           <div className="relative w-full flex items-center  gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
@@ -108,13 +112,12 @@ const AccountDetails = () => {
                       </div>
                     ))}
                   </div>
-                 
                 </CardBody>
                 <Paginate
-                    invoices={draft}
-                    postsPerPage={invoicesPerPage}
-                    paginateHandler={handlePaginate}
-                  />
+                  invoices={draft}
+                  postsPerPage={invoicesPerPage}
+                  paginateHandler={handlePaginate}
+                />
               </Card>
             )}
 

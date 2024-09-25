@@ -2,12 +2,14 @@ import { Input } from "reactstrap";
 
 import useTableController from "./table.controller";
 import Empty from "../Dashboard/Invoices/Empty";
-import Paginate from "./Paginate";
 import useClientDataController from "./client.controller";
+import Paginate from "./Paginate";
+// import Paginate from "../../../Tools/Layout/Paginate/Paginate";
+
 const Table_ = () => {
   const { clients, search, handleSearch } = useTableController();
 
-  const { currentList, listPerPage, setCurrentPage, notFound, tableColums } =
+  const { currentList, postPerPage, setCurrentPage, notFound, tableColums } =
     useClientDataController(clients);
 
   const TABLE_BODY =
@@ -99,12 +101,14 @@ const Table_ = () => {
           <br />
           <tbody>{TABLE_BODY}</tbody>
         </table>
+        <div className="relative max-sm:justify-start flex">
+          <Paginate
+            list={clients}
+            listPerPage={postPerPage}
+            handleNext={setCurrentPage}
+          />
+        </div>
 
-        <Paginate
-          list={clients}
-          listPerPage={listPerPage}
-          handleNext={setCurrentPage}
-        />
         {currentList.length == 0 && (
           <Empty message="You haven't added a client yet" />
         )}

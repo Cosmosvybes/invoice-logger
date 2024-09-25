@@ -7,12 +7,13 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { Invoice } from "../../../../../../../States/Slices/invoice.types";
-// import { MoreHorizontal } from "react-huge-icons/outline";
+
 import useInvoiceListController from "./list.controller";
 import Paginate from "../../../../../Tools/Layout/Paginate/Paginate";
-import { useState } from "react";
+import React, { useState } from "react";
+import { MoreHorizontal } from "react-huge-icons/outline";
 
-const List = ({ currentData }: { currentData: Invoice[] }) => {
+const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
   const {
     currentRowDataID,
     setCurrentRowDataID,
@@ -21,6 +22,8 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
     listPerTable,
     handleMarkAsPaid,
   } = useInvoiceListController(currentData);
+
+  //  /////////
   const [modal, setModal] = useState(false);
   const handleToggle = () => {
     setModal(!modal);
@@ -33,7 +36,9 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
           <h1> Actions</h1>
         </ModalHeader>
         <ModalBody>
-          <div className="relative justify-between  w-full flex ">Mark as</div>
+          <div className="relative justify-between  w-full flex ">
+            Mark this invoice as
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button
@@ -92,10 +97,9 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
                     }}
                     className="text-gray-500 inline hover:bg-gray-300 hover:text-gray-50 text-sm max-sm:sm text-left font-light px-2 w-auto"
                   >
-                    ●●●
+                    <MoreHorizontal className="text-4xl text-gray-600 max-sm:text-xl" />
                   </button>
                 </td>
-                {/* <div className="relative left-0  top-0 border h-6 bg-black"></div> */}
               </tr>
             ))}
           </tbody>
@@ -110,6 +114,6 @@ const List = ({ currentData }: { currentData: Invoice[] }) => {
       </Container>
     </>
   );
-};
+});
 
 export default List;

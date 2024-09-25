@@ -116,8 +116,11 @@ export default function useSettingsController() {
     dispatch(updateSettings({ key: fieldName, value: newValue }));
   };
 
+  const [loading, setLoading] = useState(false);
+
   const token = localStorage.getItem("token");
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const response_ = await fetch(
         "https://ether-bill-server-1.onrender.com/api/account/settings",
@@ -131,11 +134,14 @@ export default function useSettingsController() {
         }
       );
       if (!response_.ok) {
+        setLoading(false);
         throw new Error("Operation failed");
       }
       const { response } = await response_.json();
       toast.success(response, { theme: "light" });
+      setLoading(false);
     } catch (error: any) {
+      setLoading(false);
       console.log(error.message);
     }
   };
@@ -149,5 +155,6 @@ export default function useSettingsController() {
     handleSubmit,
     subscriptionSchema,
     businessDetails,
+    loading,
   };
 }

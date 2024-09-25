@@ -2,8 +2,9 @@ import { Input } from "reactstrap";
 import useProductsListController from "./products.controller";
 import { PlusRectangle, TrashBent } from "react-huge-icons/bulk";
 import { Item } from "../../../../../../States/Slices/invoice.types";
+import React from "react";
 
-const ProductsList = () => {
+const ProductsList = React.memo(({}) => {
   const { addNew, remove, handleChange, invoiceInformation } =
     useProductsListController();
 
@@ -89,6 +90,6 @@ const ProductsList = () => {
       </div>
     </>
   );
-};
+});
 
 export default ProductsList;
