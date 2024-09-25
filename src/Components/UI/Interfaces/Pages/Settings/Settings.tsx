@@ -51,7 +51,7 @@ const Settings = () => {
           <Button
             onClick={handleSubmit}
             color="dark"
-            className="w-52 flex justify-center items-center max-sm:w-auto font-bold py-2"
+            className="bg-black w-1/6 max-sm:w-auto max-sm:py-3 py-2 px-3 rounded-md text-white"
           >
             {loading && (
               <Spinner type="grow" color="light" size="sm" className="inline" />

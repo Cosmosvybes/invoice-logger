@@ -14,9 +14,11 @@ interface Main {
     icon: any;
     onclick?: any;
   }[];
+  setMode: (e: boolean) => void;
+  mode: boolean;
 }
 
-const SideNav = ({ title, children }: Main) => {
+const SideNav = ({ title, children, setMode, mode }: Main) => {
   const { staticForm } = useAppSelector((state) => state.invoice);
   const dispatch = useAppDispatch();
 
@@ -45,7 +47,6 @@ const SideNav = ({ title, children }: Main) => {
       })
     );
 
-    
     fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
       method: "POST",
       headers: {
@@ -95,9 +96,10 @@ const SideNav = ({ title, children }: Main) => {
         <div className="relative flex gap-7 flex-col">
           {children.map(({ title, path, icon }) => (
             <Link
-              onClick={() =>
-                title == "New invoice" && handleCreateDefaultInvoice()
-              }
+              onClick={() => {
+                setMode(!mode);
+                title == "New invoice" && handleCreateDefaultInvoice();
+              }}
               key={title}
               to={`/${path}`}
               className="text-gray-900 font-normal gap-2 flex justify-start items-center"

@@ -20,7 +20,7 @@ const Profile = () => {
 
   return (
     <>
-      {!loading && (
+      {/* {!loading && ( */}
         <div className="px-28 max-sm:px-0 max-md:px-0">
           <BreadCrumb title="Profile" useLink={false} linkTitle="" />
           <div className="relative py-0  max-sm:py-0  h-auto flex justify-between max-sm:flex-col  gap-5 ">
@@ -65,7 +65,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            <div className="relative w-1/3  max-sm:w-full h-auto flex px-3  py-2 max-sm:py-0 max-sm px-3:flex-col">
+            <div className="relative w-1/3  max-sm:w-full max-sm:hidden h-auto flex px-3  py-2 max-sm:py-0 max-sm px-3:flex-col">
               <div className="relative w-full h-auto  px-10 py-0 max-md:px-0 rounded-full">
                 {" "}
                 <img
@@ -77,7 +77,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };

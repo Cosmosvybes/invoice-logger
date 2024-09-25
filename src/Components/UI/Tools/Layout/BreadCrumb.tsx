@@ -40,6 +40,7 @@ const BreadCrumb = ({
         }),
       })
     );
+    // https://ether-bill-server-1.onrender.com
 
     fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
       method: "POST",
@@ -92,7 +93,7 @@ const BreadCrumb = ({
         <Link
           to={`/${linkTitle}`}
           onClick={() => linkTitle == "new/invoice" && handleNewInvoice()}
-          className="bg-black mt-1 h-16 max-sm:h-12 max-sm:text-sm font-normal flex justify-center items-center rounded-sm text-gray-50 w-52 max-sm:w-32"
+          className="bg-black mt-1 h-auto max-sm:h-auto max-sm:text-sm font-normal flex justify-center items-center rounded-sm text-gray-50 w-auto py-2 px-1 max-sm:w-auto"
         >
           <p className="flex items-center justify-center text-white font-normal">
             <PlusThin className="inline text-2xl" /> new{" "}

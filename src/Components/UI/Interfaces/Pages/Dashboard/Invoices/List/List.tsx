@@ -50,14 +50,14 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
           </Button>
           <Button
             onClick={() => handleMarkAsPaid(currentRowDataID)}
-            color="success"
+            color="dark"
             className="text-white hover:bg-gray-300 hover:text-gray-50 text-xl text-left  max-sm:xl font-light px-2"
           >
             PAID
           </Button>
         </ModalFooter>
       </Modal>
-      <Container className="px-0" fluid={true}>
+      <Container className="px-0 mt-2" fluid={true}>
         <table className="w-full border-collapse">
           <tbody>
             {currentInvoiceList.map((invoice, index) => (
@@ -67,25 +67,25 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
                 } py-3 px-3 `}
                 key={invoice.id}
               >
-                <td className="text-gray-500 text-center max-sm:text-xs font-normal py-2 w-20 max-sm:w-16 ">
+                <td className="text-black text-center max-sm:text-xs font-normal py-2 w-20 max-sm:w-16 ">
                   {String(invoice.id).slice(0, 8)}
                 </td>
-                <td className="text-gray-500 text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">
+                <td className="text-black text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">
                   {invoice.Client.slice(0, 8)}
                 </td>
 
                 <td className="text-green-500  text-center max-sm:text-xs  font-normal py-2 w-20 max-sm:w-16 ">
                   {invoice.status.toLowerCase()}
                 </td>
-                <td className="text-gray-500 text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">
+                <td className="text-black text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">
                   {String(invoice.TOTAL.toLocaleString())}{" "}
                 </td>
 
-                <td className="text-gray-500 text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
+                <td className="text-black text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
                   {invoice.currency != "--select--" &&
                     invoice.currency.toLowerCase() + " "}
                 </td>
-                <td className="text-gray-500 text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
+                <td className="text-black text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
                   {String(invoice.updatedAt).length > 10 &&
                     String(invoice.updatedAt).slice(0, 17) + "..."}
                 </td>
@@ -95,7 +95,7 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
                     onClick={() => {
                       handleToggle(), setCurrentRowDataID(Number(invoice.id));
                     }}
-                    className="text-gray-500 inline hover:bg-gray-300 hover:text-gray-50 text-sm max-sm:sm text-left font-light px-2 w-auto"
+                    className="text-black inline hover:bg-gray-300 hover:text-gray-50 text-sm max-sm:sm text-left font-light px-2 w-auto"
                   >
                     <MoreHorizontal className="text-4xl text-gray-600 max-sm:text-xl" />
                   </button>

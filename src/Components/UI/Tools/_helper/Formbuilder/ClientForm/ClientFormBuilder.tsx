@@ -8,19 +8,41 @@ const ClientFormBuilder = () => {
   const { formValues, updateClientForm, handleAddNewClient } =
     useClientFormController();
 
-  const CLIENT_FORM = newCLientsFormField.map((_, i) => (
-    <div className="relative block " key={i}>
-      <p>{_.placeholder}</p>
-      <Input
-        className="border border-gray-300 w-full outline-none rounded-md px-3 max-sm:py-2 py-3"
-        type={"text"}
-        placeholder={_.placeholder}
-        value={formValues[_.name]}
-        name={_.name}
-        onChange={(e) => updateClientForm(e.target.value, _.name)}
-      />
-    </div>
-  ));
+  const CLIENT_FORM = newCLientsFormField.map((_, i) => {
+    switch (_.type) {
+      case "email":
+        return (
+          <div className="relative block " key={i}>
+            <p>{_.placeholder}</p>
+            <Input
+              className="border border-gray-300 w-full outline-none rounded-md px-3 max-sm:py-2 py-3"
+              type={"email"}
+              placeholder={_.placeholder}
+              value={formValues[_.name]}
+              name={_.name}
+              onChange={(e) => updateClientForm(e.target.value, _.name)}
+              required={true}
+            />
+          </div>
+        );
+
+      default:
+        return (
+          <div className="relative block " key={i}>
+            <p>{_.placeholder}</p>
+            <Input
+              className="border border-gray-300 w-full outline-none rounded-md px-3 max-sm:py-2 py-3"
+              type={"text"}
+              placeholder={_.placeholder}
+              value={formValues[_.name]}
+              name={_.name}
+              onChange={(e) => updateClientForm(e.target.value, _.name)}
+              required={true}
+            />
+          </div>
+        );
+    }
+  });
 
   return (
     <>
@@ -33,7 +55,7 @@ const ClientFormBuilder = () => {
       <div className="relative flex mt-4  gap-1  w-1/2 max-sm:w-full max-md:w-full justify-start  max-sm:justify-end">
         <Button
           onClick={() => history.back()}
-          className="bg-transparent w-1/6 max-sm:w-auto max-sm:py-3 py-3  border px-3 rounded-md text-gray-900"
+          className="bg-transparent w-1/6 max-sm:w-auto max-sm:py-3 py-2  border px-3 rounded-md text-gray-900"
         >
           Cancel
         </Button>
@@ -41,7 +63,7 @@ const ClientFormBuilder = () => {
           onClick={() => {
             handleAddNewClient();
           }}
-          className="bg-black w-1/6 max-sm:w-auto max-sm:py-3 py-3 px-3 rounded-md text-white"
+          className="bg-black w-1/6 max-sm:w-auto max-sm:py-3 py-2 px-3 rounded-md text-white"
         >
           Add client
         </Button>

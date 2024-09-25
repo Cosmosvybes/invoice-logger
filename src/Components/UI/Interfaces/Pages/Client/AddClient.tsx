@@ -16,11 +16,11 @@ const AddClient = () => {
 
   return (
     <>
-      <div className="relative px-28 max-sm:px-0 h-screen">
+      <div className="relative px-28 max-sm:px-0">
         <BreadCrumb title="New Client" useLink={false} linkTitle="client/new" />
 
         <div className="relative py-0 max-sm:py-0  flex justify-between max-sm:flex-col-reverse  gap-5">
-          <div className="relative w-1/3  max-sm:w-full h-auto flex  py-2 max-sm:py-0  flex-col">
+          <div className="relative w-1/3 max-sm:hidden  max-sm:w-full h-auto flex  py-2 max-sm:py-0  flex-col">
             <div className="relative w-full h-auto  py-0 max-md:px-0 rounded-full">
               {" "}
               <img

@@ -54,22 +54,22 @@ const Table_ = () => {
             <td className="text-center gap-2   py-3">
               {String(row.id).slice(10, 15)}
             </td>
-            <td className="text-center max-sm:text-sm font-light text-black   py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black   py-3">
               {row.name}
             </td>
-            <td className="text-center max-sm:text-sm font-light text-black  py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
               {String(row.email).length > 10 &&
                 String(row.email).slice(0, 9) + "..."}
             </td>
-            <td className="text-center max-sm:text-sm font-light text-black  py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
               {String(row.address).length > 10
                 ? String(row.address).slice(0, 9) + "..."
                 : row.address}
             </td>
-            <td className="text-center max-sm:text-sm font-light text-black  py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
               {row.cityStatePostal}
             </td>
-            <td className="text-center max-sm:text-sm font-light text-black  py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
               {row.country}
             </td>
           </tr>

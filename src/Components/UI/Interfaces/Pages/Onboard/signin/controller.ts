@@ -22,6 +22,7 @@ export default function useSigninController() {
     },
   ]);
 
+
   const values = formFields.reduce(
     (allvalues, currValue) => ({
       ...allvalues,
@@ -29,6 +30,7 @@ export default function useSigninController() {
     }),
     {}
   );
+
 
   const [formValues, setFormValues]: any = useState(values);
 
@@ -60,7 +62,6 @@ export default function useSigninController() {
     } else if (response.status == 404) {
       setLoading(false);
       return toast.warning(result.response, { theme: "dark" });
-      setLoading(false);
     } else if (response.status == 500) {
       setLoading(false);
       return toast.error(result.response, { theme: "dark" });

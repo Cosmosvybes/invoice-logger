@@ -31,6 +31,12 @@ export default function useClientFormController() {
 
   const token = localStorage.getItem("token");
   const handleAddNewClient = async () => {
+    let hasEmptyStr = Object.values(formValues).find((val) => val == "");
+
+    if (hasEmptyStr != undefined) {
+      toast.warn("Incomplete client details", { theme: "colored" });
+      return;
+    }
     const { Name, Email, City_Postal_State, Country, Address } = formValues;
     const client = {
       name: Name,
@@ -41,14 +47,17 @@ export default function useClientFormController() {
       id: Date.now(),
     };
 
-    const response = await fetch("https://ether-bill-server-1.onrender.com/api/client/new", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "Application/json",
-      },
-      body: JSON.stringify(client),
-    });
+    const response = await fetch(
+      "https://ether-bill-server-1.onrender.com/api/client/new",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(client),
+      }
+    );
     if (!response.ok) {
       location.replace("/");
     }

@@ -107,7 +107,7 @@ const newCLientsFormField = [
     placeholder: "Client's name",
   },
   {
-    type: "text",
+    type: "email",
     name: "Email",
     value: "",
     placeholder: "Email",

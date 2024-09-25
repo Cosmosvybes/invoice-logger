@@ -75,25 +75,26 @@ const Nav = () => {
           {viewMode && (
             <div
               ref={navRef}
-              className="side-bar absolute right-28 z-20 max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-82 max-sm:left-0 max-sm:top-16  top-28 h-auto w-96  flex"
+              className="side-bar absolute right-28 z-20 max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-52  max-sm:left-0 max-sm:top-16  top-28 h-auto w-96  flex"
             >
-              <div className="relative  flex px-3 h-20 border-b border-gray-300 w-full items-center gap-2  justify-start">
-                <span className="bg-black text-white w-10 h-10 rounded-full text-center flex justify-center items-center font-normal">
-                  {String(account.firstname).charAt(0).toUpperCase()}{" "}
-                  {String(account.lastname).charAt(0).toUpperCase()}
-                </span>
+              <div className="relative  flex px-3 h-16  border-b border-gray-300 w-auto items-center gap-2  justify-start">
                 <div className="relative block">
                   <h6 className="font-bold text-black">
                     {account.firstname} {account.lastname}
                   </h6>
-                  <p className="text-black font-normal">{account.email}</p>
+                  <p className=" font-normal text-gray-400">{account.email}</p>
                 </div>
               </div>
 
               <div className="relative px-3 z-20">
                 {sideMenu.map(({ title, children }) => (
                   <div className="relative" key={title}>
-                    <SideNav title={title} children={children!} />
+                    <SideNav
+                      title={title}
+                      children={children!}
+                      setMode={setMode}
+                      mode={viewMode}
+                    />
                   </div>
                 ))}
                 <button

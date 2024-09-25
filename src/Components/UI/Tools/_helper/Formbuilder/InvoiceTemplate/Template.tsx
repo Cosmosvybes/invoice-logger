@@ -200,7 +200,7 @@ const Template = React.memo(
                     callback={() => setViewMode(!viewMode)}
                   />
                 )}
-                <hr />
+                <hr  className="mb-1 border border-gray-400"/>
                 <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
                   <Button
                     onClick={() => handleView()}

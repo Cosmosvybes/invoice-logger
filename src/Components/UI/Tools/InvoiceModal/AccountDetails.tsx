@@ -4,7 +4,6 @@ import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
 import { useEffect, useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
-import InvoiceTable from "./InvoiceTable";
 import Body from "../../Interfaces/Pages/Dashboard/Invoices/List/Body";
 import { Card, CardBody, CardText, CardTitle } from "reactstrap";
 
@@ -39,17 +38,17 @@ const AccountDetails = () => {
 
             <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
               <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto  gap-2 rounded-lg shadow-md border-gray-400">
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Revenue
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
+                  <CardText className="text-black text-4xl max-sm:text-xl font-light">
                     $ {revenue.toLocaleString()}
                   </CardText>
                 </CardBody>
               </Card>
               <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto gap-2 rounded-lg shadow-md border-gray-400">
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Total invoices
                   </CardTitle>
@@ -59,7 +58,7 @@ const AccountDetails = () => {
                 </CardBody>
               </Card>
               <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto  gap-2 rounded-lg shadow-md border-gray-400">
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Draft
                   </CardTitle>
@@ -70,7 +69,7 @@ const AccountDetails = () => {
               </Card>
 
               <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-32 gap-2 rounded-lg shadow-md border-gray-400">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto  gap-2 rounded-lg shadow-md border-gray-400">
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Outgoing invoices
                   </CardTitle>
@@ -136,7 +135,6 @@ const AccountDetails = () => {
               View All <ArrowRight className="text-black text-4xl inline" />
             </Link>{" "}
           </div>
-          <InvoiceTable />
           <Body currentData={sent} />
         </div>
       </div>

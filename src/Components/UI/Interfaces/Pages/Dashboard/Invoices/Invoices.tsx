@@ -1,6 +1,5 @@
 import { useLayoutEffect } from "react";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
-import InvoiceTable from "../../../../Tools/InvoiceModal/InvoiceTable";
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
 
 import InvoiceNav from "./InvoiceNav";
@@ -24,7 +23,6 @@ const Invoices = () => {
       <div className="relative px-28 max-sm:px-0 overflow-x-scroll overflow-y-clip h-auto max-sm:h-auto">
         <BreadCrumb useLink={true} title="Invoices" linkTitle="new/invoice" />
         <InvoiceNav switchTab={handleInvoiceFilter} />
-        <InvoiceTable />
         <Body currentData={currentData} />
       </div>
     </>
