@@ -120,12 +120,11 @@ export default function useTemplateController() {
   const [sendAsMessage, setSetAsMessage] = useState(true);
   //
   const handleSendInvoice = async (emailHtml: any) => {
-    // console.log(Object.values(invoiceInformation));
     let hasEmptyStr = Object.values(invoiceInformation).find(
       (val) => val == ""
     );
 
-    if (hasEmptyStr != undefined) {
+    if (hasEmptyStr != undefined && typeof hasEmptyStr != "number") {
       toast.warn("Missing invoice details", { theme: "colored" });
       return;
     }
