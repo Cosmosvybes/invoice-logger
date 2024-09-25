@@ -1,10 +1,12 @@
 import InvoicePiece from "../../../Tools/_helper/Inbox/InvoicePiece";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
+import Paginate from "../../../Tools/Layout/Paginate/Paginate";
 import Empty from "../Dashboard/Invoices/Empty";
 import user from "./../../../../../assets/User.svg";
 import useInvoiceReceivedController from "./controller";
 const Inbox = () => {
-  const { inbox } = useInvoiceReceivedController();
+  const { inbox, setCurrentPage, currentList, postPerPage } =
+    useInvoiceReceivedController();
 
   return (
     <>
@@ -15,9 +17,14 @@ const Inbox = () => {
             <Empty message="Fold is currently empty!" />
           ) : (
             <div className="relative w-1/2  max-sm:w-full max-sm:px-0 flex gap-3 justify-start flex-col">
-              {inbox.map((_, i) => (
+              {currentList.map((_, i) => (
                 <InvoicePiece key={i} invoiceInformation={_} />
               ))}
+              <Paginate
+                invoices={inbox}
+                paginateHandler={setCurrentPage}
+                postsPerPage={postPerPage}
+              />
             </div>
           )}
 

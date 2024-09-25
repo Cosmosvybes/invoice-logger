@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   useAppDispatch,
   useAppSelector,
@@ -9,18 +9,22 @@ import {
 } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 
 export default function useInvoiceReceivedController() {
-  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
     dispatch(getUser(localStorage.getItem("token")!));
   }, []);
+  const dispatch = useAppDispatch();
   const { inbox } = useAppSelector((state) => state.invoice);
 
-  // let list = new Array();
-  // list.length = 4;
-  // list.fill(staticForm);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage] = useState(5);
+  const indexOfLastPage = currentPage * postPerPage;
+  const indexOfFirstPage = indexOfLastPage - postPerPage;
+  const currentList = inbox.slice(indexOfFirstPage, indexOfLastPage);
   return {
     inbox,
+    setCurrentPage,
+    currentList,
+    postPerPage,
   };
 }
