@@ -36,6 +36,8 @@ export interface settingsI {
   key: string;
   [key: string]: string | boolean;
 }
+
+
 export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
