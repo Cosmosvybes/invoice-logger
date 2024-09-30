@@ -186,7 +186,7 @@ const InvoicePiece = ({
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="dark" onClick={toggle_}>Close</Button>
+          <Button  className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto" onClick={toggle_}>Close</Button>
         </ModalFooter>
       </Modal>
     </>

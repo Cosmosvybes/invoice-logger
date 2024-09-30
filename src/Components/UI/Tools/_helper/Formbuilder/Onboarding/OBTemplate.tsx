@@ -1,6 +1,6 @@
 import { ArrowRight } from "react-huge-icons/outline";
-import { Button, Input, Spinner } from "reactstrap";
-
+import { Button, Input, Spinner, Card, CardTitle } from "reactstrap";
+import { Link } from "react-router-dom";
 const OBTemplate = ({
   formFields,
   handleChange,
@@ -29,7 +29,7 @@ const OBTemplate = ({
       default:
         return (
           <div className="relative" key={i}>
-            <label className="mb-1 text-xl"> {_.name}</label>
+            <label className="mb-1 text-green-600 text-xl"> {_.name}</label>
             <Input
               type="text"
               placeholder={_.placeholder}
@@ -45,10 +45,24 @@ const OBTemplate = ({
 
   return (
     <>
-      <div className="relative w-full gap-5 px-4  max-sm:h-96">
+      <Card className="relative w-full border-none gap-4 shadow-lg px-4  max-sm:h-auto py-4">
+        <CardTitle className="text-2xl font-bold text-green-600">
+          <p> Sign in to your account </p>
+          <p className="text-gray-400 font-normal text-sm max-sm:text-sm">
+            {" "}
+            Enter your email & password
+          </p>
+        </CardTitle>
+
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
-          <Button className=" bg-black mt-2 flex justify-center items-center gap-2 text-white font-bold text-2xl text-center py-2 px-2 w-full">
+          <Link
+            to={"/"}
+            className="text-xl max-sm:text-sm text-green-600 mb-2"
+          >
+            Forgot password ?
+          </Link>
+          <Button className=" bg-gradient-to-r from-green-600 to-black mt-3 flex justify-center items-center gap-2 text-white font-bold text-2xl border-none text-center py-2 px-2 w-full">
             SIGN IN{" "}
             {!isLoading ? (
               <ArrowRight className="inline text-4xl" />
@@ -57,7 +71,7 @@ const OBTemplate = ({
             )}
           </Button>
         </form>
-      </div>
+      </Card>
     </>
   );
 };

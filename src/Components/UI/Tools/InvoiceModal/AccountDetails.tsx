@@ -62,7 +62,7 @@ const AccountDetails = () => {
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Draft
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
+                  <CardText className="text-black text-4xl max-sm:text-sm font-light">
                     {draft.length}
                   </CardText>
                 </CardBody>
@@ -73,7 +73,7 @@ const AccountDetails = () => {
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Outgoing invoices
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
+                  <CardText className="text-black text-4xl max-sm:text-sm font-light">
                     {sent.length}
                   </CardText>
                 </CardBody>

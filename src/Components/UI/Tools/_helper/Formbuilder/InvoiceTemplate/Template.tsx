@@ -99,7 +99,7 @@ const Template = React.memo(
               <Input
                 title="date"
                 type="date"
-                className=" bg-inherit px-1 font-bold border w-52   max-sm:w-full  max-sm:text-xs text-slate-400 border-none"
+                className=" bg-inherit px-1 py-2 font-bold border w-52   max-sm:w-full  max-sm:text-xs text-slate-400 border-none"
                 value={invoiceInformation[input.name]}
                 onChange={(e) =>
                   updateInvoiceDetails(e.target.value, input.name)
@@ -111,7 +111,7 @@ const Template = React.memo(
           return (
             <div className="relative" key={index}>
               <Input
-                className="px-2 border-none py-2 text-xl  font-normal max-sm:text-xs outline-none rounded-sm bg-inherit text-gray-400 w-96 max-sm:w-full"
+                className="border-none py-3 px-1 bg-gray-200 border  text-xl  font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-gray-400 w-full max-sm:w-full"
                 type="text"
                 value={invoiceInformation[input.name]}
                 placeholder={input.placeholder}
@@ -181,8 +181,8 @@ const Template = React.memo(
                     Cancel
                   </Button>{" "}
                   <Button
-                    className="p-2 py-2"
-                    color="dark"
+                    className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+                    // color="success"
                     onClick={() => {
                       handleSendInvoice(emailHtml);
                       setModal(!modal);
@@ -200,11 +200,11 @@ const Template = React.memo(
                     callback={() => setViewMode(!viewMode)}
                   />
                 )}
-                <hr  className="mb-1 border border-gray-400"/>
+                <hr className="mb-1 border border-gray-400" />
                 <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
                   <Button
                     onClick={() => handleView()}
-                    className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-none border-gray-400 bg-black  text-center py-2 flex justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-sm "
+                    className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
                   >
                     <EyeLightDouble className="text-2xl text-white inline" />
                     VIEW
@@ -214,7 +214,7 @@ const Template = React.memo(
                     onClick={() => {
                       setModal(!modal);
                     }}
-                    className="w-44 h-full mb-2 max-sm:w-28 shadow-md border-none border-gray-400 bg-black  text-center flex py-2 justify-center items-center transition duration-500 px-2 text-gray-black text-sm font-normal rounded-sm "
+                    className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
                   >
                     {isLoading ? (
                       <Spinner

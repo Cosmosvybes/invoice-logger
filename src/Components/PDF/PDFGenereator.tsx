@@ -50,7 +50,7 @@ const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
       width: "25%",
     },
     title: {
-      fontSize: 24,
+      fontSize: 8,
       marginBottom: 3,
       textAlign: "center",
     },
@@ -65,34 +65,70 @@ const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
       paddingTop: 35,
       paddingBottom: 65,
       paddingHorizontal: 35,
+      backgroundColor: "#E4E4E4",
+      "@media max-width: 400": {
+        width: 300,
+      },
+      "@media orientation: landscape": {
+        width: 400,
+      },
     },
     header: {
-      fontSize: 12,
-      marginBottom: 20,
+      fontSize: 8,
       textAlign: "center",
       color: "grey",
+      marginBottom: 10,
     },
   });
 
   return (
     <Document>
-      <Page size={"A4"} style={styles.body}>
+      <Page size="A4" style={styles.body}>
         <Image src={logo} style={styles.logo} />
-        <Text style={styles.title}>
-          ~ Invoice ref- {invoiceInformation.id}{" "}
-        </Text>
-        <br />
-        <Text style={styles.header}>
-          Compan address -,
-          {invoiceInformation.BusinessAddress}
-          {""} , {invoiceInformation.ClientCity}, {""}
-          {invoiceInformation.BusinessState}.
-        </Text>
+        <View
+          style={{
+            display: "flex",
+            paddingLeft: 140,
+            justifyContent: "flex-end",
+            marginBottom: 20,
+          }}
+        >
+          <Text style={styles.title}>
+            ~ Invoice ref- {invoiceInformation.id} ~
+          </Text>
+        </View>
 
-        <Text style={styles.header}>
-          Issued since,
-          {invoiceInformation.DateIssued}
-        </Text>
+        <br />
+        <View
+          style={{
+            display: "flex",
+            paddingLeft: 140,
+            justifyContent: "flex-end",
+            marginBottom: 20,
+          }}
+        >
+          <Text style={{ textAlign: "justify", fontSize: 4 }}>
+            {" "}
+            Created since- {" " + invoiceInformation.DateIssued}
+          </Text>
+          <Text style={{ textAlign: "justify", fontSize: 4 }}>
+            {" "}
+            Company address -{invoiceInformation.BusinessAddress}
+            {""} {invoiceInformation.ClientCity}, {""}
+            {invoiceInformation.BusinessState}.
+          </Text>
+        </View>
+
+        <br />
+        <View
+          style={{
+            display: "flex",
+            paddingLeft: 140,
+            justifyContent: "flex-start",
+          }}
+        >
+          <Text style={{ textAlign: "left", fontSize: 8 }}>Products</Text>
+        </View>
 
         <View style={styles.table}>
           <View style={styles.tableRow}>
@@ -105,17 +141,86 @@ const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
 
           {invoiceInformation?.itemList?.map(
             (product: (typeof invoiceInformation.itemList)[0]) => (
-              <View style={styles.tableCol}>
+              <View style={styles.tableCol} key={product.itemID}>
                 <View style={styles.tableRow}>
                   <Text style={styles.tableCell}>{product.itemID}</Text>
                   <Text style={styles.tableCell}>{product.description}</Text>
                   <Text style={styles.tableCell}>{product.quantity}</Text>
                   <Text style={styles.tableCell}>{product.unitPrice}</Text>
-                  <Text style={styles.tableCell}>{product.unitTotal}</Text>
+                  <Text style={styles.tableCell}>
+                    {Number(product.unitTotal).toLocaleString()}
+                  </Text>
                 </View>
               </View>
             )
           )}
+          <br />
+          <View
+            style={{
+              display: "flex",
+              paddingLeft: 140,
+              justifyContent: "flex-end",
+              marginTop: 10,
+            }}
+          >
+            <Text style={{ textAlign: "justify", fontSize: 4 }}>
+              {" "}
+              Transaction notes - {invoiceInformation.Notes}
+            </Text>
+            <Text style={{ textAlign: "justify", fontSize: 4 }}>
+              {" "}
+              Payment information - {invoiceInformation.paymentInformation}
+            </Text>
+            <Text style={{ textAlign: "justify", fontSize: 4 }}>
+              {" "}
+              Shipping Address - {invoiceInformation.shippingAddress}{" "}
+            </Text>
+          </View>
+
+          <br />
+          <View
+            style={{
+              display: "flex",
+              paddingRight: 140,
+              justifyContent: "flex-end",
+              marginTop: 10,
+            }}
+          >
+            <Text style={{ textAlign: "right", fontSize: 4 }}>
+              {" "}
+              Discount - {invoiceInformation.Discount}%
+            </Text>
+            <Text style={{ textAlign: "right", fontSize: 4 }}>
+              {" "}
+              VAT - {invoiceInformation.VAT}%
+            </Text>
+            <Text style={{ textAlign: "right", fontSize: 4 }}>
+              {" "}
+              TOTAL - {invoiceInformation.TOTAL.toLocaleString()}{" "}
+              {invoiceInformation.currency}
+            </Text>
+          </View>
+
+          <br />
+          <View
+            style={{
+              display: "flex",
+              paddingLeft: 140,
+              justifyContent: "flex-end",
+              marginTop: 10,
+            }}
+          >
+            <Text style={{ textAlign: "justify", fontSize: 4 }}>
+              {" "}
+              Customer name - {invoiceInformation.Client}
+            </Text>
+            <Text style={{ textAlign: "justify", fontSize: 4 }}>
+              {" "}
+              Customer address- {invoiceInformation.ClientAddress}{" "}
+              {invoiceInformation.City}
+              {invoiceInformation.clientState} {invoiceInformation.Country}
+            </Text>
+          </View>
         </View>
       </Page>
     </Document>

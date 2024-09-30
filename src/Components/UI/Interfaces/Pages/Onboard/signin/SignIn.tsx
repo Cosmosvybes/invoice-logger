@@ -1,13 +1,15 @@
+import Header from "../../../../Tools/_helper/Formbuilder/Common/Header/Header";
 import OBTemplate from "../../../../Tools/_helper/Formbuilder/Onboarding/OBTemplate";
+
 import useSigninController from "./controller";
 const SignIn = () => {
   const { formFields, handleChange, handleSubmit, loading, formValues } =
     useSigninController();
   return (
     <>
+      <Header />
       <div className="relative h-screen justify-between max-sm:justify-center flex">
-        <div className="relative w-full border max-sm:hidden"></div>
-        <div className="relative w-1/2 max-sm:w-full h-full  max-sm:shadow-md shadow-gray-50 flex justify-center items-center">
+        <div className="relative max-sm:px-5   w-1/2 max-sm:w-full h-full py-5 px-10  max-sm:shadow-md shadow-gray-50 flex justify-center items-center">
           <OBTemplate
             isLoading={loading}
             handleSubmit={handleSubmit}
@@ -16,6 +18,7 @@ const SignIn = () => {
             formValues={formValues}
           />
         </div>
+        <div className="relative w-full  px-10 max-sm:hidden"></div>
       </div>
     </>
   );

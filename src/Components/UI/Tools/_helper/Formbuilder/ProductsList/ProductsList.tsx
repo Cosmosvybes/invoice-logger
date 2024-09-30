@@ -83,9 +83,9 @@ const ProductsList = React.memo(({}) => {
         <div></div>
         <div></div>
         <div></div>
-        <button onClick={addNew} color="primary" className="text-black ">
+        <button onClick={addNew} color="primary" className="">
           {" "}
-          <PlusRectangle className="inline text-5xl text-black" />
+          <PlusRectangle className="inline text-5xl text-green-600" />
         </button>
       </div>
     </>

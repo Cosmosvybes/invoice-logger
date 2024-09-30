@@ -45,6 +45,7 @@ export const getUser = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
         method: "GET",
       });
+
       if (response.status != 200) {
         return location.replace("/");
       }
