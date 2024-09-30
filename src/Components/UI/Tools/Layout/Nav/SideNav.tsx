@@ -91,7 +91,7 @@ const SideNav = ({ title, children, setMode, mode }: Main) => {
   return (
     <>
       <div className="relative flex flex-col py-2   gap-2" key={title}>
-        <h6 className="font-bold text-gray-500 ml-1 mb-2">{title}</h6>
+        <h6 className="font-bold text-green-500 ml-1 mb-2">{title}</h6>
 
         <div className="relative flex gap-7 flex-col">
           {children.map(({ title, path, icon }) => (
@@ -102,7 +102,7 @@ const SideNav = ({ title, children, setMode, mode }: Main) => {
               }}
               key={title}
               to={`/${path}`}
-              className="text-gray-900 font-normal gap-2 flex justify-start items-center"
+              className="text-green-950 font-normal gap-2 flex justify-start items-center"
             >
               {icon} {title}
             </Link>

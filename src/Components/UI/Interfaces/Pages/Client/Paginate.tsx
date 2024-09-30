@@ -29,11 +29,14 @@ const Paginate = ({
               paginateHandler(linkNumber);
             }}
             key={linkNumber}
-            className={`w-8 rounded-md border border-gray-300 h-auto duration-700 transition cursor-pointer ${
-              active == linkNumber && "bg-gray-400"
-            } ${
-              active == linkNumber && "text-black"
-            } text-black px-1 rounded-sm text-center`}
+            className={`w-8 rounded-md border border-gray-300 h-auto duration-700 transition cursor-pointer 
+              ${
+                active != linkNumber
+                  ? "bg-gray-200"
+                  : "bg-gradient-to-br from-green-600 to-black"
+              } ${
+              active == linkNumber ? "text-white" : "text-black"
+            } px-1 rounded-sm text-center`}
           >
             {linkNumber}
           </button>

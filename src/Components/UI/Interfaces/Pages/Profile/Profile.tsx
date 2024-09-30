@@ -23,13 +23,13 @@ const Profile = () => {
       {/* {!loading && ( */}
       <div className="px-28 max-sm:px-0 max-md:px-0">
         <BreadCrumb title="Profile" useLink={false} linkTitle="" />
-        <div className="relative py-0  max-sm:py-0  h-auto flex justify-between max-sm:flex-col  gap-5 ">
+        <div className="relative py-0  max-sm:py-0  h-auto flex justify-between max-sm:flex-col  ">
           <div className="relative w-full  max-sm:w-full h-auto">
-            <h3 className="text-2xl px-3 max-sm:px-0 max-sm:ml-0 max-sm:text-sm text-slate-800">
+            <h3 className="text-2xl px-3 max-sm:px-0 max-sm:mt-5 max-sm:text-sm text-slate-800">
               {" "}
               Account information
             </h3>
-            <div className="grid grid-cols-1 gap-3 max-sm:gap-2 mt-5 max-sm:grid-cols-1">
+            <div className="grid grid-cols-1 gap-3 max-sm:gap-2 mt-3 max-sm:grid-cols-1">
               <div className="relative w-full px-3 max-sm:px-0  border-b  rounded block">
                 <h4 className="text-slate-900 font-bold">Firstname</h4>
                 <p className="text-slate-800 font-light">

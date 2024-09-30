@@ -12,6 +12,7 @@ import useInvoiceListController from "./list.controller";
 import Paginate from "../../../../../Tools/Layout/Paginate/Paginate";
 import React, { useState } from "react";
 import { MoreHorizontal } from "react-huge-icons/outline";
+import InvoiceTable from "../../../../../Tools/InvoiceModal/InvoiceTable";
 
 const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
   const {
@@ -44,20 +45,22 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
           <Button
             color="danger"
             onClick={() => console.log(currentRowDataID)}
-            className="text-white  hover:bg-gray-300 hover:text-gray-50 text-xl max-sm:xl text-left font-light px-2"
+            className=" mt-1  h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto max-sm:mr-2"
           >
             OVERDUE
           </Button>
           <Button
             onClick={() => handleMarkAsPaid(currentRowDataID)}
-            color="dark"
-            className="text-white hover:bg-gray-300 hover:text-gray-50 text-xl text-left  max-sm:xl font-light px-2"
+            color="success"
+            className="mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
           >
             PAID
           </Button>
         </ModalFooter>
       </Modal>
+
       <Container className="px-0 mt-2" fluid={true}>
+        <InvoiceTable />
         <table className="w-full border-collapse">
           <tbody>
             {currentInvoiceList.map((invoice, index) => (
@@ -68,7 +71,7 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
                 key={invoice.id}
               >
                 <td className="text-black text-center max-sm:text-xs font-normal py-2 w-20 max-sm:w-16 ">
-                  {String(invoice.id).slice(0, 8)}
+                  {String(invoice.id).slice(10, 13)}
                 </td>
                 <td className="text-black text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">
                   {invoice.Client.slice(0, 8)}
@@ -92,6 +95,10 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
 
                 <td className="text-black text-center max-sm:text-xs   font-normal py-2 w-20 max-sm:w-16 ">
                   <button
+                    disabled={
+                      (invoice.status == "paid" || invoice.status == "Draft") &&
+                      true
+                    }
                     onClick={() => {
                       handleToggle(), setCurrentRowDataID(Number(invoice.id));
                     }}

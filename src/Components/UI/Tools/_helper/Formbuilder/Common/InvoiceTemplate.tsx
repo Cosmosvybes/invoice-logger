@@ -70,7 +70,7 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
         <div className="relative w-full h-auto flex justify-between items-center">
           <div className="relative justify-start items-center ">
             {" "}
-            <h1 className="text-slate-950 text-2xl inline font-semibold">
+            <h1 className="text-green-500 text-2xl inline font-semibold">
               {Number(invoice.TOTAL).toLocaleString()}{" "}
               {invoice.currency != "--select--" && invoice.currency}
             </h1>{" "}
@@ -83,14 +83,14 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
         </div>
 
         <div className="relative w-full flex justify-between ">
-          <p className="text-slate-950 ">ID- {invoice.id}</p>{" "}
+          <p className="text-gray-400 ">ID- {invoice.id}</p>{" "}
         </div>
         <div className="relative h-auto w-full flex text-sm flex-col gap-2  justify-between ">
-          <p className="text-slate-950 font-semibold ">
+          <p className="text-gray-400 font-semibold ">
             Created At: {invoice.createdAt}
           </p>
 
-          <p className="text-slate-950  font-semibold">
+          <p className="text-gray-400  font-semibold">
             Last Updated: {invoice.updatedAt}
           </p>
         </div>

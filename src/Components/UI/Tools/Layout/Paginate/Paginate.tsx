@@ -24,10 +24,12 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
             }}
             key={linkNumber}
             className={` w-8 rounded-md border   h-auto duration-700 transition shadow-md cursor-pointer ${
-              active == linkNumber && "bg-gray-200"
+              active != linkNumber
+                ? "bg-gray-200"
+                : "bg-gradient-to-br from-green-600 to-black"
             } ${
-              active == linkNumber && "text-black"
-            } text-black px-1 rounded-sm text-center`}
+              active == linkNumber ? "text-white" : "text-black"
+            } px-1 rounded-sm text-center`}
           >
             {linkNumber}
           </button>
