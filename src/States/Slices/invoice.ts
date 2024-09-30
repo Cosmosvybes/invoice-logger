@@ -37,12 +37,11 @@ export interface settingsI {
   [key: string]: string | boolean;
 }
 
-
 export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch("https://ether-bill-server-1.onrender.com/api/user", {
+      const response = await fetch("http://localhost:8080/api/user", {
         headers: { Authorization: `Bearer ${token}` },
         method: "GET",
       });

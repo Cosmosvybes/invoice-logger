@@ -32,7 +32,7 @@ const AccountDetails = () => {
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
         <div className="relative h-auto  w-full  max-sm:w-full rounded-3xl   flex flex-col  gap-1 px-1  font-bold">
           <div className="w-full  block relative">
-            <p className="text-slate-900 px-2 text-xl max-sm:text-xl font-light ">
+            <p className="text-slate-900 px-2 text-xl max-sm:text-sm font-light ">
               Overview
             </p>
 
@@ -42,7 +42,7 @@ const AccountDetails = () => {
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Revenue
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-xl font-light">
+                  <CardText className="text-black text-4xl max-sm:text-sm font-light">
                     $ {revenue.toLocaleString()}
                   </CardText>
                 </CardBody>
@@ -52,7 +52,7 @@ const AccountDetails = () => {
                   <CardTitle className="text-slate-950 text-xl font-bold">
                     Total invoices
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-3xl font-light">
+                  <CardText className="text-black text-4xl max-sm:text-sm  font-light">
                     {draft.length + sent.length + paid.length}
                   </CardText>
                 </CardBody>
