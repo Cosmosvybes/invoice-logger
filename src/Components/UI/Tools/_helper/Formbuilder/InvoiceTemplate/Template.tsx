@@ -111,7 +111,7 @@ const Template = React.memo(
           return (
             <div className="relative" key={index}>
               <Input
-                className="border-none py-3 px-1 bg-gray-200 border  text-xl  font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-gray-400 w-full font-mono max-sm:w-full"
+                className="border-none py-3 px-1 bg-gray-200 border  text-xl  font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-gray-400 w-full max-sm:w-full"
                 type="text"
                 value={invoiceInformation[input.name]}
                 placeholder={input.placeholder}
