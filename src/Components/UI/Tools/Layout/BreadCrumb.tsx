@@ -42,7 +42,7 @@ const BreadCrumb = ({
     );
     // https://ether-bill-server-1.onrender.com
 
-    fetch("http://localhost:8080/api/new/invoice", {
+    fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

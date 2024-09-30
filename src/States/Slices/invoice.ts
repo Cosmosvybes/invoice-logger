@@ -41,10 +41,13 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch("http://localhost:8080/api/user", {
-        headers: { Authorization: `Bearer ${token}` },
-        method: "GET",
-      });
+      const response = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/user",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          method: "GET",
+        }
+      );
       if (response.status != 200) {
         return location.replace("/");
       }
