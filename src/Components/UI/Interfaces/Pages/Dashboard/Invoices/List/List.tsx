@@ -12,7 +12,7 @@ import useInvoiceListController from "./list.controller";
 import Paginate from "../../../../../Tools/Layout/Paginate/Paginate";
 import React, { useState } from "react";
 import { MoreHorizontal } from "react-huge-icons/outline";
-import InvoiceTable from "../../../../../Tools/InvoiceModal/InvoiceTable";
+// import InvoiceTable from "../../../../../Tools/InvoiceModal/InvoiceTable";
 
 const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
   const {
