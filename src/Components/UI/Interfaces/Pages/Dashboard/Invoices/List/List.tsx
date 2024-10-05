@@ -12,7 +12,7 @@ import useInvoiceListController from "./list.controller";
 import Paginate from "../../../../../Tools/Layout/Paginate/Paginate";
 import React, { useState } from "react";
 import { MoreHorizontal } from "react-huge-icons/outline";
-import InvoiceTable from "../../../../../Tools/InvoiceModal/InvoiceTable";
+// import InvoiceTable from "../../../../../Tools/InvoiceModal/InvoiceTable";
 
 const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
   const {
@@ -60,8 +60,33 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
       </Modal>
 
       <Container className="px-0 mt-2" fluid={true}>
-        <InvoiceTable />
+        {/* <InvoiceTable /> */}
         <table className="w-full border-collapse">
+          <thead className=" w-full  gap-4 ">
+            <tr>
+              <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
+                ID
+              </th>
+              <th className="text-center w-20 max-sm:w-16 max-sm:text-sm  ">
+                Client
+              </th>
+              <th className="text-center w-20 max-sm:w-16  max-sm:text-sm ">
+                Status
+              </th>
+              <th className="text-center w-20 max-sm:w-16  max-sm:text-sm  ">
+                Amount
+              </th>
+              <th className="text-center w-20 max-sm:w-16  max-sm:text-sm  ">
+                Currency
+              </th>
+              <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
+                Updated
+              </th>
+              <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
+                Actions
+              </th>
+            </tr>
+          </thead>
           <tbody>
             {currentInvoiceList.map((invoice, index) => (
               <tr
