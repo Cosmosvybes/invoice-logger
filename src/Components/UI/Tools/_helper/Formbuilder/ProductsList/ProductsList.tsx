@@ -72,7 +72,7 @@ const ProductsList = React.memo(({}) => {
               className="text-black flex justify-center items-center"
             >
               {" "}
-              <TrashBent className="text-3xl text-black inline" />
+              <TrashBent className="text-3xl text-red-900 inline" />
             </button>
           </div>
         ))}
@@ -85,7 +85,7 @@ const ProductsList = React.memo(({}) => {
         <div></div>
         <button onClick={addNew} color="primary" className="">
           {" "}
-          <PlusRectangle className="inline text-5xl text-green-600" />
+          <PlusRectangle className="inline text-5xl text-green-900" />
         </button>
       </div>
     </>

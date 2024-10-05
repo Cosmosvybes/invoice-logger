@@ -9,6 +9,7 @@ import Profile from "../UI/Interfaces/Pages/Profile/Profile";
 import SignIn from "../UI/Interfaces/Pages/Onboard/signin/SignIn";
 import Settings from "../UI/Interfaces/Pages/Settings/Settings";
 import Inbox from "../UI/Interfaces/Pages/Inbox/Inbox";
+import Subscription from "../UI/Interfaces/Pages/Subscription/Subscription";
 
 const _Routes = () => {
   return (
@@ -24,6 +25,7 @@ const _Routes = () => {
         <Route path="/client/new" element={<AddClient />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/account/settings" element={<Settings />}></Route>
+        <Route path="/account/subscription" element={<Subscription />}></Route>
         <Route path="/invoice/update/:id" element={<Create />}></Route>
       </Routes>
     </>

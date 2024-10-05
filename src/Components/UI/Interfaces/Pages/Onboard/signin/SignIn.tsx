@@ -8,8 +8,8 @@ const SignIn = () => {
   return (
     <>
       <Header />
-      <div className="relative h-screen justify-between max-sm:justify-center flex">
-        <div className="relative max-sm:px-5   w-1/2 max-sm:w-full h-full py-5 px-10  max-sm:shadow-md shadow-gray-50 flex justify-center items-center">
+      <div className="relative bg-gradient-to-br from-50 to-gray-white  justify-between max-sm:justify-center flex">
+        <div className="relative max-sm:px-5   w-1/2 max-sm:w-full h-full py-5 px-10   flex justify-center items-center">
           <OBTemplate
             isLoading={loading}
             handleSubmit={handleSubmit}

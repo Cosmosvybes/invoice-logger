@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function useNavMenu(icons: any) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
+
   const [links] = useState([
     { id: 1, path: "dashboard", name: "Home" },
     { id: 2, path: "invoices", name: "Invoices" },
@@ -86,7 +86,7 @@ export default function useNavMenu(icons: any) {
         {
           id: 2,
           title: "Subscription",
-          path: "subscription",
+          path: "account/subscription",
           icon: icons[5],
           onclick: "",
         },

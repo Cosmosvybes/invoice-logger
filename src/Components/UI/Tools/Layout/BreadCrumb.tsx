@@ -85,7 +85,7 @@ const BreadCrumb = ({
 
   return (
     <div className="relative w-full mt-2  h-auto py-1 flex justify-between items-center px-2">
-      <h1 className="text-green-950 text-2xl  max-sm:text-xl font-extrabold">
+      <h1 className="text-green-800 text-2xl  max-sm:text-xl font-extrabold">
         {title}
       </h1>
 
@@ -93,9 +93,9 @@ const BreadCrumb = ({
         <Link
           to={`/${linkTitle}`}
           onClick={() => linkTitle == "new/invoice" && handleNewInvoice()}
-          className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+          className=" mt-1 bg-gradient-to-br from-green-800 to-green-950 h-auto max-sm:h-auto max-sm:text-xl font-semibold flex justify-center text-2xl items-center rounded-md  text-gray-100 w-52 py-3 px-2 max-sm:w-auto"
         >
-          <p className="flex items-center justify-center text-white font-semibold">
+          <p className="flex items-center justify-center textt-2xl max-sm:xl text-white font-semibold">
             <PlusThin className="inline text-2xl" /> new{" "}
             {linkTitle == "client/new" ? "client" : "invoice"}
           </p>

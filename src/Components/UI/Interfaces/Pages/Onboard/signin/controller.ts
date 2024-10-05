@@ -15,7 +15,7 @@ export default function useSigninController() {
     {
       id: 2,
       name: "Password",
-      type: "text",
+      type: "password",
       value: "",
       placeholder: "Password here",
       required: true,

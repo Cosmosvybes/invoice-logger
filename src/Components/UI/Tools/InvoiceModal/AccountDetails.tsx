@@ -37,43 +37,43 @@ const AccountDetails = () => {
             </p>
 
             <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
-              <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto  gap-2 rounded-lg shadow-md border-gray-400">
-                  <CardTitle className="text-slate-950 text-xl font-bold">
+              <Card className="border-none">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto  gap-2  bg-gradient-to-br from-green-800 to-green-950 text-gray-100">
+                  <CardTitle className="text-gray-100 text-xl font-bold">
                     Revenue
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-sm font-light">
+                  <CardText className="text-gray-100 text-4xl max-sm:text-sm font-light">
                     $ {revenue.toLocaleString()}
                   </CardText>
                 </CardBody>
               </Card>
-              <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto gap-2 rounded-lg shadow-md border-gray-400">
-                  <CardTitle className="text-slate-950 text-xl font-bold">
+              <Card className="border-none">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto gap-2  bg-gradient-to-br from-green-800 to-green-950 text-gray-100">
+                  <CardTitle className="text-gray-100 text-xl font-bold">
                     Total invoices
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-sm  font-light">
+                  <CardText className="text-gray-100 text-4xl max-sm:text-sm  font-light">
                     {draft.length + sent.length + paid.length}
                   </CardText>
                 </CardBody>
               </Card>
-              <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto  gap-2 rounded-lg shadow-md border-gray-400">
-                  <CardTitle className="text-slate-950 text-xl font-bold">
+              <Card className="border-none">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto  gap-2  bg-gradient-to-br from-green-800 to-green-950 text-gray-100">
+                  <CardTitle className="text-gray-100 text-xl font-bold">
                     Draft
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-sm font-light">
+                  <CardText className="text-gray-100 text-4xl max-sm:text-sm font-light">
                     {draft.length}
                   </CardText>
                 </CardBody>
               </Card>
 
-              <Card>
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-auto  gap-2 rounded-lg shadow-md border-gray-400">
-                  <CardTitle className="text-slate-950 text-xl font-bold">
+              <Card className="border-none">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto  gap-2  bg-gradient-to-br from-green-800 to-green-950 text-gray-100">
+                  <CardTitle className="text-gray-100 text-xl font-bold">
                     Outgoing invoices
                   </CardTitle>
-                  <CardText className="text-black text-4xl max-sm:text-sm font-light">
+                  <CardText className="text-gray-100 text-4xl max-sm:text-sm font-light">
                     {sent.length}
                   </CardText>
                 </CardBody>
@@ -94,15 +94,15 @@ const AccountDetails = () => {
             </div>
             <div className="relative w-full flex justify-between items-center px-1">
               <p className="text-gray-600 text-xl w-full font-light">Drafts</p>
-              <ArrowRight className="text-black text-4xl" />
+              <ArrowRight className="text-green-800 text-4xl" />
             </div>
           </div>
           {/* //invoice drfats */}
-          <div className="relative w-full flex justify-end ">
+          <div className="relative w-full mt-4 flex justify-end ">
             {draft?.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <Card className="relative shadow-md flex flex-col  border border-gray-400 py-2 rounded-lg w-1/3 max-md:w-full max-sm:w-full">
+              <Card className="relative shadow-md flex flex-col bg-gradient-to-br from-green-800 to-green-950   py-2  w-1/3 max-md:w-full max-sm:w-full">
                 <CardBody>
                   <div className="relative w-full gap-1 h-auto py-2 flex flex-col-reverse ">
                     {currentInvoices.reverse().map((invoice: any) => (

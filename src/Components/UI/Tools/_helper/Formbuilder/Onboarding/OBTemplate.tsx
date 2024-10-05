@@ -1,6 +1,9 @@
 import { ArrowRight } from "react-huge-icons/outline";
 import { Button, Input, Spinner, Card, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Eye, EyeDisable } from "react-huge-icons/bulk";
+import { useState } from "react";
+
 const OBTemplate = ({
   formFields,
   handleChange,
@@ -21,10 +24,42 @@ const OBTemplate = ({
   handleSubmit(e: any): void;
   isLoading: boolean;
 }) => {
+  const [isPassWord, setIsPassword] = useState(true);
+  const handleShowPassword = () => {
+    setIsPassword(!isPassWord);
+  };
+
   const FORM = formFields.map((_, i) => {
     switch (_.type) {
       case "checkbox":
         return;
+      case "password":
+        return (
+          <div className="relative" key={i}>
+            <label className="mb-1 text-green-600 text-xl"> {_.name}</label>
+            <div className="relative  py-0">
+              <Input
+                type={isPassWord ? "password" : "text"}
+                placeholder={_.placeholder}
+                value={formValues[_.name]}
+                required={_.required}
+                onChange={(e) => handleChange(e.target.value, _.name)}
+                className="block w-full outline-none border mb-2 px-2 py-3"
+              />
+              {isPassWord ? (
+                <EyeDisable
+                  className=" absolute top-5 text-2xl right-5"
+                  onClick={handleShowPassword}
+                />
+              ) : (
+                <Eye
+                  className=" absolute top-5 text-2xl right-5"
+                  onClick={handleShowPassword}
+                />
+              )}
+            </div>
+          </div>
+        );
 
       default:
         return (
@@ -56,10 +91,7 @@ const OBTemplate = ({
 
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
-          <Link
-            to={"/"}
-            className="text-xl max-sm:text-sm text-green-600 mb-2"
-          >
+          <Link to={"/"} className="text-xl max-sm:text-sm text-green-600 mb-2">
             Forgot password ?
           </Link>
           <Button className=" bg-gradient-to-r from-green-600 to-black mt-3 flex justify-center items-center gap-2 text-white font-bold text-2xl border-none text-center py-2 px-2 w-full">

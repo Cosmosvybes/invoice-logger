@@ -2,12 +2,10 @@ import { Invoice } from "../../../../../../States/Slices/invoice.types";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../../States/Slices/invoice";
-import { MoreVertical } from "react-huge-icons/bulk";
+import { MoreVertical } from "react-huge-icons/outline";
 import { useLayoutEffect, useRef, useState } from "react";
-// import { Card, CardBody } from "reactstrap";
 
 
-//
 const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
   const dispatch = useAppDispatch();
   const invoiceOptions = useRef<HTMLDivElement>(null);
@@ -31,24 +29,19 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
   return (
     <>
-      <div className="relative w-full  gap-2 flex-col  border-b   border-gray-300 h-auto  flex justify-between items-center">
+      <div className="relative w-full   gap-2 flex-col  h-auto  flex justify-between items-center">
         {showOptions && (
           <div
             ref={invoiceOptions}
-            className="absolute right-1 bottom-1  shadow-md   transition duration-500 flex justify-start gap-2  flex-col w-auto h-auto  bg-gray-50  text-center z-20"
+            className="absolute right-1 border-gray-100 border-2 bottom-4 rounded-lg  shadow-lg  transition duration-500 flex justify-start gap-2 flex-col w-auto h-auto  bg-gray-50  text-center z-20"
           >
-            <button
-              className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
-              onClick={() => console.log(invoice)}
-            >
-              Send
-            </button>
             <Link
               to={`/${"invoice/update"}/${invoice.id}`}
-              className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center font-light px-2 w-full"
+              className="text-slate-950 hover:bg-green-900 transition duration-500 hover:text-gray-50 text-xl text-center font-light py-1 px-2 w-full "
             >
-              Edit
+              Edit invoice
             </Link>
+            {/* <hr /> */}
             <button
               onClick={() =>
                 dispatch(
@@ -58,39 +51,37 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
                   })
                 )
               }
-              className="text-slate-950 hover:bg-black hover:text-gray-50 text-xl text-center 0 font-light px-2 w-full"
+              className="text-slate-950 hover:bg-red-900 transition duration-500 hover:text-gray-50 text-xl text-center 0 font-light py-1 px-2 w-full  "
             >
-              Delete
+              Dismiss
             </button>
           </div>
         )}
-  
 
-    
-        <div className="relative w-full h-auto flex justify-between items-center">
+        <div className="relative w-full  h-auto flex justify-between items-center">
           <div className="relative justify-start items-center ">
             {" "}
-            <h1 className="text-green-500 text-2xl inline font-semibold">
+            <h1 className="text-gray-50 text-2xl inline font-semibold">
               {Number(invoice.TOTAL).toLocaleString()}{" "}
               {invoice.currency != "--select--" && invoice.currency}
             </h1>{" "}
           </div>
 
           <MoreVertical
-            className="text-4xl text-slate-950 "
+            className="text-4xl text-gray-50 "
             onClick={() => setShowOptions(true)}
           />
         </div>
 
         <div className="relative w-full flex justify-between ">
-          <p className="text-gray-400 ">ID- {invoice.id}</p>{" "}
+          <p className="text-gray-50 ">ID- {invoice.id}</p>{" "}
         </div>
         <div className="relative h-auto w-full flex text-sm flex-col gap-2  justify-between ">
           <p className="text-gray-400 font-semibold ">
             Created At: {invoice.createdAt}
           </p>
 
-          <p className="text-gray-400  font-semibold">
+          <p className="text-gray-400 font-semibold">
             Last Updated: {invoice.updatedAt}
           </p>
         </div>
