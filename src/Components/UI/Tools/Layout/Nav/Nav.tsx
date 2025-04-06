@@ -45,7 +45,7 @@ const Nav = () => {
   return (
     <>
       {isLoggedIn && (
-        <div className="max-md:px-0  flex bg-gray-50  justify-between  items-center shadow-md shadow-gray-200 right-0 z-40  h-32 sticky  top-0 max-sm:h-20 ">
+        <div className="max-md:px-0  flex bg-white justify-between  items-center border-b right-0 z-40  h-24 sticky  top-0 max-sm:h-20 ">
           <div className="relative flex justify-start items-center  max-sm:px-0 ">
             <img
               src={logo}
@@ -69,13 +69,13 @@ const Nav = () => {
           <div className="relative  w-28 px-2 py-1 flex justify-center items-center rounded-sm h-12 bg-gray-100 mr-32 max-md:mr-2 max-sm:ml-2">
             <div className="relative rounded-full flex justify-center items-center shadow-inner h-auto w-auto  bg-gray-50 py-1 px-1">
               {" "}
-              <p className="text-green-800 rounded-full text-xl">
+              <p className="text-purple-800 rounded-full text-xl">
                 {String(account.firstname).charAt(0).toUpperCase()}{" "}
                 {String(account.lastname).charAt(0).toUpperCase()}
               </p>
             </div>
             <MenuLineHorizontal
-              className="text-5xl px-1 text-green-900"
+              className="text-5xl px-1 text-purple-900"
               onClick={() => setMode(!viewMode)}
             />
           </div>
@@ -86,8 +86,8 @@ const Nav = () => {
               className="side-bar absolute right-28   max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-52  max-sm:right-0 max-sm:top-20  top-36 h-auto w-96  flex"
             >
               <div className="relative  flex px-3 h-16  border-b border-gray-300 w-auto items-center gap-2  justify-start">
-                <div className="relative block">
-                  <h6 className="font-bold text-green-800">
+                <div className="relative flex flex-col  gap-2">
+                  <h6 className="font-bold text-purple-800">
                     {String(account.firstname).toUpperCase()} {account.lastname}
                   </h6>
                   <p className=" font-normal text-gray-400">{account.email}</p>

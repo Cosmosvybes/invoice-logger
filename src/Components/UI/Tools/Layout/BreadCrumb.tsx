@@ -42,7 +42,7 @@ const BreadCrumb = ({
     );
     // https://ether-bill-server-1.onrender.com
 
-    fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
+    fetch("http://localhost:8080/api/new/invoice", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -85,7 +85,7 @@ const BreadCrumb = ({
 
   return (
     <div className="relative w-full mt-2  h-auto py-1 flex justify-between items-center px-2">
-      <h1 className="text-green-800 text-2xl  max-sm:text-xl font-extrabold">
+      <h1 className="text-purple-800 text-xl  max-sm:text-xl font-extrabold">
         {title}
       </h1>
 
@@ -93,9 +93,9 @@ const BreadCrumb = ({
         <Link
           to={`/${linkTitle}`}
           onClick={() => linkTitle == "new/invoice" && handleNewInvoice()}
-          className=" mt-1 bg-gradient-to-br from-green-800 to-green-950 h-auto max-sm:h-auto max-sm:text-xl font-semibold flex justify-center text-2xl items-center rounded-md  text-gray-100 w-52 py-3 px-2 max-sm:w-auto"
+          className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
         >
-          <p className="flex items-center justify-center textt-2xl max-sm:xl text-white font-semibold">
+          <p className="flex items-center justify-center text-xl max-sm:sm text-white font-light">
             <PlusThin className="inline text-2xl" /> new{" "}
             {linkTitle == "client/new" ? "client" : "invoice"}
           </p>

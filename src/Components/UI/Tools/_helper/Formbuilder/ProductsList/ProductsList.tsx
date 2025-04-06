@@ -8,8 +8,6 @@ const ProductsList = React.memo(({}) => {
   const { addNew, remove, handleChange, invoiceInformation } =
     useProductsListController();
 
-  //
-
   return (
     <>
       <h1 className="text-2xl mt-3 px-2 mb-2 ">Products List</h1>
@@ -72,7 +70,7 @@ const ProductsList = React.memo(({}) => {
               className="text-black flex justify-center items-center"
             >
               {" "}
-              <TrashBent className="text-3xl text-red-900 inline" />
+              <TrashBent className="text-3xl text-black inline" />
             </button>
           </div>
         ))}
@@ -85,7 +83,7 @@ const ProductsList = React.memo(({}) => {
         <div></div>
         <button onClick={addNew} color="primary" className="">
           {" "}
-          <PlusRectangle className="inline text-5xl text-green-900" />
+          <PlusRectangle className="inline text-5xl text-purple-900" />
         </button>
       </div>
     </>

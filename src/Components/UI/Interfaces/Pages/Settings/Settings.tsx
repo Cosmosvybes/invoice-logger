@@ -50,7 +50,7 @@ const Settings = () => {
         <div className="relative h-52 max-sm:h-20 w-full flex justify-start max-sm:justify-end mt-2 max-sm:mt-1 px-2 max-sm:px-4 items-center">
           <Button
             onClick={handleSubmit}
-            className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto max-sm:mr-2"
+            className=" mt-1 bg-gradient-to-br text-2xl from-purple-900 to-black h-auto max-sm:h-auto max-sm:text-sm  flex justify-center items-center rounded-md  text-gray-100 w-auto py-3 px-3 max-sm:w-auto max-sm:mr-2"
           >
             {loading && (
               <Spinner type="grow" color="light" size="sm" className="inline" />

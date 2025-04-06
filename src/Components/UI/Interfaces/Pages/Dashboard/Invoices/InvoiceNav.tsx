@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBtn from "./NavBtn";
 
 const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
@@ -9,6 +9,10 @@ const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
     { id: 4, text: "overdue" },
   ]);
   const [active, setActive] = useState(buttonData[0].id);
+
+  useEffect(() => {
+    switchTab("sent");
+  }, []);
   return (
     <>
       <div className="relative w-full max-sm:w-auto  border-b border-gray-300  h-auto max-sm:h-auto px-3   gap-5  max-sm:px-7 max-sm:gap-14 justify-start flex">

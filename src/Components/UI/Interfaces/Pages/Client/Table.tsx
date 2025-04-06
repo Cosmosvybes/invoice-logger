@@ -4,7 +4,6 @@ import useTableController from "./table.controller";
 import Empty from "../Dashboard/Invoices/Empty";
 import useClientDataController from "./client.controller";
 import Paginate from "./Paginate";
-// import Paginate from "../../../Tools/Layout/Paginate/Paginate";
 
 const Table_ = () => {
   const { clients, search, handleSearch } = useTableController();
@@ -51,26 +50,26 @@ const Table_ = () => {
             key={i}
             className={`${i % 2 == 0 ? "bg-gray-50" : "bg-gray-100"}`}
           >
-            <td className="text-center gap-2   py-3">
+            {/* <td className="text-center  py-2 max-sm:py-1">
               {String(row.id).slice(10, 15)}
+            </td> */}
+            <td className="text-center max-sm:text-sm font-normal text-black  py-2 max-sm:py-1">
+              {String(row.name).slice(0, 6)}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black   py-3">
-              {row.name}
-            </td>
-            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black py-2 max-sm:py-1">
               {String(row.email).length > 10 &&
                 String(row.email).slice(0, 9) + "..."}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black py-4 max-sm:py-1">
               {String(row.address).length > 10
-                ? String(row.address).slice(0, 9) + "..."
+                ? String(row.address).slice(0, 5) + "..."
                 : row.address}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
+            <td className="text-center max-sm:text-sm font-normal text-black py-4 max-sm:py-1">
               {row.cityStatePostal}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black  py-3">
-              {row.country}
+            <td className="text-center max-sm:text-sm font-normal text-black py-4 max-sm:py-1">
+              {row.country.slice(0,8)}
             </td>
           </tr>
         ))
@@ -89,10 +88,13 @@ const Table_ = () => {
         </div>
 
         <table className="w-full border-collapse border-b px-3  mt-5 max-sm:w-full">
-          <thead className="mb-2">
-            <tr>
+          <thead className="mb-2 bg-gray-50 ">
+            <tr className="py-3">
               {tableColums.map((_, i) => (
-                <th className="text-slate-800 text-center" key={i}>
+                <th
+                  className="text-slate-800 text-center py-3 lg:py-2 max-sm:py-2"
+                  key={i}
+                >
                   {_.text}
                 </th>
               ))}

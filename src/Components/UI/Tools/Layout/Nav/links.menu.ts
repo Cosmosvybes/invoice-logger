@@ -85,8 +85,8 @@ export default function useNavMenu(icons: any) {
         },
         {
           id: 2,
-          title: "Subscription",
-          path: "account/subscription",
+          title: "Finance",
+          path: "account/finance/overview",
           icon: icons[5],
           onclick: "",
         },
@@ -100,6 +100,7 @@ export default function useNavMenu(icons: any) {
       ],
     },
   ];
+
   const navRef = useRef<HTMLDivElement>(null);
 
   const handleCloseNav = (e: Event) => {

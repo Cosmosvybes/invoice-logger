@@ -52,41 +52,43 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
           <Button
             onClick={() => handleMarkAsPaid(currentRowDataID)}
             color="success"
-            className="mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+            className="mt-1 bg-gradient-to-br from-green-700 to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
           >
             PAID
           </Button>
         </ModalFooter>
       </Modal>
 
-      <Container className="px-0 mt-2" fluid={true}>
+      <Container className="px-0 mt-4" fluid={true}>
         {/* <InvoiceTable /> */}
         <table className="w-full border-collapse">
-          <thead className=" w-full  gap-4 ">
+          <thead className=" w-full   gap-4 ">
             <tr>
               <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
-                ID
+                id
               </th>
               <th className="text-center w-20 max-sm:w-16 max-sm:text-sm  ">
-                Client
+                client
               </th>
               <th className="text-center w-20 max-sm:w-16  max-sm:text-sm ">
-                Status
+                status
               </th>
               <th className="text-center w-20 max-sm:w-16  max-sm:text-sm  ">
-                Amount
+                amount
               </th>
               <th className="text-center w-20 max-sm:w-16  max-sm:text-sm  ">
-                Currency
+                currency
               </th>
               <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
-                Updated
+                updated 
               </th>
               <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
-                Actions
+                actions
               </th>
             </tr>
           </thead>
+
+
           <tbody>
             {currentInvoiceList.map((invoice, index) => (
               <tr
@@ -102,7 +104,7 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
                   {invoice.Client.slice(0, 8)}
                 </td>
 
-                <td className="text-green-500  text-center max-sm:text-xs  font-normal py-2 w-20 max-sm:w-16 ">
+                <td className="text-purple-500  text-center max-sm:text-xs  font-normal py-2 w-20 max-sm:w-16 ">
                   {invoice.status.toLowerCase()}
                 </td>
                 <td className="text-black text-center max-sm:text-xs font-normal py-2  w-20 max-sm:w-16 ">

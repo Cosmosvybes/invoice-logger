@@ -26,6 +26,8 @@ import Mailer from "../../../../../EMAIL/Mailer";
 import Spinner_ from "../../Loader/Spinner";
 import React, { useState } from "react";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
+import Overlay from "../../../../Interfaces/Pages/Subscription/_OverlayComp/Overlay";
+import { LoadingDashed } from "react-huge-icons/solid";
 
 const Template = React.memo(
   ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
@@ -159,6 +161,16 @@ const Template = React.memo(
 
     return (
       <>
+        {loading && (
+          <Overlay
+            children={
+              <div className="animate-spin z-10 ">
+                <LoadingDashed className="text-3xl text-purple-600" />
+              </div>
+            }
+          />
+        )}
+
         {!invoiceInformation && loading ? (
           <Spinner_ />
         ) : (
@@ -202,19 +214,19 @@ const Template = React.memo(
                 )}
                 <hr className="mb-1 border border-gray-400" />
                 <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
-                  <Button
+                  <button
+                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
                     onClick={() => handleView()}
-                    className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
                   >
-                    <EyeLightDouble className="text-2xl text-white inline" />
-                    VIEW
-                  </Button>
+                    PREVIEW
+                    <EyeLightDouble className="text-2xl inline text-white" />
+                  </button>
 
-                  <Button
+                  <button
+                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
                     onClick={() => {
                       setModal(!modal);
                     }}
-                    className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
                   >
                     {isLoading ? (
                       <Spinner
@@ -224,10 +236,10 @@ const Template = React.memo(
                         className="mr-0.5"
                       ></Spinner>
                     ) : (
-                      <SendFast className="text-2xl inline text-white " />
+                      <SendFast className="text-2xl inline text-white" />
                     )}
                     SEND
-                  </Button>
+                  </button>
                 </div>
 
                 <div className="relative flex  justify-start max-sm:justify-end">

@@ -2,18 +2,41 @@ import { useEffect, useState } from "react";
 import "react-toastify/ReactToastify.css";
 import { ItemsType, VAT_DISCOUNT } from "../type";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
+
 import {
   updateInvoiceInformation,
   updateDiscount,
   updateVAT,
   removeDraft,
 } from "../../../../../../States/Slices/invoice";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
 import { setIsLoggedIn } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
+// import useSmartContractController from "../../../../../Web3/Credentials/Index";
+import { ethers } from "ethers";
+const ethereum = (window as any).ethereum;
+import { tokenCredientials } from "../../../../../Web3/Credentials/Token/constants";
+import { shopCredientials } from "../../../../../Web3/Credentials/Shop/constants";
 
+import { setLoading as walletLoader } from "../../../../../../States/Slices/wallet";
 export default function useTemplateController() {
+  const { tokenAbi, tokenAddress } = tokenCredientials;
+  const { contractAddress, abi } = shopCredientials;
+  const getSmartContractAction = async (address_: string, abi: any) => {
+    try {
+      const provider = new ethers.BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+      const smartContraction = new ethers.Contract(address_, abi, signer);
+      return smartContraction;
+    } catch (error) {
+      toast.error("Error connecting to smart contract", {
+        theme: "dark",
+      });
+    }
+  };
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -22,7 +45,10 @@ export default function useTemplateController() {
     dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);
 
-  const { loading, draft, clients } = useAppSelector((state) => state.invoice);
+  const { draft, clients } = useAppSelector((state) => state.invoice);
+  const { address, loading, isConnected } = useAppSelector(
+    (store) => store.walletSlice
+  );
 
   let invoiceInformation: any;
   function setInvoiceInformation() {
@@ -115,7 +141,7 @@ export default function useTemplateController() {
 
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [recipient, setReceipient] = useState("");
   const [sendAsMessage, setSetAsMessage] = useState(true);
   //
@@ -134,34 +160,71 @@ export default function useTemplateController() {
       htmlContent: emailData,
       invoice: invoiceInformation,
     };
+    if (!isConnected) return toast.warn("Account not conneected");
 
+    const smartContractTx = await getSmartContractAction(
+      tokenAddress,
+      tokenAbi
+    );
+
+    const smartContractTx_Etherbill = await getSmartContractAction(
+      contractAddress,
+      abi
+    );
     try {
-      setLoading(true);
-      const responseInfo = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/send/invoice?sendAsMessage=${sendAsMessage}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "Application/json",
-          },
-          body: JSON.stringify({ ...emailObject }),
+      dispatch(walletLoader());
+      const hash = await smartContractTx!.transfer(contractAddress, 5);
+      // await hash.wait();
+
+      if (hash) {
+        const tx = await smartContractTx_Etherbill!.recordTransaction(
+          "Invoicing",
+          5,
+          0,
+          address,
+          contractAddress,
+          address
+        );
+
+        if (tx) {
+          try {
+            // setLoading(true);
+            const responseInfo = await fetch(
+              `http://localhost:8080/api/send/invoice?sendAsMessage=${sendAsMessage}`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  "Content-Type": "Application/json",
+                },
+                body: JSON.stringify({ ...emailObject }),
+              }
+            );
+            if (!responseInfo.ok) {
+              if (responseInfo.status == 403) {
+                throw new Error("Insufficient token balance, add tokens");
+              } else {
+                throw new Error("internal server error");
+              }
+            }
+            const response = await responseInfo.json();
+            toast.success(response.response, { theme: "light" });
+            navigate("/dashboard");
+            const invoiceID = invoiceInformation.id;
+            dispatch(removeDraft({ invoiceID }));
+            dispatch(walletLoader());
+          } catch (error: any) {
+            toast.error(error.message, { theme: "dark" });
+            // dispatch(walletLoader());
+          }
         }
-      );
-      if (!responseInfo.ok) {
-        throw new Error("Operation failed");
       }
-      const response = await responseInfo.json();
-      toast.success(response.response, { theme: "light" });
-      navigate("/dashboard");
-      const invoiceID = invoiceInformation.id;
-      dispatch(removeDraft({ invoiceID }));
-      setLoading(false);
-    } catch (error: any) {
-      toast.error(error.message, { theme: "dark" });
-      setLoading(false);
+    } catch (error) {
+      dispatch(walletLoader());
+      toast.error("Transaction Aborted", { theme: "dark" });
     }
   };
+
   const [useCustomChecked, setUseCustom] = useState(false);
   const [customEmail, setCustomEmail] = useState("");
 
@@ -205,5 +268,6 @@ export default function useTemplateController() {
     updateDiscount,
     token,
     updateVAT,
+    isConnected,
   };
 }

@@ -1,7 +1,7 @@
-import { ArrowRight } from "react-huge-icons/outline";
+import { ArrowRight } from "react-huge-icons/solid";
 import { Button, Input, Spinner, Card, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Eye, EyeDisable } from "react-huge-icons/bulk";
+import { Eye, EyeDisable } from "react-huge-icons/outline";
 import { useState } from "react";
 
 const OBTemplate = ({
@@ -28,6 +28,7 @@ const OBTemplate = ({
   const handleShowPassword = () => {
     setIsPassword(!isPassWord);
   };
+  const url = new URL(location.href);
 
   const FORM = formFields.map((_, i) => {
     switch (_.type) {
@@ -36,7 +37,15 @@ const OBTemplate = ({
       case "password":
         return (
           <div className="relative" key={i}>
-            <label className="mb-1 text-green-600 text-xl"> {_.name}</label>
+            <label className="mb-1 text-purple-500 text-xl">
+              {" "}
+              {_.name}{" "}
+              <p className="block text-xs text-gray-500">
+                {_.name == "Password" &&
+                  url.pathname != "/" &&
+                  "Alphabet, number and special character  E.g Password123$ "}
+              </p>
+            </label>
             <div className="relative  py-0">
               <Input
                 type={isPassWord ? "password" : "text"}
@@ -64,7 +73,7 @@ const OBTemplate = ({
       default:
         return (
           <div className="relative" key={i}>
-            <label className="mb-1 text-green-600 text-xl"> {_.name}</label>
+            <label className="mb-1 text-purple-500 text-xl"> {_.name}</label>
             <Input
               type="text"
               placeholder={_.placeholder}
@@ -80,22 +89,43 @@ const OBTemplate = ({
 
   return (
     <>
-      <Card className="relative w-full border-none gap-4 shadow-lg px-4  max-sm:h-auto py-4">
-        <CardTitle className="text-2xl font-bold text-green-600">
-          <p> Sign in to your account </p>
-          <p className="text-gray-400 font-normal text-sm max-sm:text-sm">
-            {" "}
-            Enter your email & password
+      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-4 shadow-md z-10 px-3  max-sm:h-auto py-4">
+        <CardTitle className="text-2xl font-bold text-purple-500">
+          <p>
+            {url.pathname == "/"
+              ? "Sign in to your account"
+              : "Create new account "}{" "}
           </p>
+          <strong className="text-purple-500 font-normal text-sm max-sm:text-sm">
+            {url.pathname == "/"
+              ? "Enter your email & password to continue"
+              : "Enter your details here"}
+          </strong>
         </CardTitle>
 
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
-          <Link to={"/"} className="text-xl max-sm:text-sm text-green-600 mb-2">
-            Forgot password ?
-          </Link>
-          <Button className=" bg-gradient-to-r from-green-600 to-black mt-3 flex justify-center items-center gap-2 text-white font-bold text-2xl border-none text-center py-2 px-2 w-full">
-            SIGN IN{" "}
+          <div className="relative max-md:py-2 max-sm:py-2 max-lg:py-2 w-full flex justify-between items-center">
+            <Link to={"/"} className="text-sm  max-sm:text-sm text-purple-500">
+              Forgot password ?
+            </Link>
+            {url.pathname == "/" ? (
+              <Link
+                to={"/create/new/account"}
+                className="text-sm  max-sm:text-sm text-purple-500"
+              >
+                Create new account
+              </Link>
+            ) : (
+              <Link to={"/"} className="text-sm  max-sm:text-sm text-purple-500 ">
+                Already have an account ?{" "}
+                <span className="text-purple-500">sign in </span>
+              </Link>
+            )}
+          </div>
+
+          <Button className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-bold hover:text-gray-100 text-2xl border-none text-center py-3 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-3 w-full">
+            {url.pathname == "/" ? "SIGN IN" : "SIGN UP "}
             {!isLoading ? (
               <ArrowRight className="inline text-4xl" />
             ) : (

@@ -41,7 +41,7 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch("https://ether-bill-server-1.onrender.com/api/user", {
+      const response = await fetch("http://localhost:8080/api/user", {
         headers: { Authorization: `Bearer ${token}` },
         method: "GET",
       });
@@ -62,7 +62,7 @@ export const getInvoice = createAsyncThunk(
   async (id: any) => {
     try {
       const response = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/invoice?id=${id}`,
+        `http://localhost:8080/api/invoice?id=${id}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           method: "GET",
@@ -81,11 +81,13 @@ export const getInvoice = createAsyncThunk(
   }
 );
 const initialState: ACCOUNT = {
+  currentData: [],
   draft: [],
   sent: [],
   overdue: [],
   paid: [],
   revenue: 0,
+  tokens: 0,
   clients: [],
   inbox: [],
   staticForm: invoiceStaticValue,
@@ -105,10 +107,21 @@ const initialState: ACCOUNT = {
   },
 };
 
+// export const mySlice = createSlice({
+//   name: "mySlice",
+//   initialState,
+//   reducers
+// });
+
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
+    setCurrrentInvoices: (state, action: PayloadAction<Invoice[]>) => {
+      state.currentData = action.payload;
+      // console.log(action.payload, state.currentData);
+    },
+
     markAsPaid: (
       state,
       action: PayloadAction<{ invoiceID: string | number }>
@@ -140,7 +153,7 @@ const invoiceSlice = createSlice({
       let invoice = state.draft.find((invoice) => invoice.id == id);
       invoice!.currency = currency;
 
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -167,7 +180,7 @@ const invoiceSlice = createSlice({
       state.draft.splice(state.draft.indexOf(invoice!), 1);
 
       fetch(
-        `https://ether-bill-server-1.onrender.com/api/invoice/delete/?id=${id}`,
+        `http://localhost:8080/api/invoice/delete/?id=${id}`,
         {
           method: "DELETE",
           headers: {
@@ -204,7 +217,7 @@ const invoiceSlice = createSlice({
         minute: "2-digit",
       });
 
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         credentials: "include",
         headers: {
@@ -250,7 +263,7 @@ const invoiceSlice = createSlice({
         0
       );
       invoice!.TOTAL = Number(total_);
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -311,7 +324,7 @@ const invoiceSlice = createSlice({
         minute: "2-digit",
       });
       invoiceItem!.TOTAL -= item.unitTotal;
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -336,7 +349,7 @@ const invoiceSlice = createSlice({
     updateInvoiceTotal: (state, action: PayloadAction<invoiceTotalUpdate>) => {
       const { invoiceID, value, token }: invoiceTotalUpdate = action.payload;
       let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceID);
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -377,7 +390,7 @@ const invoiceSlice = createSlice({
         hour: "2-digit",
         minute: "2-digit",
       });
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -405,8 +418,7 @@ const invoiceSlice = createSlice({
         0
       );
       invoice!.VAT = value;
-      invoice!.TOTAL =
-        subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
+      invoice!.TOTAL = subtotal + (invoice!.VAT / 100) * subtotal;
 
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
         day: "2-digit",
@@ -415,7 +427,8 @@ const invoiceSlice = createSlice({
         hour: "2-digit",
         minute: "2-digit",
       });
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+
+      fetch("http://localhost:8080/api/invoice/updates", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -443,7 +456,7 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-      const { draft, sent, revenue, clients, settings, inbox, paid } =
+      const { draft, sent, revenue, clients, settings, inbox, paid, token } =
         action.payload;
       state.draft = draft;
       state.sent = sent;
@@ -452,6 +465,7 @@ const invoiceSlice = createSlice({
       state.settings = settings;
       state.inbox = inbox;
       state.paid = paid;
+      state.tokens = token;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
@@ -475,4 +489,5 @@ export const {
   updateSettings,
   removeDraft,
   markAsPaid,
+  setCurrrentInvoices,
 } = invoiceSlice.actions;

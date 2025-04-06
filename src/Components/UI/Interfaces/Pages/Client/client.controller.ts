@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Client } from "../../../../../States/Slices/ClientSlice/client.types";
 import { setIsLoggedIn } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
+
 export default function useClientDataController(clients: Client[]) {
   const dispatch = useAppDispatch();
   dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
@@ -16,7 +17,6 @@ export default function useClientDataController(clients: Client[]) {
   ];
 
   const tableColums = [
-    { id: 4, text: "ID" },
     { id: 13, text: "Name" },
     { id: 15, text: "Email" },
     { id: 16, text: "Address" },

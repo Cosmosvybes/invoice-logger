@@ -18,6 +18,7 @@ const Invoices = () => {
     dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
   }, []);
   const { currentData, handleInvoiceFilter } = useInvoiceController();
+
   return (
     <>
       <div className="relative px-28 max-sm:px-0 overflow-x-scroll overflow-y-clip h-auto max-sm:h-auto">

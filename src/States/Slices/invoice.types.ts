@@ -69,6 +69,7 @@ export interface item {
   token: string | undefined;
 }
 export interface ACCOUNT {
+  currentData: Invoice[];
   draft: Invoice[];
   sent: Invoice[];
   overdue: Invoice[];
@@ -79,6 +80,7 @@ export interface ACCOUNT {
   clients: any[];
   inbox: Invoice[];
   currentInvoice: any;
+  tokens: 0;
   settings: {
     tokenBalanceNotification: boolean;
     invoiceSentNotication: boolean;

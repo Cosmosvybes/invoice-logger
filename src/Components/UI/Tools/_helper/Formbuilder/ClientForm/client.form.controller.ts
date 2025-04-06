@@ -46,20 +46,17 @@ export default function useClientFormController() {
       cityStatePostal: City_Postal_State,
       id: Date.now(),
     };
-
-    const response = await fetch(
-      "https://ether-bill-server-1.onrender.com/api/client/new",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify(client),
-      }
-    );
+    // https://ether-bill-server-1.onrender.com
+    const response = await fetch("http://localhost:8080/api/client/new", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify(client),
+    });
     if (!response.ok) {
-      location.replace("/");
+      // location.replace("/");
     }
     toast.success("New Client added", { theme: "light" });
     Object.keys(clientFormValues).map((name) => updateClientForm("", name));
