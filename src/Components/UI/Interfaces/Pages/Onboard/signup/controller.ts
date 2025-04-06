@@ -59,7 +59,7 @@ export default function useSignUpController() {
     setFormValues((prev) => ({ ...prev, [key]: newValue }));
   };
 
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
