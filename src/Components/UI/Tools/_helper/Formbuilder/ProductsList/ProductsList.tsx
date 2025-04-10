@@ -33,23 +33,23 @@ const ProductsList = React.memo(({}) => {
         {invoiceInformation.itemList.map((_: Item, i: number) => (
           <div className="relative grid grid-cols-5 gap-4 max-sm:gap-0" key={i}>
             <Input
-              className={`px-2  text-xl max-sm:text-xs text-center max-md:text-md  outline-none rounded-md bg-inherit border-b bg-gray-300 py-2  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2  w-24 text-xl max-sm:text-xs text-center max-md:text-md  outline-none rounded-md bg-inherit border-b bg-gray-300 py-2  text-black  font-normal  max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Description"}
               value={_.description}
               onChange={(e) => handleChange(e, i, "description")}
             />
             <Input
-              className={`px-2 py-2  text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   bg-gray-200   text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-2  w-24 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   bg-gray-200   text-black  font-normal  max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Quantity"}
               value={_.quantity}
               onChange={(e) => handleChange(e, i, "quantity")}
             />
             <Input
-              className={`px-2 py-2  text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   ${
+              className={`px-2 py-2  w-24 text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   ${
                 i % 2 == 0 ? "bg-gray-100" : "bg-gray-200"
-              }  text-black  font-normal w-96 max-md:w-full max-sm:w-full`}
+              }  text-black  font-normal  max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Unit price"}
               value={_.unitPrice}
@@ -57,7 +57,7 @@ const ProductsList = React.memo(({}) => {
             />
             <Input
               disabled
-              className={`px-2 py-2  text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit border-b text-black bg-gray-400   font-normal w-96 max-md:w-full max-sm:w-full`}
+              className={`px-2 py-2  w-24  text-xl max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit border-b text-black bg-gray-400   font-normal  max-md:w-full max-sm:w-full`}
               type={"text"}
               placeholder={"Sub Total"}
               value={Number(_.unitTotal).toFixed(2)}

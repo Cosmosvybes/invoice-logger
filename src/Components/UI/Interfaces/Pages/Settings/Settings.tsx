@@ -2,7 +2,7 @@ import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 
 import useSettingsController from "./controller";
 import InputProvider from "../../../Tools/_helper/Formbuilder/Settings/InputProvider";
-import { Button, Spinner } from "reactstrap";
+import { Spinner } from "reactstrap";
 // import Spinner_ from "../../../Tools/_helper/Loader/Spinner";
 const Settings = () => {
   const {
@@ -48,15 +48,15 @@ const Settings = () => {
           />
         </div>
         <div className="relative h-52 max-sm:h-20 w-full flex justify-start max-sm:justify-end mt-2 max-sm:mt-1 px-2 max-sm:px-4 items-center">
-          <Button
+          <button
+            className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
             onClick={handleSubmit}
-            className=" mt-1 bg-gradient-to-br text-2xl from-purple-900 to-black h-auto max-sm:h-auto max-sm:text-sm  flex justify-center items-center rounded-md  text-gray-100 w-auto py-3 px-3 max-sm:w-auto max-sm:mr-2"
           >
             {loading && (
               <Spinner type="grow" color="light" size="sm" className="inline" />
             )}{" "}
             save settings
-          </Button>
+          </button>
         </div>
       </div>
     </>

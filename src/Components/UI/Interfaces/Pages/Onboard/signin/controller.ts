@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { setIsAuthenticated } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
+import { useNavigate } from "react-router-dom";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../../States/hoooks/hook";
 
 //
 export default function useSigninController() {
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector((store) => store.userSlice);
+  const navigate = useNavigate();
   const [formFields] = useState([
     {
       id: 1,
@@ -40,12 +49,13 @@ export default function useSigninController() {
   };
 
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
-
     //// // //
     // https://ether-bill-server-1.onrender.com
     setLoading(true);
+    // console.log(loading);
     const response = await fetch(
       `http://localhost:8080/api/sign-in?email=${encodeURIComponent(
         formValues.Email
@@ -54,6 +64,7 @@ export default function useSigninController() {
     );
     const result = await response.json();
     const { token } = result;
+
     if (response.status == 403) {
       setLoading(false);
       return toast.warning(result.response, { theme: "colored" });
@@ -64,14 +75,15 @@ export default function useSigninController() {
       setLoading(false);
       return toast.error(result.response, { theme: "dark" });
     } else {
-      const response = await fetch(`http://localhost:8080/api/dashboard`, {
+      localStorage.setItem("token", token);
+
+      const response = await fetch(`http://localhost:8080/api/user`, {
         headers: { Authorization: `Bearer ${token}` },
-        method: "GET",
       });
 
       if (response.status == 200) {
-        localStorage.setItem("token", token);
-        location.replace("/dashboard");
+     dispatch(setIsAuthenticated());
+        navigate("/dashboard");
       }
     }
   };
@@ -83,5 +95,6 @@ export default function useSigninController() {
     handleChange,
     handleSubmit,
     loading,
+    isAuthenticated
   };
 }

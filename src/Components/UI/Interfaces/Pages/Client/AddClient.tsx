@@ -4,14 +4,14 @@ import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import user from "./../../../../../assets/User.svg";
 import {
   getUser,
-  setIsLoggedIn,
+  setIsAuthenticated,
 } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 const AddClient = () => {
   const dispatch = useAppDispatch();
   useLayoutEffect(() => {
-    dispatch(getUser(localStorage.getItem("token")!));
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+    dispatch(getUser());
+    dispatch(setIsAuthenticated());
   }, []);
 
   return (

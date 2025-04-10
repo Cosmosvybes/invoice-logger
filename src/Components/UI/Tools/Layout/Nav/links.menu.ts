@@ -36,6 +36,13 @@ export default function useNavMenu(icons: any) {
           onclick: "",
         },
         {
+          id: 135,
+          title: "Trust trade",
+          path: "account/business/trust-trade",
+          icon: icons[10],
+          onclick: "",
+        },
+        {
           id: 13,
           title: "Invoices",
           path: "invoices",

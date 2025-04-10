@@ -3,14 +3,14 @@ import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import Table_ from "./Table";
 import {
   getUser,
-  setIsLoggedIn,
+  setIsAuthenticated,
 } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 const ClientPage = () => {
   const dispatch = useAppDispatch();
   useLayoutEffect(() => {
-    dispatch(getUser(localStorage.getItem("token")!));
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+    dispatch(getUser());
+    dispatch(setIsAuthenticated());
   }, []);
   return (
     <>

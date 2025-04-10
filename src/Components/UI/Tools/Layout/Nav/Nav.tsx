@@ -16,6 +16,8 @@ import {
   MailArrowDown,
 } from "react-huge-icons/bulk";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
+import { MoneyBagDollar } from "react-huge-icons/solid";
+import useDashboardController from "../../../Interfaces/Pages/Dashboard";
 
 const Nav = () => {
   const icons = [
@@ -29,6 +31,7 @@ const Nav = () => {
     <Logout className="inline text-xl" />,
     <Dashboard className="inline text-xl" />,
     <MailArrowDown className="inline text-xl" />,
+    <MoneyBagDollar className="inline text-xl" />,
   ];
   const {
     active,
@@ -40,19 +43,22 @@ const Nav = () => {
     setMode,
     navRef,
   } = useNavMenu(icons);
-  const { isLoggedIn, account } = useAppSelector((state) => state.userSlice);
+  useDashboardController();
+  const { isAuthenticated, account } = useAppSelector(
+    (state) => state.userSlice
+  );
 
   return (
     <>
-      {isLoggedIn && (
-        <div className="max-md:px-0  flex bg-white justify-between  items-center border-b right-0 z-40  h-24 sticky  top-0 max-sm:h-20 ">
+      {isAuthenticated && (
+        <div className="max-md:px-0  flex bg-white justify-between rounded-tr-lg rounded-tl-lg  items-center border-b right-0 z-40  h-24 sticky  top-0 max-sm:h-20 ">
           <div className="relative flex justify-start items-center  max-sm:px-0 ">
             <img
               src={logo}
               alt="logo_image"
               className="w-52 ml-5 max-sm:ml-1  inline  h-48 max-sm:h-auto object-contain"
             />
-            <div className="relative flex px-28   gap-4 justify-start  max-sm:hidden">
+            {/* <div className="relative flex px-28   gap-4 justify-start  max-sm:hidden">
               {links.map((link) => (
                 <NavLink
                   to={link.path}
@@ -63,7 +69,7 @@ const Nav = () => {
                   activeCallback={() => handleActive(link.id)}
                 />
               ))}
-            </div>
+            </div> */}
           </div>
 
           <div className="relative  w-28 px-2 py-1 flex justify-center items-center rounded-sm h-12 bg-gray-100 mr-32 max-md:mr-2 max-sm:ml-2">
@@ -83,7 +89,7 @@ const Nav = () => {
           {viewMode && (
             <div
               ref={navRef}
-              className="side-bar absolute right-28   max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-52  max-sm:right-0 max-sm:top-20  top-36 h-auto w-96  flex"
+              className="side-bar absolute right-0   max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-52  max-sm:right-0 max-sm:top-20  top-16 h-auto w-96  flex"
             >
               <div className="relative  flex px-3 h-16  border-b border-gray-300 w-auto items-center gap-2  justify-start">
                 <div className="relative flex flex-col  gap-2">

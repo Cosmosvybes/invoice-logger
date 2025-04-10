@@ -3,7 +3,7 @@ export interface userToken {
 }
 export interface initialStateI {
   userToken: string | undefined;
-  isLoggedIn: boolean;
+  isAuthenticated: boolean;
   loading: boolean;
   account: object | any;
 }

@@ -5,13 +5,13 @@ import {
 } from "../../../../../States/hoooks/hook";
 import {
   getUser,
-  setIsLoggedIn,
+  setIsAuthenticated,
 } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 
 export default function useInvoiceReceivedController() {
   useEffect(() => {
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
-    dispatch(getUser(localStorage.getItem("token")!));
+    dispatch(setIsAuthenticated());
+    dispatch(getUser());
   }, []);
   const dispatch = useAppDispatch();
   const { inbox } = useAppSelector((state) => state.invoice);

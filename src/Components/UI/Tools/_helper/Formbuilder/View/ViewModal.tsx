@@ -1,6 +1,5 @@
 import { Like } from "react-huge-icons/bulk";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
-
 const ViewModal = ({
   data,
   callback,
@@ -11,7 +10,7 @@ const ViewModal = ({
 }) => {
   return (
     <>
-      <div className="absolute h-auto max-sm:h-auto w-full flex   max-sm:px-0 max-sm:py-0 justify-center items-center">
+      <div className="relative z-30  overflow-y-scroll w-full flex   max-sm:px-0 max-sm:py-0 justify-center items-center">
         <div className="relative bg-white shadow-md  rounded-xl  z-30 flex flex-col px-2 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-normal text-black">Invoice Preview</h1>
@@ -40,7 +39,7 @@ const ViewModal = ({
           </div>
 
 
-          <div className="relative block mt-2">
+          <div className="relative block ">
             <h1 className="text-2xl font-normal text-black underline">
               Client Details
             </h1>
@@ -73,7 +72,7 @@ const ViewModal = ({
               </p>
             </div>
           </div>
-          <div className="relative block mt-2">
+          <div className="relative block ">
             <h1 className="text-2xl font-normal text-black underline">
               Items List
             </h1>
@@ -83,8 +82,8 @@ const ViewModal = ({
               <p className="text-black  font-normal">Unit Price</p>
               <p className="text-black  font-normal">Sub-total</p>
             </div>
-            <div className="relative">
-              <div className="relative flex-col flex">
+            <div className="relative ">
+              <div className="relative flex-col flex h-16  overflow-y-scroll">
                 {data.itemList?.map(
                   ({ description, unitPrice, unitTotal, quantity }, i) => (
                     <div className="relative grid grid-cols-4 gap-1" key={i}>

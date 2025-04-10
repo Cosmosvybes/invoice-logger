@@ -74,14 +74,14 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
         </div>
 
         <div className="relative w-full flex justify-between ">
-          <p className="text-gray-50 ">ID- {invoice.id}</p>{" "}
+          <p className="text-gray-800 ">ID- {invoice.id}</p>{" "}
         </div>
         <div className="relative h-auto w-full flex text-sm flex-col gap-2  justify-between ">
-          <p className="text-gray-400 font-semibold ">
+          <p className="text-gray-800 font-semibold ">
             Created At: {invoice.createdAt}
           </p>
 
-          <p className="text-gray-400 font-semibold">
+          <p className="text-gray-800 font-semibold">
             Last Updated: {invoice.updatedAt}
           </p>
         </div>

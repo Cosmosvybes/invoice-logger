@@ -11,11 +11,12 @@ import Settings from "../UI/Interfaces/Pages/Settings/Settings";
 import Inbox from "../UI/Interfaces/Pages/Inbox/Inbox";
 import Subscription from "../UI/Interfaces/Pages/Subscription/Subscription";
 import Signup from "../UI/Interfaces/Pages/Onboard/signup/Signup";
+import TrustTradePage from "../UI/Interfaces/Pages/TrustTrade/TrustTradePage";
 
 const _Routes = () => {
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <Routes>
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/create/new/account" element={<Signup />}></Route>
@@ -26,6 +27,10 @@ const _Routes = () => {
         <Route path="/clients" element={<ClientPage />}></Route>
         <Route path="/client/new" element={<AddClient />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route
+          path="/account/business/trust-trade"
+          element={<TrustTradePage />}
+        ></Route>
         <Route path="/account/settings" element={<Settings />}></Route>
         <Route
           path="account/finance/overview"

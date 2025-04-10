@@ -2,6 +2,7 @@ import { ToastContainer } from "react-toastify";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import _Routes from "./Components/Routes/_Routes";
+import Nav from "./Components/UI/Tools/Layout/Nav/Nav";
 
 //
 function App() {

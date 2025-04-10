@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   CardBody,
-  Form,
   FormGroup,
   Input,
   Label,
@@ -27,7 +26,7 @@ import Spinner_ from "../../Loader/Spinner";
 import React, { useState } from "react";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
 import Overlay from "../../../../Interfaces/Pages/Subscription/_OverlayComp/Overlay";
-import { LoadingDashed } from "react-huge-icons/solid";
+import { LoadingDashed, Pencil, RemoveCircle } from "react-huge-icons/solid";
 
 const Template = React.memo(
   ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
@@ -55,6 +54,8 @@ const Template = React.memo(
       clients,
       useCustomChecked,
       handleSelectClient,
+      editToggle,
+      handleEditFormToggle,
     } = useTemplateController();
 
     //   //?? ///////////////////////////////////////////////
@@ -205,17 +206,30 @@ const Template = React.memo(
                 </ModalFooter>
               </Modal>
 
-              <section className="flex bg-white relative  transition duration-700 justify-start w-full h-full flex-col  px-1 max-sm:px-1">
+              <section className="flex bg-white relative  transition duration-700 justify-start w-full h-full flex-col  ">
                 {viewMode && (
-                  <ViewModal
-                    data={{ ...invoiceInformation }}
-                    callback={() => setViewMode(!viewMode)}
+                  <Overlay
+                    children={
+                      <div className="relative h-[44rem] overflow-y-scroll max-sm:py-5 w-full">
+                        <ViewModal
+                          data={{ ...invoiceInformation }}
+                          callback={() => setViewMode(!viewMode)}
+                        />{" "}
+                      </div>
+                    }
                   />
                 )}
-                <hr className="mb-1 border border-gray-400" />
-                <div className="relative  flex justify-end items-center px-0 h-auto  gap-2">
+                {/* <hr className="mb-1 border border-gray-400" /> */}
+                <div className="relative  flex justify-end items-center px-0 h-auto max-sm:mb-10  gap-2">
                   <button
-                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    onClick={handleEditFormToggle}
+                  >
+                    FILL DETAILS
+                    <Pencil className="text-2xl inline text-white" />
+                  </button>
+                  <button
+                    className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
                     onClick={() => handleView()}
                   >
                     PREVIEW
@@ -223,7 +237,7 @@ const Template = React.memo(
                   </button>
 
                   <button
-                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
                     onClick={() => {
                       setModal(!modal);
                     }}
@@ -299,12 +313,31 @@ const Template = React.memo(
                   </div>
                 </div>
 
-                <Form className="grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-2 w-full mb-2  gap-3 max-sm:gap-4">
-                  {FORM}
-                </Form>
-
-                <ProductsList />
-
+                {editToggle && (
+                  <Overlay
+                    children={
+                      <div className="w-full h-[44rem] max-sm:w-full bg-purple-100 rounded-lg flex  mt-10 max-sm:mt-20 justify-between items-start">
+                        <span className=" p-2   border right-16 max-sm:right-2 top-5 max-sm:top-1 rounded-full bg-gray-100  absolute">
+                          <RemoveCircle
+                            onClick={handleEditFormToggle}
+                            className="text-3xl text-black hover:text-gray-400"
+                          />
+                        </span>
+                        <div className="grid grid-cols-2 max-sm:w-full max-sm:px-2  w-1/2 gap-2 py-10 px-10 z-5">
+                          {FORM}
+                        </div>
+                        <div className="relative w-1/2 h-full max-sm:hidden overflow-y-scroll">
+                          {" "}
+                          <ProductsList />
+                        </div>
+                      </div>
+                    }
+                  />
+                )}
+                <div className="relative hidden max-sm:block max-md:block">
+                  {" "}
+                  <ProductsList />
+                </div>
                 <br className="w-full border-gray-300" />
                 <br className="w-full border-gray-300" />
                 <div className="relative w-full flex items-center justify-start py-2">

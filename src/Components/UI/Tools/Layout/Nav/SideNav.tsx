@@ -15,7 +15,7 @@ interface Main {
     onclick?: any;
   }[];
   setMode: (e: boolean) => void;
-  mode: boolean;
+  mode?: boolean;
 }
 
 const SideNav = ({ title, children, setMode, mode }: Main) => {
@@ -97,7 +97,7 @@ const SideNav = ({ title, children, setMode, mode }: Main) => {
           {children.map(({ title, path, icon }) => (
             <Link
               onClick={() => {
-                setMode(!mode);
+                setMode!(!mode);
                 title == "New invoice" && handleCreateDefaultInvoice();
               }}
               key={title}

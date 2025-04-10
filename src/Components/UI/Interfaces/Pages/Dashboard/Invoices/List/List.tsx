@@ -59,10 +59,10 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
         </ModalFooter>
       </Modal>
 
-      <Container className="px-0 mt-4" fluid={true}>
+      <Container className="px-0 mt-4 rounded-lg" fluid={true}>
         {/* <InvoiceTable /> */}
-        <table className="w-full border-collapse">
-          <thead className=" w-full   gap-4 ">
+        <table className="w-full border-collapse rounded-lg">
+          <thead className=" w-full  rounded-lg  gap-4 ">
             <tr>
               <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
                 id
@@ -89,7 +89,7 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
           </thead>
 
 
-          <tbody>
+          <tbody className="rounded-lg">
             {currentInvoiceList.map((invoice, index) => (
               <tr
                 className={` ${
@@ -138,7 +138,7 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
             ))}
           </tbody>
         </table>
-        <div className="relative flex justify-start max-sm:justify-start items-center w-full mt-2">
+        <div className="relative flex justify-start max-sm:justify-start items-center w-full mt-1">
           <Paginate
             invoices={currentData}
             paginateHandler={handleNextList}

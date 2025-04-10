@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUser, updateSettings } from "../../../../../States/Slices/invoice";
-import { setIsLoggedIn } from "../../../../../States/Slices/ClientSlice/useAuth/user";
+import { setIsAuthenticated } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
@@ -12,7 +12,7 @@ export default function useSettingsController() {
 
   useEffect(() => {
     dispatch(getUser(localStorage.getItem("token")!));
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+    dispatch(setIsAuthenticated());
   }, []);
 
   const [settingsSchema] = useState([

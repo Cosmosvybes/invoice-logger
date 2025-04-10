@@ -8,20 +8,20 @@ import Body from "./List/Body";
 import useInvoiceController from "./invoice.controller";
 import {
   getUser,
-  setIsLoggedIn,
+  setIsAuthenticated,
 } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
 
 const Invoices = () => {
   const dispatch = useAppDispatch();
   useLayoutEffect(() => {
-    dispatch(getUser(localStorage.getItem("token")!));
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+    dispatch(getUser());
+    dispatch(setIsAuthenticated());
   }, []);
   const { currentData, handleInvoiceFilter } = useInvoiceController();
 
   return (
     <>
-      <div className="relative px-28 max-sm:px-0 overflow-x-scroll overflow-y-clip h-auto max-sm:h-auto">
+      <div className="relative px-28 max-sm:px-0 max-sm:overflow-x-scroll max-sm:overflow-y-clip h-auto max-sm:h-auto">
         <BreadCrumb useLink={true} title="Invoices" linkTitle="new/invoice" />
         <InvoiceNav switchTab={handleInvoiceFilter} />
         <Body currentData={currentData} />

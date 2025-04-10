@@ -274,7 +274,7 @@ export default function useSmartContractController() {
     getAccountBalance();
   }, [lastReciept]);
 
-  const [transactionPerPage] = useState(4);
+  const [transactionPerPage] = useState(3);
   const [pageNumber, setPageNumber] = useState(1);
   const indexOfLastPage = pageNumber * transactionPerPage;
   const indexOfFirstPage = indexOfLastPage - transactionPerPage;

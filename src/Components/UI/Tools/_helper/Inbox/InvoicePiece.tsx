@@ -30,11 +30,12 @@ const InvoicePiece = ({
           <p className="text-gray-400 text-4xl max-sm:text-xl"> ●●●</p>{" "}
           <MailArrowLeft className="h-full text-gray-400 text-5xl max-sm:text-4xl" />{" "}
         </CardHeader>
-        <CardBody className="border-none  flex justify-between ">
-          <h1 className="text-gray-400  font-normal flex justify-center items-center px-1">
-            Reference ID- {invoiceInformation.id}
+        <CardBody className="border-none  flex justify-between items-center ">
+          <h1 className="text-gray-400  font-normal flex justify-between items-start ">
+            {/* <p className="text-purple-600">  </p>{" "} */}
+            {invoiceInformation.id.toString().slice(10, 17)}
           </h1>
-          <div className="relative flex justify-center gap-1 max-sm:gap-5  items-center ">
+          <div className="relative flex w-3/4 justify-end gap-1 max-sm:gap-2 max-sm:w-full  items-center ">
             <PDFDownloader
               reportType={`${invoiceInformation.id} - invoice`}
               file={
@@ -186,7 +187,12 @@ const InvoicePiece = ({
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button  className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto" onClick={toggle_}>Close</Button>
+          <Button
+            className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+            onClick={toggle_}
+          >
+            Close
+          </Button>
         </ModalFooter>
       </Modal>
     </>

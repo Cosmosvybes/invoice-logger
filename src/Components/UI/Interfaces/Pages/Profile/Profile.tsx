@@ -7,14 +7,14 @@ import {
 } from "../../../../../States/hoooks/hook";
 import {
   getUser,
-  setIsLoggedIn,
+  setIsAuthenticated,
 } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUser(localStorage.getItem("token")!));
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+    dispatch(getUser());
+    dispatch(setIsAuthenticated());
   }, []);
   const { account } = useAppSelector((state) => state.userSlice);
 

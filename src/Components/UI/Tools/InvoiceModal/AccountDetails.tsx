@@ -4,7 +4,6 @@ import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
 import { useEffect, useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
-import Body from "../../Interfaces/Pages/Dashboard/Invoices/List/Body";
 import { Card, CardBody, CardText, CardTitle } from "reactstrap";
 
 const AccountDetails = () => {
@@ -12,7 +11,7 @@ const AccountDetails = () => {
     (state) => state.invoice
   );
   const { balance, isConnected } = useAppSelector((store) => store.walletSlice);
-  const [invoicesPerPage] = useState(1);
+  const [invoicesPerPage] = useState(4);
 
   const [currrentPage, setCurrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
@@ -107,21 +106,20 @@ const AccountDetails = () => {
             </div>
           </div>
           {/* //invoice drfats */}
-          <div className="relative w-full mt-4 flex justify-end ">
+          <div className="relative w-full mt-4 p-2 h-[24rem] border-2 flex  bg-purple-200 rounded-lg   justify-end ">
             {draft?.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <Card className="relative shadow-md flex flex-col bg-gradient-to-br from-purple-800 to-black border-none   py-2  w-1/2 max-md:w-full max-sm:w-full">
-                <CardBody>
-                  <div className="relative w-full gap-1 h-auto py-2 flex flex-col-reverse ">
-                    {currentInvoices.reverse().map((invoice: any) => (
-                      <div className="relative" key={invoice.id}>
-                        <InvoiceTemplate invoice={invoice} />
-                      </div>
-                    ))}
-                  </div>
-                </CardBody>
-                <div className="relative px-2">
+              <Card className="relative shadow-md flex h-[20rem] p-2 overflow-y-scroll bg-gradient-to-br from-purple-400 to-gray-300 border-none  items-start  py-2  w-1/2 max-md:w-full max-sm:w-full">
+                <div className="relative w-full gap-1  z-30    flex flex-col-reverse ">
+                  {currentInvoices.reverse().map((invoice: any) => (
+                    <div className="relative" key={invoice.id}>
+                      <InvoiceTemplate invoice={invoice} />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="relative">
                   <Paginate
                     invoices={draft}
                     postsPerPage={invoicesPerPage}
@@ -146,7 +144,7 @@ const AccountDetails = () => {
               view all <ArrowRight className="text-black text-4xl inline" />
             </Link>{" "}
           </div>
-          <Body currentData={sent} />
+          {/* <Body currentData={currentInvoices} /> */}
         </div>
       </div>
     </>

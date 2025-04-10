@@ -13,7 +13,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
-import { setIsLoggedIn } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
+import { setIsAuthenticated } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
 // import useSmartContractController from "../../../../../Web3/Credentials/Index";
 import { ethers } from "ethers";
 const ethereum = (window as any).ethereum;
@@ -42,7 +42,7 @@ export default function useTemplateController() {
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(setIsLoggedIn({ token: localStorage.getItem("token")! }));
+    dispatch(setIsAuthenticated());
   }, []);
 
   const { draft, clients } = useAppSelector((state) => state.invoice);
@@ -242,6 +242,11 @@ export default function useTemplateController() {
     setReceipient(selectDoc.value);
   };
 
+  const [editToggle, setEditToggle] = useState(false);
+  const handleEditFormToggle = () => {
+    setEditToggle(!editToggle);
+  };
+
   return {
     handleSendAsMessage,
     setSetAsMessage,
@@ -269,5 +274,7 @@ export default function useTemplateController() {
     token,
     updateVAT,
     isConnected,
+    editToggle,
+    handleEditFormToggle,
   };
 }
