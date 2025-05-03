@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../UI/Interfaces/Pages/Dashboard/Dashboard";
-import Nav from "../UI/Tools/Layout/Nav/Nav";
+
 import Create from "../UI/Interfaces/Pages/Dashboard/Create-F/Create";
 import Invoices from "../UI/Interfaces/Pages/Dashboard/Invoices/Invoices";
 import ClientPage from "../UI/Interfaces/Pages/Client/ClientPage";
@@ -11,25 +11,35 @@ import Settings from "../UI/Interfaces/Pages/Settings/Settings";
 import Inbox from "../UI/Interfaces/Pages/Inbox/Inbox";
 import Subscription from "../UI/Interfaces/Pages/Subscription/Subscription";
 import Signup from "../UI/Interfaces/Pages/Onboard/signup/Signup";
-import TrustTradePage from "../UI/Interfaces/Pages/TrustTrade/TrustTradePage";
+
+import Escrow from "../UI/Interfaces/Pages/Escrow/Escrow";
+import Marketplace from "../UI/Interfaces/Pages/Marketplace/Marketplace";
+import Listings from "../UI/Interfaces/Pages/Listing/Listings";
+import Escrows from "../UI/Interfaces/Pages/Escrows/Escrows";
+import { ToastContainer } from "react-toastify";
 
 const _Routes = () => {
   return (
     <>
       {/* <Nav /> */}
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/create/new/account" element={<Signup />}></Route>
         <Route path="/account/invoice-received" element={<Inbox />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/finance/escrows" element={<Escrows />}></Route>
         <Route path="/invoices" element={<Invoices />}></Route>
         <Route path="/new/invoice" element={<Create />}></Route>
         <Route path="/clients" element={<ClientPage />}></Route>
         <Route path="/client/new" element={<AddClient />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/deal/escrow/:id" element={<Escrow />}></Route>
+        <Route path="/finance/marketplace" element={<Marketplace />}></Route>
+        <Route path="/finance/user/listings" element={<Listings />}></Route>
         <Route
           path="/account/business/trust-trade"
-          element={<TrustTradePage />}
+          element={<Marketplace />}
         ></Route>
         <Route path="/account/settings" element={<Settings />}></Route>
         <Route

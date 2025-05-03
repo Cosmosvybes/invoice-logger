@@ -4,8 +4,17 @@ import invoice from "./Slices/invoice";
 import clientSlice from "./Slices/ClientSlice/clientSlice";
 import userSlice from "./Slices/ClientSlice/useAuth/user";
 import walletSlice from "./Slices/wallet";
+import marketplaceSlice from "./Slices/marketplace";
+import escrowSlice from "./Slices/escrow";
 export const store = configureStore({
-  reducer: { clientSlice, userSlice, invoice, walletSlice },
+  reducer: {
+    clientSlice,
+    userSlice,
+    invoice,
+    walletSlice,
+    marketplaceSlice,
+    escrowSlice,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

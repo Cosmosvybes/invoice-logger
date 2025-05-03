@@ -37,7 +37,7 @@ const AccountDetails = () => {
             </p>
 
             <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
-              <Card className="border">
+              <Card className="bg-gray-100">
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto   gap-2   text-purple-900">
                   <CardTitle className="text-purple-800 text-xl font-bold">
                     Revenue
@@ -51,7 +51,7 @@ const AccountDetails = () => {
                   {/* <CardText className="text-green-800 text-xl max-sm:text-sm font-light"></CardText> */}
                 </CardBody>
               </Card>
-              <Card className="border">
+              <Card className="bg-gray-100">
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto gap-2   text-purple-900">
                   <CardTitle className="text-purple-900 text-xl font-bold">
                     Total invoices
@@ -61,7 +61,7 @@ const AccountDetails = () => {
                   </CardText>
                 </CardBody>
               </Card>
-              <Card className="border">
+              <Card className="bg-gray-100">
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto  gap-2   text-purple-900">
                   <CardTitle className="text-purple-900 text-xl font-bold">
                     Draft
@@ -72,7 +72,7 @@ const AccountDetails = () => {
                 </CardBody>
               </Card>
 
-              <Card className="border">
+              <Card className="bg-gray-100">
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto  gap-2   text-purple-900">
                   <CardTitle className="text-purple-900 text-xl font-bold">
                     Outgoing invoices
@@ -106,20 +106,23 @@ const AccountDetails = () => {
             </div>
           </div>
           {/* //invoice drfats */}
-          <div className="relative w-full mt-4 p-2 h-[24rem] border-2 flex  bg-purple-200 rounded-lg   justify-end ">
+          <div className="relative w-full mt-4 p-1 h-[24rem] border-none flex  justify-end ">
             {draft?.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <Card className="relative shadow-md flex h-[20rem] p-2 overflow-y-scroll bg-gradient-to-br from-purple-400 to-gray-300 border-none  items-start  py-2  w-1/2 max-md:w-full max-sm:w-full">
-                <div className="relative w-full gap-1  z-30    flex flex-col-reverse ">
+              <Card className="relative  rounded-lg  flex h-[20rem] p-2 overflow-y-scroll bg-gradient-to-br bg-gray-100  items-start  py-2   w-1/2 max-md:w-full max-sm:w-full">
+                <div className="relative w-full gap-1 rounded-lg z-30 flex flex-col-reverse ">
                   {currentInvoices.reverse().map((invoice: any) => (
-                    <div className="relative" key={invoice.id}>
+                    <div
+                      className="relative border-b border-gray-500 gap-2  max-sm:p-0 bg-gray-200"
+                      key={invoice.id}
+                    >
                       <InvoiceTemplate invoice={invoice} />
                     </div>
                   ))}
                 </div>
 
-                <div className="relative">
+                <div className="relative px-0 ">
                   <Paginate
                     invoices={draft}
                     postsPerPage={invoicesPerPage}

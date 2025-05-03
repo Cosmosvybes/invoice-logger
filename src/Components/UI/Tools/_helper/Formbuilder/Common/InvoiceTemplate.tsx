@@ -29,11 +29,11 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
   return (
     <>
-      <div className="relative w-full   gap-2 flex-col  h-auto  flex justify-between items-center">
+      <div className="relative w-full p-2  gap-2 flex-col  h-auto  flex justify-between items-center">
         {showOptions && (
           <div
             ref={invoiceOptions}
-            className="absolute right-1 border-gray-100 border-2 bottom-4 rounded-lg  shadow-lg  transition duration-500 flex justify-start gap-2 flex-col w-auto h-auto  bg-gray-50  text-center z-20"
+            className="absolute right-1 border-gray-100 border-2 bottom-4   transition duration-500 flex justify-start gap-2 flex-col w-auto h-auto  bg-gray-50  text-center z-20"
           >
             <Link
               to={`/${"invoice/update"}/${invoice.id}`}
@@ -58,17 +58,17 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           </div>
         )}
 
-        <div className="relative w-full  h-auto flex justify-between items-center">
+        <div className="relative w-full  h-auto flex justify-between rounded-lg items-center">
           <div className="relative justify-start items-center ">
             {" "}
-            <h1 className="text-gray-50 text-2xl inline font-semibold">
+            <h1 className="text-purple-600 text-2xl inline font-semibold">
               {Number(invoice.TOTAL).toLocaleString()}{" "}
               {invoice.currency != "--select--" && invoice.currency}
             </h1>{" "}
           </div>
 
           <MoreVertical
-            className="text-4xl text-gray-50 "
+            className="text-4xl text-purple-700 "
             onClick={() => setShowOptions(true)}
           />
         </div>

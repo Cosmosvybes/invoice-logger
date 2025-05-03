@@ -1,11 +1,16 @@
-import { useAppSelector } from "../../../../States/hoooks/hook";
+import { useAppDispatch, useAppSelector } from "../../../../States/hoooks/hook";
 import SignIn from "../../Interfaces/Pages/Onboard/signin/SignIn";
 import useLayoutController from "./layout.controller";
 import Nav from "./Nav/Nav";
 import {
   AddRectangle,
+  BookAdd,
+  BriefcaseTriangularTwoLocks,
   CardAdd,
+  ChartHistogram,
   Dashboard,
+  ExchangeRectangle,
+  InformationRectangle,
   Invoice,
   Logout,
   MailArrowDown,
@@ -16,7 +21,9 @@ import {
   UsersDouble,
 } from "react-huge-icons/solid";
 import SideNav from "./Nav/SideNav";
+import { useEffect } from "react";
 
+import { getMarketJobs } from "../../../../States/Slices/marketplace";
 
 const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const icons = [
@@ -24,23 +31,32 @@ const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     <AddRectangle className="inline text-xl" />,
     <UsersDouble className="inline text-xl" />,
     <UserAdd className="inline text-xl" />,
-    <User className="inline text-xl" />,
+    <ChartHistogram className="inline text-xl" />,
     <CardAdd className="inline text-xl" />,
     <Setting className="inline text-xl" />,
     <Logout className="inline text-xl" />,
     <Dashboard className="inline text-xl" />,
     <MailArrowDown className="inline text-xl" />,
     <MoneyBagDollar className="inline text-xl" />,
+    <User className="inline text-xl" />,
+    <ExchangeRectangle className="inline text-xl" />,
+    <BriefcaseTriangularTwoLocks className="inline text-xl" />,
+    <InformationRectangle className="inline text-xl" />,
+    <BookAdd className="inline text-xl" />,
   ];
   const { sideMenu } = useLayoutController(icons);
   const { isAuthenticated } = useAppSelector((store) => store.userSlice);
 
+  const distpatch = useAppDispatch();
+  useEffect(() => {
+    distpatch(getMarketJobs());
+  }, []);
+
   if (!isAuthenticated) {
     return <SignIn />;
   }
-
   return (
-    <div className=" bg-purple-300 h-auto w-full p-2 gap-4 border">
+    <div className=" bg-purple-200 h-auto w-full p-2 gap-4 border">
       {isAuthenticated && <Nav />}
       <div className="relative justify-normal flex">
         <div className="relative w-1/4 h-[calc(100vh-0px)]  max-sm:hidden rounded-bl-lg border bg-purple-200">
@@ -51,7 +67,7 @@ const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
           ))}
         </div>
 
-        <div className="relative w-full rounded-br-lg  bg-gray-100 h-[calc(100vh-0px)] max-sm:h-auto ">
+        <div className="relative w-full rounded-br-lg  bg-gray-100 h-[calc(100vh-0px)] max-sm:h-auto">
           {children}
         </div>
       </div>

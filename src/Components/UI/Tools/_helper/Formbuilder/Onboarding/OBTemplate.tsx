@@ -89,7 +89,7 @@ const OBTemplate = ({
 
   return (
     <>
-      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-4 shadow-md z-10 px-3  max-sm:h-auto py-4">
+      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-2 shadow-md z-10 px-2  max-sm:h-auto py-4">
         <CardTitle className="text-2xl font-bold text-purple-500">
           <p>
             {url.pathname == "/"
@@ -105,27 +105,32 @@ const OBTemplate = ({
 
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
-          <div className="relative max-md:py-2 max-sm:py-2 max-lg:py-2 w-full flex justify-between items-center">
+          <div className="relative max-md:py-2 max-sm:flex-col max-sm:py-2 max-lg:py-2 w-full flex justify-between items-start gap-4">
             <Link to={"/"} className="text-sm  max-sm:text-sm text-purple-500">
               Forgot password ?
             </Link>
             {url.pathname == "/" ? (
               <Link
                 to={"/create/new/account"}
-                className="text-sm  max-sm:text-sm text-purple-500"
+                className="text-sm  max-sm:text-sm text-purple-500 "
               >
                 Create new account
               </Link>
             ) : (
-              <Link to={"/"} className="text-sm  max-sm:text-sm text-purple-500 ">
-                Already have an account ?{" "}
-                <span className="text-purple-500">sign in </span>
+              <Link
+                to={"/"}
+                className="text-sm flex   max-sm:text-sm text-purple-500"
+              >
+                Already have an account?
+                <span className="text-purple-500 max-sm:text-sm">
+                  {"sign in"}
+                </span>
               </Link>
             )}
           </div>
 
-          <Button className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-bold hover:text-gray-100 text-2xl border-none text-center py-3 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-3 w-full">
-            {url.pathname == "/" ? "SIGN IN" : "SIGN UP "}
+          <Button className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-bold hover:text-gray-100 text-2xl border-none text-center py-2 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full">
+            {url.pathname == "/" ? "SIGN IN" : "SIGN UP"}
             {!isLoading ? (
               <ArrowRight className="inline text-4xl" />
             ) : (

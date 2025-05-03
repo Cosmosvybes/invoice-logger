@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../../../States/hoooks/hook";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
 import { LoadingDashed } from "react-huge-icons/bulk";
 import { Input } from "reactstrap";
-import useDashboardController from "../Dashboard";
+// import useDashboardController from "../Dashboard";
 import {
   Activity,
   ArrowTransferRectangle,
@@ -21,6 +21,7 @@ import {
 import BUYINGFORM from "./BUYINGFORM";
 import Paginate from "../../../Tools/Layout/Paginate/Paginate";
 import Overlay from "./_OverlayComp/Overlay";
+import { useEffect } from "react";
 
 const Subscription = () => {
   const Transaction = ({
@@ -44,7 +45,8 @@ const Subscription = () => {
                 className={` flex items-center justify-normal gap-0.5 text-[12px] ${
                   category == "Internal swap" ||
                   category == "Invoicing" ||
-                  category == "sent"
+                  category == "sent" ||
+                  category == "Job listing"||category == "Bidding & Proposal"
                     ? "text-red-600"
                     : "text-green-600"
                 }`}
@@ -54,7 +56,8 @@ const Subscription = () => {
                   className={` ${
                     category == "Internal swap" ||
                     category == "sent" ||
-                    category == "Invoicing"
+                    category == "Invoicing" ||
+                    category == "Job listing"||category == "Bidding & Proposal"
                       ? "text-red-600"
                       : "text-green-600"
                   }`}
@@ -71,7 +74,8 @@ const Subscription = () => {
                       className={`text-green-500 text-4xl ${
                         category == "Internal swap" ||
                         category == "sent" ||
-                        category == "Invoicing"
+                        category == "Invoicing" ||
+                        category == "Job listing"||category == "Bidding & Proposal"
                           ? "text-red-600"
                           : "text-green-600"
                       }  `}
@@ -79,8 +83,8 @@ const Subscription = () => {
                   )}
                 </span>
                 <span className="flex justify-center gap-2 items-center w-auto">
-                  <h1 className="text-purple-700">hash -</h1>{" "}
-                  <p className=" text-sm text-purple-600">
+                  <h1 className="text-gray-400">hash -</h1>{" "}
+                  <p className=" text-sm text-gray-400">
                     {from.slice(0, 6) + "..." + from.slice(20, 28)}
                   </p>
                 </span>
@@ -91,7 +95,8 @@ const Subscription = () => {
                   className={`text-[12px] ${
                     category == "sent" ||
                     category == "Invoicing" ||
-                    category == "Internal swap"
+                    category == "Internal swap" ||
+                    category == "Job listing"||category == "Bidding & Proposal"
                       ? "text-red-600"
                       : "text-green-600"
                   }`}
@@ -102,7 +107,8 @@ const Subscription = () => {
                   className={`${
                     category == "sent" ||
                     category == "Internal swap" ||
-                    category == "Invoicing"
+                    category == "Invoicing" ||
+                    category == "Job listing"||category == "Bidding & Proposal"
                       ? "text-red-500"
                       : "text-green-500"
                   }`}
@@ -112,7 +118,8 @@ const Subscription = () => {
                       {" "}
                       {category == "sent" ||
                       category == "Internal swap" ||
-                      category == "Invoicing"
+                      category == "Invoicing" ||
+                      category == "Job listing"
                         ? "-" + Number(amount) / 100
                         : "+" + Number(amount) / 100}
                     </span>
@@ -146,10 +153,18 @@ const Subscription = () => {
     handlePageChange,
     currentTransactions,
     transactionPerPage,
+    handleApproval,
+    getEscrows,
   } = useSmartContractController();
 
   const { isConnected, loading } = useAppSelector((state) => state.walletSlice);
-  useDashboardController();
+  const { escrows } = useAppSelector((state) => state.escrowSlice);
+  const { userDeals } = useAppSelector((state) => state.marketplaceSlice);
+  // useDashboardController();
+
+  useEffect(() => {
+    getEscrows();
+  }, [isConnected]);
 
   const SENDINGFORM = ({
     amounts,
@@ -169,11 +184,11 @@ const Subscription = () => {
     return (
       <>
         <div className="relative w-1/2 max-sm:w-full h-1/2 max-sm:h-auto bg-white rounded-lg flex flex-col justify-start items-start gap-4 p-2 shadow-lg">
-          <div className="relative flex justify-between gap-5 w-full items-center">
+          <div className="relative flex justify-between gap-3 w-full items-center">
             <h1 className="text-[16px] text-purple-600">{header}</h1>{" "}
             <button
               onClick={closehandler}
-              className="w-20 p-1 rounded-md bg-red-500 text-white  a"
+              className="w-20 p-1 rounded-md bg-red-500 text-white"
             >
               close{" "}
             </button>
@@ -232,7 +247,7 @@ const Subscription = () => {
     <>
       <div className="relative px-28  max-sm:px-1">
         <BreadCrumb title="Finance Overview" useLink={false} linkTitle="" />
-        <br />
+
         {purchaseFormToggle && (
           <Overlay
             children={<BUYINGFORM closeHandler={handleSetBuyTokenForm} />}
@@ -270,47 +285,42 @@ const Subscription = () => {
 
         {loading && (
           <Overlay
-            children={<LoadingDashed className="text-2xl text-purple-500 animate-spin" />}
+            children={
+              <LoadingDashed className="text-5xl text-purple-600 animate-spin z-30" />
+            }
           />
         )}
 
         <div className="relative  flex flex-col w-full justify-between h-auto">
           <div className="relativ flex justify-between w-full max-sm:flex-col-reverse ">
             <div className="relative rounded-lg w-1/2 max-sm:w-full  h-auto">
-              <div className="relative   py-3  rounded-md h-auto text-[28px] px-2 max-sm:px-3 flex flex-col w-full  justify-start items-start ">
-                <div className="relative w-1/2 max-sm:w-full justify-start items-center mb-2 ">
-                  <h1 className="font-extrabold text-[14px] text-purple-800">
-                    {" "}
-                    {`$EBT ${isConnected ? Number(balance) / 100 : 0} `}
-                  </h1>
-                </div>
-
-                <div className="relative w-full bg-white mt-1 grid grid-cols-2 rounded-lg h-[10rem] ">
+              <div className="relative   py-2  rounded-md h-auto text-[28px] px-2 max-sm:px-3 flex flex-col w-full  justify-start items-start ">
+                <div className="relative w-full border bg-purple-200 mt-1 grid grid-cols-2 rounded-lg h-[10rem] ">
                   {[
                     {
                       id: 1,
                       icon: <Activity className="text-xl text-purple-600" />,
-                      title: "Active",
-                      value: 1,
+                      title: "$EBT",
+                      value: isConnected ? Number(balance) / 100 : 0,
                     },
                     ,
                     {
                       id: 3,
                       icon: <UsersDouble className="text-xl text-purple-600" />,
                       title: "Listings",
-                      value: 2,
+                      value: userDeals.length,
                     },
                     {
                       id: 21,
                       icon: <Deal className="text-xl text-purple-600" />,
                       title: "Escrow",
-                      value: 1,
+                      value: escrows.length,
                     },
                     {
                       id: 51,
                       icon: <UsersTriple className="text-xl text-purple-600" />,
                       title: "Disputes",
-                      value: 4,
+                      value: 0,
                     },
                   ].map((data) => (
                     <div
@@ -334,23 +344,23 @@ const Subscription = () => {
                   ))}
                 </div>
 
-                <div className="relative h-28 w-full  p-2   place-items-center flex justify-start   gap-5   max-sm:grid max-sm:grid-cols-3 max-sm:w-full rounded-lg  ">
+                <div className="relative h-28 w-full  p-1   place-items-center b flex justify-start max-sm:grid max-sm:grid-cols-3 max-sm:w-full    rounded-lg  ">
                   <button
-                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className=" gap-2  flex justify-between items-center p-4 bg-purple-900 text-white  h-10  text-[10px]"
                     onClick={handleSetBuyTokenForm}
                   >
                     {" "}
                     BUY <CoinDollar className="text-2xl inline text-white" />
                   </button>
                   <button
-                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className=" gap-2  flex justify-between items-center p-4 bg-purple-900 text-white  h-10  text-[10px]"
                     onClick={handleOpenSendingForm}
                   >
                     {" "}
                     SEND <Send className="text-2xl inline text-white" />
                   </button>
                   <button
-                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className=" gap-2  flex justify-between items-center p-4 bg-purple-900 text-white  h-10  text-[10px]"
                     onClick={handleSwapTokenForm}
                   >
                     {" "}
@@ -358,16 +368,27 @@ const Subscription = () => {
                     <ArrowTransferRectangle className="text-2xl inline text-white" />
                   </button>
                 </div>
+                <div className="relative  w-full gap-2 flex">
+                  <p className="text-sm text-gray-400">
+                    To approve etherbill for spending,
+                  </p>
+                  <button
+                    onClick={handleApproval}
+                    className="text-sm font-[12px] text-purple-500"
+                  >
+                    {" "}
+                    click here.
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* The Connection button */}
             <div className="relative px-2 w-1/2 max-sm:w-full">
               <div className="relative h-10 gap-2  flex justify-end items-center ">
                 {!isConnected ? (
                   <button
                     onClick={handleConnectWallet}
-                    className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white   text-[10px]"
+                    className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white   text-[10px]"
                   >
                     <p>connect </p>{" "}
                     <Login className="text-2xl inline text-white" />
@@ -385,7 +406,7 @@ const Subscription = () => {
             </div>
           </div>
 
-          <section className="relative px-2 w-2/3 ml-2 max-sm:ml-0 flex flex-col h-auto  max-sm:w-full py-2 bg-gray-50 rounded-lg shadow">
+          <section className="relative px-2 w-2/3 ml-2 max-sm:ml-0 flex flex-col h-auto  max-sm:w-full py-2 bg-gray-100 rounded-lg ">
             <h1 className=""> {`TRANSACTION HISTORY`} </h1>
             <div className="relative flex flex-col gap-1 ">
               {currentTransactions.map((transaction) => (

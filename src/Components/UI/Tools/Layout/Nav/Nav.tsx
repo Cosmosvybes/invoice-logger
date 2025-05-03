@@ -1,4 +1,3 @@
-import NavLink from "./NavLink";
 import { MenuLineHorizontal } from "react-huge-icons/outline";
 import useNavMenu from "./links.menu";
 import logo from "./../../../../../assets/HatchfulExport-All(1) (2)/logo_transparent.png";
@@ -14,6 +13,10 @@ import {
   UsersDouble,
   Dashboard,
   MailArrowDown,
+  ExchangeRectangle,
+  BriefcaseTriangularTwoLocks,
+  InformationRectangle,
+  BookAdd,
 } from "react-huge-icons/bulk";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
 import { MoneyBagDollar } from "react-huge-icons/solid";
@@ -32,17 +35,13 @@ const Nav = () => {
     <Dashboard className="inline text-xl" />,
     <MailArrowDown className="inline text-xl" />,
     <MoneyBagDollar className="inline text-xl" />,
+    <ExchangeRectangle className="inline text-xl" />,
+    <BriefcaseTriangularTwoLocks className="inline text-xl" />,
+    <InformationRectangle className="inline text-xl" />,
+    <BookAdd className="inline text-xl" />,
   ];
-  const {
-    active,
-    handleActive,
-    handleSignOut,
-    links,
-    sideMenu,
-    viewMode,
-    setMode,
-    navRef,
-  } = useNavMenu(icons);
+  const { handleSignOut, sideMenu, viewMode, setMode, navRef } =
+    useNavMenu(icons);
   useDashboardController();
   const { isAuthenticated, account } = useAppSelector(
     (state) => state.userSlice
@@ -51,7 +50,7 @@ const Nav = () => {
   return (
     <>
       {isAuthenticated && (
-        <div className="max-md:px-0  flex bg-white justify-between rounded-tr-lg rounded-tl-lg  items-center border-b right-0 z-40  h-24 sticky  top-0 max-sm:h-20 ">
+        <div className="max-md:px-0  flex bg-purple-50 justify-between rounded-tr-lg rounded-tl-lg  items-center border-b right-0 z-40  h-24 sticky  px-2 top-0 max-sm:h-20 ">
           <div className="relative flex justify-start items-center  max-sm:px-0 ">
             <img
               src={logo}
@@ -72,16 +71,16 @@ const Nav = () => {
             </div> */}
           </div>
 
-          <div className="relative  w-28 px-2 py-1 flex justify-center items-center rounded-sm h-12 bg-gray-100 mr-32 max-md:mr-2 max-sm:ml-2">
-            <div className="relative rounded-full flex justify-center items-center shadow-inner h-auto w-auto  bg-gray-50 py-1 px-1">
+          <div className="relative   w-28  rounded-lg  flex justify-center items-center  h-14 p-2 bg-gray-100 ">
+            <div className="relative rounded-full flex justify-center items-center shadow-inner h-12 w-12  bg-gray-50 py-1 px-1">
               {" "}
-              <p className="text-purple-800 rounded-full text-xl">
+              <p className="text-purple-800 rounded-full text-sm">
                 {String(account.firstname).charAt(0).toUpperCase()}{" "}
                 {String(account.lastname).charAt(0).toUpperCase()}
               </p>
             </div>
             <MenuLineHorizontal
-              className="text-5xl px-1 text-purple-900"
+              className="text-5xl px-1 hidden max-sm:block max-md:block text-purple-900"
               onClick={() => setMode(!viewMode)}
             />
           </div>
@@ -89,7 +88,7 @@ const Nav = () => {
           {viewMode && (
             <div
               ref={navRef}
-              className="side-bar absolute right-0   max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  bg-white max-sm:w-52  max-sm:right-0 max-sm:top-20  top-16 h-auto w-96  flex"
+              className="side-bar absolute right-0 bg-purple-100  max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md   max-sm:w-2/3  max-sm:right-0 max-sm:top-20  top-16 h-auto w-96  flex"
             >
               <div className="relative  flex px-3 h-16  border-b border-gray-300 w-auto items-center gap-2  justify-start">
                 <div className="relative flex flex-col  gap-2">

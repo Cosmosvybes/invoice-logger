@@ -80,14 +80,13 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
                 currency
               </th>
               <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
-                updated 
+                updated
               </th>
               <th className="text-center w-20 max-sm:w-16 max-sm:text-sm ">
                 actions
               </th>
             </tr>
           </thead>
-
 
           <tbody className="rounded-lg">
             {currentInvoiceList.map((invoice, index) => (
