@@ -1,3 +1,4 @@
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import Table_ from "./Table";
 
@@ -12,4 +13,4 @@ const ClientPage = () => {
   );
 };
 
-export default ClientPage;
+export default withAuth(ClientPage);

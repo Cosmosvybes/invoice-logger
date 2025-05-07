@@ -1,4 +1,5 @@
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
+import withAuth from "../../../../Tools/_helper/Auth/withAuth";
 
 import InvoiceNav from "./InvoiceNav";
 import Body from "./List/Body";
@@ -19,4 +20,4 @@ const Invoices = () => {
   );
 };
 
-export default Invoices;
+export default withAuth(Invoices);

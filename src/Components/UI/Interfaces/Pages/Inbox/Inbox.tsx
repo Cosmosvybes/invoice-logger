@@ -1,3 +1,4 @@
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import InvoicePiece from "../../../Tools/_helper/Inbox/InvoicePiece";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import Paginate from "../../../Tools/Layout/Paginate/Paginate";
@@ -45,4 +46,4 @@ const Inbox = () => {
   );
 };
 
-export default Inbox;
+export default withAuth(Inbox);

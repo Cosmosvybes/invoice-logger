@@ -7,6 +7,7 @@ import Overlay from "../Subscription/_OverlayComp/Overlay";
 import { useState } from "react";
 import MarketplaceForm from "./MarketplaceForm";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 
 const TrustTradePage = () => {
   const { jobs } = useAppSelector((store) => store.marketplaceSlice);
@@ -197,4 +198,4 @@ const TrustTradePage = () => {
   );
 };
 
-export default TrustTradePage;
+export default withAuth(TrustTradePage);

@@ -3,6 +3,7 @@ import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import useSettingsController from "./controller";
 import InputProvider from "../../../Tools/_helper/Formbuilder/Settings/InputProvider";
 import { Spinner } from "reactstrap";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 // import Spinner_ from "../../../Tools/_helper/Loader/Spinner";
 const Settings = () => {
   const {
@@ -63,4 +64,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default withAuth(Settings);

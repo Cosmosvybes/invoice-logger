@@ -1,6 +1,7 @@
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import user from "./../../../../../assets/User.svg";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 
 const Profile = () => {
   const { account } = useAppSelector((state) => state.userSlice);
@@ -40,7 +41,7 @@ const Profile = () => {
                 <h4 className="text-slate-900 font-bold">Business name</h4>
                 <p className="text-slate-800 font-light">
                   {" "}
-                  {account.settings.businessName}{" "}
+                  {account?.settings?.businessName}{" "}
                 </p>
               </div>
               <div className="relative w-full px-3 max-sm:px-2 py-3 border-b  rounded block">
@@ -69,4 +70,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuth(Profile);

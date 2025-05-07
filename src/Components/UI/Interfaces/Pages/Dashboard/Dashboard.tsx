@@ -1,4 +1,5 @@
 // import useDashboardController from ".";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import Account from "../../../Tools/InvoiceModal/Account";
 //
 const Dashboard = () => {
@@ -13,4 +14,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
