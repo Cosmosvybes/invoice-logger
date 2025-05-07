@@ -25,7 +25,7 @@ import { useEffect } from "react";
 
 import { getMarketJobs } from "../../../../States/Slices/marketplace";
 import { getUser } from "../../../../States/Slices/ClientSlice/useAuth/user";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
 const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
@@ -53,7 +53,7 @@ const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const { sideMenu } = useLayoutController(icons);
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUser());
