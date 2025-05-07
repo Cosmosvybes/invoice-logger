@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../../States/hoooks/hook";
-// import SignIn from "../../Interfaces/Pages/Onboard/signin/SignIn";
+
 import useLayoutController from "./layout.controller";
 import Nav from "./Nav/Nav";
 import {
@@ -25,13 +25,10 @@ import { useEffect } from "react";
 
 import { getMarketJobs } from "../../../../States/Slices/marketplace";
 import { getUser } from "../../../../States/Slices/ClientSlice/useAuth/user";
-import { useNavigate } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 
-const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+const Layout = ({ children }: any) => {
   const { isAuthenticated } = useAppSelector((store) => store.userSlice);
 
-  // const navigate = useNavigate();
   const icons = [
     <Invoice className="inline text-xl" />,
     <AddRectangle className="inline text-xl" />,
@@ -53,22 +50,13 @@ const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const { sideMenu } = useLayoutController(icons);
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     dispatch(getUser());
     dispatch(getMarketJobs());
-
-    // setTimeout(() => {
-    //   if (!isAuthenticated) {
-    //     navigate("/");
-    //   }
-    // }, 5000);
   }, [isAuthenticated]);
 
   return (
     <div className=" bg-purple-200 h-auto w-full p-2 gap-4 border">
-      {/* {isAuthenticated && <Nav />} */}
       <div className="relative justify-normal flex">
         <div className="relative w-1/4 h-[calc(100vh-0px)]  max-sm:hidden rounded-bl-lg border bg-purple-200">
           {sideMenu.map(({ title, children }) => (
@@ -79,7 +67,7 @@ const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         </div>
 
         <div className="relative w-full rounded-br-lg  bg-purple-100 h-[calc(100vh-0px)] max-sm:h-auto max-sm:rounded-lg max-sm:w-full max-sm:rounded-tl-lg max-sm:rounded-tr-lg flex flex-col">
-          {isAuthenticated && <Nav />}
+          <Nav />
           {children}
         </div>
       </div>

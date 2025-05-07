@@ -11,6 +11,7 @@ import { useAppSelector } from "../../../../../States/hoooks/hook";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
 import { useEffect, useState } from "react";
 import Overlay from "../Subscription/_OverlayComp/Overlay";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 // import { StopwatchMinus } from "react-huge-icons/outline";
 
 const Escrow = () => {
@@ -323,4 +324,4 @@ const Escrow = () => {
   );
 };
 
-export default Escrow;
+export default withAuth(Escrow);

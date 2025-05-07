@@ -5,6 +5,7 @@ import Overlay from "../Subscription/_OverlayComp/Overlay";
 import Job from "./Job";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
 import { useEffect } from "react";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 
 const Listings = () => {
   const { getUsersListedDeals } = useSmartContractController();
@@ -58,4 +59,4 @@ const Listings = () => {
   );
 };
 
-export default Listings;
+export default withAuth(Listings);

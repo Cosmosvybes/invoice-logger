@@ -22,6 +22,7 @@ import BUYINGFORM from "./BUYINGFORM";
 import Paginate from "../../../Tools/Layout/Paginate/Paginate";
 import Overlay from "./_OverlayComp/Overlay";
 import { useEffect } from "react";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 
 const Subscription = () => {
   const Transaction = ({
@@ -46,7 +47,8 @@ const Subscription = () => {
                   category == "Internal swap" ||
                   category == "Invoicing" ||
                   category == "sent" ||
-                  category == "Job listing"||category == "Bidding & Proposal"
+                  category == "Job listing" ||
+                  category == "Bidding & Proposal"
                     ? "text-red-600"
                     : "text-green-600"
                 }`}
@@ -57,7 +59,8 @@ const Subscription = () => {
                     category == "Internal swap" ||
                     category == "sent" ||
                     category == "Invoicing" ||
-                    category == "Job listing"||category == "Bidding & Proposal"
+                    category == "Job listing" ||
+                    category == "Bidding & Proposal"
                       ? "text-red-600"
                       : "text-green-600"
                   }`}
@@ -75,7 +78,8 @@ const Subscription = () => {
                         category == "Internal swap" ||
                         category == "sent" ||
                         category == "Invoicing" ||
-                        category == "Job listing"||category == "Bidding & Proposal"
+                        category == "Job listing" ||
+                        category == "Bidding & Proposal"
                           ? "text-red-600"
                           : "text-green-600"
                       }  `}
@@ -96,7 +100,8 @@ const Subscription = () => {
                     category == "sent" ||
                     category == "Invoicing" ||
                     category == "Internal swap" ||
-                    category == "Job listing"||category == "Bidding & Proposal"
+                    category == "Job listing" ||
+                    category == "Bidding & Proposal"
                       ? "text-red-600"
                       : "text-green-600"
                   }`}
@@ -108,7 +113,8 @@ const Subscription = () => {
                     category == "sent" ||
                     category == "Internal swap" ||
                     category == "Invoicing" ||
-                    category == "Job listing"||category == "Bidding & Proposal"
+                    category == "Job listing" ||
+                    category == "Bidding & Proposal"
                       ? "text-red-500"
                       : "text-green-500"
                   }`}
@@ -432,4 +438,4 @@ const Subscription = () => {
   );
 };
 
-export default Subscription;
+export default withAuth(Subscription);

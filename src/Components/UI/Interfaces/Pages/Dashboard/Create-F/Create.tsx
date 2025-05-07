@@ -1,3 +1,4 @@
+import withAuth from "../../../../Tools/_helper/Auth/withAuth";
 import Template from "../../../../Tools/_helper/Formbuilder/InvoiceTemplate/Template";
 import Spinner_ from "../../../../Tools/_helper/Loader/Spinner";
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
@@ -25,4 +26,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default withAuth(Create);

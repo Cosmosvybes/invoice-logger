@@ -5,6 +5,7 @@ import {
 } from "../../../../../States/hoooks/hook";
 import { openEscrow } from "../../../../../States/Slices/escrow";
 import { ArrowRight, CheckCircle, SmartLock } from "react-huge-icons/solid";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 
 const EscrowCard = ({
   escrowID,
@@ -49,4 +50,4 @@ const EscrowCard = ({
   );
 };
 
-export default EscrowCard;
+export default withAuth(EscrowCard);

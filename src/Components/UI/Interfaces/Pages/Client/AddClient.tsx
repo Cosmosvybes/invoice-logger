@@ -7,6 +7,7 @@ import {
   setIsAuthenticated,
 } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
+import withAuth from "../../../Tools/_helper/Auth/withAuth";
 const AddClient = () => {
   const dispatch = useAppDispatch();
   useLayoutEffect(() => {
@@ -40,4 +41,4 @@ const AddClient = () => {
   );
 };
 
-export default AddClient;
+export default withAuth(AddClient);
