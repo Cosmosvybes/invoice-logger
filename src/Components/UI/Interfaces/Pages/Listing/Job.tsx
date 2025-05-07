@@ -33,7 +33,7 @@ const Job = ({
 
   return (
     <>
-      <div className="relative bg-purple-400 w-full h-[9rem]   gap-2  flex flex-col file:h-auto justify-center shadow rounded-lg p-3">
+      <div className="relative bg-purple-400 w-full h-[9rem]   gap-2  flex flex-col file:h-auto justify-center shadow rounded-md p-3">
         <MoreVertical
           className="absolute text-3xl top-1 text-purple-700 right-1 cursor-pointer mb-1"
           onClick={() => setIsOpen(!isOpen)}
@@ -46,7 +46,7 @@ const Job = ({
             <div className="relative w-full h-full flex flex-col">
               <Link
                 to={`/deal/escrow/${id}`}
-                className="w-full h-full bg-blue-600 text-white text-center max-sm:text-[12px]  "
+                className="w-full h-full bg-blue-600 text-purple-600 text-center max-sm:text-[12px]  "
               >
                 Esccrow
               </Link>
@@ -55,7 +55,7 @@ const Job = ({
                 Edit
               </button>
               <button
-                className="bg-red-500 h-full text-white w-full max-sm:text-[12px]"
+                className="bg-red-500 h-full text-purple-600 w-full max-sm:text-[12px]"
                 onClick={() => handleDelistDeal(id)}
               >
                 Delist
@@ -63,7 +63,7 @@ const Job = ({
             </div>
           </div>
         )}
-        <h1 className="text-[16px] text-white font-bold max-sm:text-[12px] mt-4 ">
+        <h1 className="text-[16px] text-purple-600 font-bold max-sm:text-[12px] mt-4 ">
           {jobTitle.toUpperCase()}
         </h1>
         <span>
@@ -76,9 +76,9 @@ const Job = ({
             <span key={statusIndicator.id} className="w-1/3">
               <p
                 className={`relative w-1/3 rounded-sm px-1 max-sm:text-[12px]  ${
-                  executionStatus == 1 && "bg-blue-700 text-white"
-                }  ${executionStatus == 3 && "bg-green-700 text-white"}  ${
-                  executionStatus == 2 && "bg-red-700 text-white"
+                  executionStatus == 1 && "bg-blue-700 text-purple-600"
+                }  ${executionStatus == 3 && "bg-green-700 text-purple-600"}  ${
+                  executionStatus == 2 && "bg-red-700 text-purple-600"
                 } ${executionStatus == 0 && "bg-amber-200 text-amber-600"}`}
               >
                 {statusIndicator.id == executionStatus &&
@@ -87,8 +87,8 @@ const Job = ({
             </span>
           ))}
         </span>
-        <p className="max-sm:text-[12px] text-white">DEADLINE- {deadline} </p>
-        <p className="max-sm:text-[12px] text-white">BUDGET- $EBT {budget} </p>
+        <p className="max-sm:text-[12px] text-purple-600">DEADLINE- {deadline} </p>
+        <p className="max-sm:text-[12px] text-purple-600">BUDGET- $EBT {budget} </p>
       </div>
     </>
   );

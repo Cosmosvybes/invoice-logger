@@ -125,13 +125,7 @@ export default function useNavMenu(icons: any) {
           icon: icons[4],
           onclick: "",
         },
-        {
-          id: 2,
-          title: "Finance",
-          path: "account/finance/overview",
-          icon: icons[5],
-          onclick: "",
-        },
+
         {
           id: 3,
           title: "Settings",

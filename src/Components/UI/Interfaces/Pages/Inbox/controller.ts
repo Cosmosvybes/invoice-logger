@@ -1,19 +1,7 @@
-import { useEffect, useState } from "react";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../States/hoooks/hook";
-import {
-  getUser,
-  setIsAuthenticated,
-} from "../../../../../States/Slices/ClientSlice/useAuth/user";
+import { useState } from "react";
+import { useAppSelector } from "../../../../../States/hoooks/hook";
 
 export default function useInvoiceReceivedController() {
-  useEffect(() => {
-    dispatch(setIsAuthenticated());
-    dispatch(getUser());
-  }, []);
-  const dispatch = useAppDispatch();
   const { inbox } = useAppSelector((state) => state.invoice);
 
   const [currentPage, setCurrentPage] = useState(1);

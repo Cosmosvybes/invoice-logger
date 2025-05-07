@@ -19,8 +19,8 @@ import {
   BookAdd,
 } from "react-huge-icons/bulk";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
-import { MoneyBagDollar } from "react-huge-icons/solid";
-import useDashboardController from "../../../Interfaces/Pages/Dashboard";
+import { LogoutOpen, MoneyBagDollar } from "react-huge-icons/solid";
+// import useDashboardController from "../../../Interfaces/Pages/Dashboard";
 
 const Nav = () => {
   const icons = [
@@ -42,7 +42,7 @@ const Nav = () => {
   ];
   const { handleSignOut, sideMenu, viewMode, setMode, navRef } =
     useNavMenu(icons);
-  useDashboardController();
+
   const { isAuthenticated, account } = useAppSelector(
     (state) => state.userSlice
   );
@@ -57,18 +57,6 @@ const Nav = () => {
               alt="logo_image"
               className="w-52 ml-5 max-sm:ml-1  inline  h-48 max-sm:h-auto object-contain"
             />
-            {/* <div className="relative flex px-28   gap-4 justify-start  max-sm:hidden">
-              {links.map((link) => (
-                <NavLink
-                  to={link.path}
-                  key={link.id}
-                  name={link.name}
-                  active={active}
-                  id={link.id}
-                  activeCallback={() => handleActive(link.id)}
-                />
-              ))}
-            </div> */}
           </div>
 
           <div className="relative   w-28  rounded-lg  flex justify-center items-center  h-14 p-2 bg-gray-100 ">
@@ -88,20 +76,26 @@ const Nav = () => {
           {viewMode && (
             <div
               ref={navRef}
-              className="side-bar absolute right-0 bg-purple-100  max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md   max-sm:w-2/3  max-sm:right-0 max-sm:top-20  top-16 h-auto w-96  flex"
+              className="side-bar absolute right-0 bg-purple-400  max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md   max-sm:w-2/3  max-sm:right-0 max-sm:top-20  top-14 h-screen overflow-y-scroll w-96  flex"
             >
-              <div className="relative  flex px-3 h-16  border-b border-gray-300 w-auto items-center gap-2  justify-start">
-                <div className="relative flex flex-col  gap-2">
-                  <h6 className="font-bold text-purple-800">
+              <div className="relative  flex px-3 h-auto  border-b border-gray-300 w-auto items-center gap-2  p-2 justify-start">
+                <div className="relative  p-1 flex flex-col  gap-2">
+                  <h6 className="font-extrabold text-purple-800">
                     {String(account.firstname).toUpperCase()} {account.lastname}
                   </h6>
-                  <p className=" font-normal text-gray-400">{account.email}</p>
+                  <p className=" font-normal text-gray-50">{account.email}</p>
+                </div>
+                <div className="relative w-1/3  rounded-lg flex justify-center items-center h-14 ">
+                  <LogoutOpen className="text-5xl " onClick={handleSignOut} />{" "}
                 </div>
               </div>
 
-              <div className="relative px-3 z-20">
+              <div className="relative px-3  z-20">
                 {sideMenu.map(({ title, children }) => (
-                  <div className="relative" key={title}>
+                  <div
+                    className="relative  h-auto overflow-y-scroll"
+                    key={title}
+                  >
                     <SideNav
                       title={title}
                       children={children!}
@@ -110,13 +104,13 @@ const Nav = () => {
                     />
                   </div>
                 ))}
-                <button
+                {/* <button
                   onClick={handleSignOut}
-                  className=" py-1 w-auto px-1 border bg-gray-100 flex justify-start items-center gap-2 mt-4  rounded-sm mb-4 text-gray-600"
+                  className="text-purple-950 font-normal gap-2 flex justify-start items-center"
                 >
                   {" "}
                   <Logout className="text-black inline text-xl" /> Sign out
-                </button>
+                </button> */}
               </div>
             </div>
           )}

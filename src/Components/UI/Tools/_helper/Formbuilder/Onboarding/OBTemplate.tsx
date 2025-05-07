@@ -89,7 +89,7 @@ const OBTemplate = ({
 
   return (
     <>
-      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-2 shadow-md z-10 px-2  max-sm:h-auto py-4">
+      <Card className="relative backdrop-blur-lg bg-purple-200 w-full border-none gap-2 z-10 px-2  max-sm:h-auto py-4">
         <CardTitle className="text-2xl font-bold text-purple-500">
           <p>
             {url.pathname == "/"

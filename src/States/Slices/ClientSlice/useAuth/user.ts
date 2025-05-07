@@ -1,14 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
 import { initialStateI } from "./types";
 import { toast } from "react-toastify";
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
+  // const navigate = useNavigate();
   try {
     const response = await fetch(`http://localhost:8080/api/user`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     if (response.status != 200) {
-      return location.replace("/");
+      if (response.status == 403) {
+        return;
+        // location.assign("/");
+        // alert("session expired, please login again");
+      }
+      return;
     }
     const user = await response.json();
     return user;
@@ -48,8 +55,17 @@ const userSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
+
+      if (action.payload == undefined || action.payload == null) {
+        state.isAuthenticated = false;
+        // location.assign("/");
+      }
       state.isAuthenticated = true;
       state.account = action.payload;
+      // console.log(action.payload);
+    });
+    builder.addCase(getUser.rejected, (state) => {
+      state.loading = false;
     });
   },
 });

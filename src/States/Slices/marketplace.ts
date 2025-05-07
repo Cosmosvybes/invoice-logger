@@ -125,7 +125,7 @@ const marketplaceSlice = createSlice({
     builder.addCase(getMarketJobs.fulfilled, (state, action) => {
       state.jobs = action.payload || [];
       state.currentJobSelected = action.payload![0];
-      console.log(action.payload);
+      
       // console.log(state.jobs);
     });
   },

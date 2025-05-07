@@ -1,20 +1,7 @@
 import { useParams } from "react-router-dom";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../../States/hoooks/hook";
-import { useEffect } from "react";
-import { getUser } from "../../../../../../States/Slices/invoice";
+import { useAppSelector } from "../../../../../../States/hoooks/hook";
 
 export default function useCreateController() {
-  const dispatch = useAppDispatch();
-
-  //
-  useEffect(() => {
-    dispatch(getUser(localStorage.getItem("token")!));
-  }, []);
-
-  //
   const { draft, loading } = useAppSelector((state) => state.invoice);
   const { id } = useParams();
 

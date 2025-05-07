@@ -8,7 +8,7 @@ const SignIn = () => {
   return (
     <>
       <Header />
-      <div className="relative bg-gradient-to-br from-gray-50 to-gray-white  justify-between max-sm:justify-center flex">
+      <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
         {" "}
         <div className="relative w-full  px-10 max-sm:hidden"></div>
         <div className="relative max-sm:px-1   w-1/2 max-sm:w-full h-full py-5 px-10   flex justify-center items-center">

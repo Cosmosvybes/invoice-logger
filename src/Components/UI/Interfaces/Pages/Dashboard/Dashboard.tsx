@@ -1,8 +1,8 @@
-import useDashboardController from ".";
+// import useDashboardController from ".";
 import Account from "../../../Tools/InvoiceModal/Account";
 //
 const Dashboard = () => {
-  useDashboardController();
+  // useDashboardController();
 
   return (
     <>

@@ -179,17 +179,14 @@ const invoiceSlice = createSlice({
       const invoice = state.draft.find((inv) => inv.id == id);
       state.draft.splice(state.draft.indexOf(invoice!), 1);
 
-      fetch(
-        `http://localhost:8080/api/invoice/delete/?id=${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "Application/json",
-          },
-          body: JSON.stringify(invoice),
-        }
-      )
+      fetch(`http://localhost:8080/api/invoice/delete/?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(invoice),
+      })
         .then((result) => {
           if (result.status == 403) {
             return location.replace("/");

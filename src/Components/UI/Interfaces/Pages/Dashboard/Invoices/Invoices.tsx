@@ -1,22 +1,11 @@
-import { useLayoutEffect } from "react";
-import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import BreadCrumb from "../../../../Tools/Layout/BreadCrumb";
 
 import InvoiceNav from "./InvoiceNav";
 import Body from "./List/Body";
 
 import useInvoiceController from "./invoice.controller";
-import {
-  getUser,
-  setIsAuthenticated,
-} from "../../../../../../States/Slices/ClientSlice/useAuth/user";
 
 const Invoices = () => {
-  const dispatch = useAppDispatch();
-  useLayoutEffect(() => {
-    dispatch(getUser());
-    dispatch(setIsAuthenticated());
-  }, []);
   const { currentData, handleInvoiceFilter } = useInvoiceController();
 
   return (
