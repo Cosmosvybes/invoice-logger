@@ -56,12 +56,14 @@ export default function useSigninController() {
     // https://ether-bill-server-1.onrender.com
     setLoading(true);
     // console.log(loading);
-    const response = await fetch(
-      `http://localhost:8080/api/sign-in?email=${encodeURIComponent(
-        formValues.Email
-      )}&password=${encodeURIComponent(formValues.Password)}`,
-      { method: "POST" }
-    );
+    const response = await fetch(`http://localhost:8080/api/sign-in`, {
+      method: "POST",
+      headers: { "Content-Type": "Application/json" },
+      body: JSON.stringify({
+        email: formValues["Email"],
+        password: formValues["Password"],
+      }),
+    });
     const result = await response.json();
     const { token } = result;
 
@@ -82,7 +84,7 @@ export default function useSigninController() {
       });
 
       if (response.status == 200) {
-     dispatch(setIsAuthenticated());
+        dispatch(setIsAuthenticated());
         navigate("/dashboard");
       }
     }
@@ -95,6 +97,6 @@ export default function useSigninController() {
     handleChange,
     handleSubmit,
     loading,
-    isAuthenticated
+    isAuthenticated,
   };
 }

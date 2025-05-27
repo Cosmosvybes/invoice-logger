@@ -39,8 +39,8 @@ const Listings = () => {
 
       <BreadCrumb title="My deals" useLink={false} linkTitle="" />
 
-      <div className="relative w-full flex flex-col p-1 max-sm:h-screen max-sm:w-full  h-screen   rounded-tl-lg pb-2">
-        <div className="relative h-[24rem] max-sm:w-full  bg-gray-100 rounded-lg  flex max-sm:flex-col gap-2 justify-start  mt-2 items-start">
+      <div className="relative w-full flex flex-col max-sm:h-screen max-sm:w-full  h-screen   rounded-tl-lg pb-2">
+        <div className="relative h-[24rem] max-sm:w-full  bg-gray-100 rounded-lg p-1 max-sm:p-0 flex max-sm:flex-col gap-1 justify-start  mt-2 items-start">
           {userDeals.map(
             ({ budget, jobTitle, deadline, executionStatus, id }) => (
               <Job

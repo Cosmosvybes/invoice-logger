@@ -93,7 +93,7 @@ export default function useNavMenu(icons: any) {
         },
         {
           id: 3,
-          title: "Inbox",
+          title: "Invoice inbox",
           path: "account/invoice-received",
           icon: icons[9],
           onclick: "",

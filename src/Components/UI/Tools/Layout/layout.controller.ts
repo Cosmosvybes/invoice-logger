@@ -7,6 +7,13 @@ export default function useLayoutController(icons: any) {
       title: "Finance",
       children: [
         {
+          id: 18,
+          title: "Dashboard",
+          path: "dashboard",
+          icon: icons[8],
+          onclick: "",
+        },
+        {
           id: 16,
           title: "Business deals",
           path: "account/business/trust-trade",
@@ -63,7 +70,7 @@ export default function useLayoutController(icons: any) {
         },
         {
           id: 3,
-          title: "Inbox",
+          title: "Invoice inbox",
           path: "account/invoice-received",
           icon: icons[9],
           onclick: "",

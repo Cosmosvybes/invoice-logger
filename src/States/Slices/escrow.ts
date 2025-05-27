@@ -30,13 +30,16 @@ const escrowSlice = createSlice({
   reducers: {
     openEscrow: (state, action: PayloadAction<EscrowInterface>) => {
       const Escrow = action.payload;
-      // state.escrows.push(Escrow);
       state.currentEscrow = Escrow;
+      localStorage.setItem("escrow", JSON.stringify(Escrow));
     },
     setEscrows: (state, action: PayloadAction<EscrowInterface[]>) => {
       state.escrows = action.payload;
     },
 
+    clearEscrow: (state, action: PayloadAction<[]>) => {
+      state.escrows=action.payload;
+    },
     closeEscrow: (state, action: PayloadAction<{ id: number }>) => {
       const { id } = action.payload;
       const escrowIndex = state.escrows.findIndex(
@@ -48,4 +51,4 @@ const escrowSlice = createSlice({
 });
 
 export default escrowSlice.reducer;
-export const { openEscrow, setEscrows, closeEscrow } = escrowSlice.actions;
+export const { openEscrow, setEscrows, closeEscrow , clearEscrow} = escrowSlice.actions;

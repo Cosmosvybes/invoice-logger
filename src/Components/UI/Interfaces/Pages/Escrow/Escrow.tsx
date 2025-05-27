@@ -2,6 +2,7 @@ import {
   BriefcaseTwoLocks,
   Deal,
   LoadingDashed,
+  // LoadingDashed,
   TimeClock,
   User,
 } from "react-huge-icons/solid";
@@ -10,22 +11,33 @@ import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import { useAppSelector } from "../../../../../States/hoooks/hook";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
 import { useEffect, useState } from "react";
+// import Overlay from "../Subscription/_OverlayComp/Overlay";
+
+import escrowReReady from "../../../Tools/_helper/Auth/EscrowHOC/EHOC";
+import { EscrowInterface } from "../../../../../States/Slices/escrow";
 import Overlay from "../Subscription/_OverlayComp/Overlay";
-import withAuth from "../../../Tools/_helper/Auth/withAuth";
+import { ownerAddress } from "../../../../constants/Index";
 // import { StopwatchMinus } from "react-huge-icons/outline";
 
 const Escrow = () => {
   const {
     handleCLoseEscrow,
     handleStartJob,
-    getEscrows,
+    handleCreateDispute,
+    handleVoteEscrowParty,
+    // getEscrows,
     handleMarkJobAsComplete,
     handleReleaseFunds,
     handleGetJobStatus,
+    handleModeratorReleaseFunds,
   } = useSmartContractController();
-  const { currentEscrow } = useAppSelector((store) => store.escrowSlice);
-  const { address, loading } = useAppSelector((store) => store.walletSlice);
-  const [jobStatus, setJobStatus] = useState<any>(1);
+  const { loading } = useAppSelector((store) => store.walletSlice);
+  const currentEscrow: EscrowInterface = JSON.parse(
+    localStorage.getItem("escrow")!
+  );
+
+  const { address } = useAppSelector((store) => store.walletSlice);
+  const [jobStatus, setJobStatus] = useState<any>(0);
 
   useEffect(() => {
     async function runGetJobStatus() {
@@ -33,9 +45,8 @@ const Escrow = () => {
       setJobStatus(status);
     }
     runGetJobStatus();
-    getEscrows();
   }, []);
-  // console.log(currentEscrow)
+
   return (
     <>
       <div className="relative px-28  max-sm:px-1">
@@ -44,7 +55,6 @@ const Escrow = () => {
           useLink={false}
           linkTitle=""
         />
-
         {loading && (
           <Overlay
             children={
@@ -55,9 +65,8 @@ const Escrow = () => {
             }
           />
         )}
-
         <div className="relative w-full flex rounded-lg justify-between max-sm:flex-col h-[44rem]  max-sm:h-auto  mt-3 max-sm:mt-0">
-          <div className="relative w-1/2 max-sm:w-full h-full max-sm:flex-col-reverse bg-gray-100 flex justify-between gap-2 p-2">
+          <div className="relative w-1/2 max-sm:w-full h-full max-sm:flex-col-reverse bg-purple-50 rounded-lg flex justify-between gap-2 p-2">
             <div className="relative w-1/2 flex gap-1 flex-col max-sm:flex-row-reverse max-sm:w-full  h-full">
               <div className="relative w-full max-sm:rounded-lg rounded-tr-lg rounded-tl-lg flex justify-between p-4  flex-col bg-purple-200   h-1/2">
                 <div className="relative h-1/5 max-sm:w-full max-sm:flex-col  flex justify-between items-center p-4">
@@ -72,14 +81,24 @@ const Escrow = () => {
 
                 <span className="relative w-full flex justify-center items-center">
                   <h1 className="text-xl max-sm:text-sm text-purple-500 font-semibold">
-                    {currentEscrow.client.slice(0, 4) +
+                    {currentEscrow?.client.slice(0, 4) +
                       "..." +
-                      currentEscrow.client.slice(39, 42)}
+                      currentEscrow?.client?.slice(39, 42)}
                   </h1>
                 </span>
+
+                {currentEscrow.inDispute && (
+                  <div className="relative w-full  flex justify-center items-center">
+                    <span className="relative flex justify-center rounded-full h-8 w-8 bg-purple-700 mt-4  border-2 border-purple-400 text-white items-center">
+                      <p className="text-white">
+                        {currentEscrow.tradeBallot.client}
+                      </p>
+                    </span>
+                  </div>
+                )}
               </div>
 
-              <div className="relative w-full flex justify-between p-4 flex-col max-sm:rounded-lg  max-sm:w-full bg-purple-200 rounded-br-lg rounded-bl-lg h-1/2">
+              <div className="relative w-full flex justify-between p-4 flex-col max-sm:rounded-lg   max-sm:w-full bg-purple-200 rounded-br-lg rounded-bl-lg h-1/2">
                 <div className="relative h-1/5  max-sm:flex-col  max-sm:w-full  flex justify-between items-center p-4">
                   <div className="relative rounded-full bg-gray-100 p-2">
                     <User className="text-2xl text-purple-600" />
@@ -96,6 +115,16 @@ const Escrow = () => {
                       currentEscrow.worker.slice(39, 42)}
                   </h1>
                 </span>
+
+                {currentEscrow.inDispute && (
+                  <div className="relative flex w-full justify-center items-center">
+                    <span className="relative flex justify-center rounded-full h-8 w-8 bg-purple-700 mt-4  border-2 border-purple-400 text-white items-center">
+                      <p className="text-white">
+                        {currentEscrow.tradeBallot.worker}
+                      </p>
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -126,17 +155,16 @@ const Escrow = () => {
                       <BriefcaseTwoLocks className="text-2xl text-purple-600" />{" "}
                     </div>
                   </div>
-                  <div className="h-8 w-1/7 rounded-lg  px-2 font-semibold  place-items-center text-purple-600">
-                    {" "}
+                  <div className="h-8 w-4/5 mt-2 rounded-lg  px-5 font-semibold  place-items-center text-purple-600">
                     <p
                       className={`${
                         currentEscrow.inDispute
-                          ? "text-red-600 p-1 rounded-md  bg-red-200"
+                          ? "text-red-600 p-2 rounded-md  bg-red-200"
                           : "text-purple-600"
                       }`}
                     >
                       {currentEscrow.inDispute
-                        ? "Transaction in dispute"
+                        ? "Deal in dispute"
                         : "Everything OK."}
                     </p>
                   </div>
@@ -209,7 +237,7 @@ const Escrow = () => {
                 <h1 className="text-md font-bold">{currentEscrow.jobTitle}</h1>
 
                 <div className="relative max-sm:place-items-start gap-2 flex flex-col justify-between w-full mt-4">
-                  <div className="relative flex items-center justify-center gap-2">
+                  <div className="relative flex items-center justify-start gap-2">
                     <h3 className="text-xl text-purple-600 max-sm:text-sm font-extrabold">
                       $EBT {currentEscrow.budget}
                     </h3>{" "}
@@ -217,7 +245,7 @@ const Escrow = () => {
                       Funded
                     </button>
                   </div>
-                  <div className="relative w-1/7 max-sm:w-6/7 gap-2 flex justify-center items-center">
+                  <div className="relative w-1/7 max-sm:w-6/7 gap-2 flex justify-start items-center">
                     <TimeClock className="text-sm inline font-light text-purple-600" />
                     <p className="text-purple-600 text-sm">
                       Started at -{" "}
@@ -239,6 +267,7 @@ const Escrow = () => {
                     { id: 3, title: "completed" },
                   ].map((statusIndicator) => (
                     <p
+                      key={statusIndicator.id}
                       className={`text-sm ${
                         jobStatus == 0 && "text-amber-600"
                       } ${jobStatus == 1 && "text-blue-600"}  ${
@@ -310,12 +339,89 @@ const Escrow = () => {
                 </div>
               )}
 
-              <div className="relative h-full mt-5 flex rounded-br-lg rounded-bl-lg justify-start items-center  w-full bg-gradient-to-tr p-2 gap-2 ">
-                <p>To open dispute, </p>
-                <button className="px-2  font-semibold place-items-center text-red-600">
-                  click here.
-                </button>
-              </div>
+              {currentEscrow.client.toUpperCase() !=
+                String(address).toUpperCase() &&
+                currentEscrow.worker.toUpperCase() !=
+                  String(address).toUpperCase() && (
+                  <div className="relative flex flex-col items-start justify-start  max-sm:flex-col  h-auto gap-2 max-sm:h-auto  w-full">
+                    <div className="relative max-sm:w-full max-sm:p-2">
+                      <p className="text-purple-400 max-sm:text-sm">
+                        Consider checking the proof of the job execution and
+                        vote for the client or worker.
+                      </p>{" "}
+                      <span className="text-purple-400 max-sm:text-sm mt-4">
+                        <button className="text-purple-700 inline ">
+                          View proofs here.
+                        </button>
+                      </span>
+                      <p className="text-purple-400 max-sm:text-sm">
+                        Note: You can only vote once.{" "}
+                      </p>
+                    </div>
+
+                    <div className="relative w-full  flex jusify-between items-center  gap-2 max-sm:gap-4 max-sm:w-full">
+                      <button
+                        onClick={() =>
+                          handleVoteEscrowParty(currentEscrow.escrowID, 1)
+                        }
+                        className=" w-1/2 h-[4rem] rounded-lg border-2 border-purple-400  outline-none  max-sm:h-12  max-sm:w-1/2 px-2 bg-purple-600 font-semibold  place-items-center text-white"
+                      >
+                        Support worker
+                      </button>
+
+                      <button
+                        disabled={
+                          currentEscrow.isCompleted ||
+                          jobStatus == 2 ||
+                          jobStatus == 3
+                        }
+                        onClick={() =>
+                          handleVoteEscrowParty(currentEscrow.escrowID, 0)
+                        }
+                        className=" w-1/2 h-[4rem] rounded-lg outline-none  max-sm:h-12 border-2 border-purple-400  max-sm:w-1/2 px-2 bg-purple-600 font-semibold  place-items-center text-white"
+                      >
+                        Support client
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+              {ownerAddress == address && (
+                <div className="relative flex flex-col items-center justify-start gap-3  max-sm:flex-col  h-14 max-sm:h-auto  w-full">
+                  <div className="relative max-sm:w-full max-sm:p-2">
+                    <p className="text-purple-400 max-sm:text-sm">
+                      Consider clicking the green button to release funds when
+                      the job is done completely, Thank you.
+                    </p>
+                  </div>
+
+                  <div className="relative w-full  flex jusify-between items-center  gap-2 max-s:gap-4 max-sm:w-full">
+                    <button
+                      onClick={() =>
+                        handleModeratorReleaseFunds(currentEscrow.escrowID)
+                      }
+                      className="w-1/2 h-[4rem] rounded-lg   max-sm:w-full  max-sm:h-12  px-2 bg-purple-600 font-semibold outline-none place-items-center hover:bg-purple-700 text-white"
+                    >
+                      SETTLE DISPUTE
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {(currentEscrow.client.toUpperCase() ==
+                String(address).toUpperCase() ||
+                currentEscrow.worker.toUpperCase() ==
+                  String(address).toUpperCase()) && (
+                <div className="relative h-full mt-3 flex rounded-br-lg rounded-bl-lg justify-start items-center  w-full bg-gradient-to-tr p-2 gap-2 ">
+                  <p>To open dispute, </p>
+                  <button
+                    onClick={() => handleCreateDispute(currentEscrow.escrowID)}
+                    className="px-2  font-semibold place-items-center text-red-600"
+                  >
+                    click here.
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -324,4 +430,4 @@ const Escrow = () => {
   );
 };
 
-export default withAuth(Escrow);
+export default escrowReReady(Escrow);

@@ -21,8 +21,9 @@ import {
 import BUYINGFORM from "./BUYINGFORM";
 import Paginate from "../../../Tools/Layout/Paginate/Paginate";
 import Overlay from "./_OverlayComp/Overlay";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import withAuth from "../../../Tools/_helper/Auth/withAuth";
+// import { useEffect } from "react";
 
 const Subscription = () => {
   const Transaction = ({
@@ -145,6 +146,7 @@ const Subscription = () => {
     handleRedeemToken,
     balance,
     handleSendEBT,
+    handleFileUpload,
     isToggled,
     handleOpenSendingForm,
     recipient,
@@ -160,17 +162,18 @@ const Subscription = () => {
     currentTransactions,
     transactionPerPage,
     handleApproval,
-    getEscrows,
+    // getEscrows,
   } = useSmartContractController();
 
   const { isConnected, loading } = useAppSelector((state) => state.walletSlice);
   const { escrows } = useAppSelector((state) => state.escrowSlice);
   const { userDeals } = useAppSelector((state) => state.marketplaceSlice);
+  const { disputes } = useAppSelector((state) => state.disputeSlice);
   // useDashboardController();
 
-  useEffect(() => {
-    getEscrows();
-  }, [isConnected]);
+  // useEffect(() => {
+  //   getEscrows();
+  // }, [isConnected]);
 
   const SENDINGFORM = ({
     amounts,
@@ -189,7 +192,7 @@ const Subscription = () => {
   }) => {
     return (
       <>
-        <div className="relative w-1/2 max-sm:w-full h-1/2 max-sm:h-auto bg-white rounded-lg flex flex-col justify-start items-start gap-4 p-2 shadow-lg">
+        <div className="relative w-1/2 max-sm:w-full h-auto max-sm:h-auto bg-white rounded-lg flex flex-col justify-start items-start gap-4 p-2 shadow-lg">
           <div className="relative flex justify-between gap-3 w-full items-center">
             <h1 className="text-[16px] text-purple-600">{header}</h1>{" "}
             <button
@@ -251,7 +254,7 @@ const Subscription = () => {
 
   return (
     <>
-      <div className="relative px-28  max-sm:px-1">
+      <div className="relative px-28 h-screen  max-sm:px-1">
         <BreadCrumb title="Finance Overview" useLink={false} linkTitle="" />
 
         {purchaseFormToggle && (
@@ -326,7 +329,7 @@ const Subscription = () => {
                       id: 51,
                       icon: <UsersTriple className="text-xl text-purple-600" />,
                       title: "Disputes",
-                      value: 0,
+                      value: disputes.length,
                     },
                   ].map((data) => (
                     <div
@@ -350,23 +353,23 @@ const Subscription = () => {
                   ))}
                 </div>
 
-                <div className="relative h-28 w-full  p-1   place-items-center b flex justify-start max-sm:grid max-sm:grid-cols-3 max-sm:w-full    rounded-lg  ">
+                <div className="relative max-sm:h-auto h-16 w-full mt-5 p-1  place-items-center b flex justify-start max-sm:grid max-sm:grid-cols-3 max-sm:w-full  gap-2   rounded-lg  ">
                   <button
-                    className=" gap-2  flex justify-between items-center p-4 bg-purple-900 text-white  h-10  text-[10px]"
+                    className=" gap-2 w-1/3 max-sm:w-full  flex justify-between items-center p-4 bg-purple-900 text-white  h-full max-sm:h-12 rounded-md  text-[10px]"
                     onClick={handleSetBuyTokenForm}
                   >
                     {" "}
                     BUY <CoinDollar className="text-2xl inline text-white" />
                   </button>
                   <button
-                    className=" gap-2  flex justify-between items-center p-4 bg-purple-900 text-white  h-10  text-[10px]"
+                    className=" rounded-md gap-2 w-1/3 max-sm:w-full  flex justify-between items-center p-4 bg-purple-900 text-white  h-full max-sm:h-12  text-[10px]"
                     onClick={handleOpenSendingForm}
                   >
                     {" "}
                     SEND <Send className="text-2xl inline text-white" />
                   </button>
                   <button
-                    className=" gap-2  flex justify-between items-center p-4 bg-purple-900 text-white  h-10  text-[10px]"
+                    className="rounded-md gap-2 w-1/3 max-sm:w-full  flex justify-between items-center p-4 bg-purple-900 text-white  h-full max-sm:h-12  text-[10px]"
                     onClick={handleSwapTokenForm}
                   >
                     {" "}
@@ -374,13 +377,13 @@ const Subscription = () => {
                     <ArrowTransferRectangle className="text-2xl inline text-white" />
                   </button>
                 </div>
-                <div className="relative  w-full gap-2 flex">
+                <div className="relative mt-4  ml-1 w-full gap-2 flex">
                   <p className="text-sm text-gray-400">
                     To approve etherbill for spending,
                   </p>
                   <button
                     onClick={handleApproval}
-                    className="text-sm font-[12px] text-purple-500"
+                    className="text-sm font-[12px] text-purple-500 visited:text-purple-500 hover:text-purple-600"
                   >
                     {" "}
                     click here.
@@ -412,7 +415,7 @@ const Subscription = () => {
             </div>
           </div>
 
-          <section className="relative px-2 w-2/3 ml-2 max-sm:ml-0 flex flex-col h-auto  max-sm:w-full py-2 bg-gray-100 rounded-lg ">
+          <section className="relative px-2 w-2/4  mt-2 max-sm:ml-0 flex flex-col h-auto  max-sm:w-full py-2 bg-gray-100 rounded-lg ">
             <h1 className=""> {`TRANSACTION HISTORY`} </h1>
             <div className="relative flex flex-col gap-1 ">
               {currentTransactions.map((transaction) => (
@@ -432,6 +435,12 @@ const Subscription = () => {
               postsPerPage={transactionPerPage}
             />
           </section>
+
+          {/* <form>
+            <label>
+              <input onChange={handleFileUpload} type="file" value="" multiple />
+            </label>
+          </form> */}
         </div>
       </div>
     </>

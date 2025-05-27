@@ -17,19 +17,30 @@ import Marketplace from "../UI/Interfaces/Pages/Marketplace/Marketplace";
 import Listings from "../UI/Interfaces/Pages/Listing/Listings";
 import Escrows from "../UI/Interfaces/Pages/Escrows/Escrows";
 import { ToastContainer } from "react-toastify";
+import Disputes from "../UI/Interfaces/Pages/Disputes/Disputes";
+import PasswordReset from "../UI/Interfaces/Pages/PasswordReset/PasswordReset";
+import VerificationCodePage from "../UI/Interfaces/Pages/PasswordReset/VerificationCodePage";
+import NewPassword from "../UI/Interfaces/Pages/PasswordReset/NewPassword";
 
 const _Routes = () => {
   return (
     <>
-      {/* <Nav /> */}
+   
       <ToastContainer />
       <Routes>
+        <Route path="/new_password" element={<NewPassword />}></Route>
+        <Route path="/reset_password" element={<PasswordReset />}></Route>
+        <Route
+          path="/verification_code"
+          element={<VerificationCodePage />}
+        ></Route>
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/create/new/account" element={<Signup />}></Route>
         <Route path="/account/invoice-received" element={<Inbox />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/finance/escrows" element={<Escrows />}></Route>
         <Route path="/invoices" element={<Invoices />}></Route>
+        <Route path="/finance/deal/disputes" element={<Disputes />}></Route>
         <Route path="/new/invoice" element={<Create />}></Route>
         <Route path="/clients" element={<ClientPage />}></Route>
         <Route path="/client/new" element={<AddClient />}></Route>

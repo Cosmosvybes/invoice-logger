@@ -52,7 +52,7 @@ const MarketplaceForm = ({
   };
 
   return (
-    <div className=" gap-1 bg-purple-200 w-1/2 max-sm:w-full  p-2 h-auto rounded-lg relative">
+    <div className="z-50 gap-1 bg-purple-300 w-1/2 max-sm:w-full mt-10  p-2 h-auto rounded-lg relative">
       <button
         onClick={() => setIsToggled(!isToggled)}
         className="w-20 z-30 p-1 rounded-md bg-red-500 text-white absolute right-4 top-2"

@@ -18,13 +18,10 @@ const InvoiceTemplate = ({
       <Tailwind>
         <Body className=" text-black py-5 px-2 border-5 border-gray-100 bg-gray-white  w-full">
           <Container className="py-auto border-3 border-gray-100 ">
-            <Heading className="h-auto">
+            <Heading className="h-16">
               <Img
-                className="h-20 w-auto object-cover"
+                className="h-20 w-1/2 object-cover"
                 src="https://res.cloudinary.com/dkckrpwew/image/upload/v1726595270/logo_transparent_jxwxhn.png"
-                style={{
-                  width: "100%",
-                }}
                 alt="logo"
               />
             </Heading>

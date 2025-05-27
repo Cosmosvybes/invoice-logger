@@ -137,7 +137,7 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
             ))}
           </tbody>
         </table>
-        <div className="relative flex justify-start max-sm:justify-start items-center w-full mt-1">
+        <div className="relative flex justify-center max-sm:justify-center items-center w-full mt-1">
           <Paginate
             invoices={currentData}
             paginateHandler={handleNextList}

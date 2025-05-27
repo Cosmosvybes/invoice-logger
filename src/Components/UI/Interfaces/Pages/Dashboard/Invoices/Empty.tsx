@@ -1,6 +1,12 @@
 import { Invoice } from "react-huge-icons/bulk";
 
-const Empty = ({ message }: { message: string }) => {
+const Empty = ({
+  message,
+  showBtn,
+}: {
+  message: string;
+  showBtn?: boolean;
+}) => {
   return (
     <>
       <div className="relative text-center h-60 gap-5 w-full flex-col flex justify-center items-center border-b">
@@ -10,7 +16,7 @@ const Empty = ({ message }: { message: string }) => {
         <p className="text-2xl font-normal">{message}</p>{" "}
         <button
           //   to="/new/invoice"
-          className="w-32 px-2 py-1 text-black font-normal border rounded-md"
+          className={`w-32 px-2 py-1 text-black font-normal hidden ${showBtn && "block"} border rounded-md`}
         >
           add now
         </button>

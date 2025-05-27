@@ -1,9 +1,20 @@
 import { useAppSelector } from "../../../../../States/hoooks/hook";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
+import Empty from "../Dashboard/Invoices/Empty";
 import EscrowCard from "./EscrowCard";
 
 const Escrows = () => {
   const { escrows } = useAppSelector((store) => store.escrowSlice);
+  const { isConnected } = useAppSelector((store) => store.walletSlice);
+
+  if (!isConnected) {
+    return (
+      <div className="relative flex justify-center items-center h-screen w-full">
+        <Empty message={"Connect wallet to proceed"} />
+      </div>
+    );
+  }
+
   if (escrows.length == 0) {
     return (
       <div className="relative flex justify-center items-center h-screen w-full">

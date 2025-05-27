@@ -5,7 +5,7 @@ import {
 } from "../../../../../States/hoooks/hook";
 import { openEscrow } from "../../../../../States/Slices/escrow";
 import { ArrowRight, CheckCircle, SmartLock } from "react-huge-icons/solid";
-import withAuth from "../../../Tools/_helper/Auth/withAuth";
+import escrowReReady from "../../../Tools/_helper/Auth/EscrowHOC/EHOC";
 
 const EscrowCard = ({
   escrowID,
@@ -23,7 +23,7 @@ const EscrowCard = ({
   };
 
   return (
-    <div className="w-2/5 max-sm:w-full  text-white  bg-purple-400 h-auto rounded-lg flex gap-3 flex-col justify-between relative p-2">
+    <div className="w-2/5 max-sm:w-full  text-white  bg-purple-400 border-l-8 border-b-8 border-purple-900 h-24 rounded-lg flex gap-3 flex-col justify-between relative p-2">
       <div className="relative flex justify-between items-center">
         <span className="flex justify-start items-center gap-2">
           <SmartLock className="text-2xl text-purple-900" />{" "}
@@ -50,4 +50,4 @@ const EscrowCard = ({
   );
 };
 
-export default withAuth(EscrowCard);
+export default escrowReReady(EscrowCard);

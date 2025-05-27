@@ -60,9 +60,10 @@ const Layout = ({ children }: any) => {
   }, [isAuthenticated]);
 
   return (
-    <div className=" bg-purple-200 h-auto w-full p-2 gap-4 border">
+    <div className=" bg-purple-200   h-auto w-full rounded-tl-lg rounded-tr-lg gap-4 p-1 ">
+         <Nav />
       <div className="relative justify-normal flex">
-        <div className="relative w-1/4 h-[calc(100vh-0px)]  max-sm:hidden rounded-bl-lg border bg-purple-200">
+        <div className="relative w-1/4 h-[calc(100vh-36px)] overflow-y-scroll max-sm:hidden rounded-bl-lg border bg-purple-200">
           {sideMenu.map(({ title, children }) => (
             <div className="relative p-3" key={title}>
               <SideNav title={title} children={children!} setMode={() => ""} />
@@ -71,7 +72,7 @@ const Layout = ({ children }: any) => {
         </div>
 
         <div className="relative w-full rounded-br-lg  bg-purple-100 h-[calc(100vh-0px)] max-sm:h-auto max-sm:rounded-lg max-sm:w-full max-sm:rounded-tl-lg max-sm:rounded-tr-lg flex flex-col">
-          <Nav />
+       
           {children}
         </div>
       </div>

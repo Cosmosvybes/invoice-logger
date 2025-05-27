@@ -1,5 +1,5 @@
 export const marketPlaceCredentials = {
-  markePlacetAddress: "0xd7c3e2Cc171597AB643652f118FCbE44AA96929d",
+  markePlacetAddress: "0x222e6926045C846814BC9632Cd56491d580B92D9",
   marketPlaceAbi: [
     {
       type: "constructor",
@@ -261,6 +261,35 @@ export const marketPlaceCredentials = {
       inputs: [{ name: "escrowID", type: "uint256", internalType: "uint256" }],
       outputs: [{ name: "success", type: "bool", internalType: "bool" }],
       stateMutability: "nonpayable",
+    },
+    {
+      type: "function",
+      name: "openDisputes",
+      inputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+      outputs: [
+        { name: "client", type: "address", internalType: "address" },
+        { name: "worker", type: "address", internalType: "address" },
+        { name: "jobTitle", type: "string", internalType: "string" },
+        { name: "budget", type: "uint256", internalType: "uint256" },
+        { name: "startTime", type: "uint256", internalType: "uint256" },
+        { name: "jobDuration", type: "string", internalType: "string" },
+        { name: "isCompleted", type: "bool", internalType: "bool" },
+        { name: "inDispute", type: "bool", internalType: "bool" },
+        { name: "completedTime", type: "uint256", internalType: "uint256" },
+        { name: "_jobID", type: "uint256", internalType: "uint256" },
+        {
+          name: "vote",
+          type: "tuple",
+          internalType: "struct MarketPlace.EscrowBallot",
+          components: [
+            { name: "client", type: "uint256", internalType: "uint256" },
+            { name: "worker", type: "uint256", internalType: "uint256" },
+          ],
+        },
+        { name: "escrowID", type: "uint256", internalType: "uint256" },
+        { name: "jobDeadline", type: "uint256", internalType: "uint256" },
+      ],
+      stateMutability: "view",
     },
     {
       type: "function",

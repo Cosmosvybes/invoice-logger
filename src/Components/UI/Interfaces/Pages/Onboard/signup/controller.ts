@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { setLoading } from "../../../../../../States/Slices/wallet";
+import { useAppDispatch } from "../../../../../../States/hoooks/hook";
+import { useNavigate } from "react-router-dom";
 
 interface valueInterface {
   [key: string]: string;
 }
+
 export default function useSignUpController() {
-  //
+  const navigate = useNavigate();
   const [formFields] = useState([
     {
       id: 1,
@@ -59,13 +63,11 @@ export default function useSignUpController() {
     setFormValues((prev) => ({ ...prev, [key]: newValue }));
   };
 
-  const [loading] = useState(false);
+  const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: Event) => {
+  const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    // setLoading(true);
-
-    const pattern = /^[A-Z][a-zA-Z]{6,10}[0-9]{1,3}[\W]{1}$/;
+    const pattern = /^[A-Z][a-zA-Z]{6,10}[0-9]{1,7}[\W]{1}$/;
 
     const isValidPassword = pattern.test(formValues["Password"]);
     if (!isValidPassword) {
@@ -78,7 +80,34 @@ export default function useSignUpController() {
       toast.warn("Password doesn't match");
       return;
     }
-    console.log(formValues);
+
+    try {
+      dispatch(setLoading());
+      const result = await fetch("http://localhost:8080/api/create_account", {
+        method: "POST",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify(formValues),
+      });
+      if (!result.ok) {
+        dispatch(setLoading());
+
+        if (result.status == 403) {
+          return toast.error("Action forbidden, User account exist, sign in");
+        } else if (result.status == 500) {
+          return toast.error("Service unavailable, try again");
+        } else if (result.status == 503) {
+          return toast.error("Internal server error");
+        }
+      } else {
+        dispatch(setLoading());
+        const { response } = await result.json();
+        toast.success(response);
+        navigate("/");
+      }
+    } catch (error: any) {
+      dispatch(setLoading());
+      toast.error(error, { position: "top-center" });
+    }
   };
 
   return {
@@ -86,6 +115,5 @@ export default function useSignUpController() {
     formValues,
     handleChange,
     handleSubmit,
-    loading,
   };
 }

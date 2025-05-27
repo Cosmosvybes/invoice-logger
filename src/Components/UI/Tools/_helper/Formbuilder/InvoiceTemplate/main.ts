@@ -145,6 +145,8 @@ export default function useTemplateController() {
   const [recipient, setReceipient] = useState("");
   const [sendAsMessage, setSetAsMessage] = useState(true);
   //
+
+
   const handleSendInvoice = async (emailHtml: any) => {
     let hasEmptyStr = Object.values(invoiceInformation).find(
       (val) => val == ""
@@ -155,6 +157,7 @@ export default function useTemplateController() {
       return;
     }
     const emailData = await emailHtml;
+    
     const emailObject = {
       receipient: recipient,
       htmlContent: emailData,

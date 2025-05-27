@@ -50,12 +50,12 @@ const Nav = () => {
   return (
     <>
       {isAuthenticated && (
-        <div className="max-md:px-0  flex bg-purple-50 justify-between rounded-tr-lg rounded-tl-lg  items-center border-b right-0 z-40  h-24 sticky  px-2 top-0 max-sm:h-20 ">
+        <div className="max-md:px-0   flex bg-purple-50 justify-between rounded-tr-lg rounded-tl-lg  items-center border-b right-0   h-24 sticky   px-2 top-0 max-sm:h-20 max-sm:z-40 ">
           <div className="relative flex justify-start items-center  max-sm:px-0 ">
             <img
               src={logo}
               alt="logo_image"
-              className="w-52 ml-5 max-sm:ml-1  inline  h-48 max-sm:h-auto object-contain"
+              className="w-28 ml-5 max-sm:ml-1  inline  h-28 max-sm:h-auto object-contain"
             />
           </div>
 
@@ -70,32 +70,29 @@ const Nav = () => {
             <MenuLineHorizontal
               className="text-5xl px-1 hidden max-sm:block max-md:block text-purple-900"
               onClick={() => setMode(!viewMode)}
-            />
+            /> 
           </div>
 
           {viewMode && (
             <div
               ref={navRef}
-              className="side-bar absolute right-0 bg-purple-400  max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md   max-sm:w-2/3  max-sm:right-0 max-sm:top-20  top-14 h-screen overflow-y-scroll w-96  flex"
+              className="side-bar absolute left-0 bg-gray-200  max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  max-sm:w-3/4  max-sm:right-0 max-sm:top-20 z-50 top-0 h-[100dvh] overflow-y-scroll overflow-x-hidden   flex"
             >
               <div className="relative  flex px-3 h-auto  border-b border-gray-300 w-auto items-center gap-2  p-2 justify-start">
                 <div className="relative  p-1 flex flex-col  gap-2">
                   <h6 className="font-extrabold text-purple-800">
                     {String(account.firstname).toUpperCase()} {account.lastname}
                   </h6>
-                  <p className=" font-normal text-gray-50">{account.email}</p>
+                  <p className=" font-normal text-purple-600">{account.email}</p>
                 </div>
                 <div className="relative w-1/3  rounded-lg flex justify-center items-center h-14 ">
-                  <LogoutOpen className="text-5xl " onClick={handleSignOut} />{" "}
+                  <LogoutOpen className="text-4xl text-purple-900 border-2 border-purple-400 rounded-lg" onClick={handleSignOut} />{" "}
                 </div>
               </div>
 
               <div className="relative px-3  z-20">
                 {sideMenu.map(({ title, children }) => (
-                  <div
-                    className="relative  h-auto overflow-y-scroll"
-                    key={title}
-                  >
+                  <div className="relative  overflow-y-scroll" key={title}>
                     <SideNav
                       title={title}
                       children={children!}
@@ -104,13 +101,7 @@ const Nav = () => {
                     />
                   </div>
                 ))}
-                {/* <button
-                  onClick={handleSignOut}
-                  className="text-purple-950 font-normal gap-2 flex justify-start items-center"
-                >
-                  {" "}
-                  <Logout className="text-black inline text-xl" /> Sign out
-                </button> */}
+              
               </div>
             </div>
           )}

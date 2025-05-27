@@ -6,6 +6,7 @@ import userSlice from "./Slices/ClientSlice/useAuth/user";
 import walletSlice from "./Slices/wallet";
 import marketplaceSlice from "./Slices/marketplace";
 import escrowSlice from "./Slices/escrow";
+import disputeSlice from "./Slices/disputes";
 export const store = configureStore({
   reducer: {
     clientSlice,
@@ -14,6 +15,7 @@ export const store = configureStore({
     walletSlice,
     marketplaceSlice,
     escrowSlice,
+    disputeSlice,
   },
 });
 

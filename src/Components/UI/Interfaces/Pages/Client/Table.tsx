@@ -88,7 +88,7 @@ const Table_ = () => {
         </div>
 
         <table className="w-full border-collapse border-b px-3  mt-5 max-sm:w-full">
-          <thead className="mb-2 bg-gray-50 ">
+          <thead className="mb-2 ">
             <tr className="py-3">
               {tableColums.map((_, i) => (
                 <th
@@ -103,7 +103,7 @@ const Table_ = () => {
           <br />
           <tbody>{TABLE_BODY}</tbody>
         </table>
-        <div className="relative max-sm:justify-start flex">
+        <div className="relative justify-center flex">
           <Paginate
             list={clients}
             listPerPage={postPerPage}

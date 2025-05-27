@@ -11,7 +11,7 @@ const SignIn = () => {
       <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
         {" "}
         <div className="relative w-full  px-10 max-sm:hidden"></div>
-        <div className="relative max-sm:px-1   w-1/2 max-sm:w-full h-full py-5 px-10   flex justify-center items-center">
+        <div className="relative max-sm:px-1   w-1/2 max-sm:w-full h-screen py-5 px-10   flex justify-center items-start">
           <OBTemplate
             isLoading={loading}
             handleSubmit={handleSubmit}

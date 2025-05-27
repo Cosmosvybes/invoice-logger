@@ -92,7 +92,7 @@ const OBTemplate = ({
       <Card className="relative backdrop-blur-lg bg-purple-200 w-full border-none gap-2 z-10 px-2  max-sm:h-auto py-4">
         <CardTitle className="text-2xl font-bold text-purple-500">
           <p>
-            {url.pathname == "/"
+            {url.pathname == "/" || url.pathname != "/create/new/account"
               ? "Sign in to your account"
               : "Create new account "}{" "}
           </p>
@@ -106,10 +106,13 @@ const OBTemplate = ({
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
           <div className="relative max-md:py-2 max-sm:flex-col max-sm:py-2 max-lg:py-2 w-full flex justify-between items-start gap-4">
-            <Link to={"/"} className="text-sm  max-sm:text-sm text-purple-500">
+            <Link
+              to={"/reset_password"}
+              className="text-sm  max-sm:text-sm text-purple-500"
+            >
               Forgot password ?
             </Link>
-            {url.pathname == "/" ? (
+            {url.pathname == "/" || url.pathname != "/create/new/account" ? (
               <Link
                 to={"/create/new/account"}
                 className="text-sm  max-sm:text-sm text-purple-500 "

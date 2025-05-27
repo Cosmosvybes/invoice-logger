@@ -110,8 +110,8 @@ const AccountDetails = () => {
             {draft?.length == 0 ? (
               <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
             ) : (
-              <Card className="relative  rounded-lg  flex h-[20rem] p-2 overflow-y-scroll bg-gradient-to-br bg-gray-100  items-start  py-2   w-1/2 max-md:w-full max-sm:w-full">
-                <div className="relative w-full gap-1 rounded-lg z-30 flex flex-col-reverse ">
+              <Card className="relative  rounded-lg  flex h-[20rem] p-2 overflow-y-scroll bg-gradient-to-br bg-gray-100  items-center py-2   w-1/2 max-md:w-full max-sm:w-full">
+                <div className="relative w-full gap-1 rounded-lg  flex flex-col-reverse ">
                   {currentInvoices.reverse().map((invoice: any) => (
                     <div
                       className="relative border-b border-gray-500 gap-2  max-sm:p-0 bg-gray-200"
@@ -122,7 +122,7 @@ const AccountDetails = () => {
                   ))}
                 </div>
 
-                <div className="relative px-0 ">
+                <div className="relative  px-0 ">
                   <Paginate
                     invoices={draft}
                     postsPerPage={invoicesPerPage}

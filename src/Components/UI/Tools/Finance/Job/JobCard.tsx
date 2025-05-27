@@ -38,7 +38,7 @@ const JobCard = ({
 
   return (
     <div
-      className="w-full flex-col p-2 gap-0 flex h-full rounded-lg py-2 px-2 max-sm:px-0 max-sm:gap-5  max-sm:w-full"
+      className="w-full flex-col p-2 gap-0 flex h-full rounded-lg py-2  max-sm:px-0 max-sm:gap-5  max-sm:w-full"
       onClick={handleSetJob}
     >
       <div className="relative flex w-full  p-2  justify-start items-center   ">

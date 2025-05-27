@@ -1,0 +1,104 @@
+import { Button, Input } from "reactstrap";
+import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { render } from "@react-email/components";
+import { setLoading } from "../../../../../States/Slices/wallet";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../States/hoooks/hook";
+import Overlay from "../Subscription/_OverlayComp/Overlay";
+import { LoadingDashed } from "react-huge-icons/solid";
+import GeneralMailer from "../../../../EMAIL/GeneralMailer";
+import { useNavigate } from "react-router-dom";
+
+const PasswordReset = () => {
+  const verificationCode = String(Date.now()).slice(9, 17);
+  const navigate = useNavigate();
+
+  const emailHtml = render(
+    <GeneralMailer verificationCode={Number(verificationCode)} />,
+    {
+      pretty: true,
+    }
+  );
+
+  const [email, setEmail] = useState("");
+  const { loading } = useAppSelector((store) => store.walletSlice);
+  const dispatch = useAppDispatch();
+
+  const passwordResetHandler = async (emailTemplate: any) => {
+    const emailInstance = await emailTemplate;
+    if (!email) return;
+    // e.preventDefault();
+    dispatch(setLoading());
+    try {
+      const response = await fetch("http://localhost:8080/api/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify({ email, emailInstance, verificationCode }),
+      });
+
+      if (!response.ok) {
+        dispatch(setLoading());
+        if (response.status == 503) {
+          return toast.error("Service temporarily unavailable");
+        } else if (response.status == 403) {
+          return toast.error("Account does not exist");
+        } else if (response.status == 500) {
+          return toast.error("Service temporarily unavailable");
+        }
+      } else {
+        const { message } = await response.json();
+        dispatch(setLoading());
+        toast.success(message);
+        navigate("/verification_code");
+        localStorage.setItem("email", email);
+      }
+    } catch (error) {
+      dispatch(setLoading());
+      toast.error("Error occured");
+    }
+  };
+
+  return (
+    <>
+      <Header />
+      {loading && (
+        <Overlay
+          children={
+            <LoadingDashed className="text-5xl text-purple-600 animate-spin z-30" />
+          }
+        />
+      )}
+
+      <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
+        <div className="relative w-full  px-10 max-sm:hidden"></div>
+
+        <div className="relative max-sm:px-1   w-1/2 max-sm:w-full h-[calc(100vh-100px)] py-5 px-10  flex-col  flex justify-center items-center">
+          <h1 className="text-2xl text-purple-700 font-extrabold mb-2">
+            PASSWORD RESET{" "}
+          </h1>
+          <Input
+            type="email"
+            placeholder={"Enter your email"}
+            value={email}
+            required={true}
+            onChange={(e) => setEmail(e.target.value)}
+            className="block w-full outline-none text-center border mb-2 px-2 py-3"
+          />
+
+          <Button
+            onClick={() => passwordResetHandler(emailHtml)}
+            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-3 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
+          >
+            REQUEST CODE
+          </Button>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default PasswordReset;

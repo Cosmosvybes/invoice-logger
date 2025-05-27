@@ -52,13 +52,12 @@ const InvoicePiece = ({
               }
             />
 
-            <Button
-              color="success"
+            <button
               onClick={toggle_}
-              className=" border-none shadow-inner font-extrabold"
+              className=" w-2/5 bg-purple-400 text-white p-2 rounded-md border-none  font-extrabold"
             >
               OPEN
-            </Button>
+            </button>
           </div>
         </CardBody>
       </Card>
@@ -188,7 +187,7 @@ const InvoicePiece = ({
         </ModalBody>
         <ModalFooter>
           <Button
-            className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+            className=" mt-1 bg-gradient-to-br from-purple-700 to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
             onClick={toggle_}
           >
             Close

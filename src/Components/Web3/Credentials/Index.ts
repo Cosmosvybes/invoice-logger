@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { PinataSDK } from "pinata";
 import { shopCredientials } from "./Shop/constants";
 import { tokenCredientials } from "./Token/constants";
 import { marketPlaceCredentials } from "./Marketplace/Index";
@@ -12,16 +13,47 @@ import {
 } from "../../../States/Slices/wallet";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-import { JOBINTERFACE, setUserDeals } from "../../../States/Slices/marketplace";
 import {
+  clearUserDeals,
+  JOBINTERFACE,
+  setUserDeals,
+} from "../../../States/Slices/marketplace";
+import {
+  clearEscrow,
   closeEscrow,
   EscrowInterface,
   openEscrow,
   setEscrows,
 } from "../../../States/Slices/escrow";
 import { useNavigate } from "react-router-dom";
+import { clearDisputes, setDisputes } from "../../../States/Slices/disputes";
 
 export default function useSmartContractController() {
+  const pinata = new PinataSDK({
+    pinataJwt: import.meta.env.VITE_PINATA_JWT,
+    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
+  });
+
+  const handleFileUpload = async (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+    try {
+      const { cid } = await pinata.upload.public.file(file);
+      const data = await verifyFile(cid);
+      console.log(data);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const verifyFile = async (cid: string) => {
+    try {
+      const response = await pinata.gateways.public.convert(cid);
+      console.log(response);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
   const { address, balance, transactionHistory } = useAppSelector(
     (state) => state.walletSlice
   );
@@ -69,6 +101,7 @@ export default function useSmartContractController() {
       const account = accounts[0];
       dispatch(setIsConnected());
       dispatch(setWalletAddress({ address: account }));
+      localStorage.setItem("walletAddress", account);
       setPreviousReciept("" + Math.random() + "abse");
       dispatch(setLoading());
     } catch (error: any) {
@@ -83,6 +116,7 @@ export default function useSmartContractController() {
         method: "wallet_revokePermissions",
         params: [{ eth_accounts: [] }],
       });
+
       dispatch(setIsConnected());
       dispatch(setWalletAddress({ address: null }));
       dispatch(setWalletBalance({ balanceValue: 0 }));
@@ -90,6 +124,10 @@ export default function useSmartContractController() {
         position: "top-center",
       });
       dispatch(setTransactionHistory({ transactionHistory: [] }));
+      dispatch(clearEscrow([]));
+      dispatch(clearUserDeals([]));
+      dispatch(clearDisputes([]));
+      localStorage.removeItem("walletAddress");
     } catch (error: any) {
       console.log(error);
     }
@@ -290,7 +328,10 @@ export default function useSmartContractController() {
 
   useEffect(() => {
     getAccountBalance();
-  }, [lastReciept]);
+    getEscrows(address);
+    getUsersListedDeals();
+    handleGetDisputes();
+  }, [lastReciept, address]);
 
   const [transactionPerPage] = useState(3);
   const [pageNumber, setPageNumber] = useState(1);
@@ -315,7 +356,7 @@ export default function useSmartContractController() {
       dispatch(setLoading());
       const txHash = await tokenContractAddress.approve(
         markePlacetAddress,
-        50000
+        5000
       );
       await txHash.wait();
       dispatch(setLoading());
@@ -389,9 +430,10 @@ export default function useSmartContractController() {
       return status;
     } catch (error) {
       dispatch(setLoading());
-      console.log(error);
+      // console.log(error);
     }
   };
+
   const getUsersListedDeals = async () => {
     const usersDeals: JOBINTERFACE[] = [];
     try {
@@ -422,14 +464,14 @@ export default function useSmartContractController() {
           })
         ),
         category: job.category,
-        JobStatus: Number(job.jobExecutionState),
+        JobStatus: Number(job.executionStatus),
         postedAt: String(
           new Date(Number(job.postedAt) * 1000).toLocaleString("en-Us", {
             hour12: true,
           })
         ),
         executionDuration: job.executionDuration,
-        jobExecutionState: Number(job.jobExecutionState),
+        jobExecutionState: Number(job.executionStatus),
       }));
 
       dispatch(setUserDeals(structuredUserDeals));
@@ -543,6 +585,7 @@ export default function useSmartContractController() {
       dispatch(closeEscrow({ id }));
       dispatch(setLoading());
       toast.success("Escrow closed, stake refunded");
+      navigate("/dashboard");
     } catch (error) {
       dispatch(setLoading());
       // console.log(error);
@@ -553,7 +596,7 @@ export default function useSmartContractController() {
     }
   };
 
-  const getEscrows = async () => {
+  const getEscrows = async (address_: string | null) => {
     const userEscrows: EscrowInterface[] = [];
     const tradeBallot = { client: 0, worker: 0 };
     try {
@@ -571,13 +614,15 @@ export default function useSmartContractController() {
           escrow[1] != "0x0000000000000000000000000000000000000000"
         ) {
           if (
-            (escrow[0].toUpperCase() == String(address).toUpperCase() &&
-              escrow[1].toUpperCase() == String(address).toUpperCase()) ||
-            escrow[6] != true
+            escrow[0].toUpperCase() == String(address_).toUpperCase() ||
+            escrow[1].toUpperCase() == String(address_).toUpperCase()
           ) {
-            userEscrows.push(escrow);
-            tradeBallot.client = Number(escrow[10][0]);
-            tradeBallot.worker = Number(escrow[10][1]);
+            if (escrow[6] == false) {
+              userEscrows.push(escrow);
+              tradeBallot.client = Number(escrow[10][0]);
+              tradeBallot.worker = Number(escrow[10][1]);
+              // console.log(escrow);
+            }
           }
         }
 
@@ -628,7 +673,7 @@ export default function useSmartContractController() {
       dispatch(setLoading());
     } catch (error) {
       dispatch(setLoading());
-      console.log(error);
+      // console.log(error);
       toast.error("Error occured", {
         position: "top-center",
         theme: "colored",
@@ -689,7 +734,7 @@ export default function useSmartContractController() {
           theme: "colored",
           position: "top-center",
         });
-      toast.error("Error occured", {
+      toast.error("Escrow is dispute", {
         position: "top-center",
         theme: "colored",
       });
@@ -719,6 +764,37 @@ export default function useSmartContractController() {
           theme: "colored",
           position: "top-center",
         });
+      toast.error("Escrow in dispute", {
+        position: "top-center",
+        theme: "colored",
+      });
+    }
+  };
+
+  const handleCreateDispute = async (escrowID: number) => {
+    try {
+      dispatch(setLoading());
+      const smartContractTransaction = await getSmartContractTransaction(
+        markePlacetAddress,
+        marketPlaceAbi
+      );
+
+      const tx = await smartContractTransaction.createDispute(escrowID);
+
+      if (tx) {
+        toast.success("Dispute created successfully", {
+          position: "top-center",
+          theme: "colored",
+        });
+      }
+      dispatch(setLoading());
+    } catch (error: any) {
+      dispatch(setLoading());
+      if (error.code == "ACTION_REJECTED")
+        return toast.error("Action rejected by you", {
+          theme: "colored",
+          position: "top-center",
+        });
       toast.error("Error occured", {
         position: "top-center",
         theme: "colored",
@@ -726,7 +802,161 @@ export default function useSmartContractController() {
     }
   };
 
+  const handleGetDisputes = async () => {
+    const disputes = [];
+    const tradeBallot = { client: 0, worker: 0 };
+    try {
+      dispatch(setLoading());
+      const smartContractTransaction = await getSmartContractTransaction(
+        markePlacetAddress,
+        marketPlaceAbi
+      );
+      const disputeCount = await smartContractTransaction.disputeCount();
+
+      for (let i = 0; i <= Number(disputeCount); i++) {
+        const escrow = await smartContractTransaction.getEscrow(i);
+
+        if (
+          escrow[0] != "0x0000000000000000000000000000000000000000" &&
+          escrow[1] != "0x0000000000000000000000000000000000000000"
+        ) {
+          if (escrow[7] == true) {
+            disputes.push(escrow);
+            tradeBallot.client = Number(escrow[10][0]);
+            tradeBallot.worker = Number(escrow[10][1]);
+          }
+        }
+
+        const structuredDisputeData = disputes.map(
+          (escrow: EscrowInterface) => ({
+            _jobID: Number(escrow._jobID),
+            client: escrow.client,
+            budget: Number(escrow.budget),
+            worker: escrow.worker,
+            jobTitle: escrow.jobTitle,
+            startTime: String(
+              new Date(Number(escrow.startTime) * 1000).toLocaleString(
+                "en-Us",
+                {
+                  hour12: true,
+                }
+              )
+            ),
+            inDispute: escrow.inDispute,
+            isCompleted: escrow.isCompleted,
+            completedTime: String(
+              new Date(Number(escrow.completedTime) * 1000).toLocaleString(
+                "en-Us",
+                {
+                  hour12: true,
+                }
+              )
+            ),
+            tradeBallot: {
+              client: tradeBallot.client,
+              worker: tradeBallot.worker,
+            },
+            jobDuration: escrow.jobDuration,
+            jobDeadline: String(
+              new Date(Number(escrow.jobDeadline) * 1000).toLocaleString(
+                "en-Us",
+                {
+                  hour12: true,
+                }
+              )
+            ),
+            escrowID: Number(escrow.escrowID),
+          })
+        );
+
+        dispatch(setDisputes(structuredDisputeData));
+      }
+
+      dispatch(setLoading());
+    } catch (error: any) {
+      dispatch(setLoading());
+      if (error.code == "ACTION_REJECTED")
+        return toast.error("Action rejected by you", {
+          theme: "colored",
+          position: "top-center",
+        });
+      toast.error("Error occured", {
+        position: "top-center",
+        theme: "colored",
+      });
+    }
+  };
+
+  const handleVoteEscrowParty = async (escrowID: number, party: number) => {
+    // console.log(escrowID, party);
+    try {
+      dispatch(setLoading());
+      const smartContractTransaction = await getSmartContractTransaction(
+        markePlacetAddress,
+        marketPlaceAbi
+      );
+      const tx = await smartContractTransaction.voteEscrowDispute(
+        escrowID,
+        party
+      );
+      if (tx) {
+        toast.success("Vote casted successfully", {
+          position: "top-center",
+          theme: "colored",
+        });
+      }
+      dispatch(setLoading());
+    } catch (error: any) {
+      dispatch(setLoading());
+      if (error.code == "ACTION_REJECTED")
+        return toast.error("Action rejected by you", {
+          theme: "colored",
+          position: "top-center",
+        });
+      toast.error("Sorry, you can't vote twice.", {
+        position: "top-center",
+      });
+    }
+  };
+
+  const handleModeratorReleaseFunds = async (escrowID: number) => {
+    try {
+      dispatch(setLoading());
+      const smartContractTransaction = await getSmartContractTransaction(
+        markePlacetAddress,
+        marketPlaceAbi
+      );
+      const tx = await smartContractTransaction.moderatoreReleaseFunds(
+        escrowID
+      );
+      if (tx) {
+        toast.success("Funds successfully released!", {
+          position: "top-center",
+          theme: "colored",
+        });
+      }
+      dispatch(setLoading());
+    } catch (error: any) {
+      dispatch(setLoading());
+      // console.log(error);
+      if (error.code == "ACTION_REJECTED")
+        return toast.error("Action rejected by you", {
+          theme: "colored",
+          position: "top-center",
+        });
+      toast.error("Action denied, moderator only,", {
+        position: "top-center",
+        theme: "colored",
+      });
+    }
+  };
+
   return {
+    handleFileUpload,
+    handleModeratorReleaseFunds,
+    handleVoteEscrowParty,
+    handleGetDisputes,
+    handleCreateDispute,
     handleReleaseFunds,
     handleGetJobStatus,
     handleMarkJobAsComplete,

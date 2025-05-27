@@ -117,20 +117,23 @@ const marketplaceSlice = createSlice({
     setJobs: (state, action: PayloadAction<JOBINTERFACE[]>) => {
       state.jobs = action.payload;
     },
-    setUserDeals: (state, action: PayloadAction<JOBINTERFACE[]>) => {
+    setUserDeals: (state, action: PayloadAction<any>) => {
       state.userDeals = action.payload;
+    },
+    clearUserDeals:(state,action:PayloadAction<[]>)=>{
+      state.userDeals=action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(getMarketJobs.fulfilled, (state, action) => {
       state.jobs = action.payload || [];
       state.currentJobSelected = action.payload![0];
-      
+
       // console.log(state.jobs);
     });
   },
 });
 
-export const { listJob, setCurrentJob, setJobs, setUserDeals } =
+export const { listJob, setCurrentJob, clearUserDeals, setJobs, setUserDeals } =
   marketplaceSlice.actions;
 export default marketplaceSlice.reducer;
