@@ -23,7 +23,8 @@ const Disputes = () => {
 
   if (!isConnected) {
     return (
-      <div className="relative flex justify-center items-center h-screen w-full">
+      <div className="relative flex justify-center items-center flex-col h-screen w-full">
+          {/* <BreadCrumb title="Open Disputes" useLink={false} linkTitle="" /> */}
         <Empty message={"Connect wallet to proceed"} />
       </div>
     );

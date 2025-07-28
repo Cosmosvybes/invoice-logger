@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 
 const { markePlacetAddress, marketPlaceAbi } = marketPlaceCredentials;
 const ethereum = (window as any).ethereum;
+
+
 const getSmartContractTransaction = async (
   contractAddress: string,
   abi: any
@@ -14,6 +16,9 @@ const getSmartContractTransaction = async (
   const contractTransaction = new ethers.Contract(contractAddress, abi, signer);
   return contractTransaction;
 };
+
+
+
 
 export const getMarketJobs = createAsyncThunk("getMarketJobs", async () => {
   const marketJobs: JOBINTERFACE[] = [];

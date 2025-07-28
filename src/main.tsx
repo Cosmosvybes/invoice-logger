@@ -12,8 +12,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Provider store={store}>
         <Layout>
-          <App/>
-          </Layout>
+          <App />
+        </Layout>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

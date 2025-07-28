@@ -1,5 +1,5 @@
 export const marketPlaceCredentials = {
-  markePlacetAddress: "0x222e6926045C846814BC9632Cd56491d580B92D9",
+  markePlacetAddress: "0x86EFeE4C5860B591e6Dc308eD290891d43Ed5B4C",
   marketPlaceAbi: [
     {
       type: "constructor",

@@ -21,7 +21,7 @@ export default function useSettingsController() {
       type: "switch",
       name: "tokenBalanceNotification",
       value: false,
-      label: "enable/disbale token balance notification",
+      label: "Update balance notification",
     },
 
     {
@@ -29,7 +29,7 @@ export default function useSettingsController() {
       type: "switch",
       name: "invoiceSentNotication",
       value: true,
-      label: "enable/disbale invoice sent notification",
+      label: "Invoice notification",
     },
   ]);
 
@@ -39,14 +39,14 @@ export default function useSettingsController() {
       type: "switch",
       name: "defaultCurrency",
       value: true,
-      label: "default currency usd",
+      label: "Default currency usd",
     },
     {
       id: 11,
       type: "switch",
       name: "applyTax",
       value: true,
-      label: "apply tax to invoices",
+      label: "Apply tax to invoices",
     },
     {
       id: 15,

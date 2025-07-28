@@ -1,14 +1,18 @@
 import {
   BriefcaseTwoLocks,
   Deal,
+  File,
+  FileUploadBent,
   LoadingDashed,
-  // LoadingDashed,
   TimeClock,
   User,
 } from "react-huge-icons/solid";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 
-import { useAppSelector } from "../../../../../States/hoooks/hook";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../../../States/hoooks/hook";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
 import { useEffect, useState } from "react";
 // import Overlay from "../Subscription/_OverlayComp/Overlay";
@@ -17,6 +21,7 @@ import escrowReReady from "../../../Tools/_helper/Auth/EscrowHOC/EHOC";
 import { EscrowInterface } from "../../../../../States/Slices/escrow";
 import Overlay from "../Subscription/_OverlayComp/Overlay";
 import { ownerAddress } from "../../../../constants/Index";
+import { getEscrowProofs } from "../../../../../States/Slices/dealProof";
 // import { StopwatchMinus } from "react-huge-icons/outline";
 
 const Escrow = () => {
@@ -25,6 +30,7 @@ const Escrow = () => {
     handleStartJob,
     handleCreateDispute,
     handleVoteEscrowParty,
+    handleFileUpload,
     // getEscrows,
     handleMarkJobAsComplete,
     handleReleaseFunds,
@@ -32,14 +38,17 @@ const Escrow = () => {
     handleModeratorReleaseFunds,
   } = useSmartContractController();
   const { loading } = useAppSelector((store) => store.walletSlice);
+  const { filesUrl } = useAppSelector((store) => store.dealProof);
   const currentEscrow: EscrowInterface = JSON.parse(
     localStorage.getItem("escrow")!
   );
-
+  const dispatch = useAppDispatch();
   const { address } = useAppSelector((store) => store.walletSlice);
   const [jobStatus, setJobStatus] = useState<any>(0);
 
   useEffect(() => {
+    // getEscrows(address);
+    dispatch(getEscrowProofs(currentEscrow.escrowID));
     async function runGetJobStatus() {
       const status = await handleGetJobStatus(currentEscrow._jobID);
       setJobStatus(status);
@@ -148,14 +157,14 @@ const Escrow = () => {
                     {currentEscrow.isCompleted ? "closed" : "open"}
                   </p>
                 </span>
-                <div className="relative text-center h-60 max-sm:h-28  w-full flex-col flex justify-center items-center border-b">
+                <div className="relative text-center h-60  max-sm:h-28  w-full flex-col flex justify-center items-center border-b">
                   <div className="relative w-14 h-14 rounded-full flex justify-center items-center bg-gray-300">
                     <div className="relative rounded-full w-10 h-10 flex justify-center items-center bg-purple-300  p-2">
                       {" "}
                       <BriefcaseTwoLocks className="text-2xl text-purple-600" />{" "}
                     </div>
                   </div>
-                  <div className="h-8 w-4/5 mt-2 rounded-lg  px-5 font-semibold  place-items-center text-purple-600">
+                  <div className="h-auto w-4/5 mt-2 rounded-lg  px-5 font-semibold  place-items-center text-purple-600">
                     <p
                       className={`${
                         currentEscrow.inDispute
@@ -171,12 +180,67 @@ const Escrow = () => {
                 </div>
               </div>
 
+              {(currentEscrow.client.toUpperCase() ==
+                String(address).toUpperCase() ||
+                currentEscrow.worker.toUpperCase() ==
+                  String(address).toUpperCase()) && (
+                <div className="relative h-auto mt-2 mb-2 p-2 bg-purple-100 rounded-lg w-full">
+                  <div className="relative h-auto bg-purple-200 rounded-lg  flex justify-center items-center w-full">
+                    <form>
+                      <input
+                        id="inputIcon"
+                        type="file"
+                        onChange={(e) =>
+                          handleFileUpload(
+                            e.target.files![0],
+                            String(currentEscrow.escrowID)
+                          )
+                        }
+                        className="hidden"
+                      />
+
+                      <label
+                        htmlFor="inputIcon"
+                        className="flex gap-2 flex-col p-1  justify-center h-auto items-center"
+                      >
+                        <FileUploadBent className="text-8xl text-purple-600" />
+
+                        <p className="text-purple-500">
+                          Upload legal docs here !
+                        </p>
+                      </label>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              {
+                <div className="relative h-auto mt-2 mb-2 p-2 bg-purple-100 rounded-lg w-full">
+                  <h1 className="text-purple-600 text-center">
+                    Escow legal documents
+                  </h1>
+                  <div className="relative h-auto p-2 rounded-lg   grid grid-cols-5 gap-2 place-items-center items-center w-full">
+                    {filesUrl.map((proof, i) => (
+                      <div
+                        className="relative  place-items-center flex justify-center items-center rounded-md border-purple-300 h-8 w-8 "
+                        key={i}
+                      >
+                        <File
+                          className="text-4xl text-purple-600"
+                          onClick={() => open(proof)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              }
+
               <span className="relative w-full rounded-bl-lg rounded-br-lg bg-purple-300 h-1/5 flex flex-col justify-center items-center p-2 text-sm">
-                <h1 className="text-md text-purple-500 font-semibold">
+                <p className="text-md text-purple-500 font-semibold">
                   Before you click the "Mark as complete" button, ensure that
                   your read, understand and agree to the contract terms and
                   agreement.
-                </h1>
+                </p>
               </span>
             </div>
           </div>

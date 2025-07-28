@@ -1,5 +1,5 @@
 import { Button, Input } from "reactstrap";
-import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
+// import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { render } from "@react-email/components";
@@ -11,7 +11,7 @@ import {
 import Overlay from "../Subscription/_OverlayComp/Overlay";
 import { LoadingDashed } from "react-huge-icons/solid";
 import GeneralMailer from "../../../../EMAIL/GeneralMailer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PasswordReset = () => {
   const verificationCode = String(Date.now()).slice(9, 17);
@@ -47,7 +47,7 @@ const PasswordReset = () => {
         } else if (response.status == 403) {
           return toast.error("Account does not exist");
         } else if (response.status == 500) {
-          return toast.error("Service temporarily unavailable");
+          return toast.error("Connection error");
         }
       } else {
         const { message } = await response.json();
@@ -64,7 +64,7 @@ const PasswordReset = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {loading && (
         <Overlay
           children={
@@ -76,9 +76,9 @@ const PasswordReset = () => {
       <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
         <div className="relative w-full  px-10 max-sm:hidden"></div>
 
-        <div className="relative max-sm:px-1   w-1/2 max-sm:w-full h-[calc(100vh-100px)] py-5 px-10  flex-col  flex justify-center items-center">
-          <h1 className="text-2xl text-purple-700 font-extrabold mb-2">
-            PASSWORD RESET{" "}
+        <div className="relative max-sm:px-1 max-sm:h-screen bg-gray-100   w-3/4 max-sm:w-full h-screen py-5 px-10  flex-col  flex justify-center items-center">
+          <h1 className="text-2xl text-purple-500 font-bold mb-2">
+            Password reset{" "}
           </h1>
           <Input
             type="email"
@@ -91,11 +91,22 @@ const PasswordReset = () => {
 
           <Button
             onClick={() => passwordResetHandler(emailHtml)}
-            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-3 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
+            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-2 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
           >
             REQUEST CODE
           </Button>
+          <div className="relative mt-2 max-sm:mt-5 flex justify-right w-full">
+ <Link
+          to={"/"}
+          className="text-sm flex max-sm:text-sm  text-[14px] text-purple-500"
+        >
+          Already have an account?
+          <span className="text-purple-500 max-sm:text-sm text-[16px] ml-3 underline">{"Sign in"}</span>
+        </Link>
+          </div>
+          
         </div>
+       
       </div>
     </>
   );

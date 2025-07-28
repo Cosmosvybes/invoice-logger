@@ -194,7 +194,7 @@ const Template = React.memo(
                     Cancel
                   </Button>{" "}
                   <Button
-                    className=" mt-1 bg-gradient-to-br from-green-700 to-green-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+                    className=" mt-1 bg-gradient-to-br from-black to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
                     // color="success"
                     onClick={() => {
                       handleSendInvoice(emailHtml);
@@ -206,7 +206,7 @@ const Template = React.memo(
                 </ModalFooter>
               </Modal>
 
-              <section className="flex bg-white relative  transition duration-700 justify-start w-full h-full flex-col  ">
+              <section className="flex  relative  transition duration-700 justify-start w-full h-screen flex-col  ">
                 {viewMode && (
                   <Overlay
                     children={
@@ -316,8 +316,8 @@ const Template = React.memo(
                 {editToggle && (
                   <Overlay
                     children={
-                      <div className="w-full h-[44rem] max-sm:w-full bg-purple-100 rounded-lg flex  mt-10 max-sm:mt-20 justify-between items-start">
-                        <span className=" p-2   border right-16 max-sm:right-2 top-5 max-sm:top-1 rounded-full bg-gray-100  absolute">
+                      <div className="w-full h-auto max-sm:w-full bg-purple-100 rounded-lg flex  mt-10 max-sm:mt-20 justify-between items-start">
+                        <span className=" p-2   border right-16 max-sm:right-2 top-5 max-sm:top-10 rounded-full bg-gray-100  absolute">
                           <RemoveCircle
                             onClick={handleEditFormToggle}
                             className="text-3xl text-black hover:text-gray-400"

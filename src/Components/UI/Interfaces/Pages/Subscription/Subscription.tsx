@@ -4,7 +4,6 @@ import { useAppSelector } from "../../../../../States/hoooks/hook";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
 import { LoadingDashed } from "react-huge-icons/bulk";
 import { Input } from "reactstrap";
-// import useDashboardController from "../Dashboard";
 import {
   Activity,
   ArrowTransferRectangle,
@@ -21,9 +20,8 @@ import {
 import BUYINGFORM from "./BUYINGFORM";
 import Paginate from "../../../Tools/Layout/Paginate/Paginate";
 import Overlay from "./_OverlayComp/Overlay";
-// import { useEffect } from "react";
 import withAuth from "../../../Tools/_helper/Auth/withAuth";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 
 const Subscription = () => {
   const Transaction = ({
@@ -146,7 +144,6 @@ const Subscription = () => {
     handleRedeemToken,
     balance,
     handleSendEBT,
-    handleFileUpload,
     isToggled,
     handleOpenSendingForm,
     recipient,
@@ -162,6 +159,7 @@ const Subscription = () => {
     currentTransactions,
     transactionPerPage,
     handleApproval,
+    handleGetTransactionHistory,
     // getEscrows,
   } = useSmartContractController();
 
@@ -171,9 +169,12 @@ const Subscription = () => {
   const { disputes } = useAppSelector((state) => state.disputeSlice);
   // useDashboardController();
 
-  // useEffect(() => {
-  //   getEscrows();
-  // }, [isConnected]);
+  useEffect(() => {
+    async function loadHistory() {
+      await handleGetTransactionHistory();
+    }
+    loadHistory();
+  }, [isConnected]);
 
   const SENDINGFORM = ({
     amounts,

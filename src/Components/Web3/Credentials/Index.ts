@@ -12,7 +12,7 @@ import {
   setWalletBalance,
 } from "../../../States/Slices/wallet";
 import { toast } from "react-toastify";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   clearUserDeals,
   JOBINTERFACE,
@@ -34,26 +34,41 @@ export default function useSmartContractController() {
     pinataGateway: import.meta.env.VITE_GATEWAY_URL,
   });
 
-  const handleFileUpload = async (e: any) => {
-    const file = e.target.files[0];
-    console.log(file);
+  const handleFileUpload = async (file: any, escrowId: string) => {
     try {
+      dispatch(setLoading());
       const { cid } = await pinata.upload.public.file(file);
       const data = await verifyFile(cid);
-      console.log(data);
+      console.log(file, escrowId, data);
+      const result = await fetch(
+        "http://localhost:8080/api/upload/escrow_docs",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "Application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ escrowID: escrowId, file: data }),
+        }
+      );
+      const { response } = await result.json();
+      toast.success(response, { position: "top-center" });
+      if (response) dispatch(setLoading());
     } catch (error: any) {
-      console.log(error);
+      dispatch(setLoading());
+      toast.error("Error occured");
     }
   };
 
   const verifyFile = async (cid: string) => {
     try {
       const response = await pinata.gateways.public.convert(cid);
-      console.log(response);
+      return response;
     } catch (error: any) {
       console.log(error);
     }
   };
+
   const { address, balance, transactionHistory } = useAppSelector(
     (state) => state.walletSlice
   );
@@ -73,7 +88,6 @@ export default function useSmartContractController() {
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState(10);
   const navigate = useNavigate();
-  // const [marketJobs, setMarketJobs] = useState<any[]>([]);
 
   const getSmartContractTransaction = async (
     contractAddress: string,
@@ -93,7 +107,7 @@ export default function useSmartContractController() {
     try {
       dispatch(setLoading());
       if (!ethereum) {
-        return alert("Please install metamask");
+        toast.warn("wallet account not yet connected");
       }
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
@@ -133,33 +147,43 @@ export default function useSmartContractController() {
     }
   };
 
-  const handleTopUp = async (amount: any) => {
+  const handleTopUp = async (amount: string) => {
     try {
+      if (!ethereum) {
+        throw new Error("Please install MetaMask!");
+      } else if (!address) {
+        toast.warn("Acccount not connected", {
+          position: "top-center",
+          theme: "colored",
+        });
+        // await handleConnectWallet();
+      }
       dispatch(setLoading());
+      const amountInWei = ethers.parseEther(amount);
+
       const provider = new ethers.BrowserProvider(ethereum);
       const signer = await provider.getSigner();
       const tx = await signer.sendTransaction({
-        from: address,
         to: contractAddress,
-        value: ethers.parseEther(amount),
+        value: amountInWei,
       });
       await tx.wait();
+      // console.log(hash);
+
       dispatch(setLoading());
       setPreviousReciept(String(Math.random() + "abse"));
-
       toast.success(
-        `Sucessfully purchased EBT ${
-          String(tx.hash).slice(0, 3) + "..." + String(tx.hash).slice(25, 28)
-        } `,
-        {
-          position: "top-center",
-        }
+        `Successfully purchased EBT ${tx.hash.slice(0, 6)}...${tx.hash.slice(
+          -4
+        )}`,
+        { position: "top-center" }
       );
-    } catch (error) {
+    } catch (error: any) {
       dispatch(setLoading());
-      toast.error(`Transaction aborted `, {
-        position: "top-center",
-      });
+      console.error("Transaction error:", error);
+
+      let errorMessage = "Transaction failed";
+      toast.error(errorMessage, { position: "top-center" });
     }
   };
 
@@ -215,7 +239,7 @@ export default function useSmartContractController() {
         tokenAbi
       );
       const accountBalance = await smartContractTransaction.balanceOf(address);
-      await handleGetTransactionHistory();
+
       dispatch(setWalletBalance({ balanceValue: accountBalance.toString() }));
       dispatch(setLoading());
     } catch (error: any) {
@@ -237,6 +261,7 @@ export default function useSmartContractController() {
 
       const tx = await smartContractTransaction.transfer(recipient, amount);
       await tx.wait();
+
       await smartContractTransaction_Shop.recordTransaction(
         "sent",
         amount,
@@ -291,7 +316,7 @@ export default function useSmartContractController() {
 
   const handleGetTransactionHistory = async () => {
     if (!address) {
-      return alert("no acccount detected , connect account");
+      toast.warn("Wallet account not yet connected");
     }
     try {
       dispatch(setLoading());
@@ -319,6 +344,7 @@ export default function useSmartContractController() {
           })),
         })
       );
+      await getAccountBalance();
       dispatch(setLoading());
     } catch (error) {
       dispatch(setLoading());
@@ -327,10 +353,7 @@ export default function useSmartContractController() {
   };
 
   useEffect(() => {
-    getAccountBalance();
     getEscrows(address);
-    getUsersListedDeals();
-    handleGetDisputes();
   }, [lastReciept, address]);
 
   const [transactionPerPage] = useState(3);
@@ -360,6 +383,7 @@ export default function useSmartContractController() {
       );
       await txHash.wait();
       dispatch(setLoading());
+      toast.success("Spending approved");
     } catch (error) {
       dispatch(setLoading());
     }
@@ -373,6 +397,7 @@ export default function useSmartContractController() {
     deadline: number,
     category: string
   ) => {
+    // console.log(jobTitle, jobDuration, description, category, budget, deadline);
     try {
       dispatch(setLoading());
       const smartContractTransaction = await getSmartContractTransaction(
@@ -387,7 +412,7 @@ export default function useSmartContractController() {
         budget,
         deadline
       );
-      // console.log(tx.hash)
+
       if (tx.hash) {
         toast.success("You have successfully listed a job", {
           position: "top-center",
@@ -397,10 +422,11 @@ export default function useSmartContractController() {
       dispatch(setLoading());
     } catch (error) {
       dispatch(setLoading());
-      toast.warn("Low $EBT balance, BUY $EBT to list yours jobs.", {
-        position: "top-center",
-        theme: "colored",
-      });
+      console.log(error);
+      // toast.warn("Low $EBT balance, BUY $EBT to list yours jobs.", {
+      //   position: "top-center",
+      //   theme: "colored",
+      // });
     }
   };
 
@@ -558,18 +584,19 @@ export default function useSmartContractController() {
       }
     } catch (error: any) {
       dispatch(setLoading());
+      console.log(error);
 
-      if (error.code == "CALL_EXCEPTION")
-        toast.warn("You can't open multiple deals", {
-          position: "top-center",
-          theme: "colored",
-        });
-      else {
-        toast.error("Error occured", {
-          position: "top-center",
-          theme: "colored",
-        });
-      }
+      // if (error.code == "CALL_EXCEPTION")
+      //   toast.warn("You can't open multiple deals", {
+      //     position: "top-center",
+      //     theme: "colored",
+      //   });
+      // else {
+      //   toast.error("Error occured", {
+      //     position: "top-center",
+      //     theme: "colored",
+      //   });
+      // }
     }
   };
 
@@ -991,5 +1018,6 @@ export default function useSmartContractController() {
     handlePageChange,
     getUsersListedDeals,
     handleDelistDeal,
+    handleGetTransactionHistory,
   };
 }

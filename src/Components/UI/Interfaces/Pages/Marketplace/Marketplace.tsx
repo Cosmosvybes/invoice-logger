@@ -1,5 +1,9 @@
 import { BoxFavorite, TimeQuarter } from "react-huge-icons/outline";
-import { useAppSelector } from "../../../../../States/hoooks/hook";
+import {
+  useAppDispatch,
+  // useAppDispatch,
+  useAppSelector,
+} from "../../../../../States/hoooks/hook";
 import JobCard from "../../../Tools/Finance/Job/JobCard";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import { AddRectangle, LoadingDashed } from "react-huge-icons/solid";
@@ -8,16 +12,20 @@ import { useEffect, useState } from "react";
 import MarketplaceForm from "./MarketplaceForm";
 import useSmartContractController from "../../../../Web3/Credentials/Index";
 import withAuth from "../../../Tools/_helper/Auth/withAuth";
-
+import { getMarketJobs } from "../../../../../States/Slices/marketplace";
+// import { getMarketJobs } from "../../../../../States/Slices/marketplace";
 const TrustTradePage = () => {
   const { jobs } = useAppSelector((store) => store.marketplaceSlice);
   const { loading } = useAppSelector((store) => store.walletSlice);
   const { currentJobSelected } = useAppSelector(
     (store) => store.marketplaceSlice
   );
-  const { handleBidForJob } = useSmartContractController();
-
-  useEffect(() => {}, []);
+  const { handleBidForJob, getUsersListedDeals } = useSmartContractController();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    getUsersListedDeals();
+    dispatch(getMarketJobs());
+  }, []);
 
   const [isToggled, setIsTOggled] = useState(false);
 

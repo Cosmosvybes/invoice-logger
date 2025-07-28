@@ -24,21 +24,21 @@ import { LogoutOpen, MoneyBagDollar } from "react-huge-icons/solid";
 
 const Nav = () => {
   const icons = [
-    <Invoice className="inline text-xl" />,
-    <AddRectangle className="inline text-xl" />,
-    <UsersDouble className="inline text-xl" />,
-    <UserAdd className="inline text-xl" />,
-    <User className="inline text-xl" />,
-    <CardAdd className="inline text-xl" />,
-    <Setting className="inline text-xl" />,
-    <Logout className="inline text-xl" />,
-    <Dashboard className="inline text-xl" />,
-    <MailArrowDown className="inline text-xl" />,
-    <MoneyBagDollar className="inline text-xl" />,
-    <ExchangeRectangle className="inline text-xl" />,
-    <BriefcaseTriangularTwoLocks className="inline text-xl" />,
-    <InformationRectangle className="inline text-xl" />,
-    <BookAdd className="inline text-xl" />,
+    <Invoice className="inline text-3xl" />,
+    <AddRectangle className="inline text-3xl" />,
+    <UsersDouble className="inline text-3xl" />,
+    <UserAdd className="inline text-3xl" />,
+    <User className="inline text-3xl" />,
+    <CardAdd className="inline text-3xl" />,
+    <Setting className="inline text-3xl" />,
+    <Logout className="inline text-3xl" />,
+    <Dashboard className="inline text-3xl" />,
+    <MailArrowDown className="inline text-3xl" />,
+    <MoneyBagDollar className="inline text-3xl" />,
+    <ExchangeRectangle className="inline text-3xl" />,
+    <BriefcaseTriangularTwoLocks className="inline text-3xl" />,
+    <InformationRectangle className="inline text-3xl" />,
+    <BookAdd className="inline text-3xl" />,
   ];
   const { handleSignOut, sideMenu, viewMode, setMode, navRef } =
     useNavMenu(icons);
@@ -50,7 +50,7 @@ const Nav = () => {
   return (
     <>
       {isAuthenticated && (
-        <div className="max-md:px-0   flex bg-purple-50 justify-between rounded-tr-lg rounded-tl-lg  items-center border-b right-0   h-24 sticky   px-2 top-0 max-sm:h-20 max-sm:z-40 ">
+        <div className="max-md:px-0   flex bg-purple-100 justify-between rounded-tr-lg rounded-tl-lg   items-center border-b right-0   h-24 sticky   px-2 top-0 max-sm:h-20 z-40 ">
           <div className="relative flex justify-start items-center  max-sm:px-0 ">
             <img
               src={logo}

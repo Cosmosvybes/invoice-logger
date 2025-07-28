@@ -1,5 +1,5 @@
 export const tokenCredientials = {
-  tokenAddress: "0xF932fb29504F8c2Ec4374f1D728Bc9A4dD516a83",
+  tokenAddress: "0x23622dD59c4F906749921D5060CB7570Df6F2ACb",
   tokenAbi: [
     { type: "constructor", inputs: [], stateMutability: "nonpayable" },
     {

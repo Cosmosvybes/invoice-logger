@@ -182,5 +182,5 @@ export const shopCredientials = {
       stateMutability: "nonpayable",
     },
   ],
-  contractAddress: "0x6C9CE39c60D04Eb38C9b5AB50c00E7E07615F979",
+  contractAddress: "0x82555A15B0296b4784d724AE6646ba3eD317b7A9",
 };

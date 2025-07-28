@@ -7,6 +7,7 @@ import walletSlice from "./Slices/wallet";
 import marketplaceSlice from "./Slices/marketplace";
 import escrowSlice from "./Slices/escrow";
 import disputeSlice from "./Slices/disputes";
+import dealProof from "./Slices/dealProof";
 export const store = configureStore({
   reducer: {
     clientSlice,
@@ -16,6 +17,7 @@ export const store = configureStore({
     marketplaceSlice,
     escrowSlice,
     disputeSlice,
+    dealProof,
   },
 });
 

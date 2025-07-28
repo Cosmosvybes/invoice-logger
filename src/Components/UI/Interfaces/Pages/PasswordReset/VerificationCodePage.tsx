@@ -1,5 +1,5 @@
 import { LoadingDashed } from "react-huge-icons/solid";
-import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
+// import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
 import Overlay from "../Subscription/_OverlayComp/Overlay";
 import { Button, Input } from "reactstrap";
 import { useState } from "react";
@@ -51,7 +51,7 @@ const VerificationCodePage = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {loading && (
         <Overlay
           children={
@@ -63,9 +63,9 @@ const VerificationCodePage = () => {
       <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
         <div className="relative w-full  px-10 max-sm:hidden"></div>
 
-        <div className="relative max-sm:px-1   w-1/2 max-sm:w-full h-[calc(100vh-100px)] py-5 px-10  flex-col  flex justify-center items-center">
-          <h1 className="text-2xl text-purple-700 font-extrabold mb-2">
-            VERIFICATION CODE{" "}
+        <div className="relative max-sm:px-1   w-3/4 bg-gray=100 max-sm:w-full h-[calc(100vh-100px)] py-5 px-10  flex-col  flex justify-center items-center">
+          <h1 className="text-2xl text-purple-500 font-bold mb-2">
+         Verification code
           </h1>
           <Input
             type="number"

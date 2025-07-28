@@ -1,5 +1,5 @@
 export const ICOcredientials = {
-  contractAddress: "0xABC9E1C094fb10f393ec6644789eA25eF4ab9164",
+  contractAddress: "0x13e95f7de9c12f7d7d395F670dEB273bEAc5806a",
   abi: [
     {
       type: "constructor",

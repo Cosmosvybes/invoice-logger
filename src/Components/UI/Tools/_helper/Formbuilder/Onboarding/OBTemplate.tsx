@@ -89,7 +89,7 @@ const OBTemplate = ({
 
   return (
     <>
-      <Card className="relative backdrop-blur-lg bg-purple-200 w-full border-none gap-2 z-10 px-2  max-sm:h-auto py-4">
+      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-2 z-10 px-2  max-sm:h-auto py-4">
         <CardTitle className="text-2xl font-bold text-purple-500">
           <p>
             {url.pathname == "/" || url.pathname != "/create/new/account"
@@ -122,11 +122,11 @@ const OBTemplate = ({
             ) : (
               <Link
                 to={"/"}
-                className="text-sm flex   max-sm:text-sm text-purple-500"
+                className="text-sm flex flex-col   max-sm:text-sm text-purple-500"
               >
                 Already have an account?
-                <span className="text-purple-500 max-sm:text-sm">
-                  {"sign in"}
+                <span className="text-purple-500 underline text-[16px] max-sm:text-sm">
+                  {"Sign in"}
                 </span>
               </Link>
             )}

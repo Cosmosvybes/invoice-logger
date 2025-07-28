@@ -10,7 +10,7 @@ const ViewModal = ({
 }) => {
   return (
     <>
-      <div className="relative z-30  overflow-y-scroll w-full flex   max-sm:px-0 max-sm:py-0 justify-center items-center">
+      <div className="relative z-30 border border-red-500  overflow-y-scroll w-full flex   max-sm:px-0 max-sm:py-0 justify-center items-center">
         <div className="relative bg-white shadow-md  rounded-xl  z-30 flex flex-col px-2 ">
           <div className="relative flex flex-col gap-2">
             <h1 className="text-3xl font-normal text-black">Invoice Preview</h1>

@@ -39,7 +39,7 @@ const InputProvider = React.memo(
               <FormGroup
                 switch
                 key={i}
-                className="flex justify-between  px-0 items-center"
+                className="flex justify-between px-0 items-center"
               >
                 <Label> {_.label}</Label>
                 <Input
@@ -98,13 +98,13 @@ const InputProvider = React.memo(
 
     return (
       <>
-        <Card className="w-full border-none bg-purple-400 h-96 max-sm:h-auto shadow">
-          <CardBody className="border-none text-purple-800">
+        <Card className="w-full border-none bg-purple-300 h-96 max-sm:h-auto shadow">
+          <CardBody className="border-none text-purple700">
             <CardTitle>{title}</CardTitle>
             <hr />
             <br />
             <Form
-              className="grid grid-cols-1 gap-2 max-sm:grid-cols-1  max-sm:mt-0"
+              className="grid grid-cols-1 gap-2 max-sm:text-sm max-sm:grid-cols-1  max-sm:mt-0"
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSubmit();
