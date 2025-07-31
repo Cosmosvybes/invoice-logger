@@ -18,7 +18,10 @@ import { useEffect, useState } from "react";
 // import Overlay from "../Subscription/_OverlayComp/Overlay";
 
 import escrowReReady from "../../../Tools/_helper/Auth/EscrowHOC/EHOC";
-import { EscrowInterface } from "../../../../../States/Slices/escrow";
+import {
+  EscrowInterface,
+  // getAccountEscrows,
+} from "../../../../../States/Slices/escrow";
 import Overlay from "../Subscription/_OverlayComp/Overlay";
 import { ownerAddress } from "../../../../constants/Index";
 import { getEscrowProofs } from "../../../../../States/Slices/dealProof";
@@ -47,7 +50,6 @@ const Escrow = () => {
   const [jobStatus, setJobStatus] = useState<any>(0);
 
   useEffect(() => {
-    // getEscrows(address);
     dispatch(getEscrowProofs(currentEscrow.escrowID));
     async function runGetJobStatus() {
       const status = await handleGetJobStatus(currentEscrow._jobID);

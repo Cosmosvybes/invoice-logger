@@ -353,7 +353,7 @@ export default function useSmartContractController() {
   };
 
   useEffect(() => {
-    getEscrows(address);
+    getEscrows();
   }, [lastReciept, address]);
 
   const [transactionPerPage] = useState(3);
@@ -623,7 +623,7 @@ export default function useSmartContractController() {
     }
   };
 
-  const getEscrows = async (address_: string | null) => {
+  const getEscrows = async () => {
     const userEscrows: EscrowInterface[] = [];
     const tradeBallot = { client: 0, worker: 0 };
     try {
@@ -641,8 +641,8 @@ export default function useSmartContractController() {
           escrow[1] != "0x0000000000000000000000000000000000000000"
         ) {
           if (
-            escrow[0].toUpperCase() == String(address_).toUpperCase() ||
-            escrow[1].toUpperCase() == String(address_).toUpperCase()
+            escrow[0].toUpperCase() == String(address).toUpperCase() ||
+            escrow[1].toUpperCase() == String(address).toUpperCase()
           ) {
             if (escrow[6] == false) {
               userEscrows.push(escrow);
