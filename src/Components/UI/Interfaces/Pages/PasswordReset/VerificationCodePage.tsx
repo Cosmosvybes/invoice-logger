@@ -22,7 +22,7 @@ const VerificationCodePage = () => {
     dispatch(setLoading());
     // console.log(userEmail, code);
     try {
-      const response = await fetch("http://localhost:8080/api/verify_code", {
+      const response = await fetch("https://ether-bill-server-1.onrender.com/api/verify_code", {
         method: "POST",
         headers: { "Content-Type": "Application/json" },
         body: JSON.stringify({ code, userEmail }),

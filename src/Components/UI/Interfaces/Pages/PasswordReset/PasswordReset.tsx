@@ -34,7 +34,7 @@ const PasswordReset = () => {
     // e.preventDefault();
     dispatch(setLoading());
     try {
-      const response = await fetch("http://localhost:8080/api/reset-password", {
+      const response = await fetch("https://ether-bill-server-1.onrender.com/api/reset-password", {
         method: "POST",
         headers: { "Content-Type": "Application/json" },
         body: JSON.stringify({ email, emailInstance, verificationCode }),

@@ -29,7 +29,7 @@ const NewPassword = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/update_password",
+        "https://ether-bill-server-1.onrender.com/api/update_password",
         {
           method: "POST",
           headers: { "Content-Type": "Application/json" },
