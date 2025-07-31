@@ -10,7 +10,7 @@ export const getEscrowProofs = createAsyncThunk(
   async (escrowID: any) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/escrow_proofs/?escrowID=${escrowID}`,
+        `https://ether-bill-server-1.onrender.com/api/escrow_proofs/?escrowID=${escrowID}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
