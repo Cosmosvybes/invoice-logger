@@ -41,10 +41,13 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (token: string) => {
     try {
-      const response = await fetch("https://ether-bill-server-1.onrender.com/api/user", {
-        headers: { Authorization: `Bearer ${token}` },
-        method: "GET",
-      });
+      const response = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/user",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          method: "GET",
+        }
+      );
 
       if (response.status != 200) {
         return location.replace("/");
@@ -179,14 +182,17 @@ const invoiceSlice = createSlice({
       const invoice = state.draft.find((inv) => inv.id == id);
       state.draft.splice(state.draft.indexOf(invoice!), 1);
 
-      fetch(`https://ether-bill-server-1.onrender.com/api/invoice/delete/?id=${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify(invoice),
-      })
+      fetch(
+        `https://ether-bill-server-1.onrender.com/api/invoice/delete/?id=${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "Application/json",
+          },
+          body: JSON.stringify(invoice),
+        }
+      )
         .then((result) => {
           if (result.status == 403) {
             return location.replace("/");
@@ -451,10 +457,10 @@ const invoiceSlice = createSlice({
     builder.addCase(getUser.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getUser.fulfilled, (state, action) => {
+    builder.addCase(getUser.fulfilled, (state, { payload }) => {
       state.loading = false;
       const { draft, sent, revenue, clients, settings, inbox, paid, token } =
-        action.payload;
+        payload;
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
@@ -463,6 +469,7 @@ const invoiceSlice = createSlice({
       state.inbox = inbox;
       state.paid = paid;
       state.tokens = token;
+      state.currentData = draft;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;

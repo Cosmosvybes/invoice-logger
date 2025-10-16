@@ -74,7 +74,7 @@ const Template = React.memo(
         case "checkbox":
           return (
             <div
-              className="relative items-center  px-3 py-3 gap-1 flex justify-between"
+              className="relative items-center  px-1 py-1 gap-1 flex justify-between"
               key={input.placeholder}
             >
               <p className="text-gray-500 inline">{input.placeholder}</p>
@@ -96,13 +96,13 @@ const Template = React.memo(
               key={index}
             >
               {" "}
-              <p className="text-gray-400 ml-0 font-normal px-2 text-xl max-sm:inline  block max-sm:text-sm">
+              <p className="text-gray-400 ml-0 font-normal px-2 text-sm max-sm:inline  block max-sm:text-sm">
                 {input.placeholder}
               </p>
               <Input
                 title="date"
                 type="date"
-                className=" bg-inherit px-1 py-2 font-bold border w-52   max-sm:w-full  max-sm:text-xs text-slate-400 border-none"
+                className=" bg-inherit px-1 py-2 font-bold border w-52   text-sm max-sm:w-full  max-sm:text-xs text-slate-400 border-none"
                 value={invoiceInformation[input.name]}
                 onChange={(e) =>
                   updateInvoiceDetails(e.target.value, input.name)
@@ -114,7 +114,7 @@ const Template = React.memo(
           return (
             <div className="relative" key={index}>
               <Input
-                className="border-none py-3 px-1 bg-gray-200 border  text-xl  font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-gray-400 w-full max-sm:w-full"
+                className="border-none py-1 px-1 bg-gray-200 border  text-sm  font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-gray-400 w-full max-sm:w-full"
                 type="text"
                 value={invoiceInformation[input.name]}
                 placeholder={input.placeholder}
@@ -129,11 +129,11 @@ const Template = React.memo(
 
     const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
       <div
-        className="relative py-2  max-sm:px-0 flex  items-center"
+        className="relative py-1  max-sm:px-0 flex  items-center"
         key={input.id}
       >
         <Input
-          className="py-2 text-xl text-center max-sm:text-xs  max-md:text-md  outline-none rounded-sm text-gray-400 px-0 font-normal w-36  max-sm:w-full"
+          className="py-1 text-sm  text-center max-sm:text-xs  max-md:text-md  outline-none rounded-sm text-gray-400 px-0 font-normal w-36  max-sm:w-full"
           type={"text"}
           placeholder={`${input.placeholder} %`}
           value={invoiceInformation[input.name]}
@@ -206,15 +206,15 @@ const Template = React.memo(
                 </ModalFooter>
               </Modal>
 
-              <section className="flex  relative  transition duration-700 justify-start w-full h-screen flex-col  ">
+              <section className="flex  relative  transition duration-700 justify-start w-full h-auto flex-col  border-none ">
                 {viewMode && (
                   <Overlay
                     children={
-                      <div className="relative h-[44rem] overflow-y-scroll max-sm:py-5 w-full">
+                      <div className="relative h-[90vh] border-none overflow-y-scroll max-sm:py-5 w-full shadow-sm shadow-white rounded-md bg-white">
                         <ViewModal
                           data={{ ...invoiceInformation }}
                           callback={() => setViewMode(!viewMode)}
-                        />{" "}
+                        />
                       </div>
                     }
                   />
@@ -258,15 +258,15 @@ const Template = React.memo(
 
                 <div className="relative flex  justify-start max-sm:justify-end">
                   <div className="relative flex flex-col  mb-1 w-full">
-                    <strong className="w-full text-2xl max-sm:text-xl mb-2 font-semibold">
+                    <strong className="w-full text-xl max-sm:text-xl mb-2 font-semibold">
                       Sending to:
                     </strong>
-                    <div className="relative w-1/5 max-sm:w-full  h-auto ">
+                    <div className="relative w-2/5 max-sm:w-full  h-auto ">
                       {!useCustomChecked ? (
                         <Input
                           type="select"
                           id="client-list"
-                          className="py-3 px-4 rounded-md bg-gray-100 w-full"
+                          className="py-2 px-4 rounded-md bg-gray-100 w-full"
                           onChange={handleSelectClient}
                         >
                           {[{ email: "--select--" }, ...clients].map((_, i) => (
@@ -294,7 +294,7 @@ const Template = React.memo(
                           setUseCustom(e.currentTarget.checked);
                         }}
                       />
-                      <Label className="max-sm:text-xs text-xl text-gray-400">
+                      <Label className="max-sm:text-xs text-sm text-gray-400">
                         use custom email
                       </Label>
                     </FormGroup>
@@ -306,7 +306,7 @@ const Template = React.memo(
                           setSetAsMessage(e.currentTarget.checked);
                         }}
                       />
-                      <Label className="max-sm:text-xs text-xl text-gray-400">
+                      <Label className="max-sm:text-xs text-sm text-gray-400">
                         send as direct message
                       </Label>
                     </FormGroup>
@@ -316,7 +316,7 @@ const Template = React.memo(
                 {editToggle && (
                   <Overlay
                     children={
-                      <div className="w-full h-auto max-sm:w-full bg-purple-100 rounded-lg flex  mt-10 max-sm:mt-20 justify-between items-start">
+                      <div className="w-full h-[78vh] overflow-y-scroll max-sm:w-full bg-purple-100 rounded-lg flex  mt-10 max-sm:mt-20 justify-between items-start">
                         <span className=" p-2   border right-16 max-sm:right-2 top-5 max-sm:top-10 rounded-full bg-gray-100  absolute">
                           <RemoveCircle
                             onClick={handleEditFormToggle}
@@ -326,7 +326,7 @@ const Template = React.memo(
                         <div className="grid grid-cols-2 max-sm:w-full max-sm:px-2  w-1/2 gap-2 py-10 px-10 z-5">
                           {FORM}
                         </div>
-                        <div className="relative w-1/2 h-full max-sm:hidden overflow-y-scroll">
+                        <div className="relative   w-1/2 h-full max-sm:hidden overflow-y-scroll">
                           {" "}
                           <ProductsList />
                         </div>
@@ -334,7 +334,7 @@ const Template = React.memo(
                     }
                   />
                 )}
-                <div className="relative hidden max-sm:block max-md:block">
+                <div className="relative h-[70%] overflow-y-scroll hidden max-sm:block max-md:block">
                   {" "}
                   <ProductsList />
                 </div>
@@ -350,21 +350,21 @@ const Template = React.memo(
                 <div className="relative w-full flex justify-start  max-md:w-full  max-sm:grid grid-cols-1 max-sm:px-0 items-center">
                   <div className="relative grid grid-cols-1 items-center w-1/2 max-md:w-full max-sm:w-full  gap-2">
                     <div className="relative flex justify-between items-center max-sm:w-full">
-                      <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                      <p className="text-sm text-gray-500 font-normal max-sm:text-sm ">
                         discount
                       </p>
 
-                      <p className="text-xl  text-gray-500 mr-2  font-normal">
+                      <p className="text-sm  text-gray-500 mr-2  font-normal">
                         {Number(invoiceInformation.Discount)}%
                       </p>
                     </div>
 
                     <div className="relative flex justify-between items-center   gap-2 ">
-                      <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                      <p className="text-sm text-gray-500 font-normal max-sm:text-sm ">
                         Tax
                       </p>
 
-                      <p className="text-xl  text-gray-500 mr-2  font-normal">
+                      <p className="text-sm text-gray-500 mr-2  font-normal">
                         {" "}
                         {Number(invoiceInformation.VAT)}%
                       </p>
@@ -373,7 +373,7 @@ const Template = React.memo(
                     <hr className="w-full border-gray-300" />
 
                     <div className="relative flex justify-between items-center   gap-2 ">
-                      <p className="text-xl text-gray-500 font-normal max-sm:text-sm ">
+                      <p className="text-sm text-gray-500 font-normal max-sm:text-sm ">
                         Total
                       </p>
                       <p className="text-xl  text-gray-500 mr-2  font-normal">

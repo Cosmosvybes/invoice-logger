@@ -34,11 +34,14 @@ const PasswordReset = () => {
     // e.preventDefault();
     dispatch(setLoading());
     try {
-      const response = await fetch("https://ether-bill-server-1.onrender.com/api/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify({ email, emailInstance, verificationCode }),
-      });
+      const response = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/reset-password",
+        {
+          method: "POST",
+          headers: { "Content-Type": "Application/json" },
+          body: JSON.stringify({ email, emailInstance, verificationCode }),
+        }
+      );
 
       if (!response.ok) {
         dispatch(setLoading());
@@ -86,27 +89,27 @@ const PasswordReset = () => {
             value={email}
             required={true}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full outline-none text-center border mb-2 px-2 py-3"
+            className="block w-full outline-none border mb-2 px-2 py-1 lg:text-sm "
           />
 
           <Button
             onClick={() => passwordResetHandler(emailHtml)}
-            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-2 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
+            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
           >
             REQUEST CODE
           </Button>
           <div className="relative mt-2 max-sm:mt-5 flex justify-right w-full">
- <Link
-          to={"/"}
-          className="text-sm flex max-sm:text-sm  text-[14px] text-purple-500"
-        >
-          Already have an account?
-          <span className="text-purple-500 max-sm:text-sm text-[16px] ml-3 underline">{"Sign in"}</span>
-        </Link>
+            <Link
+              to={"/"}
+              className="text-sm flex max-sm:text-sm  text-[14px] text-purple-500"
+            >
+              Already have an account?
+              <span className="text-purple-500 max-sm:text-sm text-[16px] ml-3 underline">
+                {"Sign in"}
+              </span>
+            </Link>
           </div>
-          
         </div>
-       
       </div>
     </>
   );

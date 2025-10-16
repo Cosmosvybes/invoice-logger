@@ -35,8 +35,10 @@ const Paginate = ({
   return (
     <>
       <ul className="flex justify-center gap-2 px-2 place-items-center mt-4 flex-wrap rounded-md py-2 ">
-        <button onClick={handlePrevious}>
-          <ArrowLeftCircle className="text-5xl text-purple-500" />{" "}
+        <button 
+        
+        onClick={handlePrevious}>
+          <ArrowLeftCircle   className="text-2xl text-black " />{" "}
         </button>
         <span>...</span>
         {pageLinks.map((linkNumber) => (
@@ -46,7 +48,7 @@ const Paginate = ({
               paginateHandler(linkNumber);
             }}
             key={linkNumber}
-            className={` w-8 rounded-lg border text-2xl   h-auto duration-700 transition shadow-md cursor-pointer ${
+            className={` w-8 rounded-lg border text-xl   h-auto duration-700 transition shadow-md cursor-pointer ${
               active != linkNumber ? "bg-gray-200" : "bg-purple-400 text-white"
             } ${
               active == linkNumber ? "text-white" : "text-black"
@@ -58,7 +60,7 @@ const Paginate = ({
     <span>...</span>
         <button>
           <ArrowRightCircle
-            className="text-5xl text-purple-500"
+            className="text-2xl text-black "
             onClick={handleNext_}
           />{" "}
         </button>

@@ -8,10 +8,10 @@ import useInvoiceController from "./invoice.controller";
 
 const Invoices = () => {
   const { currentData, handleInvoiceFilter } = useInvoiceController();
-
+  // console.log(currentData)
   return (
     <>
-      <div className="relative px-28 max-sm:px-0 max-sm:overflow-x-scroll max-sm:overflow-y-clip h-auto max-sm:h-auto">
+      <div className="relative px-28 max-sm:px-0 max-sm:overflow-x-scroll border max-sm:overflow-y-clip h-full max-sm:h-auto border border-grey-500 bg-transparent">
         <BreadCrumb useLink={true} title="Invoices" linkTitle="new/invoice" />
         <InvoiceNav switchTab={handleInvoiceFilter} />
         <Body currentData={currentData} />

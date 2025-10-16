@@ -25,7 +25,7 @@ export default function useInvoiceListController(invoices: Invoice[]) {
     };
   }, []);
 
-  const [listPerTable] = useState(5);
+  const [listPerTable] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleNextList = (id: number) => {

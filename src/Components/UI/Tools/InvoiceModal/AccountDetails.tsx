@@ -5,13 +5,23 @@ import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
 import { useEffect, useState } from "react";
 import Paginate from "../Layout/Paginate/Paginate";
 import { Card, CardBody, CardText, CardTitle } from "reactstrap";
-
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 const AccountDetails = () => {
   const { draft, sent, revenue, paid } = useAppSelector(
     (state) => state.invoice
   );
-  const { balance, isConnected } = useAppSelector((store) => store.walletSlice);
-  const [invoicesPerPage] = useState(4);
+  // const { balance, isConnected } = useAppSelector((store) => store.walletSlice);
+  const [invoicesPerPage] = useState(2);
 
   const [currrentPage, setCurrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
@@ -27,6 +37,66 @@ const AccountDetails = () => {
     }
   }, []);
 
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const data = {
+    labels: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "July",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    datasets: [
+      {
+        label: "Paid",
+        data: [29, 59, 80, 96, 207, 100, 400, 500, 300, 900, 1000, 1200],
+        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: "rgba(75,192,192,0.2)",
+        tension: 0.3, // smooth curves
+      },
+      {
+        label: "Draft",
+        data: [10, 30, 40, 90, 204, 100, 400, 500, 300, 400, 1000, 2300],
+        borderColor: "rgba(89, 6, 232, 1)",
+        backgroundColor: "rgba(13, 17, 42, 0.2)",
+        tension: 0.3, // smooth curves
+      },
+    ],
+  };
+
+  const LineChart = () => {
+    return (
+      <>
+        <Line
+          height={250}
+          data={data}
+          options={{
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "Invoicing Metrics" },
+            },
+          }}
+        />
+      </>
+    );
+  };
+
   return (
     <>
       <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
@@ -38,21 +108,21 @@ const AccountDetails = () => {
 
             <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
               <Card className="bg-gray-100">
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto   gap-2   text-purple-900">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full lg:h-auto max-sm:h-auto   gap-2   text-purple-900">
                   <CardTitle className="text-purple-800 text-xl font-bold">
                     Revenue
                   </CardTitle>
                   <CardText className="text-purple-800 text-4xl max-sm:text-sm font-semibold">
                     $ {revenue.toLocaleString()}
                   </CardText>
-                  <p className="text-purple-800 mt-2 text-xl font-semibold max-sm:text-sm">
+                  {/* <p className="text-purple-800 mt-2 text-xl font-semibold max-sm:text-sm">
                     $ EBT {isConnected ? Number(balance) / 100 : 0}
-                  </p>
+                  </p> */}
                   {/* <CardText className="text-green-800 text-xl max-sm:text-sm font-light"></CardText> */}
                 </CardBody>
               </Card>
               <Card className="bg-gray-100">
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto gap-2   text-purple-900">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full lg:h-auto max-sm:h-auto gap-2   text-purple-900">
                   <CardTitle className="text-purple-900 text-xl font-bold">
                     Total invoices
                   </CardTitle>
@@ -62,7 +132,7 @@ const AccountDetails = () => {
                 </CardBody>
               </Card>
               <Card className="bg-gray-100">
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto  gap-2   text-purple-900">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full lg:h-auto max-sm:h-auto  gap-2   text-purple-900">
                   <CardTitle className="text-purple-900 text-xl font-bold">
                     Draft
                   </CardTitle>
@@ -73,7 +143,7 @@ const AccountDetails = () => {
               </Card>
 
               <Card className="bg-gray-100">
-                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full h-44 max-sm:h-auto  gap-2   text-purple-900">
+                <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full lg:h-auto max-sm:h-auto  gap-2   text-purple-900">
                   <CardTitle className="text-purple-900 text-xl font-bold">
                     Outgoing invoices
                   </CardTitle>
@@ -86,54 +156,70 @@ const AccountDetails = () => {
           </div>
           <div className="relative w-full flex items-center  mt-4 gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
             <div className="relative w-full flex justify-between items-center px-1">
-              <p className="text-purple-900 text-xl font-normal">
+              <p className="text-purple-900 text-sm font-normal">
                 latest invoice
               </p>{" "}
               <Link
                 to={"/invoices"}
-                className="text-purple-900 text-xl   font-normal"
+                className="text-purple-900 text-sm   font-normal"
               >
-                <p className="text-purple-900 text-xl  font-normal">
+                <p className="text-purple-900 text-sm  font-normal">
                   view invoice
                 </p>
               </Link>{" "}
             </div>
             <div className="relative w-full flex justify-between items-center px-1">
-              <p className="text-purple-900 text-xl w-full  font-normal">
+              <p className="text-purple-900 text-sm w-full  font-normal">
                 draft
               </p>
               <ArrowRight className="text-purple-900 text-4xl" />
             </div>
           </div>
           {/* //invoice drfats */}
-          <div className="relative w-full mt-4 p-1 h-[24rem] border-none flex  justify-end ">
-            {draft?.length == 0 ? (
-              <p className="text-gray-300 text-4xl px-2  ">No invoice yet!</p>
-            ) : (
-              <Card className="relative  rounded-lg  flex h-[20rem] p-2 overflow-y-scroll bg-gradient-to-br bg-gray-100  items-center py-2   w-1/2 max-md:w-full max-sm:w-full">
-                <div className="relative w-full gap-1 rounded-lg  flex flex-col-reverse ">
-                  {currentInvoices.reverse().map((invoice: any) => (
-                    <div
-                      className="relative border-b border-gray-500 gap-2  max-sm:p-0 bg-gray-200"
-                      key={invoice.id}
-                    >
-                      <InvoiceTemplate invoice={invoice} />
+          <div className="relative w-full mt-4 p-1 h-[26rem] max-sm:h-auto gap-3 border-none flex  justify-between   max-sm:flex-col max-md:flex-col">
+            <div className="w-1/2 max-sm:w-full flex-col gap-5">
+              <div className="flex flex-col w-full">
+                {draft?.length == 0 ? (
+                  <p className="text-gray-700 text-xl px-2  ">
+                    No invoice yet!
+                  </p>
+                ) : (
+                  <Card className="relative  rounded-lg  flex h-[18rem] p-2 overflow-y-scroll bg-gradient-to-br bg-gray-100  items-center py-2   w-full max-md:w-full max-sm:w-full">
+                    <div className="relative w-full gap-1 rounded-lg  flex flex-col-reverse ">
+                      {currentInvoices.reverse().map((invoice: any) => (
+                        <div
+                          className="relative border-b border-gray-500 gap-2  max-sm:p-0 bg-gray-200"
+                          key={invoice.id}
+                        >
+                          <InvoiceTemplate invoice={invoice} />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </Card>
+                )}
+              </div>
+              <div className="w-full  h-auto mt-1">
+                <Paginate
+                  invoices={draft}
+                  postsPerPage={invoicesPerPage}
+                  paginateHandler={handlePaginate}
+                />
+              </div>
+            </div>
 
-                <div className="relative  px-0 ">
+            {/*  */}
+            <div className="w-1/2 max-sm:w-full max-sm:h-auto">
+              <LineChart />
+            </div>
+            {/* //invoice drfats */}
+          </div>{" "}
+          {/* <div className="relative  px-0 ">
                   <Paginate
                     invoices={draft}
                     postsPerPage={invoicesPerPage}
                     paginateHandler={handlePaginate}
                   />
-                </div>
-              </Card>
-            )}
-
-            {/* //invoice drfats */}
-          </div>{" "}
+                </div> */}
           {/* //Latest invoiceF */}
           <div className="relative w-full max-sm:px-1 justify-between flex  items-center">
             <p className="text-gray-600 text-sm font-light ">

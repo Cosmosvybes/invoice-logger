@@ -22,11 +22,14 @@ const VerificationCodePage = () => {
     dispatch(setLoading());
     // console.log(userEmail, code);
     try {
-      const response = await fetch("https://ether-bill-server-1.onrender.com/api/verify_code", {
-        method: "POST",
-        headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify({ code, userEmail }),
-      });
+      const response = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/verify_code",
+        {
+          method: "POST",
+          headers: { "Content-Type": "Application/json" },
+          body: JSON.stringify({ code, userEmail }),
+        }
+      );
 
       if (!response.ok) {
         dispatch(setLoading());
@@ -65,7 +68,7 @@ const VerificationCodePage = () => {
 
         <div className="relative max-sm:px-1   w-3/4 bg-gray=100 max-sm:w-full h-[calc(100vh-100px)] py-5 px-10  flex-col  flex justify-center items-center">
           <h1 className="text-2xl text-purple-500 font-bold mb-2">
-         Verification code
+            Verification code
           </h1>
           <Input
             type="number"
@@ -73,12 +76,12 @@ const VerificationCodePage = () => {
             value={code}
             required={true}
             onChange={(e) => setCode(e.target.value)}
-            className="block w-full outline-none text-center border mb-2 px-2 py-3"
+            className="block w-full outline-none border mb-2 px-2 py-1 lg:text-sm "
           />
 
           <Button
             onClick={codeVerificationHandler}
-            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-3 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
+            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
           >
             SUBMIT CODE
           </Button>

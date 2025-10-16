@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { add } from "../../../../../../States/Slices/ClientSlice/clientSlice";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import useModalController from "../../../InvoiceModal/controller";
+import { API_URL } from "../../../../../constants/Index";
 
 type FormValues = {
   [key: string]: string;
@@ -47,7 +48,7 @@ export default function useClientFormController() {
       id: Date.now(),
     };
     // https://ether-bill-server-1.onrender.com
-    const response = await fetch("http://localhost:8080/api/client/new", {
+    const response = await fetch(`${API_URL}/api/client/new`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

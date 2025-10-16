@@ -98,7 +98,7 @@ const InputProvider = React.memo(
 
     return (
       <>
-        <Card className="w-full border-none bg-purple-300 h-96 max-sm:h-auto shadow">
+        <Card className="w-full border-none bg-purple-100 h-96 max-sm:h-auto shadow-xs">
           <CardBody className="border-none text-purple700">
             <CardTitle>{title}</CardTitle>
             <hr />

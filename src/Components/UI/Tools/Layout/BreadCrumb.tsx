@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../States/hoooks/hook";
 import { createInvoice } from "../../../../States/Slices/invoice";
 import { toast } from "react-toastify";
+import { API_URL } from "../../../constants/Index";
 
 const BreadCrumb = ({
   useLink,
@@ -42,7 +43,7 @@ const BreadCrumb = ({
     );
     // https://ether-bill-server-1.onrender.com
 
-    fetch("http://localhost:8080/api/new/invoice", {
+    fetch(`${API_URL}/api/new/invoice`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -84,7 +85,7 @@ const BreadCrumb = ({
   };
 
   return (
-    <div className="relative w-full mt-2  h-auto py-1 flex justify-between items-center px-2">
+    <div className="relative w-full mt-2  h-20 py-1 flex justify-between items-center px-2">
       <h1 className="text-purple-800 text-xl  max-sm:text-xl font-extrabold">
         {title}
       </h1>

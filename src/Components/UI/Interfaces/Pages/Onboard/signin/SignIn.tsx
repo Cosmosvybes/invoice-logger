@@ -8,10 +8,10 @@ const SignIn = () => {
   return (
     <>
       {/* <Header /> */}
-      <div className="relative bg-gradient-to-br from-purple-200  to-gray-white  justify-center max-sm:justify-center flex">
+      <div className="relative bg-gradient-to-br from-purple-50 h-full  to-gray-white max-sm:h-screen  justify-start max-sm:justify-start flex">
         {" "}
         <div className="relative w-full  px-5 max-sm:hidden"></div>
-        <div className="relative max-sm:px-1 bg-gray-100  w-3/4 max-sm:w-full h-screen py-5 px-10  flex justify-center items-center">
+        <div className="relative max-sm:px-1 bg-gray-100  w-3/4 max-sm:w-full h-full py-5 px-10  flex justify-start items-start">
           <OBTemplate
             isLoading={loading}
             handleSubmit={handleSubmit}

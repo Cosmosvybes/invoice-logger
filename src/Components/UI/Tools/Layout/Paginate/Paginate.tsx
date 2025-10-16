@@ -34,7 +34,7 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
 
         <button onClick={handlePrevious}>
  
-          <ArrowLeftCircle className="text-5xl text-purple-500" />{" "}
+          <ArrowLeftCircle className="text-2xl text-grey-400" />{" "}
         </button>
 
         <span>...</span>
@@ -46,7 +46,7 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
             }}
             key={linkNumber}
             className={` w-8 rounded-lg border text-xl font-bold  h-auto duration-700 transition shadow-md cursor-pointer ${
-              active != linkNumber ? "bg-gray-200" : "bg-purple-400 text-white"
+              active != linkNumber ? "bg-gray-200" : "bg-purple-500 text-white"
             } ${
               active == linkNumber ? "text-white" : "text-black"
             } px-1 rounded-sm text-center`}
@@ -55,9 +55,9 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
           </button>
         ))}
         <span>...</span>
-        <button className="text-3xl text-gray-500 font-semibold">
+        <button className="text-3xl  font-normal">
           <ArrowRightCircle
-            className="text-5xl text-purple-500"
+            className="text-2xl text-grey-400"
             onClick={handleNext}
           />{" "}
         </button>

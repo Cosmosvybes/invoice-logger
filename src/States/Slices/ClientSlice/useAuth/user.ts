@@ -2,26 +2,23 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { initialStateI } from "./types";
 import { toast } from "react-toastify";
+import { API_URL } from "../../../../Components/constants/Index";
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
-  // const navigate = useNavigate();
   try {
-    const response = await fetch(`http://localhost:8080/api/user`, {
+    const response = await fetch(`${API_URL}/api/user`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     if (response.status != 200) {
       if (response.status == 403) {
         return;
-        // location.assign("/");
-        // alert("session expired, please login again");
       }
       return;
     }
     const user = await response.json();
     return user;
   } catch (error: any) {
-    toast.error("session expired", { theme: "colored" });
-    return location.replace("/");
+    toast.error("session expired already", { theme: "colored" });
   }
 });
 
@@ -42,6 +39,9 @@ const userSlice = createSlice({
     setIsAuthenticated: (state) => {
       // const { token }: userToken = action.payload;
       state.isAuthenticated = true;
+    },
+    setUser: (state, { payload }) => {
+      state.account = payload.user;
     },
     logOut: (state) => {
       state.isAuthenticated = false;
@@ -71,4 +71,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { setIsAuthenticated, logOut } = userSlice.actions;
+export const { setIsAuthenticated, logOut, setUser } = userSlice.actions;

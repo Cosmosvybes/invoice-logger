@@ -3,15 +3,15 @@ import NavBtn from "./NavBtn";
 
 const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
   const [buttonData] = useState([
-    { id: 1, text: "sent" },
     { id: 2, text: "draft" },
+    { id: 1, text: "sent" },
     { id: 3, text: "paid" },
     { id: 4, text: "overdue" },
   ]);
   const [active, setActive] = useState(buttonData[0].id);
 
   useEffect(() => {
-    switchTab("sent");
+    switchTab("draft");
   }, []);
   return (
     <>

@@ -48,27 +48,27 @@ const Table_ = () => {
         .map((row, i) => (
           <tr
             key={i}
-            className={`${i % 2 == 0 ? "bg-gray-50" : "bg-gray-100"}`}
+            className={`${i % 2 == 0 ? "bg-purple-200" : "bg-gray-100"} py-1`}
           >
-            {/* <td className="text-center  py-2 max-sm:py-1">
+            {/* <td className="text-center  py-1 max-sm:py-1">
               {String(row.id).slice(10, 15)}
             </td> */}
-            <td className="text-center max-sm:text-sm font-normal text-black  py-2 max-sm:py-1">
-              {String(row.name).slice(0, 6)}
+            <td className="text-center max-sm:text-sm font-normal text-black  py-1 max-sm:py-1">
+              {String(row.name).slice(0, 8)}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black py-2 max-sm:py-1">
+            <td className="text-center max-sm:text-sm font-normal text-black py-1 max-sm:py-1">
               {String(row.email).length > 10 &&
                 String(row.email).slice(0, 9) + "..."}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black py-4 max-sm:py-1">
+            <td className="text-center max-sm:text-sm font-normal text-black p-2 max-sm:py-1">
               {String(row.address).length > 10
                 ? String(row.address).slice(0, 5) + "..."
                 : row.address}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black py-4 max-sm:py-1">
+            <td className="text-center max-sm:text-sm font-normal text-black p-2 max-sm:py-1">
               {row.cityStatePostal}
             </td>
-            <td className="text-center max-sm:text-sm font-normal text-black py-4 max-sm:py-1">
+            <td className="text-center max-sm:text-sm font-normal text-black p-2 max-sm:py-1">
               {row.country.slice(0,8)}
             </td>
           </tr>
@@ -78,9 +78,9 @@ const Table_ = () => {
   return (
     <>
       <div className="relative max-sm:w-full">
-        <div className="relative flex justify-start items-center gap-3 max-sm:w-full h-auto w-full mt-5 max-sm:px-1 max-sm:mt-3">
+        <div className="relative flex justify-start items-center max-sm:w-full h-auto w-full mt-5 max-sm:px-1 max-sm:mt-3">
           <Input
-            className="w-1/4 max-sm:w-full border px-3 py-3 outline-none rounded-md"
+            className="w-1/4 max-sm:w-full border px-3 py-2 outline-none rounded-md"
             placeholder="Search client name, ID, city or country"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
@@ -92,7 +92,7 @@ const Table_ = () => {
             <tr className="py-3">
               {tableColums.map((_, i) => (
                 <th
-                  className="text-slate-800 text-center py-3 lg:py-2 max-sm:py-2"
+                  className="text-slate-800 text-center py-3 lg:py-1 max-sm:py-1"
                   key={i}
                 >
                   {_.text}

@@ -12,7 +12,7 @@ export default function useInvoiceController() {
   );
 
   const { currentData } = useAppSelector((store) => store.invoice);
-
+  // console.log(currentData);
   const dispatch = useAppDispatch();
   //filter func
   const handleInvoiceFilter = (arg: string) => {
@@ -24,7 +24,6 @@ export default function useInvoiceController() {
 
       case "sent":
         const uniqueSent = sent.filter((item) => item.status === "sent");
-       ;
         return dispatch(setCurrrentInvoices(uniqueSent));
 
       case "paid":
@@ -38,7 +37,8 @@ export default function useInvoiceController() {
 
         return dispatch(setCurrrentInvoices(uniqueOverdue));
       default:
-        return dispatch(setCurrrentInvoices(sent));
+        const drafts = draft.filter((item) => item.status == "Draft");
+        return dispatch(setCurrrentInvoices(drafts));
     }
   };
 

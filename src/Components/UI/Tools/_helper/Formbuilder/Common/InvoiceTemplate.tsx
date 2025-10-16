@@ -2,9 +2,8 @@ import { Invoice } from "../../../../../../States/Slices/invoice.types";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../../States/Slices/invoice";
-import { MoreVertical } from "react-huge-icons/outline";
+import { MoreVertical } from "react-huge-icons/solid";
 import { useLayoutEffect, useRef, useState } from "react";
-
 
 const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
   const dispatch = useAppDispatch();
@@ -37,7 +36,7 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           >
             <Link
               to={`/${"invoice/update"}/${invoice.id}`}
-              className="text-slate-950 hover:bg-green-900 transition duration-500 hover:text-gray-50 text-xl text-center font-light py-1 px-2 w-full "
+              className="text-slate-950 hover:bg-purple-900 transition duration-500 hover:text-gray-50 text-xl text-center font-light py-1 px-2 w-full "
             >
               Edit invoice
             </Link>
@@ -68,7 +67,7 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           </div>
 
           <MoreVertical
-            className="text-4xl text-purple-700 "
+            className="text-2xl text-black"
             onClick={() => setShowOptions(true)}
           />
         </div>

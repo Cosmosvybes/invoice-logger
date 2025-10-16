@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { setIsAuthenticated } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
+import {
+  setIsAuthenticated,
+  setUser,
+} from "../../../../../../States/Slices/ClientSlice/useAuth/user";
 import { useNavigate } from "react-router-dom";
 import {
   useAppDispatch,
@@ -56,14 +59,17 @@ export default function useSigninController() {
     // https://ether-bill-server-1.onrender.com
     setLoading(true);
     // console.log(loading);
-    const response = await fetch(`http://localhost:8080/api/sign-in`, {
-      method: "POST",
-      headers: { "Content-Type": "Application/json" },
-      body: JSON.stringify({
-        email: formValues["Email"],
-        password: formValues["Password"],
-      }),
-    });
+    const response = await fetch(
+      `https://ether-bill-server-1.onrender.com/api/sign-in`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify({
+          email: formValues["Email"],
+          password: formValues["Password"],
+        }),
+      }
+    );
     const result = await response.json();
     const { token } = result;
 
@@ -78,13 +84,16 @@ export default function useSigninController() {
       return toast.error(result.response, { theme: "dark" });
     } else {
       localStorage.setItem("token", token);
-
-      const response = await fetch(`http://localhost:8080/api/user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        `https://ether-bill-server-1.onrender.com/api/user`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (response.status == 200) {
         dispatch(setIsAuthenticated());
+        dispatch(setUser({ user: await response.json() }));
         navigate("/dashboard");
       }
     }

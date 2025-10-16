@@ -83,11 +83,14 @@ export default function useSignUpController() {
 
     try {
       dispatch(setLoading());
-      const result = await fetch("http://localhost:8080/api/create_account", {
-        method: "POST",
-        headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify(formValues),
-      });
+      const result = await fetch(
+        "https://ether-bill-server-1.onrender.com/api/create_account",
+        {
+          method: "POST",
+          headers: { "Content-Type": "Application/json" },
+          body: JSON.stringify(formValues),
+        }
+      );
       if (!result.ok) {
         dispatch(setLoading());
 

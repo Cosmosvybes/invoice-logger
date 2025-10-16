@@ -19,10 +19,10 @@ const Settings = () => {
   } = useSettingsController();
   return (
     <>
-      <div className="relative px-28 max-sm:px-0 h-auto">
+      <div className="relative px-24 max-sm:px-0 h-auto">
         <BreadCrumb title="Settings" useLink={false} linkTitle="" />
         <br/>
-        <div className="relative w-full grid grid-cols-3 max-sm:grid-cols-1 px-2 gap-5 max-sm:gap-3  h-auto max-sm:h-auto ">
+        <div className="relative w-full grid grid-cols-3 max-sm:grid-cols-1  px-1 gap-5 max-sm:gap-3  h-auto max-sm:h-auto ">
           <InputProvider
             settings={settings}
             handleSubmit={handleSubmit}
