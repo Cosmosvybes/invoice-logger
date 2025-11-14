@@ -19,7 +19,7 @@
     "chart.js": "^4.5.1",
     "connectkit": "^1.8.2",
     "ethers": "^6.13.5",
-    "firebase": "^10.12.5",
+    "firebase": "^10.14.1",
     "get-uid": "^1.0.1",
     "pinata": "^2.4.2",
     "react": "^18.3.1",
@@ -47,5 +47,18 @@
     "tailwindcss": "^3.4.7",
     "typescript": "^5.2.2",
     "vite": "^5.3.4"
-  }
+  },
+  "description": "- Etherbill is blockchain powered web application, to execute contractual business deals on a trustess system.",
+  "main": "postcss.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cosmosvybes/invoice-logger.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cosmosvybes/invoice-logger/issues"
+  },
+  "homepage": "https://github.com/Cosmosvybes/invoice-logger#readme"
 }

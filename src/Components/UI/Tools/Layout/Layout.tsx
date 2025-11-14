@@ -62,16 +62,16 @@ const Layout = ({ children }: any) => {
   // if (!isAuthenticated) return <SignIn />;
   return (
     <AuthContext.Provider value={{}}>
-      <div className=" bg-purple-200    h-auto w-full rounded-tl-lg rounded-tr-lg gap-4 p-2 ">
+      <div className=" bg-purple-200     w-full rounded-tl-lg rounded-tr-lg gap-4 p-2 ">
         <Nav />
-        <div className="relative justify-normal flex">
+        <div className="relative justify-normal  flex">
           <div className="relative w-1/4 overflow-y-scroll  max-sm:hidden rounded-bl-lg bg-purple-200">
             <div className="fixed h-auto w-10 left-100 p-1 rounded-md bottom-10  bg-[rgba(0,0,0,0.18)] flex justify-center items-center">
               <ArrowDownRectangle className="text-2xl text-purple-500" />
             </div>
 
             {sideMenu.map(({ title, children }) => (
-              <div className="relative p-3" key={title}>
+              <div className="relative p-3 border " key={title}>
                 <SideNav
                   title={title}
                   children={children!}

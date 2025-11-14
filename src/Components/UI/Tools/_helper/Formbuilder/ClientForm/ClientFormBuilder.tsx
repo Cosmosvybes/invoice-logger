@@ -5,8 +5,7 @@ import useClientFormController from "./client.form.controller";
 const ClientFormBuilder = () => {
   const { newCLientsFormField } = useModalController();
 
-  const { formValues, updateClientForm, handleAddNewClient } =
-    useClientFormController();
+  const { formValues, updateClientForm } = useClientFormController();
 
   const CLIENT_FORM = newCLientsFormField.map((_, i) => {
     switch (_.type) {
@@ -55,11 +54,11 @@ const ClientFormBuilder = () => {
       <div className="relative flex mt-4  gap-5  pb-5 w-1/2 max-sm:w-full max-md:w-full justify-start  max-sm:justify-end">
         <Button
           onClick={() => history.back()}
-          className="bg-purple-500 text-white w-32 text-sm max-sm:w-auto max-sm:py-3 py-2  border px-3 rounded-md text-gray-900"
+          className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]"
         >
           Cancel
         </Button>
-        <Button className="bg-purple-500 text-white w-32 text-sm max-sm:w-auto max-sm:py-3 py-2  border px-3 rounded-md text-gray-900">
+        <Button className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]">
           Add client
         </Button>
       </div>

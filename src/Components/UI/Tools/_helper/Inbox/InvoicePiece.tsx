@@ -1,4 +1,4 @@
-import { MailArrowLeft } from "react-huge-icons/bulk";
+import { Chatting, MailArrowLeft } from "react-huge-icons/bulk";
 import {
   Button,
   Card,
@@ -13,6 +13,7 @@ import PDFDownloader from "../../../../PDF/Components/PDFDownloader";
 import GeneratePDF from "../../../../PDF/PDFGenereator";
 
 import { Invoice } from "../../../../../States/Slices/invoice.types";
+import { useNavigate } from "react-router-dom";
 const InvoicePiece = ({
   invoiceInformation,
 }: {
@@ -23,6 +24,7 @@ const InvoicePiece = ({
     setModal(!modal);
   };
 
+  const navigate = useNavigate();
   return (
     <>
       <Card className="h-auto max-sm:w-full flex justify-between  b-l-secondary ribbon-wrapper-right shadow-md">
@@ -188,9 +190,17 @@ const InvoicePiece = ({
         <ModalFooter>
           <Button
             className=" mt-1 bg-gradient-to-br from-purple-700 to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+            onClick={() =>
+              navigate("/invoice/chat", { state: { invoiceInformation } })
+            }
+          >
+            <Chatting className="text-xl" />
+          </Button>
+          <Button
+            className=" mt-1 bg-gradient-to-br from-purple-700 to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
             onClick={toggle_}
           >
-            Close
+            close
           </Button>
         </ModalFooter>
       </Modal>

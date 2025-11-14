@@ -166,7 +166,7 @@ export default function useTemplateController() {
       htmlContent: emailData,
       invoice: invoiceInformation,
     };
-    if (!isConnected) return toast.warn("Account not conneected");
+    // if (!isConnected) return toast.warn("Account not conneected");
 
     try {
       dispatch(setLoading());
