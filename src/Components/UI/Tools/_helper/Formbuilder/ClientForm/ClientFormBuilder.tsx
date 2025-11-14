@@ -1,11 +1,14 @@
 import { Button, Input } from "reactstrap";
 import useModalController from "../../../InvoiceModal/controller";
 import useClientFormController from "./client.form.controller";
+import Overlay from "../../../../Interfaces/Pages/Subscription/_OverlayComp/Overlay";
+import { LoadingDashed } from "react-huge-icons/solid";
 
 const ClientFormBuilder = () => {
   const { newCLientsFormField } = useModalController();
 
-  const { formValues, updateClientForm } = useClientFormController();
+  const { formValues, updateClientForm, handleAddNewClient, loading } =
+    useClientFormController();
 
   const CLIENT_FORM = newCLientsFormField.map((_, i) => {
     switch (_.type) {
@@ -45,20 +48,31 @@ const ClientFormBuilder = () => {
 
   return (
     <>
+      {loading && (
+        <Overlay
+          children={
+            <LoadingDashed className="text-5xl text-purple-600 animate-spin z-30" />
+          }
+        />
+      )}
+
       <div className="relative block  max-sm:text-sm mt-2">
         <p>Adding a client makes it easy to send them invoice.</p>
       </div>
       <div className="relative grid grid-cols-1 gap-2 mt-5 max-sm:grid-cols-1 ">
         {CLIENT_FORM}
       </div>
-      <div className="relative flex mt-4  gap-5  pb-5 w-1/2 max-sm:w-full max-md:w-full justify-start  max-sm:justify-end">
+      <div className="relative flex mt-4  gap-2  pb-5 w-1/2 max-sm:w-full max-md:w-full justify-start  max-sm:justify-end">
         <Button
           onClick={() => history.back()}
           className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]"
         >
           Cancel
         </Button>
-        <Button className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]">
+        <Button
+          onClick={handleAddNewClient}
+          className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]"
+        >
           Add client
         </Button>
       </div>

@@ -31,6 +31,8 @@ export default function useClientFormController() {
   };
 
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
+
   const handleAddNewClient = async () => {
     let hasEmptyStr = Object.values(formValues).find((val) => val == "");
 
@@ -47,6 +49,7 @@ export default function useClientFormController() {
       cityStatePostal: City_Postal_State,
       id: Date.now(),
     };
+    setLoading(true);
     // https://ether-bill-server-1.onrender.com
     const response = await fetch(`${API_URL}/api/client/new`, {
       method: "POST",
@@ -61,10 +64,12 @@ export default function useClientFormController() {
     }
     toast.success("New Client added", { theme: "light" });
     Object.keys(clientFormValues).map((name) => updateClientForm("", name));
+    setLoading(false);
     return dispatch(add({ ...client })); //clear input values
   };
 
   return {
+    loading,
     formValues,
     updateClientForm,
     handleAddNewClient,
