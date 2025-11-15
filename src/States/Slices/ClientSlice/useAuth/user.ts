@@ -18,7 +18,7 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
     const user = await response.json();
     return user;
   } catch (error: any) {
-    toast.error("session expired already", { theme: "colored" });
+    toast.warn("Please sign in", { theme: "colored" });
   }
 });
 

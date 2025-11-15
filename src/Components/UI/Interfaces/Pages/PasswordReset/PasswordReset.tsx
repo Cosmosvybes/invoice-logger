@@ -36,6 +36,7 @@ const PasswordReset = () => {
     try {
       const response = await fetch(
         "https://ether-bill-server-1.onrender.com/api/reset-password",
+        //https://ether-bill-server-1.onrender.com
         {
           method: "POST",
           headers: { "Content-Type": "Application/json" },
@@ -68,7 +69,7 @@ const PasswordReset = () => {
   return (
     <>
       {/* <Header /> */}
-      {loading && (
+     {loading && (
         <Overlay
           children={
             <LoadingDashed className="text-5xl text-purple-600 animate-spin z-30" />
@@ -78,7 +79,7 @@ const PasswordReset = () => {
 
       <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
         <div className="relative w-full  px-10 max-sm:hidden"></div>
-
+ 
         <div className="relative max-sm:px-1 max-sm:h-screen bg-gray-100   w-3/4 max-sm:w-full h-screen py-5 px-10  flex-col  flex justify-center items-center">
           <h1 className="text-2xl text-purple-500 font-bold mb-2">
             Password reset{" "}

@@ -51,18 +51,16 @@ const Layout = ({ children }: any) => {
     <BookAdd className="inline text-xl" />,
   ];
   const { sideMenu } = useLayoutController(icons);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   // const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
+ ;
 
   // if (!isAuthenticated) return <SignIn />;
   return (
     <AuthContext.Provider value={{}}>
-      <div className=" bg-purple-200     w-full rounded-tl-lg rounded-tr-lg gap-4 p-2 ">
+      <div className=" bg-purple-200     w-full rounded-tl-lg rounded-tr-lg gap-4 py-2  ">
         <Nav />
         <div className="relative justify-normal  flex">
           <div className="relative w-1/4 overflow-y-scroll  max-sm:hidden rounded-bl-lg bg-purple-200">

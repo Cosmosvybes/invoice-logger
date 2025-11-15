@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getUser } from "../../../../States/Slices/ClientSlice/useAuth/user";
+import { useAppDispatch } from "../../../../States/hoooks/hook";
 
 export default function useLayoutController(icons: any) {
   const sideMenu = [
@@ -120,6 +122,10 @@ export default function useLayoutController(icons: any) {
       ],
     },
   ];
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
   const [viewMode, setMode] = useState(false);
   return {
     sideMenu,
