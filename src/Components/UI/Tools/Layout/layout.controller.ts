@@ -1,11 +1,11 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import { getUser } from "../../../../States/Slices/ClientSlice/useAuth/user";
-import { useAppDispatch, useAppSelector } from "../../../../States/hoooks/hook";
+import { useAppDispatch} from "../../../../States/hoooks/hook";
 import { getUser } from "../../../../States/Slices/ClientSlice/useAuth/user";
 // import { getUser as userState } from "../../../../States/Slices/invoice";
 
 export default function useLayoutController(icons: any) {
-  const { isAuthenticated } = useAppSelector((store) => store.userSlice);
+  // const { isAuthenticated } = useAppSelector((store) => store.userSlice);
   const sideMenu = [
     // {
     //   id: 2,
