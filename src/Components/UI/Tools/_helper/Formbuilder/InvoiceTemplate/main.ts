@@ -41,7 +41,7 @@ export default function useTemplateController() {
   // };
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
@@ -149,7 +149,7 @@ export default function useTemplateController() {
   const [recipient, setReceipient] = useState("");
   const [sendAsMessage, setSetAsMessage] = useState(true);
   //
-
+  const navigate = useNavigate();
   const handleSendInvoice = async (emailHtml: any) => {
     let hasEmptyStr = Object.values(invoiceInformation).find(
       (val) => val == ""
@@ -183,7 +183,10 @@ export default function useTemplateController() {
       );
       if (!responseInfo.ok) {
         if (responseInfo.status == 403) {
-          throw new Error("Insufficient token balance, add tokens");
+          const { res } = await responseInfo.json();
+
+          navigate("/subscription/payment");
+          throw new Error(res);
         } else {
           throw new Error("internal server error");
         }

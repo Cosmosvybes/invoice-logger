@@ -21,11 +21,12 @@ import Disputes from "../UI/Interfaces/Pages/Disputes/Disputes";
 import PasswordReset from "../UI/Interfaces/Pages/PasswordReset/PasswordReset";
 import VerificationCodePage from "../UI/Interfaces/Pages/PasswordReset/VerificationCodePage";
 import NewPassword from "../UI/Interfaces/Pages/PasswordReset/NewPassword";
+import Chat from "../UI/Tools/chat/Chat";
+import Payment from "../UI/Interfaces/Pages/Dashboard/payment/Payment";
 
 const _Routes = () => {
   return (
     <>
-   
       <ToastContainer />
       <Routes>
         <Route path="/new_password" element={<NewPassword />}></Route>
@@ -45,6 +46,8 @@ const _Routes = () => {
         <Route path="/clients" element={<ClientPage />}></Route>
         <Route path="/client/new" element={<AddClient />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/invoice/chat" element={<Chat />}></Route>
+        <Route path="/subscription/payment" element={<Payment />}></Route>
         <Route path="/deal/escrow/:id" element={<Escrow />}></Route>
         <Route path="/finance/marketplace" element={<Marketplace />}></Route>
         <Route path="/finance/user/listings" element={<Listings />}></Route>

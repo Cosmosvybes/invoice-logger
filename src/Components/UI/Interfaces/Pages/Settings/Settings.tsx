@@ -19,25 +19,24 @@ const Settings = () => {
   } = useSettingsController();
   return (
     <>
-      <div className="relative px-24 max-sm:px-0 h-auto">
+      <div className="relative px-24 max-sm:px-0 ">
         <BreadCrumb title="Settings" useLink={false} linkTitle="" />
-        <br/>
-        <div className="relative w-full grid grid-cols-3 max-sm:grid-cols-1  px-1 gap-5 max-sm:gap-3  h-auto max-sm:h-auto ">
-          <InputProvider
-            settings={settings}
-            handleSubmit={handleSubmit}
-            schema={personalizationSchema}
-            data={fieldsValue}
-            title="User Preferences"
-            handleChange={handleChange}
-          />
-
+        <br />
+        <div className="relative w-full mt-0 border bg-purple-200 grid grid-cols-3 max-sm:grid-cols-1  max-sm:py-1 px-1 max-sm:gap-3  h-auto max-sm:h-auto ">
           <InputProvider
             settings={settings}
             handleSubmit={handleSubmit}
             schema={[...settingsSchema, ...businessDetails]}
             data={fieldsValue}
             title="Profile & Account Info"
+            handleChange={handleChange}
+          />{" "}
+          <InputProvider
+            settings={settings}
+            handleSubmit={handleSubmit}
+            schema={personalizationSchema}
+            data={fieldsValue}
+            title="User Preferences"
             handleChange={handleChange}
           />
           <InputProvider
@@ -49,9 +48,9 @@ const Settings = () => {
             handleChange={handleChange}
           />
         </div>
-        <div className="relative h-52 max-sm:h-20 w-full flex justify-start max-sm:justify-end mt-2 max-sm:mt-1 px-1 max-sm:px-4 items-center">
+        <div className="relative  max-sm:h-20 w-full flex justify-start max-sm:justify-end max-sm:mt-1 px-1 max-sm:px-4 items-center">
           <button
-            className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]"
+            className=" rounded-md gap-2 mt-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]"
             onClick={handleSubmit}
           >
             {loading && (

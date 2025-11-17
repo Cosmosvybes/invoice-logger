@@ -41,16 +41,19 @@ const InputProvider = React.memo(
                 key={i}
                 className="flex justify-between px-0 items-center"
               >
-                <Label> {_.label}</Label>
-                <Input
-                  color="dark"
-                  type="switch"
-                  value={settings[_.name]}
-                  checked={settings[_.name]}
-                  onChange={(e) => {
-                    handleChange(_.name, e.currentTarget.checked);
-                  }}
-                />
+                <div className="flex items-center= justify-between w-full">
+                  <Label className="text-xs ">{_.label}</Label>
+                  <Input
+                    className="text-xs"
+                    color="dark"
+                    type="switch"
+                    value={settings[_.name]}
+                    checked={settings[_.name]}
+                    onChange={(e) => {
+                      handleChange(_.name, e.currentTarget.checked);
+                    }}
+                  />
+                </div>
               </FormGroup>
             </div>
           );
@@ -83,7 +86,7 @@ const InputProvider = React.memo(
           return (
             <div className="relative" key={i}>
               <FormGroup key={i}>
-                <Label> {_.label}</Label>
+                <Label className="text-sm"> {_.label}</Label>
                 <Input
                   type="text"
                   className="form-control text-gray-400"
@@ -98,9 +101,9 @@ const InputProvider = React.memo(
 
     return (
       <>
-        <Card className="w-full border-none bg-purple-100 h-96 max-sm:h-auto shadow-xs">
+        <Card className="w-full border-none bg-purple-100 h-auto max-sm:h-auto shadow-xs">
           <CardBody className="border-none text-purple700">
-            <CardTitle>{title}</CardTitle>
+            <CardTitle className="text-xs">{title}</CardTitle>
             <hr />
             <br />
             <Form

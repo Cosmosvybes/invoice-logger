@@ -68,7 +68,7 @@ const VerificationCodePage = () => {
 
         <div className="relative max-sm:px-1   w-3/4 bg-gray=100 max-sm:w-full h-[calc(100vh-100px)] py-5 px-10  flex-col  flex justify-center items-center">
           <h1 className="text-2xl text-purple-500 font-bold mb-2">
-            Verification code
+            VERIFICATION CODE
           </h1>
           <Input
             type="number"
@@ -83,7 +83,7 @@ const VerificationCodePage = () => {
             onClick={codeVerificationHandler}
             className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
           >
-            SUBMIT CODE
+            Submit code
           </Button>
         </div>
       </div>

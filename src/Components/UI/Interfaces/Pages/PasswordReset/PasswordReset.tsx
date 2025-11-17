@@ -69,7 +69,7 @@ const PasswordReset = () => {
   return (
     <>
       {/* <Header /> */}
-     {loading && (
+      {loading && (
         <Overlay
           children={
             <LoadingDashed className="text-5xl text-purple-600 animate-spin z-30" />
@@ -79,10 +79,10 @@ const PasswordReset = () => {
 
       <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
         <div className="relative w-full  px-10 max-sm:hidden"></div>
- 
+
         <div className="relative max-sm:px-1 max-sm:h-screen bg-gray-100   w-3/4 max-sm:w-full h-screen py-5 px-10  flex-col  flex justify-center items-center">
           <h1 className="text-2xl text-purple-500 font-bold mb-2">
-            Password reset{" "}
+            PASSWORD RESET
           </h1>
           <Input
             type="email"
@@ -97,7 +97,7 @@ const PasswordReset = () => {
             onClick={() => passwordResetHandler(emailHtml)}
             className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
           >
-            REQUEST CODE
+            Request code
           </Button>
           <div className="relative mt-2 max-sm:mt-5 flex justify-right w-full">
             <Link

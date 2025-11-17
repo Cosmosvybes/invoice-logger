@@ -13,11 +13,11 @@ const Inbox = () => {
     <>
       <div className="relative px-28 max-sm:px-2">
         <BreadCrumb title="Invoice received" linkTitle="" useLink={false} />
-        <div className="relative flex  max-sm:flex-col mt-5 justify-between h-auto">
+        <div className="relative flex  max-sm:flex-col  justify-between h-auto">
           {inbox.length < 1 ? (
-            <Empty message="Fold is currently empty!" />
+            <Empty message="Folder is currently empty!" />
           ) : (
-            <div className="relative w-1/2  max-sm:w-full max-sm:px-0 flex gap-1 justify-start flex-col">
+            <div className="relative w-2/3  max-sm:w-full max-sm:px-0 flex gap-2 justify-start flex-col">
               {currentList.map((_, i) => (
                 <InvoicePiece key={i} invoiceInformation={_} />
               ))}

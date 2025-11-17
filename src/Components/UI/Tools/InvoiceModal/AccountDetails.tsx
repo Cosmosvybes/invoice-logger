@@ -2,8 +2,7 @@ import { ArrowRight } from "react-huge-icons/outline";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
-import { useEffect, useState } from "react";
-import Paginate from "../Layout/Paginate/Paginate";
+import { useState } from "react";
 import { Card, CardBody, CardText, CardTitle } from "reactstrap";
 import {
   Chart as ChartJS,
@@ -23,19 +22,19 @@ const AccountDetails = () => {
   // const { balance, isConnected } = useAppSelector((store) => store.walletSlice);
   const [invoicesPerPage] = useState(2);
 
-  const [currrentPage, setCurrentPage] = useState(1);
+  const [currrentPage] = useState(1);
   let indexOfLastInvoice = currrentPage * invoicesPerPage;
   let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
   const currentInvoices = draft?.slice(indexOfFirstInvoice, indexOfLastInvoice);
 
-  const handlePaginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-  useEffect(() => {
-    if (typeof draft == undefined) {
-      location.replace("/");
-    }
-  }, []);
+  // const handlePaginate = (pageNumber: number) => {
+  //   setCurrentPage(pageNumber);
+  // };
+  // useEffect(() => {
+  //   if (typeof draft == undefined) {
+  //     location.replace("/");
+  //   }
+  // }, []);
 
   ChartJS.register(
     CategoryScale,
@@ -84,7 +83,7 @@ const AccountDetails = () => {
     return (
       <>
         <Line
-          height={250}
+          height={180}
           data={data}
           options={{
             plugins: {
@@ -99,20 +98,20 @@ const AccountDetails = () => {
 
   return (
     <>
-      <div className="relative h-auto  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
+      <div className="relative overflow-y-scroll  w-full   flex-col  transition  max-sm:py-2 max-sm:h-auto  flex justify-center items-center max-sm:px-0 max-sm:w-full">
         <div className="relative h-auto  w-full  max-sm:w-full rounded-3xl   flex flex-col  gap-1 px-1  font-bold">
           <div className="w-full  block relative">
             <p className="text-slate-900 px-2 text-xl max-sm:text-sm font-light ">
               Overview
             </p>
 
-            <div className="relative w-full grid gap-2 max-md:gap-5 mt-2  px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
+            <div className="relative w-full grid gap-2 max-md:gap-5 mt-2 px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2   max-sm:grid-cols-2">
               <Card className="bg-gray-100">
                 <CardBody className="relative flex text-xl flex-col max-sm:gap-2 justify-center px-2 max-sm:w-full items-left w-full lg:h-auto max-sm:h-auto   gap-2   text-purple-900">
                   <CardTitle className="text-purple-800 text-xl font-bold">
                     Revenue
                   </CardTitle>
-                  <CardText className="text-purple-800 text-4xl max-sm:text-sm font-semibold">
+                  <CardText className="text-purple-800 text-4xl max-sm:text-sm font-semibold flex justify-start items-start gap-2">
                     $ {revenue.toLocaleString()}
                   </CardText>
                   {/* <p className="text-purple-800 mt-2 text-xl font-semibold max-sm:text-sm">
@@ -154,7 +153,7 @@ const AccountDetails = () => {
               </Card>
             </div>
           </div>
-          <div className="relative w-full flex items-center  mt-4 gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
+          <div className="relative w-full flex items-center  mt-1 gap-2 justify-between  max-sm:px-0  max-sm:grid max-sm:grid-cols-1 max-sm:w-full ">
             <div className="relative w-full flex justify-between items-center px-1">
               <p className="text-purple-900 text-sm font-normal">
                 latest invoice
@@ -176,40 +175,40 @@ const AccountDetails = () => {
             </div>
           </div>
           {/* //invoice drfats */}
-          <div className="relative w-full mt-4 p-1 h-[26rem] max-sm:h-auto gap-3 border-none flex  justify-between   max-sm:flex-col max-md:flex-col">
-            <div className="w-1/2 max-sm:w-full flex-col gap-5">
+          <div className="relative w-full max-sm:h-auto h-[16rem] max-sm:h-auto gap-1 border-none flex  justify-between   max-sm:flex-col max-md:flex-col">
+            <div className="w-1/2 max-sm:w-full flex-col gap-2">
               <div className="flex flex-col w-full">
                 {draft?.length == 0 ? (
                   <p className="text-gray-700 text-xl px-2  ">
                     No invoice yet!
                   </p>
                 ) : (
-                  <Card className="relative  rounded-lg  flex h-[18rem] p-2 overflow-y-scroll bg-gradient-to-br bg-gray-100  items-center py-2   w-full max-md:w-full max-sm:w-full">
-                    <div className="relative w-full gap-1 rounded-lg  flex flex-col-reverse ">
-                      {currentInvoices.reverse().map((invoice: any) => (
-                        <div
-                          className="relative border-b border-gray-500 gap-2  max-sm:p-0 bg-gray-200"
-                          key={invoice.id}
-                        >
-                          <InvoiceTemplate invoice={invoice} />
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
+                  <div className="border w-full h-[10rem]  max-sm:h-auto flex-col gap-2">
+                    {currentInvoices.reverse().map((invoice: any) => (
+                      <div
+                        className="relative border-b border-gray-700 gap-2 border max-sm:p-0 bg-gray-200"
+                        key={invoice.id}
+                      >
+                        <InvoiceTemplate invoice={invoice} />
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
-              <div className="w-full  h-auto mt-1">
+              {/* <div className="w-full  h-auto mt-1">
                 <Paginate
                   invoices={draft}
                   postsPerPage={invoicesPerPage}
                   paginateHandler={handlePaginate}
                 />
-              </div>
+              </div> */}
             </div>
 
             {/*  */}
-            <div className="w-1/2 max-sm:w-full max-sm:h-auto">
-              <LineChart />
+            <div className="w-1/2 h-[100%] max-sm:w-full">
+              <div className="w-full max-sm:w-full max-sm:h-auto border">
+                <LineChart />
+              </div>
             </div>
             {/* //invoice drfats */}
           </div>{" "}
@@ -221,7 +220,7 @@ const AccountDetails = () => {
                   />
                 </div> */}
           {/* //Latest invoiceF */}
-          <div className="relative w-full max-sm:px-1 justify-between flex  items-center">
+          {/* <div className="relative w-full max-sm:px-1 justify-between flex  items-center">
             <p className="text-gray-600 text-sm font-light ">
               {" "}
               recent invoices
@@ -232,7 +231,7 @@ const AccountDetails = () => {
             >
               view all <ArrowRight className="text-black text-4xl inline" />
             </Link>{" "}
-          </div>
+          </div> */}
           {/* <Body currentData={currentInvoices} /> */}
         </div>
       </div>

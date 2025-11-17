@@ -28,7 +28,7 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
   return (
     <>
-      <div className="relative w-full p-2  gap-2 flex-col  h-auto  flex justify-between items-center">
+      <div className="relative w-full p-1  gap-2 flex-col  h-auto  flex justify-between items-center">
         {showOptions && (
           <div
             ref={invoiceOptions}

@@ -21,7 +21,7 @@ export default function useSettingsController() {
       type: "switch",
       name: "tokenBalanceNotification",
       value: false,
-      label: "Update balance notification",
+      label: "Balance notification",
     },
 
     {
@@ -53,7 +53,7 @@ export default function useSettingsController() {
       type: "switch",
       name: "defaultPaymentTerms",
       value: false,
-      label: "30 days default payment term",
+      label: "30 days default payment",
     },
 
     {
@@ -61,7 +61,7 @@ export default function useSettingsController() {
       type: "switch",
       name: "revenueNotification",
       value: false,
-      label: "enable/disbale revenue notifications",
+      label: "Enable revenue notification",
     },
   ]);
   const [subscriptionSchema] = useState([
@@ -70,14 +70,14 @@ export default function useSettingsController() {
       type: "switch",
       name: "sharingToken",
       value: false,
-      label: "enable/disable token sharing",
+      label: "Enable/disable token sharing",
     },
     {
       id: 19,
       type: "switch",
       name: "autoRenewal",
       value: false,
-      label: "subscription auto-renewal",
+      label: "Subscription auto-renewal",
     },
   ]);
 
@@ -94,7 +94,7 @@ export default function useSettingsController() {
       type: "text",
       name: "businessAddress",
       value: "",
-      label: "business address",
+      label: "Business address",
     },
   ]);
 

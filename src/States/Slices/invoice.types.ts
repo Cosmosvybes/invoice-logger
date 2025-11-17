@@ -69,6 +69,7 @@ export interface item {
   token: string | undefined;
 }
 export interface ACCOUNT {
+  accountCurrency:string,
   currentData: Invoice[];
   draft: Invoice[];
   sent: Invoice[];

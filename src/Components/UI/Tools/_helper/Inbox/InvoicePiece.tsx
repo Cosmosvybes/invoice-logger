@@ -27,9 +27,9 @@ const InvoicePiece = ({
   const navigate = useNavigate();
   return (
     <>
-      <Card className="h-auto max-sm:w-full flex justify-between  b-l-secondary ribbon-wrapper-right shadow-md">
-        <CardHeader className="flex justify-between items-center ">
-          <p className="text-gray-400 text-4xl max-sm:text-xl"> ●●●</p>{" "}
+      <Card className="h-auto max-sm:w-full flex justify-between border  ribbon-wrapper-right shadow-md">
+        <CardHeader className="flex justify-between items-center">
+          <p className="text-gray-400 text-4xl max-sm:text-xl"> ●●●</p>
           <MailArrowLeft className="h-full text-gray-400 text-5xl max-sm:text-4xl" />{" "}
         </CardHeader>
         <CardBody className="border-none  flex justify-between items-center ">
@@ -194,7 +194,7 @@ const InvoicePiece = ({
               navigate("/invoice/chat", { state: { invoiceInformation } })
             }
           >
-            <Chatting className="text-xl" />
+            SEND MESSAGE <Chatting className="text-xl" />
           </Button>
           <Button
             className=" mt-1 bg-gradient-to-br from-purple-700 to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"

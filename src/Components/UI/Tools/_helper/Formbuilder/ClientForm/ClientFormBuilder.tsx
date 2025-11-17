@@ -15,7 +15,7 @@ const ClientFormBuilder = () => {
       case "email":
         return (
           <div className="relative block " key={i}>
-            <p>{_.placeholder}</p>
+            <p className="text-sm">{_.placeholder}</p>
             <Input
               className="border border-gray-300 w-full outline-none rounded-md px-1 max-sm:py-2 py-2 lg:text-sm"
               type={"email"}
@@ -31,7 +31,7 @@ const ClientFormBuilder = () => {
       default:
         return (
           <div className="relative block " key={i}>
-            <p>{_.placeholder}</p>
+            <p className="text-sm">{_.placeholder}</p>
             <Input
               className="border border-gray-300 w-full outline-none rounded-md px-1 max-sm:py-2 py-2 lg:text-sm"
               type={"text"}
@@ -56,13 +56,13 @@ const ClientFormBuilder = () => {
         />
       )}
 
-      <div className="relative block  max-sm:text-sm mt-2">
+      <div className="relative block  max-sm:text-sm">
         <p>Adding a client makes it easy to send them invoice.</p>
       </div>
-      <div className="relative grid grid-cols-1 gap-2 mt-5 max-sm:grid-cols-1 ">
+      <div className="relative grid grid-cols-1 gap-2 mt-2 max-sm:grid-cols-1 ">
         {CLIENT_FORM}
       </div>
-      <div className="relative flex mt-4  gap-2  pb-5 w-1/2 max-sm:w-full max-md:w-full justify-start  max-sm:justify-end">
+      <div className="relative flex mt-3 gap-2  pb-5 w-1/2 max-sm:w-full max-md:w-full justify-start  max-sm:justify-end">
         <Button
           onClick={() => history.back()}
           className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[14px]"

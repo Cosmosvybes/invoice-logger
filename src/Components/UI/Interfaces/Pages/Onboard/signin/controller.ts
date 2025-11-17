@@ -9,6 +9,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../../States/hoooks/hook";
+import { getUser } from "../../../../../../States/Slices/invoice";
 
 //
 export default function useSigninController() {
@@ -94,6 +95,7 @@ export default function useSigninController() {
       if (response.status == 200) {
         dispatch(setIsAuthenticated());
         dispatch(setUser({ user: await response.json() }));
+        dispatch(getUser(localStorage.getItem("token")!));
         navigate("/dashboard");
       }
     }

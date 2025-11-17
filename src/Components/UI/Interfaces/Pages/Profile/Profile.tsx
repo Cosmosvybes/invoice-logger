@@ -11,8 +11,8 @@ const Profile = () => {
       {/* {!loading && ( */}
       <div className="px-28 max-sm:px-0 max-md:px-0">
         <BreadCrumb title="Profile" useLink={false} linkTitle="" />
-        <div className="relative py-0  mt-4 max-sm:mt-2  max-sm:py-0  h-screen flex justify-between max-sm:flex-col  ">
-          <div className="relative w-full  max-sm:w-full h-auto">
+        <div className="relative py-0  mt-4 max-sm:h-screen max-sm:mt-2  max-sm:py-0 flex justify-between max-sm:flex-col  ">
+          <div className="relative w-full border-2 bg-purple-200 max-sm:bg-purple-100  max-sm:w-full h-auto">
             <h3 className="text-2xl px-3 max-sm:px-0  max-sm:text-sm text-slate-800">
               {" "}
               Account information

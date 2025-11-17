@@ -85,7 +85,7 @@ const BreadCrumb = ({
   };
 
   return (
-    <div className="relative w-full mt-2  h-20 py-1 flex justify-between items-center px-2">
+    <div className="relative w-full  h-20 py-1 flex justify-between items-center px-2">
       <h1 className="text-purple-800 text-xl  max-sm:text-xl font-extrabold">
         {title}
       </h1>

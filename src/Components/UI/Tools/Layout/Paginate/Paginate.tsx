@@ -30,7 +30,7 @@ const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
 
   return (
     <>
-      <ul className="flex justify-center gap-2 px-2 place-items-center mt-4 flex-wrap rounded-md py-2 ">
+      <ul className="flex justify-center gap-2 px-2 place-items-center flex-wrap rounded-md  ">
 
         <button onClick={handlePrevious}>
  

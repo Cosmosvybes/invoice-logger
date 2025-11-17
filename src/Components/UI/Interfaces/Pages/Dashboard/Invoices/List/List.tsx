@@ -11,8 +11,8 @@ import { Invoice } from "../../../../../../../States/Slices/invoice.types";
 import useInvoiceListController from "./list.controller";
 import Paginate from "../../../../../Tools/Layout/Paginate/Paginate";
 import React, { useState } from "react";
-import { MoreHorizontal } from "react-huge-icons/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { MoreVertical } from "react-huge-icons/solid";
 // import InvoiceTable from "../../../../../Tools/InvoiceModal/InvoiceTable";
 
 const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
@@ -25,11 +25,14 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
     handleMarkAsPaid,
   } = useInvoiceListController(currentData);
 
+  const navigate = useNavigate();
   //  /////////
   const [modal, setModal] = useState(false);
   const handleToggle = () => {
     setModal(!modal);
   };
+
+  const handleViewInvoice = () => {};
 
   return (
     <>
@@ -44,6 +47,13 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
         </ModalBody>
         <ModalFooter>
           <Button
+            onClick={() => handleMarkAsPaid(currentRowDataID)}
+            color="success"
+            className="mt-1 bg-gradient-to-br from-green-700 to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+          >
+            PAID
+          </Button>
+          <Button
             color="danger"
             onClick={() => console.log(currentRowDataID)}
             className=" mt-1  h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto max-sm:mr-2"
@@ -51,11 +61,15 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
             OVERDUE
           </Button>
           <Button
-            onClick={() => handleMarkAsPaid(currentRowDataID)}
-            color="success"
-            className="mt-1 bg-gradient-to-br from-green-700 to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
+            color="primary"
+            onClick={() =>
+              navigate("/invoice/chat", {
+                state: { invoiceInformation: { id: currentRowDataID } },
+              })
+            }
+            className=" mt-1  h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto max-sm:mr-2"
           >
-            PAID
+            SEND MESSAGE
           </Button>
         </ModalFooter>
       </Modal>
@@ -133,7 +147,10 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
                     }}
                     className="text-black inline hover:bg-gray-300 hover:text-gray-50 text-sm max-sm:sm text-left font-light px-2 w-auto"
                   >
-                    <MoreHorizontal className="text-2xl text-gray-600 max-sm:text-xl" />
+                    <MoreVertical
+                      onClick={handleViewInvoice}
+                      className="text-2xl text-gray-600 max-sm:text-xl"
+                    />
                   </button>
                 </td>
               </tr>

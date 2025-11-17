@@ -93,6 +93,7 @@ const initialState: ACCOUNT = {
   tokens: 0,
   clients: [],
   inbox: [],
+  accountCurrency: "",
   staticForm: invoiceStaticValue,
   loading: false,
   currentInvoice: {},

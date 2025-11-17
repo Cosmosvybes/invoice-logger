@@ -69,7 +69,7 @@ const Table_ = () => {
               {row.cityStatePostal}
             </td>
             <td className="text-center max-sm:text-sm font-normal text-black p-2 max-sm:py-1">
-              {row.country.slice(0,8)}
+              {row.country.slice(0, 8)}
             </td>
           </tr>
         ))
@@ -77,22 +77,22 @@ const Table_ = () => {
 
   return (
     <>
-      <div className="relative max-sm:w-full">
-        <div className="relative flex justify-start items-center max-sm:w-full h-auto w-full mt-5 max-sm:px-1 max-sm:mt-3">
+      <div className="relative  max-sm:w-full px-4">
+        <div className="relative flex  justify-start items-center max-sm:w-full h-auto w-full max-sm:px-1 max-sm:mt-3 ">
           <Input
-            className="w-1/4 max-sm:w-full border px-3 py-2 outline-none rounded-md"
+            className="w-2/4 max-sm:w-full  px-3 py-2 outline-none rounded-md"
             placeholder="Search client name, ID, city or country"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-          />{" "}
+          />
         </div>
 
-        <table className="w-full border-collapse border-b px-3  mt-5 max-sm:w-full">
-          <thead className="mb-2 ">
-            <tr className="py-3">
+        <table className="w-full mt-1 px-3 max-sm:w-full">
+          <thead className="mb-2 px-4 ">
+            <tr className="py-3 px-4">
               {tableColums.map((_, i) => (
                 <th
-                  className="text-slate-800 text-center py-3 lg:py-1 max-sm:py-1"
+                  className="text-slate-800 text-left py-3 lg:py-1 max-sm:py-1"
                   key={i}
                 >
                   {_.text}
