@@ -74,7 +74,7 @@ const NewPassword = () => {
 
         <div className="relative max-sm:px-1 bg-purple-500   w-3/4 max-sm:w-full max-sm:h-screen py-5 px-10  flex-col  flex justify-center items-center">
           <h1 className="text-2xl text-purple-500 font-bold mb-2">
-            CREATE NEW PASSWORD
+            Create new password
           </h1>
           <Input
             type="email"

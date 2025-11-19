@@ -82,7 +82,7 @@ const PasswordReset = () => {
 
         <div className="relative max-sm:px-1 max-sm:h-screen bg-gray-100   w-3/4 max-sm:w-full h-screen py-5 px-10  flex-col  flex justify-center items-center">
           <h1 className="text-2xl text-purple-500 font-bold mb-2">
-            PASSWORD RESET
+            Password reset
           </h1>
           <Input
             type="email"
@@ -90,7 +90,7 @@ const PasswordReset = () => {
             value={email}
             required={true}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full outline-none border mb-2 px-2 py-1 lg:text-sm "
+            className="block w-full outline-none py-2 border mb-2 px-2 py-1 lg:text-sm "
           />
 
           <Button

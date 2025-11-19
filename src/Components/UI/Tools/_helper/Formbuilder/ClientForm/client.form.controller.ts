@@ -4,6 +4,7 @@ import { add } from "../../../../../../States/Slices/ClientSlice/clientSlice";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import useModalController from "../../../InvoiceModal/controller";
 import { API_URL } from "../../../../../constants/Index";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
   [key: string]: string;
@@ -12,7 +13,7 @@ type FormValues = {
 export default function useClientFormController() {
   const { newCLientsFormField } = useModalController();
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   let clientFormValues = newCLientsFormField.reduce(
     (allInfo, currInfo) => ({
       ...allInfo,
@@ -60,9 +61,11 @@ export default function useClientFormController() {
       body: JSON.stringify(client),
     });
     if (!response.ok) {
+      if (response.status === 403) {
+        navigate("/subscription/payment");
+      }
       // location.replace("/");
-    }
-    toast.success("New Client added", { theme: "light" });
+    } else toast.success("New Client added", { theme: "light" });
     Object.keys(clientFormValues).map((name) => updateClientForm("", name));
     setLoading(false);
     return dispatch(add({ ...client })); //clear input values

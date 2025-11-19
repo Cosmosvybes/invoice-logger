@@ -105,13 +105,7 @@ const OBTemplate = ({
 
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
-          <div className="relative max-md:py-2  max-sm:py-2 max-lg:py-2 w-full flex justify-between items-start gap-4">
-            <Link
-              to={"/reset_password"}
-              className="text-xs max-sm:text-sm text-purple-500"
-            >
-              Forgot password ?
-            </Link>
+          <div className="relative max-md:py-2 w-full flex-col   max-sm:py-2 max-lg:py-2  flex justify-between items-start gap-2">
             {url.pathname == "/" || url.pathname != "/create/new/account" ? (
               <Link
                 to={"/create/new/account"}
@@ -120,16 +114,23 @@ const OBTemplate = ({
                 Create new account
               </Link>
             ) : (
-              <Link
-                to={"/"}
-                className="text-xs flex flex-col   max-sm:text-sm text-purple-500"
-              >
-                Already have an account?
-                <span className="text-purple-500 underline max-sm:text-[16px] text-xs font-extrabold">
-                  {"Sign in"}
-                </span>
-              </Link>
+              <span className="text-purple-400 w-full max-sm:text-[16px] text-xs flex justify-start gap-2 ">
+                <p>Already have an account ? </p>
+
+                <Link
+                  to={"/"}
+                  className="text-xs  max-sm:text-sm underline text-purple-600"
+                >
+                  Sign in
+                </Link>
+              </span>
             )}
+            <Link
+              to={"/reset_password"}
+              className="text-xs max-sm:text-sm text-purple-500"
+            >
+              Forgot password ?
+            </Link>
           </div>
 
           <Button className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-bold hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full">
