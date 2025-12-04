@@ -80,8 +80,8 @@ const PasswordReset = () => {
       <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
         <div className="relative w-full  px-10 max-sm:hidden"></div>
 
-        <div className="relative max-sm:px-1 max-sm:h-screen bg-gray-100   w-3/4 max-sm:w-full h-screen py-5 px-10  flex-col  flex justify-center items-center">
-          <h1 className="text-2xl text-purple-500 font-bold mb-2">
+        <div className="relative max-sm:px-1 max-sm:h-screen bg-gray-100   w-3/4 max-sm:w-full h-screen py-5 px-10  flex-col  flex justify-center items-start">
+          <h1 className="text-2xl text-purple-500 font-bold mb-2 ">
             Password reset
           </h1>
           <Input
@@ -102,10 +102,10 @@ const PasswordReset = () => {
           <div className="relative mt-2 max-sm:mt-5 flex justify-right w-full">
             <Link
               to={"/"}
-              className="text-sm flex max-sm:text-sm  text-[14px] text-purple-500"
+              className="text-sm flex max-sm:text-sm  text-[14px] text-xs text-purple-500"
             >
               Already have an account?
-              <span className="text-purple-500 max-sm:text-sm text-[16px] ml-3 underline">
+              <span className="text-purple-500 text-xs max-sm:text-sm text-[16px] ml-3 underline">
                 {"Sign in"}
               </span>
             </Link>

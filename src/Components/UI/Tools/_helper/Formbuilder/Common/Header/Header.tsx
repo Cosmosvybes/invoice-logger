@@ -1,4 +1,4 @@
-import logo from "../../../../../../../assets/HatchfulExport-All(1) (2)/logo_transparent.png"
+import logo from "../../../../../../../assets/HatchfulExport-All(1) (2)/logo_transparent.png";
 const Header = () => {
   return (
     <>

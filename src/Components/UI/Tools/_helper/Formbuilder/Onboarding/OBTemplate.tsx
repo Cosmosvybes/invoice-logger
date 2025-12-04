@@ -53,7 +53,7 @@ const OBTemplate = ({
                 value={formValues[_.name]}
                 required={_.required}
                 onChange={(e) => handleChange(e.target.value, _.name)}
-                className="block w-full outline-none border mb-2 px-2 py-1 lg:text-sm"
+                className="block w-full outline-none border px-2 py-2 lg:text-sm"
               />
               {isPassWord ? (
                 <EyeDisable
@@ -80,7 +80,7 @@ const OBTemplate = ({
               value={formValues[_.name]}
               required={_.required}
               onChange={(e) => handleChange(e.target.value, _.name)}
-              className="block w-full outline-none border mb-2 px-2 py-1 lg:text-sm "
+              className="block w-full outline-none border mb-2 px-2 py-2 lg:text-sm "
             />
           </div>
         );
@@ -89,7 +89,8 @@ const OBTemplate = ({
 
   return (
     <>
-      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-2 z-10 px-2  max-sm:h-auto py-4">
+      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-2 z-10 px-2  max-sm:h-auto py-1">
+        {/* <p className="text-neutral-500">Etherbill</p> */}
         <CardTitle className="text-2xl font-bold text-purple-500">
           <p>
             {url.pathname == "/" || url.pathname != "/create/new/account"
@@ -105,7 +106,13 @@ const OBTemplate = ({
 
         <form onSubmit={(e) => handleSubmit(e)}>
           {FORM}
-          <div className="relative max-md:py-2 w-full flex-col   max-sm:py-2 max-lg:py-2  flex justify-between items-start gap-2">
+          <Link
+            to={"/reset_password"}
+            className="text-xs max-sm:text-sm text-purple-500"
+          >
+            Password reset
+          </Link>
+          <div className="relative max-md:py-2 w-full  max-sm:py-2 max-lg:py-1  flex justify-between items-start gap-2">
             {url.pathname == "/" || url.pathname != "/create/new/account" ? (
               <Link
                 to={"/create/new/account"}
@@ -119,21 +126,15 @@ const OBTemplate = ({
 
                 <Link
                   to={"/"}
-                  className="text-xs  max-sm:text-sm underline text-purple-600"
+                  className="text-xs  max-sm:text-sm  text-purple-600"
                 >
-                  Sign in
+                  Click here to sign in
                 </Link>
               </span>
             )}
-            <Link
-              to={"/reset_password"}
-              className="text-xs max-sm:text-sm text-purple-500"
-            >
-              Forgot password ?
-            </Link>
           </div>
 
-          <Button className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-bold hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full">
+          <Button className=" bg-gradient-to-r mt-2 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-bold hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full">
             {url.pathname == "/" ? "SIGN IN" : "SIGN UP"}
             {!isLoading ? (
               <ArrowRight className="inline text-2xl" />
@@ -142,6 +143,15 @@ const OBTemplate = ({
             )}
           </Button>
         </form>
+
+        <div className="mt-10 flex justify-center items-center flex-col">
+          <p className="text-neutral-500 text-sm font-normal">
+            Etherbill v1.0.0
+          </p>
+          <p className="text-neutral-500 text-xs">
+            Stay Connected with your clients on go!
+          </p>
+        </div>
       </Card>
     </>
   );
