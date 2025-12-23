@@ -7,6 +7,7 @@ import {
   ModalHeader,
   Spinner,
 } from "reactstrap";
+import DebouncedFormInput from "./DebouncedFormInput";
 import useTemplateController from "./main";
 import { EyeLightDouble } from "react-huge-icons/bulk";
 import useModalController from "../../../InvoiceModal/controller";
@@ -97,13 +98,13 @@ const Template = React.memo(
               <p className="text-slate-600 ml-0 font-bold px-1 text-xs uppercase tracking-wider">
                 {input.placeholder}
               </p>
-              <Input
+              <DebouncedFormInput
                 title="date"
                 type="date"
                 className="clean-input w-full p-2 text-sm text-slate-800 font-medium"
                 value={invoiceInformation[input.name]}
-                onChange={(e) =>
-                  updateInvoiceDetails(e.target.value, input.name)
+                onChange={(val: string) =>
+                  updateInvoiceDetails(val, input.name)
                 }
               />
             </div>
@@ -112,13 +113,13 @@ const Template = React.memo(
           return (
             <div className="relative" key={index}>
                 <label className="text-xs text-slate-600 ml-1 mb-1 block uppercase font-bold">{input.placeholder}</label>
-              <Input
+              <DebouncedFormInput
                 className="clean-input w-full p-2.5 text-sm font-medium text-slate-800"
                 type="text"
                 value={invoiceInformation[input.name]}
                 placeholder={input.placeholder}
-                onChange={(e) =>
-                  updateInvoiceDetails(e.target.value, input.name)
+                onChange={(val: string) =>
+                  updateInvoiceDetails(val, input.name)
                 }
               />
             </div>
@@ -185,7 +186,19 @@ const Template = React.memo(
                 contentClassName="bg-white border border-slate-200 shadow-xl rounded-xl"
               >
                 <ModalHeader className="text-slate-800 border-b border-slate-100">Sending Invoice</ModalHeader>
-                <ModalBody className="text-slate-600">Do you want to send this invoice now?</ModalBody>
+                <ModalBody className="text-slate-600">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-bold text-slate-700">Recipient Email</label>
+                        <Input 
+                            type="email" 
+                            className="clean-input w-full p-2.5 rounded-lg border border-slate-300"
+                            placeholder="Enter client email..."
+                            value={customEmail}
+                            onChange={handleSetCustomEmail}
+                        />
+                        <p className="text-xs text-slate-500">The invoice will be sent to this email address.</p>
+                    </div>
+                </ModalBody>
                 <ModalFooter className="border-t border-slate-100">
                   <Button
                     className="bg-transparent border border-red-200 text-red-500 hover:bg-red-50 hover:border-red-500 transition-all duration-300"
