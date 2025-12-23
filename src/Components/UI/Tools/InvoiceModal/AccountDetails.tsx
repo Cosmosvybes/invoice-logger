@@ -1,4 +1,4 @@
-import { ArrowRight } from "react-huge-icons/outline";
+
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
@@ -14,7 +14,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  Defaults
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 

@@ -14,10 +14,7 @@ const Profile = () => {
 
   // Destructure controller props
   const {
-    settingsSchema,
-    personalizationSchema,
     fieldsValue,
-    subscriptionSchema,
     businessDetails,
     settings,
     handleChange,

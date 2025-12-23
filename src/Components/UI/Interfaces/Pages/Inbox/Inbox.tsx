@@ -3,7 +3,7 @@ import InvoicePiece from "../../../Tools/_helper/Inbox/InvoicePiece";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
 import Paginate from "../../../Tools/Layout/Paginate/Paginate";
 import Empty from "../Dashboard/Invoices/Empty";
-import user from "./../../../../../assets/User.svg";
+
 import useInvoiceReceivedController from "./controller";
 const Inbox = () => {
   const { inbox, setCurrentPage, currentList, postPerPage } =

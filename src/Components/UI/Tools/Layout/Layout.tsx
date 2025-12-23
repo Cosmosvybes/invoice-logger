@@ -2,7 +2,6 @@ import useLayoutController from "./layout.controller";
 import Nav from "./Nav/Nav";
 import {
   AddRectangle,
-  ArrowDownRectangle,
   BookAdd,
   BriefcaseTriangularTwoLocks,
   CardAdd,

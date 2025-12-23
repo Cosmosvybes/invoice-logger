@@ -17,7 +17,7 @@ const InputProvider = React.memo(
       value: boolean | string;
       label: string;
       checked?: boolean | string;
-      options?: [];
+      options?: string[];
     }[];
     data: { [key: string]: string };
     settings: { [key: string]: any };

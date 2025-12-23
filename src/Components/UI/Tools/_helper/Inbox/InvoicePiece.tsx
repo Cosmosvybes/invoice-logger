@@ -1,9 +1,6 @@
 import { Chatting, MailArrowLeft } from "react-huge-icons/bulk";
 import {
   Button,
-  Card,
-  CardBody,
-  CardHeader,
   Modal,
   ModalBody,
   ModalFooter,
