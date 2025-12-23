@@ -198,6 +198,11 @@ export default function useTemplateController() {
       toast.warn("Missing invoice details", { theme: "colored" });
       return;
     }
+    
+    if (!recipient || recipient.trim() === "") {
+        toast.warn("Please enter a recipient email address", { theme: "colored" });
+        return;
+    }
     const emailData = await emailHtml;
 
     // Transform "Recurring" field (from FormBuilder) to backend structure
