@@ -83,6 +83,20 @@ export const getInvoice = createAsyncThunk(
     }
   }
 );
+
+const defaultSettings = {
+    tokenBalanceNotification: true,
+    invoiceSentNotication: true,
+    defaultCurrency: "USD",
+    applyTax: false,
+    defaultPaymentTerms: false,
+    revenueNotification: true,
+    sharingToken: false,
+    autoRenewal: false,
+    businessName: "",
+    businessAddress: "",
+};
+
 const initialState: ACCOUNT = {
   currentData: [],
   draft: [],
@@ -91,24 +105,15 @@ const initialState: ACCOUNT = {
   paid: [],
   revenue: 0,
   tokens: 0,
+  subscriptionStatus: "free",
   clients: [],
   inbox: [],
   accountCurrency: "",
+  email: "", // Initialize email
   staticForm: invoiceStaticValue,
   loading: false,
   currentInvoice: {},
-  settings: {
-    tokenBalanceNotification: true,
-    invoiceSentNotication: true,
-    defaultCurrency: true,
-    applyTax: false,
-    defaultPaymentTerms: false,
-    revenueNotification: true,
-    sharingToken: false,
-    autoRenewal: false,
-    businessName: "",
-    businessAddress: "",
-  },
+  settings: defaultSettings,
 };
 
 // export const mySlice = createSlice({
@@ -149,6 +154,9 @@ const invoiceSlice = createSlice({
 
     updateSettings: (state, action: PayloadAction<settingsI>) => {
       const { value, key }: settingsI = action.payload;
+      if (!state.settings) {
+        state.settings = defaultSettings;
+      }
       state.settings[key] = value;
     },
 
@@ -460,13 +468,14 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, { payload }) => {
       state.loading = false;
-      const { draft, sent, revenue, clients, settings, inbox, paid, token } =
+      const { draft, sent, revenue, clients, settings, inbox, paid, token, email } =
         payload;
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
       state.clients = clients;
-      state.settings = settings;
+      state.settings = settings || defaultSettings;
+      state.email = email; // Save email to state
       state.inbox = inbox;
       state.paid = paid;
       state.tokens = token;

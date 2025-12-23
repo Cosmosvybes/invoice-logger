@@ -9,7 +9,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="relative px-20 max-sm:px-0  max-sm:w-full max-md:w-full">
+      <div className="relative w-full px-4 md:px-12 py-6">
         <Account />
       </div>
     </>

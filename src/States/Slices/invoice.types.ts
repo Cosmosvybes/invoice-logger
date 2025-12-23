@@ -70,6 +70,7 @@ export interface item {
 }
 export interface ACCOUNT {
   accountCurrency:string,
+  email: string; // Dynamic user email
   currentData: Invoice[];
   draft: Invoice[];
   sent: Invoice[];
@@ -82,10 +83,11 @@ export interface ACCOUNT {
   inbox: Invoice[];
   currentInvoice: any;
   tokens: 0;
+  subscriptionStatus: 'free' | 'pro';
   settings: {
     tokenBalanceNotification: boolean;
     invoiceSentNotication: boolean;
-    defaultCurrency: boolean;
+    defaultCurrency: string;
     applyTax: boolean;
     defaultPaymentTerms: boolean;
     revenueNotification: boolean;

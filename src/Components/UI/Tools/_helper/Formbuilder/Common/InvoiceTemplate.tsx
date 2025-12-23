@@ -28,19 +28,18 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
   return (
     <>
-      <div className="relative w-full p-1  gap-2 flex-col  h-auto  flex justify-between items-center">
+      <div className="relative w-full p-4 gap-2 flex-col h-auto flex justify-between items-center group">
         {showOptions && (
           <div
             ref={invoiceOptions}
-            className="absolute right-1 border-gray-100 border-2 bottom-4   transition duration-500 flex justify-start gap-2 flex-col w-auto h-auto  bg-gray-50  text-center z-20"
+            className="absolute right-1 top-10 border border-slate-200 rounded-xl overflow-hidden bg-white flex justify-start gap-1 flex-col w-40 h-auto p-1 z-50 shadow-2xl animate-in fade-in zoom-in duration-200"
           >
             <Link
               to={`/${"invoice/update"}/${invoice.id}`}
-              className="text-slate-950 hover:bg-purple-900 transition duration-500 hover:text-gray-50 text-xl text-center font-light py-1 px-2 w-full "
+              className="text-slate-700 hover:bg-violet-50 transition duration-200 hover:text-violet-700 text-sm text-left font-medium py-2 px-3 w-full rounded-lg"
             >
               Edit invoice
             </Link>
-            {/* <hr /> */}
             <button
               onClick={() =>
                 dispatch(
@@ -50,39 +49,44 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
                   })
                 )
               }
-              className="text-slate-950 hover:bg-red-900 transition duration-500 hover:text-gray-50 text-xl text-center 0 font-light py-1 px-2 w-full  "
+              className="text-red-500 hover:bg-red-50 transition duration-200 hover:text-red-700 text-sm text-left font-medium py-2 px-3 w-full rounded-lg"
             >
               Dismiss
             </button>
           </div>
         )}
 
-        <div className="relative w-full  h-auto flex justify-between rounded-lg items-center">
-          <div className="relative justify-start items-center ">
-            {" "}
-            <h1 className="text-purple-600 text-2xl inline font-semibold">
+        <div className="relative w-full h-auto flex justify-between rounded-lg items-center">
+          <div className="relative justify-start items-center">
+            <h1 className="text-slate-900 text-2xl inline font-bold tracking-tight">
               {Number(invoice.TOTAL).toLocaleString()}{" "}
-              {invoice.currency != "--select--" && invoice.currency}
-            </h1>{" "}
+              <span className="text-violet-600 text-lg">
+                {invoice.currency != "--select--" && invoice.currency}
+              </span>
+            </h1>
           </div>
 
           <MoreVertical
-            className="text-2xl text-black"
+            className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
             onClick={() => setShowOptions(true)}
           />
         </div>
 
-        <div className="relative w-full flex justify-between ">
-          <p className="text-gray-800 ">ID- {invoice.id}</p>{" "}
+        <div className="relative w-full flex justify-between mt-2">
+          <p className="text-slate-500 text-xs font-mono bg-slate-100 px-2 py-1 rounded">
+            ID: {invoice.id}
+          </p>
         </div>
-        <div className="relative h-auto w-full flex text-sm flex-col gap-2  justify-between ">
-          <p className="text-gray-800 font-semibold ">
-            Created At: {invoice.createdAt}
-          </p>
+        <div className="relative h-auto w-full flex text-sm flex-col gap-1 justify-between mt-1">
+          <div className="flex justify-between items-center">
+             <span className="text-slate-500 text-xs">Created:</span>
+             <span className="text-slate-700 font-bold text-xs">{invoice.createdAt}</span>
+          </div>
 
-          <p className="text-gray-800 font-semibold">
-            Last Updated: {invoice.updatedAt}
-          </p>
+          <div className="flex justify-between items-center">
+             <span className="text-slate-500 text-xs">Updated:</span>
+             <span className="text-slate-700 font-bold text-xs">{invoice.updatedAt}</span>
+          </div>
         </div>
       </div>
     </>

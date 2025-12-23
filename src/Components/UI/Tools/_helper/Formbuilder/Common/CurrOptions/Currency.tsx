@@ -23,12 +23,12 @@ const Currency = () => {
 
   return (
     <>
-      <div className="relative flex justify-center gap-2 items-center border">
-        <label className="px-1"> Currency</label>
+      <div className="relative flex justify-center gap-2 items-center">
+        <span className="text-xs text-slate-600 font-bold">Currency</span>
         <select
           onChange={handleCurrencyChange}
           id="currencies"
-          className="px-2 w-auto py-1"
+          className="clean-input px-3 py-2 text-xs font-mono text-violet-700 font-bold bg-white border border-slate-300 rounded-lg cursor-pointer outline-none focus:ring-2 focus:ring-violet-500/20 shadow-sm appearance-none min-w-[80px] text-center"
         >
           <option>--select--</option>
           <option>NGN</option>

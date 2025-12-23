@@ -17,22 +17,19 @@ const AddClient = () => {
 
   return (
     <>
-      <div className="relative  h-screen px-28 max-sm:px-0 max-sm:overflow-x-scroll max-sm:overflow-y-clip s max-sm:h-screen  bg-transparent">
+      <div className="w-full h-full min-h-screen px-4 md:px-8 py-6">
         <BreadCrumb title="New Client" useLink={false} linkTitle="client/new" />
 
-        <div className="relative py-0 max-sm:py-0   flex justify-between max-sm:flex-col-reverse gap-3">
-          <div className="relative w-1/3 max-sm:hidden  max-sm:w-full h-auto flex  py-2 max-sm:py-0  flex-col">
-            <div className="relative w-full h-auto  py-0 max-md:px-0 rounded-full">
-              {" "}
-              <img
-                src={user}
-                alt="profile"
-                className="w-full  object-contain max-md:w-full max-md:h-auto"
-              />
+        <div className="relative w-full mt-6 max-w-2xl mx-auto animate-fade-in-up">
+          <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-6 md:p-8">
+            <div className="mb-8 text-center">
+                 <div className="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <img src={user} alt="new client" className="w-8 h-8 opacity-50" />
+                 </div>
+                 <h2 className="text-2xl font-bold text-slate-800">Add New Client</h2>
+                 <p className="text-slate-500 mt-2">Enter the client's information below to create a new profile.</p>
             </div>
-          </div>
-
-          <div className="relative w-full  max-sm:w-full max-sm:h-screen  max-sm:px-3">
+            
             <ClientFormBuilder />
           </div>
         </div>

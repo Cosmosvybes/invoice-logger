@@ -12,12 +12,14 @@ const NavBtn = ({
   return (
     <div className="h-full">
       <button
-        className={`text-purple-800 h-full bg-inherit text-center border-b-2 font-normal text-xs w-auto transition duration-500 max-sm:w-auto   max-sm:text-sm  ${
-          active == id ? "border-purple-900" : "border-none"
-        } `}
+        className={`px-6 py-2 rounded-full font-medium text-sm transition-all duration-300 border border-transparent ${
+          active == id 
+            ? "bg-violet-600/20 text-violet-300 border-violet-500/50 shadow-[0_0_10px_-3px_rgba(124,58,237,0.3)]" 
+            : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+        }`}
         onClick={() => func()}
       >
-        {node.toLowerCase()}
+        {node}
       </button>
     </div>
   );

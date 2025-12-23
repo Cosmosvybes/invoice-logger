@@ -97,6 +97,13 @@ export const forms = [
     value: "",
     placeholder: "Due on",
   },
+  {
+    type: "select",
+    name: "Recurring",
+    value: "None",
+    placeholder: "Recurring Frequency",
+    options: ["None", "Weekly", "Monthly"],
+  },
 ];
 
 const newCLientsFormField = [

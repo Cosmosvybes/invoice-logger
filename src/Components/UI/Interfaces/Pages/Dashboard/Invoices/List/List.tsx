@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   Modal,
   ModalBody,
   ModalFooter,
@@ -74,97 +73,88 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
         </ModalFooter>
       </Modal>
 
-      <Container className="px-0 mt-4 rounded-lg" fluid={true}>
+      <div className="w-full clean-card p-6 overflow-hidden">
         {/* <InvoiceTable /> */}
-        <table className="w-full border-collapse rounded-lg">
-          <thead className=" w-full  rounded-lg  gap-4 ">
-            <tr>
-              <th className="text-center w-20 text-xs max-sm:w-16 max-sm:text-sm ">
-                id
-              </th>
-              <th className="text-center w-20 text-xs max-sm:w-16 max-sm:text-sm  ">
-                client
-              </th>
-              <th className="text-center w-20 text-xs max-sm:w-16  max-sm:text-sm ">
-                status
-              </th>
-              <th className="text-center w-20 text-xs max-sm:w-16  max-sm:text-sm  ">
-                amount
-              </th>
-              <th className="text-center w-20 text-xs max-sm:w-16  max-sm:text-sm  ">
-                currency
-              </th>
-              <th className="text-center w-20 text-xs max-sm:w-16 max-sm:text-sm ">
-                updated
-              </th>
-              <th className="text-center w-20 text-xs max-sm:w-16 max-sm:text-sm ">
-                actions
-              </th>
-            </tr>
-          </thead>
+        <div className="overflow-x-auto rounded-lg border border-slate-200">
+            <table className="w-full border-collapse">
+            <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">ID</th>
+                <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Client</th>
+                <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
+                <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Amount</th>
+                <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Currency</th>
+                <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Updated</th>
+                <th className="p-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Action</th>
+                </tr>
+            </thead>
 
-          <tbody className="rounded-lg mt-10 gap-5">
-            {currentInvoiceList.map((invoice, index) => (
-              <tr
-                className={` ${
-                  index % 2 != 0 ? "bg-gray-100" : "bg-purple-200"
-                } py-2 px-3`}
-                key={invoice.id}
-              >
-                <td className="text-black text-center max-sm:text-xs font-normal py-2 w-20 text-xs max-sm:w-16 ">
-                  {String(invoice.id).slice(10, 13)}
-                </td>
-                <td className="text-black text-center max-sm:text-xs font-normal py-2  w-20 text-xs max-sm:w-16 ">
-                  {invoice.Client.slice(0, 8)}
-                </td>
+            <tbody className="divide-y divide-slate-100 bg-white">
+                {currentInvoiceList.map((invoice) => (
+                <tr
+                    className="hover:bg-slate-50 transition-colors group"
+                    key={invoice.id}
+                >
+                    <td className="p-4 text-sm text-slate-600 font-mono">
+                    #{String(invoice.id).slice(0, 8)}...
+                    </td>
+                    <td className="p-4 text-sm text-slate-900 font-semibold">
+                    {invoice.Client.slice(0, 15)}
+                    </td>
 
-                <td className="text-purple-500  text-center max-sm:text-xs  font-normal py-2 w-20 text-xs max-sm:w-16 ">
-                  <Link to={`/invoice/update/${invoice.id}`}>
-                    {invoice.status.toLowerCase()}
-                  </Link>
-                </td>
-                <td className="text-black text-center max-sm:text-xs font-normal py-2  w-20 text-xs max-sm:w-16 ">
-                  {String(invoice.TOTAL.toLocaleString())}{" "}
-                </td>
+                    <td className="p-4">
+                    <Link to={`/invoice/update/${invoice.id}`}>
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold capitalize
+                        ${invoice.status.toLowerCase() === 'paid' ? 'bg-emerald-100 text-emerald-700' : 
+                          invoice.status.toLowerCase() === 'overdue' ? 'bg-red-100 text-red-700' :
+                          'bg-amber-100 text-amber-700'}`}>
+                        {invoice.status.toLowerCase()}
+                        </span>
+                    </Link>
+                    </td>
+                    <td className="p-4 text-sm text-slate-900 font-bold">
+                    {String(invoice.TOTAL.toLocaleString())}
+                    </td>
 
-                <td className="text-black text-center max-sm:text-xs   font-normal py-2 w-20 text-xs max-sm:w-16 ">
-                  {invoice.currency != "--select--" &&
-                    invoice.currency.toLowerCase() + " "}
-                </td>
-                <td className="text-black text-center max-sm:text-xs   font-normal py-2 w-20 text-xs max-sm:w-16 ">
-                  {String(invoice.updatedAt).length > 10 &&
-                    String(invoice.updatedAt).slice(0, 17) + "..."}
-                </td>
+                    <td className="p-4 text-sm text-slate-500">
+                    {invoice.currency != "--select--" &&
+                        invoice.currency.toUpperCase()}
+                    </td>
+                    <td className="p-4 text-sm text-slate-500">
+                    {String(invoice.updatedAt).length > 10 &&
+                        String(invoice.updatedAt).slice(0, 10)}
+                    </td>
 
-                <td className="text-black text-center max-sm:text-xs   font-normal py-2 w-20 text-xs max-sm:w-16 ">
-                  <button
-                    disabled={
-                      (invoice.status == "paid" || invoice.status == "Draft") &&
-                      true
-                    }
-                    onClick={() => {
-                      handleToggle(), setCurrentRowDataID(Number(invoice.id));
-                    }}
-                    className="text-black inline hover:bg-gray-300 hover:text-gray-50 text-sm max-sm:sm text-left font-light px-2 w-auto"
-                  >
-                    <MoreVertical
-                      onClick={handleViewInvoice}
-                      className="text-2xl text-gray-600 max-sm:text-xl"
-                    />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="relative flex justify-center max-sm:justify-center items-center w-full mt-1">
+                    <td className="p-4 text-center">
+                    <button
+                        disabled={
+                        (invoice.status == "paid" || invoice.status == "Draft") &&
+                        true
+                        }
+                        onClick={() => {
+                        handleToggle(), setCurrentRowDataID(Number(invoice.id));
+                        }}
+                        className="p-1 rounded-full hover:bg-slate-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                        <MoreVertical
+                        onClick={handleViewInvoice}
+                        className="text-xl text-slate-400 group-hover:text-slate-700 transition-colors"
+                        />
+                    </button>
+                    </td>
+                </tr>
+                ))}
+            </tbody>
+            </table>
+        </div>
+        <div className="relative flex justify-center items-center w-full mt-6">
           <Paginate
             invoices={currentData}
             paginateHandler={handleNextList}
             postsPerPage={listPerTable}
           />
         </div>
-      </Container>
+      </div>
     </>
   );
 });

@@ -1,5 +1,5 @@
-import { PlusThin } from "react-huge-icons/outline";
-import { Link } from "react-router-dom";
+import { PlusThin, ArrowLeft } from "react-huge-icons/outline";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../States/hoooks/hook";
 import { createInvoice } from "../../../../States/Slices/invoice";
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ const BreadCrumb = ({
 }) => {
   const { staticForm } = useAppSelector((state) => state.invoice);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   //new invoice
   const handleNewInvoice = async () => {
@@ -85,20 +86,29 @@ const BreadCrumb = ({
   };
 
   return (
-    <div className="relative w-full  h-20 py-1 flex justify-between items-center px-2">
-      <h1 className="text-purple-800 text-xl  max-sm:text-xl font-extrabold">
-        {title}
-      </h1>
+    <div className="relative w-full h-20 py-1 flex justify-between items-center px-4">
+      <div className="flex items-center gap-4">
+        <button 
+            onClick={() => navigate(-1)}
+            className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-all border border-slate-200 shadow-sm"
+            title="Go Back"
+        >
+            <ArrowLeft className="text-xl" />
+        </button>
+        <h1 className="text-slate-800 text-3xl max-sm:text-xl font-extrabold tracking-tight">
+            {title}
+        </h1>
+      </div>
 
       {useLink && (
         <Link
           to={`/${linkTitle}`}
           onClick={() => linkTitle == "new/invoice" && handleNewInvoice()}
-          className=" rounded-lg gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+          className="rounded-xl gap-2 flex justify-between items-center py-2 px-4 bg-violet-600 hover:bg-violet-700 text-white h-auto transition-all shadow-md hover:shadow-lg transform active:scale-95"
         >
-          <p className="flex items-center justify-center text-xl max-sm:sm text-white font-light">
-            <PlusThin className="inline text-2xl" /> new{" "}
-            {linkTitle == "client/new" ? "client" : "invoice"}
+          <p className="flex items-center justify-center text-sm font-bold tracking-wide">
+            <PlusThin className="inline text-xl mr-1" /> New{" "}
+            {linkTitle == "client/new" ? "Client" : "Invoice"}
           </p>
         </Link>
       )}

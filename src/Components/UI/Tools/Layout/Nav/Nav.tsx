@@ -50,25 +50,31 @@ const Nav = () => {
   return (
     <>
       {isAuthenticated && (
-        <div className="max-md:px-0   flex bg-purple-100 justify-between rounded-tr-lg rounded-tl-lg   items-center border-b right-0   h-16  border-purple-500 sticky   px-2 top-0 max-sm:h-20 z-40 ">
-          <div className="relative flex justify-start items-center  max-sm:px-0 ">
+        <div className="w-full bg-white border-b border-slate-200 sticky top-0 z-40 flex justify-between items-center px-4 md:px-8 h-16 shadow-sm">
+          <div className="relative flex justify-start items-center">
             <img
               src={logo}
               alt="logo_image"
-              className="w-28 ml-5 max-sm:ml-1  inline  h-28 max-sm:h-auto object-contain"
+              className="w-24 h-auto object-contain"
             />
           </div>
 
-          <div className="relative   w-26 rounded-lg  flex justify-center items-center  h-auto p-2 bg-gray-100 ">
-            <div className="relative rounded-full flex justify-center items-center h-auto w-full bg-gray-50 py-2 px-1">
-              {" "}
-              <p className="text-purple-800 rounded-md text-sm">
-                {String(account.firstname).charAt(0).toUpperCase()}{" "}
-                {String(account.lastname).charAt(0).toUpperCase()}
-              </p>
+          <div className="relative flex items-center gap-4">
+             {/* User Profile Pill */}
+            <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-full py-1.5 px-3 pr-4 transition-all hover:bg-slate-100 cursor-pointer group">
+               <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shadow-md shadow-violet-200">
+                  {String(account.firstname).charAt(0).toUpperCase()}
+                  {String(account.lastname).charAt(0).toUpperCase()}
+               </div>
+               <div className="hidden md:flex flex-col items-start leading-none">
+                  <span className="text-xs font-bold text-slate-700 group-hover:text-violet-700 transition-colors">
+                    {String(account.firstname)} {String(account.lastname).charAt(0)}.
+                  </span>
+               </div>
             </div>
+
             <MenuLineHorizontal
-              className="text-5xl px-1 hidden max-sm:block max-md:block text-purple-900"
+              className="text-2xl text-slate-600 md:hidden cursor-pointer hover:text-slate-900 transition-colors"
               onClick={() => setMode(!viewMode)}
             />
           </div>
@@ -76,28 +82,32 @@ const Nav = () => {
           {viewMode && (
             <div
               ref={navRef}
-              className="side-bar absolute left-0 bg-gray-200  max-md:right-0  py-2 max-sm:py-1 flex-col  shadow-md  max-sm:w-3/4  max-sm:right-0 max-sm:top-20 z-50 top-0 h-[100dvh] overflow-y-scroll overflow-x-hidden   flex"
+              className="fixed inset-y-0 right-0 w-3/4 max-w-sm bg-white shadow-2xl z-50 transform transition-transform duration-300 flex flex-col"
             >
-              <div className="relative  flex px-3 h-auto  border-b border-gray-300 w-auto items-center gap-2  p-2 justify-start">
-                <div className="relative  p-1 flex flex-col ">
-                  <h6 className="font-extrabold text-purple-800">
-                    {String(account.firstname).toUpperCase()}
-                  </h6>
-                  <p className=" font-normal text-purple-600">
-                    {account.email}
-                  </p>
-                </div>
-                <div className="relative w-1/3  rounded-lg flex justify-center items-center h-14 ">
-                  <LogoutOpen
-                    className="text-4xl text-purple-900 border-2 border-purple-400 rounded-lg"
-                    onClick={handleSignOut}
-                  />
-                </div>
+              <div className="p-6 border-b border-slate-100 bg-slate-50/50">
+                 <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-violet-600 text-white flex items-center justify-center text-lg font-bold shadow-lg shadow-violet-200">
+                        {String(account.firstname).charAt(0).toUpperCase()}
+                        {String(account.lastname).charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                        <h6 className="font-bold text-slate-900 text-lg">
+                            {String(account.firstname)} {String(account.lastname)}
+                        </h6>
+                        <p className="text-slate-500 text-xs truncate max-w-[150px]">
+                            {account.email}
+                        </p>
+                    </div>
+                 </div>
+                 <div className="flex items-center gap-2 text-red-500 hover:text-red-700 cursor-pointer transition-colors" onClick={handleSignOut}>
+                     <LogoutOpen className="text-xl" />
+                     <span className="text-sm font-medium">Sign Out</span>
+                 </div>
               </div>
 
-              <div className="relative px-3  z-20">
+              <div className="flex-1 overflow-y-auto p-4">
                 {sideMenu.map(({ title, children }) => (
-                  <div className="relative  overflow-y-scroll" key={title}>
+                  <div className="mb-6" key={title}>
                     <SideNav
                       title={title}
                       children={children!}

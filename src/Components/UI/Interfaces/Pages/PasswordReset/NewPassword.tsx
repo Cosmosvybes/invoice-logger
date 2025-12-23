@@ -1,5 +1,3 @@
-import { Button, Input } from "reactstrap";
-// import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
 import Overlay from "../Subscription/_OverlayComp/Overlay";
 import { LoadingDashed } from "react-huge-icons/solid";
 import {
@@ -10,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { setLoading } from "../../../../../States/Slices/wallet";
 import { toast } from "react-toastify";
+
 const NewPassword = () => {
   const { loading } = useAppSelector((store) => store.walletSlice);
   const navigate = useNavigate();
@@ -60,45 +59,57 @@ const NewPassword = () => {
 
   return (
     <>
-      {/* <Header /> */}
       {loading && (
         <Overlay
           children={
-            <LoadingDashed className="text-5xl text-purple-600 animate-spin z-30" />
+            <LoadingDashed className="text-5xl text-violet-500 animate-spin z-30" />
           }
         />
       )}
 
-      <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
-        <div className="relative w-full  px-10 max-sm:hidden"></div>
+      <div className="w-full h-full min-h-screen flex justify-center items-center bg-slate-50 p-4">
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden p-8 md:p-12 animate-fade-in-up">
+          <div className="flex flex-col gap-6">
+            <div className="text-center">
+                <h1 className="text-3xl text-slate-900 font-extrabold mb-2 tracking-tight">
+                Create New Password
+                </h1>
+                <p className="text-slate-500 text-sm">Create a secure password for your account.</p>
+            </div>
+            
+            <div className="flex flex-col gap-2">
+                <label className="text-slate-700 text-xs font-bold uppercase tracking-wide ml-1">New Password</label>
+                <input
+                type="password"
+                placeholder="Enter new password"
+                value={newPassword}
+                required={true}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="clean-input w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-900 font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all"
+                />
+            </div>
 
-        <div className="relative max-sm:px-1 bg-purple-500   w-3/4 max-sm:w-full max-sm:h-screen py-5 px-10  flex-col  flex justify-center items-center">
-          <h1 className="text-2xl text-purple-500 font-bold mb-2">
-            Create new password
-          </h1>
-          <Input
-            type="email"
-            placeholder={"new password"}
-            value={newPassword}
-            required={true}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="block w-full outline-none border mb-2 px-2 py-1 lg:text-sm "
-          />
-          <Input
-            type="text"
-            placeholder={"comfirm password"}
-            value={cPassword}
-            required={true}
-            onChange={(e) => setcPassword(e.target.value)}
-            className="block w-full outline-none border mb-2 px-2 py-1 lg:text-sm "
-          />
+             <div className="flex flex-col gap-2">
+                <label className="text-slate-700 text-xs font-bold uppercase tracking-wide ml-1">Confirm Password</label>
+                <input
+                type="password"
+                placeholder="Confirm new password"
+                value={cPassword}
+                required={true}
+                onChange={(e) => setcPassword(e.target.value)}
+                className="clean-input w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-900 font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all"
+                />
+            </div>
 
-          <Button
-            onClick={handleNewPasswordUpdate}
-            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
-          >
-            Change Password
-          </Button>
+            <button
+                onClick={handleNewPasswordUpdate}
+                className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-violet-600 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-[0.98] group"
+            >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                    Reset Password
+                </span>
+            </button>
+          </div>
         </div>
       </div>
     </>

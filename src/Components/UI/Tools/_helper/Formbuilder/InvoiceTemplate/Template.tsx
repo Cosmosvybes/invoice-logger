@@ -1,10 +1,6 @@
 import {
   Button,
-  Card,
-  CardBody,
-  FormGroup,
   Input,
-  Label,
   Modal,
   ModalBody,
   ModalFooter,
@@ -27,11 +23,14 @@ import React, { useState } from "react";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
 import Overlay from "../../../../Interfaces/Pages/Subscription/_OverlayComp/Overlay";
 import { LoadingDashed, Pencil, RemoveCircle } from "react-huge-icons/solid";
+// import { toast } from "react-toastify";
+import SubscriptionModal from "../../../../Interfaces/Pages/Subscription/SubscriptionModal";
 
 const Template = React.memo(
   ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
     const { forms } = useModalController();
     const [modal, setModal] = useState(false);
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
     const {
       customEmail,
       sendAsMessage,
@@ -74,14 +73,14 @@ const Template = React.memo(
         case "checkbox":
           return (
             <div
-              className="relative items-center  px-1 py-1 gap-1 flex justify-between"
+              className="relative items-center px-1 py-1 gap-1 flex justify-between bg-slate-50 rounded-lg p-2 border border-slate-200 hover:bg-slate-100 transition-colors"
               key={input.placeholder}
             >
-              <p className="text-gray-500 inline">{input.placeholder}</p>
+              <p className="text-slate-700 inline text-sm font-medium">{input.placeholder}</p>
               <Input
                 title="check"
                 type="checkbox"
-                className="max-sm:w-auto max-sm:text-xs"
+                className="max-sm:w-auto max-sm:text-xs accent-violet-600"
                 value={invoiceInformation[input.name]}
                 onChange={(e) =>
                   updateInvoiceDetails(e.currentTarget.checked, input.name)
@@ -92,17 +91,16 @@ const Template = React.memo(
         case "date":
           return (
             <div
-              className="relative  justify-start   max-sm:ml-0 max-md:items-start max-md:ml-0 gap-1 flex flex-col  max-sm:justify-start"
+              className="relative justify-start max-sm:ml-0 max-md:items-start max-md:ml-0 gap-1 flex flex-col max-sm:justify-start"
               key={index}
             >
-              {" "}
-              <p className="text-gray-400 ml-0 font-normal px-2 text-sm max-sm:inline  block max-sm:text-sm">
+              <p className="text-slate-600 ml-0 font-bold px-1 text-xs uppercase tracking-wider">
                 {input.placeholder}
               </p>
               <Input
                 title="date"
                 type="date"
-                className=" bg-inherit px-1 py-2 font-bold border w-52   text-sm max-sm:w-full  max-sm:text-xs text-slate-400 border-none"
+                className="clean-input w-full p-2 text-sm text-slate-800 font-medium"
                 value={invoiceInformation[input.name]}
                 onChange={(e) =>
                   updateInvoiceDetails(e.target.value, input.name)
@@ -113,8 +111,9 @@ const Template = React.memo(
         default:
           return (
             <div className="relative" key={index}>
+                <label className="text-xs text-slate-600 ml-1 mb-1 block uppercase font-bold">{input.placeholder}</label>
               <Input
-                className="border-none py-1 px-1 bg-gray-200 border  text-sm  font-normal max-sm:text-xs outline-none rounded-md bg-inherit text-gray-400 w-full max-sm:w-full"
+                className="clean-input w-full p-2.5 text-sm font-medium text-slate-800"
                 type="text"
                 value={invoiceInformation[input.name]}
                 placeholder={input.placeholder}
@@ -129,13 +128,14 @@ const Template = React.memo(
 
     const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
       <div
-        className="relative py-1  max-sm:px-0 flex  items-center"
+        className="relative py-1 flex items-center gap-2"
         key={input.id}
       >
+        <span className="text-xs text-slate-600 font-bold">{input.placeholder}</span>
         <Input
-          className="py-1 text-sm  text-center max-sm:text-xs  max-md:text-md  outline-none rounded-sm text-gray-400 px-0 font-normal w-36  max-sm:w-full"
+          className="clean-input p-2 text-xs text-center w-20 font-mono text-violet-700 font-bold bg-white border-slate-300"
           type={"text"}
-          placeholder={`${input.placeholder} %`}
+          placeholder={`0`}
           value={invoiceInformation[input.name]}
           onChange={(e) =>
             input.name == "Discount"
@@ -155,6 +155,7 @@ const Template = React.memo(
                 )
           }
         />
+        <span className="text-slate-500 font-bold">%</span>
       </div>
     ));
 
@@ -166,7 +167,7 @@ const Template = React.memo(
           <Overlay
             children={
               <div className="animate-spin z-10 ">
-                <LoadingDashed className="text-3xl text-purple-600" />
+                <LoadingDashed className="text-3xl text-violet-600" />
               </div>
             }
           />
@@ -175,69 +176,70 @@ const Template = React.memo(
         {!invoiceInformation && loading ? (
           <Spinner_ />
         ) : (
-          <Card className="border-none">
-            <CardBody>
+          <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-6 md:p-8 animate-fade-in-up">
               <Modal
                 centered={true}
                 isOpen={modal}
                 toggle={() => setModal(!modal)}
                 fade={true}
+                contentClassName="bg-white border border-slate-200 shadow-xl rounded-xl"
               >
-                <ModalHeader>Sending Invoice</ModalHeader>
-                <ModalBody>Do you want send this invoice now ?</ModalBody>
-                <ModalFooter>
+                <ModalHeader className="text-slate-800 border-b border-slate-100">Sending Invoice</ModalHeader>
+                <ModalBody className="text-slate-600">Do you want to send this invoice now?</ModalBody>
+                <ModalFooter className="border-t border-slate-100">
                   <Button
-                    className="p-2 py-2"
-                    color="danger"
+                    className="bg-transparent border border-red-200 text-red-500 hover:bg-red-50 hover:border-red-500 transition-all duration-300"
                     onClick={() => setModal(!modal)}
                   >
                     Cancel
                   </Button>{" "}
                   <Button
-                    className=" mt-1 bg-gradient-to-br from-black to-purple-900 h-auto max-sm:h-auto max-sm:text-sm font-semibold flex justify-center items-center rounded-md  text-gray-100 w-auto py-2 px-2 max-sm:w-auto"
-                    // color="success"
+                    className="bg-violet-600 text-white font-semibold shadow-md hover:bg-violet-700 hover:shadow-lg transition-all duration-300 border-none"
                     onClick={() => {
                       handleSendInvoice(emailHtml);
                       setModal(!modal);
                     }}
                   >
-                    Yes, I'm sending.
+                    Yes, Send it
                   </Button>
                 </ModalFooter>
               </Modal>
 
-              <section className="flex  relative  transition duration-700 justify-start w-full h-auto flex-col  border-none ">
+              <section className="flex relative transition duration-700 justify-start w-full h-auto flex-col border-none gap-6">
                 {viewMode && (
                   <Overlay
                     children={
-                      <div className="relative h-[90vh] border-none overflow-y-scroll max-sm:py-5 w-full shadow-sm shadow-white rounded-md bg-white">
-                        <ViewModal
-                          data={{ ...invoiceInformation }}
-                          callback={() => setViewMode(!viewMode)}
-                        />
+                      <div className="relative h-[90vh] w-full max-w-4xl bg-white rounded-xl overflow-hidden shadow-2xl border border-slate-200">
+                         <div className="h-full overflow-y-auto p-4 custom-scrollbar">
+                            <ViewModal
+                            data={{ ...invoiceInformation }}
+                            callback={() => setViewMode(!viewMode)}
+                            />
+                        </div>
                       </div>
                     }
                   />
                 )}
-                {/* <hr className="mb-1 border border-gray-400" /> */}
-                <div className="relative  flex justify-end items-center px-0 h-auto max-sm:mb-10  gap-2">
+                
+                {/* Actions Toolbar */}
+                <div className="relative flex justify-end items-center gap-3 mb-2">
                   <button
-                    className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className="group relative px-4 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 hover:text-violet-700 hover:border-violet-200 hover:bg-violet-50 transition-all duration-200 flex items-center gap-2 text-xs font-bold shadow-sm"
                     onClick={handleEditFormToggle}
                   >
-                    FILL DETAILS
-                    <Pencil className="text-2xl inline text-white" />
+                    <span>EDIT</span>
+                    <Pencil className="text-lg group-hover:scale-110 transition-transform" />
                   </button>
                   <button
-                    className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className="group relative px-4 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 hover:text-violet-700 hover:border-violet-200 hover:bg-violet-50 transition-all duration-200 flex items-center gap-2 text-xs font-bold shadow-sm"
                     onClick={() => handleView()}
                   >
-                    PREVIEW
-                    <EyeLightDouble className="text-2xl inline text-white" />
+                    <span>PREVIEW</span>
+                    <EyeLightDouble className="text-lg group-hover:scale-110 transition-transform" />
                   </button>
 
                   <button
-                    className=" rounded-md gap-2  flex justify-between items-center p-2 bg-purple-900 text-white  h-10  text-[10px]"
+                    className="group relative px-6 py-2 rounded-lg bg-violet-600 text-white font-bold shadow-sm hover:bg-violet-700 hover:shadow-md transition-all duration-200 flex items-center gap-2 text-xs"
                     onClick={() => {
                       setModal(!modal);
                     }}
@@ -247,147 +249,204 @@ const Template = React.memo(
                         type="grow"
                         color="light"
                         size="sm"
-                        className="mr-0.5"
+                        className="mr-1"
                       ></Spinner>
                     ) : (
-                      <SendFast className="text-2xl inline text-white" />
+                      <SendFast className="text-xl group-hover:rotate-12 transition-transform" />
                     )}
-                    SEND
+                    SEND INVOICE
                   </button>
                 </div>
 
-                <div className="relative flex  justify-start max-sm:justify-end">
-                  <div className="relative flex flex-col  mb-1 w-full">
-                    <strong className="w-full text-xl max-sm:text-xl mb-2 font-semibold">
+                {/* Recipient Section */}
+                <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-sm">
+                  <div className="flex flex-col gap-4">
+                    <strong className="text-lg text-slate-800 font-bold tracking-tight">
                       Sending to:
                     </strong>
-                    <div className="relative w-2/5 max-sm:w-full  h-auto ">
+                    <div className="w-full md:w-1/2">
                       {!useCustomChecked ? (
-                        <Input
-                          type="select"
-                          id="client-list"
-                          className="py-2 px-4 rounded-md bg-gray-100 w-full"
-                          onChange={handleSelectClient}
-                        >
-                          {[{ email: "--select--" }, ...clients].map((_, i) => (
-                            <option key={i}>{_.email}</option>
-                          ))}
-                        </Input>
+                        <div className="relative">
+                            <Input
+                            type="select"
+                            id="client-list"
+                            className="clean-input w-full p-2.5 rounded-lg appearance-none cursor-pointer bg-white text-slate-800 font-medium"
+                            onChange={handleSelectClient}
+                            >
+                            {[{ email: "-- Select Client --" }, ...clients].map((_, i) => (
+                                <option key={i} className="text-slate-800">{_.email}</option>
+                            ))}
+                            </Input>
+                        </div>
                       ) : (
-                        <Input
-                          color="dark"
+                        <input
                           type="text"
-                          placeholder="Receipient email here..."
+                          placeholder="Recipient email address..."
                           value={customEmail}
                           onChange={handleSetCustomEmail}
-                          className="py-3 px-3"
+                          className="clean-input w-full p-2.5 rounded-lg"
                         />
                       )}
                     </div>
 
-                    <FormGroup color="dark" switch className="mt-3">
-                      <Input
-                        className="text-black"
-                        color="dark"
-                        type="switch"
-                        onChange={(e) => {
-                          setUseCustom(e.currentTarget.checked);
-                        }}
-                      />
-                      <Label className="max-sm:text-xs text-sm text-gray-400">
-                        use custom email
-                      </Label>
-                    </FormGroup>
-                    <FormGroup switch className="mt-3">
-                      <Input
-                        type="switch"
-                        checked={sendAsMessage}
-                        onChange={(e) => {
-                          setSetAsMessage(e.currentTarget.checked);
-                        }}
-                      />
-                      <Label className="max-sm:text-xs text-sm text-gray-400">
-                        send as direct message
-                      </Label>
-                    </FormGroup>
+                    <div className="flex flex-wrap gap-6 mt-2">
+                        <div className="flex items-center gap-3">
+                            <label className="relative inline-flex items-center cursor-pointer">
+                                <input 
+                                    type="checkbox" 
+                                    className="sr-only peer"
+                                    onChange={(e) => setUseCustom(e.currentTarget.checked)} 
+                                />
+                                <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600 shadow-inner"></div>
+                                <span className="ml-3 text-sm font-bold text-slate-600">Use custom email</span>
+                            </label>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <label className="relative inline-flex items-center cursor-pointer">
+                                <input 
+                                    type="checkbox" 
+                                    checked={sendAsMessage}
+                                    className="sr-only peer"
+                                    onChange={(e) => setSetAsMessage(e.currentTarget.checked)} 
+                                />
+                                <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600 shadow-inner"></div>
+                                <span className="ml-3 text-sm font-bold text-slate-600">Send as direct message</span>
+                            </label>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recurring Invoice Section (Monetization Feature - Clean UI) */}
+                <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group hover:border-violet-200 hover:shadow-md transition-all">
+                  <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <SendFast className="text-9xl text-violet-600 transform rotate-12" />
+                  </div>
+                  
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-3">
+                         <strong className="text-lg text-slate-800 font-bold tracking-tight">Recurring Invoice</strong>
+                         <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-violet-100 text-violet-700 border border-violet-200">PRO FEATURE</span>
+                      </div>
+                      <p className="text-slate-600 text-sm font-medium">Automatically bill this client on a schedule.</p>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                       <label className="relative inline-flex items-center cursor-pointer">
+                          <input 
+                              type="checkbox" 
+                              className="sr-only peer"
+                              onChange={(e) => {
+                                // Gated Feature: Recurring Invoices
+                                // TODO: Replace with actual state check after verifying backend mapping
+                                // const isPro = subscriptionStatus === 'pro'; 
+                                if (false) { // forcing false for demo until backend is ready or manually toggled
+                                   // Allow toggle
+                                } else {
+                                   e.preventDefault();
+                                   e.currentTarget.checked = false;
+                                   setShowUpgradeModal(true);
+                                }
+                              }} 
+                          />
+                          <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-violet-600 shadow-inner"></div>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  {/* Collapsible Options */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-slate-100 transition-all duration-300">
+                      <div className="relative">
+                        <label className="text-xs text-slate-600 uppercase font-bold tracking-wider mb-2 block">Frequency</label>
+                         <div className="relative">
+                            <select className="clean-input w-full p-2.5 rounded-lg appearance-none cursor-pointer text-slate-800 bg-white font-medium">
+                                <option>Weekly</option>
+                                <option>Bi-Weekly</option>
+                                <option>Monthly</option>
+                                <option>Quarterly</option>
+                                <option>Annually</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div className="relative">
+                        <label className="text-xs text-slate-600 uppercase font-bold tracking-wider mb-2 block">Start Date</label>
+                         <input type="date" className="clean-input w-full p-2.5 rounded-lg text-slate-800 font-medium" />
+                      </div>
+                      <div className="relative">
+                        <label className="text-xs text-slate-600 uppercase font-bold tracking-wider mb-2 block">End Date (Optional)</label>
+                         <input type="date" className="clean-input w-full p-2.5 rounded-lg text-slate-800 font-medium" />
+                      </div>
                   </div>
                 </div>
 
                 {editToggle && (
                   <Overlay
                     children={
-                      <div className="w-full h-[78vh] overflow-y-scroll max-sm:w-full bg-purple-100 rounded-lg flex  mt-10 max-sm:mt-20 justify-between items-start">
-                        <span className=" p-2   border right-16 max-sm:right-2 top-5 max-sm:top-10 rounded-full bg-gray-100  absolute">
-                          <RemoveCircle
+                      <div className="w-full max-w-5xl h-[85vh] bg-white rounded-2xl border border-slate-200 shadow-2xl flex flex-col md:flex-row overflow-hidden relative animate-fade-in-up m-4">
+                        <button 
                             onClick={handleEditFormToggle}
-                            className="text-3xl text-black hover:text-gray-400"
-                          />
-                        </span>
-                        <div className="grid grid-cols-2 max-sm:w-full max-sm:px-2  w-1/2 gap-2 py-10 px-10 z-5">
-                          {FORM}
+                            className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+                        >
+                          <RemoveCircle className="text-2xl" />
+                        </button>
+                        
+                        <div className="w-full md:w-1/2 p-8 overflow-y-auto custom-scrollbar border-b md:border-b-0 md:border-r border-slate-100">
+                            <h3 className="text-xl text-slate-800 font-bold mb-6">Invoice Details</h3>
+                            <div className="grid grid-cols-1 gap-4">
+                                {FORM}
+                            </div>
                         </div>
-                        <div className="relative   w-1/2 h-full max-sm:hidden overflow-y-scroll">
-                          {" "}
-                          <ProductsList />
+                        <div className="w-full md:w-1/2 p-0 bg-slate-50">
+                          <div className="h-full overflow-y-auto custom-scrollbar p-6">
+                             <ProductsList />
+                          </div>
                         </div>
                       </div>
                     }
                   />
                 )}
-                <div className="relative h-[70%] overflow-y-scroll hidden max-sm:block max-md:block">
-                  {" "}
+                
+                {/* Mobile Products List */}
+                <div className="relative h-auto overflow-y-auto block md:hidden border-t border-slate-200 pt-4">
                   <ProductsList />
                 </div>
-                <br className="w-full border-gray-300" />
-                <br className="w-full border-gray-300" />
-                <div className="relative w-full flex items-center justify-start py-2">
-                  <div className="relative  w-1/3 max-sm:w-full  mt-1 flex justify-start items-center  gap-3">
-                    {VAT_DISCOUNT_INPUT} <Currency />
+
+                <div className="w-full h-px bg-slate-200 my-6" />
+
+                <div className="relative w-full flex items-center justify-end py-2">
+                   {/* VAT Discount Input Area */}
+                  <div className="w-full max-w-md bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl flex justify-between items-center gap-3 shadow-sm">
+                     <span className="text-slate-600 text-sm font-bold">Params:</span>
+                    {VAT_DISCOUNT_INPUT} 
+                    <Currency />
                   </div>
                 </div>
 
-                <hr className="w-1/2" />
-                <div className="relative w-full flex justify-start  max-md:w-full  max-sm:grid grid-cols-1 max-sm:px-0 items-center">
-                  <div className="relative grid grid-cols-1 items-center w-1/2 max-md:w-full max-sm:w-full  gap-2">
-                    <div className="relative flex justify-between items-center max-sm:w-full">
-                      <p className="text-sm text-gray-500 font-normal max-sm:text-sm ">
-                        discount
-                      </p>
-
-                      <p className="text-sm  text-gray-500 mr-2  font-normal">
-                        {Number(invoiceInformation.Discount)}%
-                      </p>
+                <div className="flex flex-col items-end gap-4 mt-4">
+                    <div className="bg-white shadow-sm p-6 rounded-xl w-full max-w-sm border border-slate-200/60">
+                        <div className="flex justify-between items-center mb-3">
+                            <span className="text-slate-600 text-sm font-bold">Discount</span>
+                            <span className="text-slate-800 font-mono font-bold">{Number(invoiceInformation.Discount)}%</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-4">
+                            <span className="text-slate-600 text-sm font-bold">Tax (VAT)</span>
+                            <span className="text-slate-800 font-mono font-bold">{Number(invoiceInformation.VAT)}%</span>
+                        </div>
+                        <div className="w-full h-px bg-slate-100 mb-4" />
+                        <div className="flex justify-between items-center">
+                            <span className="text-slate-800 font-extrabold text-lg">Total</span>
+                            <span className="text-violet-600 font-extrabold text-2xl">
+                                {Number(invoiceInformation.TOTAL).toLocaleString()}{" "}
+                                <span className="text-sm text-slate-500 font-medium">{invoiceInformation.currency != "--select--" && invoiceInformation.currency}</span>
+                            </span>
+                        </div>
                     </div>
-
-                    <div className="relative flex justify-between items-center   gap-2 ">
-                      <p className="text-sm text-gray-500 font-normal max-sm:text-sm ">
-                        Tax
-                      </p>
-
-                      <p className="text-sm text-gray-500 mr-2  font-normal">
-                        {" "}
-                        {Number(invoiceInformation.VAT)}%
-                      </p>
-                    </div>
-
-                    <hr className="w-full border-gray-300" />
-
-                    <div className="relative flex justify-between items-center   gap-2 ">
-                      <p className="text-sm text-gray-500 font-normal max-sm:text-sm ">
-                        Total
-                      </p>
-                      <p className="text-xl  text-gray-500 mr-2  font-normal">
-                        {Number(invoiceInformation.TOTAL).toLocaleString()}{" "}
-                        {invoiceInformation.currency != "--select--" &&
-                          invoiceInformation.currency}
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </section>
-            </CardBody>
-          </Card>
+          </div>
         )}
+        <SubscriptionModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
       </>
     );
   }

@@ -1,4 +1,4 @@
-import { Button, Input } from "reactstrap";
+// import { Button, Input } from "reactstrap";
 // import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -11,104 +11,146 @@ import {
 import Overlay from "../Subscription/_OverlayComp/Overlay";
 import { LoadingDashed } from "react-huge-icons/solid";
 import GeneralMailer from "../../../../EMAIL/GeneralMailer";
+import { API_URL } from "../../../../constants/Index";
 import { Link, useNavigate } from "react-router-dom";
 
 const PasswordReset = () => {
-  const verificationCode = String(Date.now()).slice(9, 17);
+  // Generate a stable 6-digit code (100000-999999) to avoid leading zero issues
+  const [verificationCode] = useState(String(Math.floor(100000 + Math.random() * 900000)));
   const navigate = useNavigate();
-
-  const emailHtml = render(
-    <GeneralMailer verificationCode={Number(verificationCode)} />,
-    {
-      pretty: true,
-    }
-  );
-
   const [email, setEmail] = useState("");
   const { loading } = useAppSelector((store) => store.walletSlice);
   const dispatch = useAppDispatch();
+  const [errorDetails, setErrorDetails] = useState<string | null>(null);
 
-  const passwordResetHandler = async (emailTemplate: any) => {
-    const emailInstance = await emailTemplate;
+  const passwordResetHandler = async () => {
     if (!email) return;
-    // e.preventDefault();
+
     dispatch(setLoading());
+    setErrorDetails(null); // Clear previous errors
+
     try {
+      // Render email template inside handler to ensure latest state
+      const emailHtml = await render(
+        <GeneralMailer verificationCode={Number(verificationCode)} />,
+        { pretty: true }
+      );
+
       const response = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/reset-password",
-        //https://ether-bill-server-1.onrender.com
+        `${API_URL}/api/reset-password`,
         {
           method: "POST",
           headers: { "Content-Type": "Application/json" },
-          body: JSON.stringify({ email, emailInstance, verificationCode }),
+          body: JSON.stringify({ 
+            email, 
+            userEmail: email, 
+            recipient: email, // Common
+            receipient: email, // Matches typo in InvoiceTemplate sending logic
+            emailInstance: emailHtml, 
+            htmlContent: emailHtml, 
+            verificationCode 
+          }),
         }
       );
 
       if (!response.ok) {
         dispatch(setLoading());
-        if (response.status == 503) {
+        
+        // Capture detailed error for user debugging
+        const errorData = await response.json().catch(() => ({}));
+        const userMsg = errorData.response || response.statusText;
+        const debugMsg = `${response.status}: ${userMsg}`;
+        setErrorDetails(debugMsg);
+
+        if (response.status === 503) {
           return toast.error("Service temporarily unavailable");
-        } else if (response.status == 403) {
+        } else if (response.status === 403) {
           return toast.error("Account does not exist");
-        } else if (response.status == 500) {
+        } else if (response.status === 500) {
           return toast.error("Connection error");
+        } else {
+             return toast.error(userMsg || "Failed to request code");
         }
       } else {
         const { message } = await response.json();
         dispatch(setLoading());
-        toast.success(message);
-        navigate("/verification_code");
+        toast.success(message || "Code sent successfully!");
         localStorage.setItem("email", email);
+        navigate("/verification_code");
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch(setLoading());
-      toast.error("Error occured");
+      console.error("Password Reset Error:", error);
+      const debugMsg = error.message || "Network Error";
+      setErrorDetails(debugMsg);
+      toast.error("An error occurred while sending requests");
     }
   };
 
   return (
     <>
-      {/* <Header /> */}
       {loading && (
         <Overlay
           children={
-            <LoadingDashed className="text-5xl text-purple-600 animate-spin z-30" />
+            <LoadingDashed className="text-5xl text-violet-500 animate-spin z-30" />
           }
         />
       )}
 
-      <div className="relative bg-gradient-to-br from-purple-200 to-gray-white  justify-between max-sm:justify-center flex">
-        <div className="relative w-full  px-10 max-sm:hidden"></div>
+      <div className="w-full h-full min-h-screen flex justify-center items-center bg-slate-50 p-4">
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden p-8 md:p-12 animate-fade-in-up">
+          <div className="flex flex-col gap-6">
+            <div className="text-center">
+                <h1 className="text-3xl text-slate-900 font-extrabold mb-2 tracking-tight">
+                Password Reset
+                </h1>
+                <p className="text-slate-500 text-sm">Enter the email associated with your account.</p>
+            </div>
+            
+            <div className="flex flex-col gap-2">
+                <label className="text-slate-700 text-xs font-bold uppercase tracking-wide ml-1">Email Address</label>
+                <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                required={true}
+                onChange={(e) => setEmail(e.target.value)}
+                className="clean-input w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-900 font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all"
+                />
+            </div>
 
-        <div className="relative max-sm:px-1 max-sm:h-screen bg-gray-100   w-3/4 max-sm:w-full h-screen py-5 px-10  flex-col  flex justify-center items-start">
-          <h1 className="text-2xl text-purple-500 font-bold mb-2 ">
-            Password reset
-          </h1>
-          <Input
-            type="email"
-            placeholder={"Enter your email"}
-            value={email}
-            required={true}
-            onChange={(e) => setEmail(e.target.value)}
-            className="block w-full outline-none py-2 border mb-2 px-2 py-1 lg:text-sm "
-          />
-
-          <Button
-            onClick={() => passwordResetHandler(emailHtml)}
-            className=" bg-gradient-to-r mt-4 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-normal hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full"
-          >
-            Request code
-          </Button>
-          <div className="relative mt-2 max-sm:mt-5 flex justify-right w-full">
-            <Link
-              to={"/"}
-              className="text-sm flex max-sm:text-sm  text-[14px] text-xs text-purple-500"
+            <button
+                onClick={() => passwordResetHandler()}
+                className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-violet-600 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-[0.98] group"
             >
-              Already have an account?
-              <span className="text-purple-500 text-xs max-sm:text-sm text-[16px] ml-3 underline">
-                {"Sign in"}
-              </span>
-            </Link>
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                    Request Code
+                </span>
+            </button>
+
+             {errorDetails && (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-left animate-fade-in">
+                    <p className="text-red-800 text-xs font-bold mb-1">Server Error Details:</p>
+                    <code className="text-[10px] text-red-600 font-mono break-all block">
+                        {errorDetails}
+                    </code>
+                    <p className="text-[10px] text-red-500 mt-1 italic">
+                        (If this says "500", the email server is failing)
+                    </p>
+                </div>
+            )}
+
+            <div className="relative mt-4 flex justify-center w-full text-center border-t border-slate-100 pt-6">
+                <p className="text-slate-500 text-sm">
+                    Remember your password?
+                    <Link
+                    to={"/"}
+                    className="text-violet-600 font-bold hover:text-violet-800 transition-colors ml-1"
+                    >
+                    Sign in
+                    </Link>
+                </p>
+            </div>
           </div>
         </div>
       </div>

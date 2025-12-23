@@ -90,10 +90,10 @@ const SideNav = ({ title, children, setMode, mode }: Main) => {
 
   return (
     <>
-      <div className="relative flex flex-col py-2   gap-2" key={title}>
-        <h6 className="font-bol text-[16px] text-purple-800 ml-1 mb-2">{title}</h6>
+      <div className="relative flex flex-col py-2 gap-1 px-4" key={title}>
+        <h6 className="font-bold text-xs text-slate-500 ml-2 mb-2 uppercase tracking-widest">{title}</h6>
 
-        <div className="relative flex gap-7 flex-col">
+        <div className="relative flex gap-1 flex-col">
           {children.map(({ title, path, icon }) => (
             <Link
               onClick={() => {
@@ -102,9 +102,10 @@ const SideNav = ({ title, children, setMode, mode }: Main) => {
               }}
               key={title}
               to={`/${path}`}
-              className="text-purple-950 text-xs font-normal gap-2 flex justify-start items-center"
+              className="text-slate-600 text-sm font-bold gap-3 flex justify-start items-center hover:text-violet-700 hover:bg-violet-50 px-3 py-2 rounded-lg transition-all duration-200 group"
             >
-              {icon} {title}
+              <span className="text-lg text-slate-400 group-hover:text-violet-500 transition-colors">{icon}</span> 
+              {title}
             </Link>
           ))}
         </div>

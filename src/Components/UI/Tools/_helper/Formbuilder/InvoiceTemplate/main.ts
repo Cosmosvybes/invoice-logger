@@ -66,6 +66,45 @@ export default function useTemplateController() {
   }
   setInvoiceInformation();
   const token = String(localStorage.getItem("token"));
+  
+  // [NEW] Logic for Default Payment Terms & Apply Tax
+  const { settings } = useAppSelector((state) => state.invoice);
+  useEffect(() => {
+    if (invoiceInformation && !id) { // Only on new invoice creation (not editing existing)
+        
+        // 1. Default Payment Terms (30 Days)
+        if (settings?.defaultPaymentTerms) {
+             const issueDate = invoiceInformation.DateIssued ? new Date(invoiceInformation.DateIssued) : new Date();
+             const dueDate = new Date(issueDate);
+             dueDate.setDate(dueDate.getDate() + 30);
+             
+             // Check if DateDue is empty before overwriting? Or force overwrite?
+             // Since it's a preference, we likely want to set the default starting state.
+             if(!invoiceInformation.DateDue) {
+                 dispatch(updateInvoiceInformation({
+                    value: dueDate.toISOString().split('T')[0],
+                    key: "DateDue",
+                    invoiceID: Number(localStorage.getItem("id")),
+                    token
+                 }));
+             }
+        }
+
+        // 2. Apply Tax Defaults
+        if (settings?.applyTax) {
+             // If VAT is not set, set a default value (e.g., 5 or just ensure input is ready)
+             // The structure uses `tax_discount_input` state, but values live in invoiceInformation.
+             if (!invoiceInformation.VAT) {
+                 dispatch(updateVAT({
+                     invoiceId: invoiceInformation.id,
+                     value: 5, // Default 5% tax if enabled
+                     token,
+                 }));
+             }
+        }
+    }
+  }, [settings, invoiceInformation?.id]); // Run when settings load or invoice ID changes
+
   const [tax_discount_input] = useState<VAT_DISCOUNT[]>([
     {
       type: "number",
@@ -161,10 +200,22 @@ export default function useTemplateController() {
     }
     const emailData = await emailHtml;
 
+    // Transform "Recurring" field (from FormBuilder) to backend structure
+    let finalInvoice = { ...invoiceInformation };
+    if (finalInvoice.Recurring && finalInvoice.Recurring !== "None") {
+        finalInvoice.recurring = {
+            frequency: finalInvoice.Recurring.toLowerCase(),
+            // Default to starting today if not specified
+            nextRun: new Date().toISOString() 
+        };
+    }
+    // Clean up the flat field
+    delete finalInvoice.Recurring;
+
     const emailObject = {
       receipient: recipient,
       htmlContent: emailData,
-      invoice: invoiceInformation,
+      invoice: finalInvoice,
     };
     // if (!isConnected) return toast.warn("Account not conneected");
 
@@ -182,14 +233,7 @@ export default function useTemplateController() {
         }
       );
       if (!responseInfo.ok) {
-        if (responseInfo.status == 403) {
-          const { res } = await responseInfo.json();
-
-          navigate("/subscription/payment");
-          throw new Error(res);
-        } else {
-          throw new Error("internal server error");
-        }
+          throw new Error("Failed to send invoice. Please try again.");
       }
       const response = await responseInfo.json();
       toast.success(response.response, { theme: "light" });
@@ -198,72 +242,9 @@ export default function useTemplateController() {
       dispatch(removeDraft({ invoiceID }));
       dispatch(walletLoader());
     } catch (error: any) {
-      toast.error(error.message, { theme: "dark" });
+      toast.error(error.message, { theme: "colored" });
       dispatch(setLoading());
-      // dispatch(walletLoader());
     }
-
-    // const smartContractTx = await getSmartContractAction(
-    //   tokenAddress,
-    //   tokenAbi
-    // );
-
-    // const smartContractTx_Etherbill = await getSmartContractAction(
-    //   contractAddress,
-    //   abi
-    // );
-    // try {
-    //   dispatch(walletLoader());
-    // const hash = await smartContractTx!.transfer(contractAddress, 5);
-    // await hash.wait();
-
-    // if (hash) {
-    //   const tx = await smartContractTx_Etherbill!.recordTransaction(
-    //     "Invoicing",
-    //     5,
-    //     0,
-    //     address,
-    //     contractAddress,
-    //     address
-    //   );
-
-    //     if (tx) {
-    //       try {
-    //         // setLoading(true);
-    //         const responseInfo = await fetch(
-    //           `http://localhost:8080/api/send/invoice?sendAsMessage=${sendAsMessage}`,
-    //           {
-    //             method: "POST",
-    //             headers: {
-    //               Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //               "Content-Type": "Application/json",
-    //             },
-    //             body: JSON.stringify({ ...emailObject }),
-    //           }
-    //         );
-    //         if (!responseInfo.ok) {
-    //           if (responseInfo.status == 403) {
-    //             throw new Error("Insufficient token balance, add tokens");
-    //           } else {
-    //             throw new Error("internal server error");
-    //           }
-    //         }
-    //         const response = await responseInfo.json();
-    //         toast.success(response.response, { theme: "light" });
-    //         navigate("/dashboard");
-    //         const invoiceID = invoiceInformation.id;
-    //         dispatch(removeDraft({ invoiceID }));
-    //         dispatch(walletLoader());
-    //       } catch (error: any) {
-    //         toast.error(error.message, { theme: "dark" });
-    //         // dispatch(walletLoader());
-    //       }
-    //     }
-    //   }
-    // } catch (error) {
-    //   dispatch(walletLoader());
-    //   toast.error("Transaction Aborted", { theme: "dark" });
-    // }
   };
 
   const [useCustomChecked, setUseCustom] = useState(false);

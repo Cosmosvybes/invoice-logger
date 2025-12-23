@@ -1,5 +1,5 @@
 import { ArrowRight } from "react-huge-icons/solid";
-import { Button, Input, Spinner, Card, CardTitle } from "reactstrap";
+import { Spinner } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Eye, EyeDisable } from "react-huge-icons/outline";
 import { useState } from "react";
@@ -30,57 +30,63 @@ const OBTemplate = ({
   };
   const url = new URL(location.href);
 
+  // Helper to determine column span
+  const isSignUp = formFields.some(field => field.name === "Confirm Password");
+  
+  const getColSpan = (name: string) => {
+    if (!isSignUp) return "col-span-2"; // Sign In: all full width
+    
+    const halfWidthFields = ["Firstname", "Lastname", "Password", "Confirm Password"];
+    return halfWidthFields.includes(name) ? "col-span-2 md:col-span-1" : "col-span-2";
+  };
+
   const FORM = formFields.map((_, i) => {
+    const colSpan = getColSpan(_.name);
+    
     switch (_.type) {
       case "checkbox":
-        return;
+        return null;
       case "password":
         return (
-          <div className="relative" key={i}>
-            <label className="mb-1 text-purple-500 text-xs">
-              {" "}
-              {_.name}{" "}
-              <p className="block text-xs text-gray-500">
-                {_.name == "Password" &&
-                  url.pathname != "/" &&
-                  "Alphabet, number and special character  E.g Password123$ "}
-              </p>
+          <div className={`relative ${colSpan}`} key={i}>
+            <label className="mb-2 block text-violet-700 text-xs font-bold tracking-wide uppercase">
+              {_.name}
             </label>
-            <div className="relative  py-0">
-              <Input
+            <div className="relative">
+              <input
                 type={isPassWord ? "password" : "text"}
                 placeholder={_.placeholder}
                 value={formValues[_.name]}
                 required={_.required}
                 onChange={(e) => handleChange(e.target.value, _.name)}
-                className="block w-full outline-none border px-2 py-2 lg:text-sm"
+                className="block w-full glass-input rounded-lg px-4 py-3 text-sm h-11 text-slate-900 placeholder:text-slate-500 border border-slate-300/50"
               />
-              {isPassWord ? (
-                <EyeDisable
-                  className=" absolute top-2 text-xl right-5"
-                  onClick={handleShowPassword}
-                />
-              ) : (
-                <Eye
-                  className=" absolute top-2 text-xl right-5"
-                  onClick={handleShowPassword}
-                />
-              )}
+              <div 
+                className="absolute top-3 right-4 text-slate-500 cursor-pointer hover:text-violet-600 transition-colors"
+                onClick={handleShowPassword}
+              >
+                {isPassWord ? <EyeDisable className="text-xl" /> : <Eye className="text-xl" />}
+              </div>
             </div>
+             {_.name == "Password" && url.pathname != "/" && (
+                <p className="block mt-1 text-[10px] text-slate-500 leading-tight">
+                  Alphabet, number & special char (e.g. Pass123$)
+                </p>
+             )}
           </div>
         );
 
       default:
         return (
-          <div className="relative" key={i}>
-            <label className="mb-1 text-purple-500 text-xs"> {_.name}</label>
-            <Input
+          <div className={`relative ${colSpan}`} key={i}>
+            <label className="mb-2 block text-violet-700 text-xs font-bold tracking-wide uppercase"> {_.name}</label>
+            <input
               type="text"
               placeholder={_.placeholder}
               value={formValues[_.name]}
               required={_.required}
               onChange={(e) => handleChange(e.target.value, _.name)}
-              className="block w-full outline-none border mb-2 px-2 py-2 lg:text-sm "
+              className="block w-full glass-input rounded-lg px-4 py-3 text-sm h-11 text-slate-900 placeholder:text-slate-500 border border-slate-300/50"
             />
           </div>
         );
@@ -89,70 +95,74 @@ const OBTemplate = ({
 
   return (
     <>
-      <Card className="relative backdrop-blur-lg bg-gray-100 w-full border-none gap-2 z-10 px-2  max-sm:h-auto py-1">
-        {/* <p className="text-neutral-500">Etherbill</p> */}
-        <CardTitle className="text-2xl font-bold text-purple-500">
-          <p>
-            {url.pathname == "/" || url.pathname != "/create/new/account"
-              ? "Welcome back"
-              : "Create new account "}{" "}
-          </p>
-          <strong className="text-purple-500 font-normal text-sm max-sm:text-sm">
-            {url.pathname == "/"
-              ? "Enter your email & password to continue"
-              : "Enter your details here"}
-          </strong>
-        </CardTitle>
+      <div className="relative glass-heavy w-full h-full min-h-screen border-none flex flex-col justify-center p-8 md:p-12 border border-slate-200/50 backdrop-blur-2xl">
+        <div className="text-center mb-6">
+            <h2 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">
+                {url.pathname == "/" || url.pathname != "/create/new/account"
+                ? "Welcome back"
+                : "Create Account"}
+            </h2>
+            <p className="text-slate-500 text-xs font-medium">
+                {url.pathname == "/"
+                ? "Enter your email & password to continue"
+                : "Enter your details to get started"}
+            </p>
+        </div>
 
-        <form onSubmit={(e) => handleSubmit(e)}>
-          {FORM}
-          <Link
-            to={"/reset_password"}
-            className="text-xs max-sm:text-sm text-purple-500"
-          >
-            Password reset
-          </Link>
-          <div className="relative max-md:py-2 w-full  max-sm:py-2 max-lg:py-1  flex justify-between items-start gap-2">
-            {url.pathname == "/" || url.pathname != "/create/new/account" ? (
-              <Link
-                to={"/create/new/account"}
-                className="text-xs  max-sm:text-sm text-purple-500 "
+        <form onSubmit={(e) => handleSubmit(e)} className="w-full">
+           <div className="grid grid-cols-2 gap-6 mb-6">
+              {FORM}
+           </div>
+          
+          <div className="flex justify-end mb-4">
+               <Link
+                to={"/reset_password"}
+                className="text-xs text-violet-600 font-bold hover:text-violet-800 transition-colors"
               >
-                Create new account
+                Forgot Password?
               </Link>
-            ) : (
-              <span className="text-purple-400 w-full max-sm:text-[16px] text-xs flex justify-start gap-2 ">
-                <p>Already have an account ? </p>
-
-                <Link
-                  to={"/"}
-                  className="text-xs  max-sm:text-sm  text-purple-600"
-                >
-                  Click here to sign in
-                </Link>
-              </span>
-            )}
           </div>
 
-          <Button className=" bg-gradient-to-r mt-2 from-purple-600 to-black flex justify-center items-center gap-2 text-white font-bold hover:text-gray-100 text-2xl border-none text-center py-1 hover:from-purple-700 hover:to-purple-900 transition duration-500 px-2 w-full">
-            {url.pathname == "/" ? "SIGN IN" : "SIGN UP"}
+          <button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-violet-600/30 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2 group border border-white/10">
+            {url.pathname == "/" ? "Sign In" : "Sign Up"}
             {!isLoading ? (
-              <ArrowRight className="inline text-2xl" />
+              <ArrowRight className="inline text-xl group-hover:translate-x-1 transition-transform" />
             ) : (
               <Spinner type="grow" color="light" size={"sm"} />
             )}
-          </Button>
+          </button>
+          
+          <div className="pt-4 text-center border-t border-slate-200/50 mt-4">
+            {url.pathname == "/" || url.pathname != "/create/new/account" ? (
+               <p className="text-slate-500 text-xs">
+                Don't have an account?{" "}
+                <Link
+                    to={"/create/new/account"}
+                    className="text-violet-600 font-bold hover:text-violet-800 transition-colors ml-1"
+                >
+                    Create one
+                </Link>
+               </p>
+            ) : (
+               <p className="text-slate-500 text-xs">
+                Already have an account?{" "}
+                <Link
+                    to={"/"}
+                    className="text-violet-600 font-bold hover:text-violet-800 transition-colors ml-1"
+                >
+                    Sign in
+                </Link>
+               </p>
+            )}
+          </div>
         </form>
 
-        <div className="mt-10 flex justify-center items-center flex-col">
-          <p className="text-neutral-500 text-sm font-normal">
+        <div className="mt-6 text-center">
+          <p className="text-slate-400 text-[10px] font-mono">
             Etherbill v1.0.0
           </p>
-          <p className="text-neutral-500 text-xs">
-            Stay Connected with your clients on go!
-          </p>
         </div>
-      </Card>
+      </div>
     </>
   );
 };

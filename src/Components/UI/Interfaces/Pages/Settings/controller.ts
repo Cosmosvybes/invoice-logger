@@ -36,10 +36,11 @@ export default function useSettingsController() {
   const [personalizationSchema] = useState([
     {
       id: 10,
-      type: "switch",
+      type: "select",
       name: "defaultCurrency",
-      value: true,
-      label: "Default currency usd",
+      value: "USD",
+      label: "Account Default Currency",
+      options: ["USD", "NGN", "EUR", "GBP", "KWT", "CAD", "AUD"],
     },
     {
       id: 11,
@@ -62,6 +63,13 @@ export default function useSettingsController() {
       name: "revenueNotification",
       value: false,
       label: "Enable revenue notification",
+    },
+    {
+      id: 99,
+      type: "switch",
+      name: "autoChase",
+      value: false,
+      label: "Enable Auto-Chasing (Daily Reminders)",
     },
   ]);
   const [subscriptionSchema] = useState([

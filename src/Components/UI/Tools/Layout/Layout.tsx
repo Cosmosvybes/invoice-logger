@@ -47,27 +47,23 @@ const Layout = ({ children }: any) => {
 
   // if (!isAuthenticated) return <SignIn />;
   return (
-    <div className=" bg-purple-200 border w-full rounded-tl-lg rounded-tr-lg gap-4 ">
+    <div className="w-full h-screen overflow-hidden flex flex-col bg-slate-50">
       <Nav />
-      <div className="relative justify-normal  h-screen max-sm:h-auto flex">
-        <div className="relative w-1/4 overflow-y-scroll  max-sm:hidden rounded-bl-lg bg-purple-200">
-          <div className="fixed h-auto w-10 left-100 p-1 rounded-md bottom-10  bg-[rgba(0,0,0,0.18)] flex justify-center items-center">
-            <ArrowDownRectangle className="text-2xl text-purple-500" />
-          </div>
-
+      <div className="flex flex-1 overflow-hidden">
+        {/* SideNav Container */}
+        <div className="w-64 hidden md:flex flex-col border-r border-slate-200 bg-white h-full overflow-y-auto shrink-0 z-20 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]">
           {sideMenu.map(({ title, children }) => (
-            <div className="relative p-3 border " key={title}>
+            <div className="border-b border-slate-100 last:border-0 pb-2" key={title}>
               <SideNav title={title} children={children!} setMode={() => ""} />
             </div>
           ))}
         </div>
 
-        <div
-          className="relative  w-full rounded-br-lg bg-purple-100 max-sm:h-auto
-            max-sm:rounded-lg max-sm:w-full max-sm:rounded-tl-lg
-            max-sm:rounded-tr-lg flex flex-col pb-2"
-        >
-          {children}
+        {/* Main Content Area */}
+        <div className="flex-1 relative flex flex-col h-full overflow-y-auto custom-scrollbar bg-slate-50">
+          <main className="flex-1 w-full h-full mx-auto">
+            {children}
+          </main>
         </div>
       </div>
     </div>

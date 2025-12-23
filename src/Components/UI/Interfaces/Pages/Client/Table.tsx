@@ -8,102 +8,98 @@ import Paginate from "./Paginate";
 const Table_ = () => {
   const { clients, search, handleSearch } = useTableController();
 
-  const { currentList, postPerPage, setCurrentPage, notFound, tableColums } =
+  const { currentList, postPerPage, setCurrentPage, tableColums } =
     useClientDataController(clients);
 
-  const TABLE_BODY =
-    currentList.filter((user) =>
-      search == ""
-        ? currentList
-        : user.name.toLowerCase().includes(search.toLowerCase().trim()) ||
-          String(user.id).includes(search.trim()) ||
-          user.address.toLowerCase().includes(search.toLowerCase().trim()) ||
-          user.cityStatePostal
-            .toLowerCase()
-            .includes(search.toLowerCase().trim()) ||
-          user.country.toLowerCase().includes(search.toLowerCase().trim())
-    ).length == 0 ? (
-      <tr className="text-center row-span-full max-sm:text-sm font-light text-black ">
-        {notFound.map((_, i) => (
-          <td className="text-gray-400" key={i}>
-            {""}
-          </td>
-        ))}
-      </tr>
-    ) : (
-      currentList
-        .filter((user) =>
-          search == ""
-            ? currentList
-            : user.name.toLowerCase().includes(search.toLowerCase().trim()) ||
-              String(user.id).includes(search.trim()) ||
-              user.address
-                .toLowerCase()
-                .includes(search.toLowerCase().trim()) ||
-              user.cityStatePostal
-                .toLowerCase()
-                .includes(search.toLowerCase().trim()) ||
-              user.country.toLowerCase().includes(search.toLowerCase().trim())
-        )
-        .map((row, i) => (
-          <tr
-            key={i}
-            className={`${i % 2 == 0 ? "bg-purple-200" : "bg-gray-100"} py-1`}
-          >
-            {/* <td className="text-center  py-1 max-sm:py-1">
-              {String(row.id).slice(10, 15)}
-            </td> */}
-            <td className="text-center max-sm:text-sm font-normal text-black  py-1 max-sm:py-1">
-              {String(row.name).slice(0, 8)}
-            </td>
-            <td className="text-center max-sm:text-sm font-normal text-black py-1 max-sm:py-1">
-              {String(row.email).length > 10 &&
-                String(row.email).slice(0, 9) + "..."}
-            </td>
-            <td className="text-center max-sm:text-sm font-normal text-black p-2 max-sm:py-1">
-              {String(row.address).length > 10
-                ? String(row.address).slice(0, 5) + "..."
-                : row.address}
-            </td>
-            <td className="text-center max-sm:text-sm font-normal text-black p-2 max-sm:py-1">
-              {row.cityStatePostal}
-            </td>
-            <td className="text-center max-sm:text-sm font-normal text-black p-2 max-sm:py-1">
-              {row.country.slice(0, 8)}
-            </td>
-          </tr>
-        ))
-    );
+
 
   return (
     <>
-      <div className="relative  max-sm:w-full px-4">
-        <div className="relative flex  justify-start items-center max-sm:w-full h-auto w-full max-sm:px-1 max-sm:mt-3 ">
-          <Input
-            className="w-2/4 max-sm:w-full  px-3 py-2 outline-none rounded-md"
-            placeholder="Search client name, ID, city or country"
-            value={search}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
+      <div className="relative w-full clean-card p-6 animate-fade-in-up">
+        <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-slate-800">Client List</h2>
+            <div className="relative w-full max-w-md">
+                <Input
+                    className="clean-input w-full px-4 py-2 rounded-lg text-slate-900 placeholder-slate-400 bg-slate-50 border-slate-200"
+                    placeholder="Search client..."
+                    value={search}
+                    onChange={(e) => handleSearch(e.target.value)}
+                />
+            </div>
         </div>
 
-        <table className="w-full mt-1 px-3 max-sm:w-full">
-          <thead className="mb-2 px-4 ">
-            <tr className="py-3 px-4">
-              {tableColums.map((_, i) => (
-                <th
-                  className="text-slate-800 text-left py-3 lg:py-1 max-sm:py-1"
-                  key={i}
-                >
-                  {_.text}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <br />
-          <tbody>{TABLE_BODY}</tbody>
-        </table>
-        <div className="relative justify-center flex">
+        <div className="overflow-x-auto rounded-lg border border-slate-200">
+            <table className="w-full border-collapse text-left">
+            <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                {tableColums.map((_, i) => (
+                    <th
+                    className="py-4 px-4 text-xs font-bold text-slate-500 uppercase tracking-wider"
+                    key={i}
+                    >
+                    {_.text}
+                    </th>
+                ))}
+                </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 bg-white">
+                {currentList.filter((user) =>
+                    search == ""
+                        ? currentList
+                        : user.name.toLowerCase().includes(search.toLowerCase().trim()) ||
+                        String(user.id).includes(search.trim()) ||
+                        user.address.toLowerCase().includes(search.toLowerCase().trim()) ||
+                        user.cityStatePostal.toLowerCase().includes(search.toLowerCase().trim()) ||
+                        user.country.toLowerCase().includes(search.toLowerCase().trim())
+                ).length == 0 ? (
+                    <tr>
+                        <td colSpan={tableColums.length} className="py-8 text-center text-slate-500">
+                            No clients found matching your search.
+                        </td>
+                    </tr>
+                ) : (
+                    currentList
+                        .filter((user) =>
+                            search == ""
+                                ? currentList
+                                : user.name.toLowerCase().includes(search.toLowerCase().trim()) ||
+                                String(user.id).includes(search.trim()) ||
+                                user.address.toLowerCase().includes(search.toLowerCase().trim()) ||
+                                user.cityStatePostal.toLowerCase().includes(search.toLowerCase().trim()) ||
+                                user.country.toLowerCase().includes(search.toLowerCase().trim())
+                        )
+                        .map((row, i) => (
+                        <tr
+                            key={i}
+                            className="hover:bg-slate-50 transition-colors group"
+                        >
+                            <td className="py-4 px-4 text-sm text-slate-900 font-semibold">
+                            {String(row.name).slice(0, 15)}
+                            </td>
+                            <td className="py-4 px-4 text-sm text-slate-600">
+                            {String(row.email).length > 20
+                                ? String(row.email).slice(0, 20) + "..."
+                                : row.email}
+                            </td>
+                            <td className="py-4 px-4 text-sm text-slate-500">
+                            {String(row.address).length > 20
+                                ? String(row.address).slice(0, 20) + "..."
+                                : row.address}
+                            </td>
+                            <td className="py-4 px-4 text-sm text-slate-500">
+                            {row.cityStatePostal}
+                            </td>
+                            <td className="py-4 px-4 text-sm text-slate-500">
+                            {row.country.slice(0, 15)}
+                            </td>
+                        </tr>
+                        ))
+                )}
+            </tbody>
+            </table>
+        </div>
+        
+        <div className="relative flex justify-center mt-6">
           <Paginate
             list={clients}
             listPerPage={postPerPage}

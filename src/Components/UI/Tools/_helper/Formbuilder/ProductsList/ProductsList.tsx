@@ -10,81 +10,87 @@ const ProductsList = React.memo(({}) => {
 
   return (
     <>
-      <h1 className="text-2xl mt-3 px-2 mb-2 ">Products List</h1>
-      <div className="relative bg-gray-50 items-center grid grid-cols-5  gap-1 py-1 w-full max-sm:w-full">
-        <p className="text-black text-center  font-light px-2 text-sm  max-sm:text-xs">
-          Product
-        </p>
-        <p className="text-black text-center  font-light text-sm  max-sm:text-xs">
-          Quantity
-        </p>
-        <p className="text-black text-center  font-light text-sm  max-sm:text-xs">
-          Unit price
-        </p>
-        <p className="text-black text-center  font-light text-sm  max-sm:text-xs">
-          Unit total
-        </p>
-        <p className="text-black text-center  font-light text-sm  max-sm:text-xs">
-          Actions
-        </p>
-      </div>
+      <div className="w-full relative py-2">
+        <div className="flex justify-between items-center mb-4 px-1">
+            <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide">Items List</h4>
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">
+                {invoiceInformation.itemList.length} Items
+            </span>
+        </div>
+        
+        <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto custom-scrollbar p-1">
+            {invoiceInformation.itemList.map((item: Item, i: number) => (
+              <div
+                key={i}
+                className="relative bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:shadow-md hover:border-violet-200 transition-all duration-200 group"
+              >
+                <div className="flex justify-between items-start mb-3 gap-3">
+                    <div className="flex-1">
+                        <label className="text-[10px] uppercase font-bold text-slate-600 mb-1 block">Description</label>
+                        <Input
+                            className="clean-input w-full p-2 text-sm text-slate-700 placeholder-slate-500 font-medium"
+                            type={"text"}
+                            placeholder={"Item name / description"}
+                            value={item.description}
+                            onChange={(e) => handleChange(e, i, "description")}
+                        />
+                    </div>
+                    <button
+                        onClick={() => remove(i, item.itemID)}
+                        className="text-slate-400 hover:text-red-500 transition-colors p-1 mt-6"
+                    >
+                        <TrashBent className="text-lg" />
+                    </button>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-3">
+                    <div className="flex flex-col">
+                        <label className="text-[10px] uppercase font-bold text-slate-600 mb-1 block">Qty</label>
+                         <Input
+                            className="clean-input w-full p-2 text-center text-sm text-slate-700 placeholder-slate-500 font-mono font-medium"
+                            type={"number"}
+                            placeholder={"0"}
+                            value={item.quantity}
+                            onChange={(e) => handleChange(e, i, "quantity")}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="text-[10px] uppercase font-bold text-slate-600 mb-1 block">Price</label>
+                        <Input
+                            className="clean-input w-full p-2 text-center text-sm text-slate-700 placeholder-slate-500 font-mono font-medium"
+                            type={"number"}
+                            placeholder={"0.00"}
+                            value={item.unitPrice}
+                            onChange={(e) => handleChange(e, i, "unitPrice")}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="text-[10px] uppercase font-bold text-slate-600 mb-1 block">Total</label>
+                         <div className="w-full p-2 text-center text-sm font-mono font-bold text-violet-600 bg-slate-50 rounded-lg border border-slate-100 h-[38px] flex items-center justify-center">
+                            {Number(item.unitTotal).toFixed(2)}
+                         </div>
+                    </div>
+                </div>
+              </div>
+            ))}
+            
+            {invoiceInformation.itemList.length === 0 && (
+                 <div className="text-center py-12 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+                    <p className="text-slate-500 text-sm font-bold">No items added yet</p>
+                    <p className="text-slate-500/60 text-xs">Click the button below to add your first item</p>
+                </div>
+            )}
+        </div>
 
-      <div className="relative w-full flex flex-col gap-1 mt-2 mb-3">
-        {invoiceInformation.itemList.map((_: Item, i: number) => (
-          <div className="relative grid grid-cols-5 gap-4 max-sm:gap-0" key={i}>
-            <Input
-              className={`px-2  w-24 text-sm  max-sm:text-xs text-center max-md:text-md  outline-none rounded-md bg-inherit border-b bg-gray-300 py-2  text-black  font-normal  max-md:w-full max-sm:w-full`}
-              type={"text"}
-              placeholder={"Description"}
-              value={_.description}
-              onChange={(e) => handleChange(e, i, "description")}
-            />
-            <Input
-              className={`px-2 py-2  w-24 text-sm  max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   bg-gray-200   text-black  font-normal  max-md:w-full max-sm:w-full`}
-              type={"text"}
-              placeholder={"Quantity"}
-              value={_.quantity}
-              onChange={(e) => handleChange(e, i, "quantity")}
-            />
-            <Input
-              className={`px-2 py-2  w-24 text-sm  max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit   ${
-                i % 2 == 0 ? "bg-gray-100" : "bg-gray-200"
-              }  text-black  font-normal  max-md:w-full max-sm:w-full`}
-              type={"text"}
-              placeholder={"Unit price"}
-              value={_.unitPrice}
-              onChange={(e) => handleChange(e, i, "unitPrice")}
-            />
-            <Input
-              disabled
-              className={`px-2 py-2  w-24  text-sm max-sm:text-xs text-center max-md:text-md   outline-none rounded-md bg-inherit border-b text-black bg-gray-400   font-normal  max-md:w-full max-sm:w-full`}
-              type={"text"}
-              placeholder={"Sub Total"}
-              value={Number(_.unitTotal).toFixed(2)}
-              onChange={(e) => handleChange(e, i, "unitTotal")}
-            />
-
-            <button
-              onClick={() => remove(i, _.itemID)}
-              color="primary"
-              className="text-black flex justify-center items-center"
+        <div className="mt-4 pt-4 border-t border-slate-200">
+             <button 
+                onClick={addNew} 
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white transition-all duration-300 shadow-sm hover:shadow-lg transform active:scale-95"
             >
-              {" "}
-              <TrashBent className="text-3xl text-black inline" />
+                <PlusRectangle className="text-lg" />
+                <span className="text-sm font-bold uppercase tracking-wide">Add New Item</span>
             </button>
-          </div>
-        ))}
-      </div>
-      <div className="relative grid grid-cols-5  gap-4">
-        {" "}
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <button onClick={addNew} color="primary" className="">
-          {" "}
-          <PlusRectangle className="inline text-5xl text-purple-900" />
-        </button>
+        </div>
       </div>
     </>
   );

@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background-color: #F8FAFC;
+    /* slate-50 */
+    color: #0f172a;
+    /* slate-900 */
+}
+
+/* Custom Utilities for Clean UI */
+.clean-card {
+    @apply bg-white border border-slate-200 shadow-sm rounded-xl;
+}
+
+.clean-input {
+    @apply w-full border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 outline-none transition-all placeholder:text-slate-400 bg-white;
+}
+
+/* Animation Utilities */
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
