@@ -189,12 +189,12 @@ const Template = React.memo(
                 <ModalBody className="text-slate-600">
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-bold text-slate-700">Recipient Email</label>
-                        <Input 
+                        <DebouncedFormInput 
                             type="email" 
                             className="clean-input w-full p-2.5 rounded-lg border border-slate-300"
                             placeholder="Enter client email..."
                             value={customEmail}
-                            onChange={handleSetCustomEmail}
+                            onChange={(val) => handleSetCustomEmail(val)}
                         />
                         <p className="text-xs text-slate-500">The invoice will be sent to this email address.</p>
                     </div>

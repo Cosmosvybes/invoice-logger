@@ -256,8 +256,9 @@ export default function useTemplateController() {
   const [customEmail, setCustomEmail] = useState("");
 
   const handleSetCustomEmail = (e: any) => {
-    setCustomEmail(e.target.value);
-    setReceipient(e.target.value);
+    const value = typeof e === 'string' ? e : e.target.value;
+    setCustomEmail(value);
+    setReceipient(value);
   };
   const handleSendAsMessage = (e: any) => {
     setSetAsMessage(e.target.value);
