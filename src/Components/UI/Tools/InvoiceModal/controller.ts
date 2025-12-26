@@ -140,7 +140,7 @@ const newCLientsFormField = [
 ];
 
 export default function useModalController() {
-  let combinedForm = [...forms];
+  const combinedForm = [...forms];
   return {
     forms,
     combinedForm,

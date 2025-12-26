@@ -14,7 +14,7 @@ export default function useClientFormController() {
   const { newCLientsFormField } = useModalController();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  let clientFormValues = newCLientsFormField.reduce(
+  const clientFormValues = newCLientsFormField.reduce(
     (allInfo, currInfo) => ({
       ...allInfo,
       [currInfo.name]: currInfo.value,
@@ -35,7 +35,7 @@ export default function useClientFormController() {
   const [loading, setLoading] = useState(false);
 
   const handleAddNewClient = async () => {
-    let hasEmptyStr = Object.values(formValues).find((val) => val == "");
+    const hasEmptyStr = Object.values(formValues).find((val) => val == "");
 
     if (hasEmptyStr != undefined) {
       toast.warn("Incomplete client details", { theme: "colored" });

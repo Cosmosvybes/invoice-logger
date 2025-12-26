@@ -25,8 +25,8 @@ const AccountDetails = () => {
   const [invoicesPerPage] = useState(2);
 
   const [currrentPage] = useState(1);
-  let indexOfLastInvoice = currrentPage * invoicesPerPage;
-  let indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
+  const indexOfLastInvoice = currrentPage * invoicesPerPage;
+  const indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
   const currentInvoices = draft?.slice(indexOfFirstInvoice, indexOfLastInvoice);
 
   ChartJS.register(

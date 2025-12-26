@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 
 const { combinedForm } = useModalController();
 
-let invoiceStaticValue = combinedForm.reduce(
+const invoiceStaticValue = combinedForm.reduce(
   (valuesBucket: any, currVa: any) => ({
     ...valuesBucket,
     [currVa.name]: currVa.value,
@@ -136,7 +136,7 @@ const invoiceSlice = createSlice({
       action: PayloadAction<{ invoiceID: string | number }>
     ) => {
       const { invoiceID } = action.payload;
-      let invoice = state.sent.find((invoice) => invoice.id == invoiceID);
+      const invoice = state.sent.find((invoice) => invoice.id == invoiceID);
       const invoice_ = state.sent.find((inv) => inv.id == invoiceID);
       const index = state.sent.indexOf(invoice_!);
       state.paid.push(invoice!);
@@ -162,7 +162,7 @@ const invoiceSlice = createSlice({
 
     changeCurrency: (state, action: PayloadAction<ICURRENCY>) => {
       const { id, currency, token }: ICURRENCY = action.payload;
-      let invoice = state.draft.find((invoice) => invoice.id == id);
+      const invoice = state.draft.find((invoice) => invoice.id == id);
       invoice!.currency = currency;
 
       fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
@@ -217,7 +217,7 @@ const invoiceSlice = createSlice({
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
       const { key, value, invoiceID, token } = action.payload;
-      let invoice: string | number | boolean | any = state.draft.find(
+      const invoice: string | number | boolean | any = state.draft.find(
         (invoice) => invoice.id == invoiceID
       );
       invoice[key] = value;
@@ -255,7 +255,7 @@ const invoiceSlice = createSlice({
     },
 
     createInvoice: (state, action: PayloadAction<Invoice>) => {
-      let invoice: Invoice = action.payload;
+      const invoice: Invoice = action.payload;
       state.draft.push({
         ...invoice,
       });
@@ -263,7 +263,7 @@ const invoiceSlice = createSlice({
 
     addItem: (state, action: PayloadAction<productKeyValue>) => {
       const { key, value, index, id, token }: productKeyValue = action.payload;
-      let invoice = state.draft.find((invoice) => invoice.id == id);
+      const invoice = state.draft.find((invoice) => invoice.id == id);
 
       invoice!.itemList[index][key] = value;
       const total =
@@ -299,7 +299,7 @@ const invoiceSlice = createSlice({
 
     updateInvoiceItems: (state, action: PayloadAction<item>) => {
       const { id, item }: item = action.payload;
-      let invoice = state.draft.find(
+      const invoice = state.draft.find(
         (invoice: { id: string | number }) => invoice.id == id
       );
       invoice!.itemList.push(item);
@@ -315,17 +315,17 @@ const invoiceSlice = createSlice({
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
       const { invoiceId, itemID, token }: itemToDelete = action.payload;
-      let invoiceItemList: Item[] = state.draft.find(
+      const invoiceItemList: Item[] = state.draft.find(
         (invoice) => invoice.id == invoiceId
       )!.itemList!;
-      let item: any = invoiceItemList?.find(
+      const item: any = invoiceItemList?.find(
         (data: Item) => data!.itemID == itemID
       );
-      let invoiceIndex = invoiceItemList!.indexOf(item);
+      const invoiceIndex = invoiceItemList!.indexOf(item);
       invoiceItemList!.splice(Number(invoiceIndex), 1);
       //
-      let invoiceItem = state.draft.find((invoice) => invoice.id == invoiceId);
-      let invoice: Invoice = state.draft.find(
+      const invoiceItem = state.draft.find((invoice) => invoice.id == invoiceId);
+      const invoice: Invoice = state.draft.find(
         (invoice) => invoice.id == invoiceId
       )!;
       invoice!.updatedAt = new Date().toLocaleString("en-GB", {
@@ -360,7 +360,7 @@ const invoiceSlice = createSlice({
 
     updateInvoiceTotal: (state, action: PayloadAction<invoiceTotalUpdate>) => {
       const { invoiceID, value, token }: invoiceTotalUpdate = action.payload;
-      let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceID);
+      const invoice = state.draft.find((inv: Invoice) => inv.id == invoiceID);
       fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
         method: "PUT",
         headers: {
@@ -386,8 +386,8 @@ const invoiceSlice = createSlice({
 
     updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value, token }: taxAndDiscount = action.payload;
-      let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
-      let subtotal = invoice!.itemList.reduce(
+      const invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
+      const subtotal = invoice!.itemList.reduce(
         (acc, curr) => acc + curr.unitTotal,
         0
       );
@@ -424,8 +424,8 @@ const invoiceSlice = createSlice({
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
       const { invoiceId, value, token }: taxAndDiscount = action.payload;
-      let invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
-      let subtotal = invoice!.itemList.reduce(
+      const invoice = state.draft.find((inv: Invoice) => inv.id == invoiceId);
+      const subtotal = invoice!.itemList.reduce(
         (acc, curr) => acc + curr.unitTotal,
         0
       );

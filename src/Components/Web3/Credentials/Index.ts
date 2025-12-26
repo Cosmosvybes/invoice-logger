@@ -182,7 +182,7 @@ export default function useSmartContractController() {
       dispatch(setLoading());
       console.error("Transaction error:", error);
 
-      let errorMessage = "Transaction failed";
+      const errorMessage = "Transaction failed";
       toast.error(errorMessage, { position: "top-center" });
     }
   };

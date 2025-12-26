@@ -3,7 +3,7 @@ import { IPaginate } from "./types";
 import { useState } from "react";
 
 const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
-  let pageLinks = [];
+  const pageLinks = [];
 
   for (let i = 1; i <= Math.ceil(invoices.length / postsPerPage); i++) {
     pageLinks.push(i);

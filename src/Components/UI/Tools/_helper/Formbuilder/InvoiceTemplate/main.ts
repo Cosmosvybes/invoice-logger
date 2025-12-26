@@ -190,7 +190,7 @@ export default function useTemplateController() {
   //
   const navigate = useNavigate();
   const handleSendInvoice = async (emailHtml: any) => {
-    let hasEmptyStr = Object.values(invoiceInformation).find(
+    const hasEmptyStr = Object.values(invoiceInformation).find(
       (val) => val == ""
     );
 
@@ -206,7 +206,7 @@ export default function useTemplateController() {
     const emailData = await emailHtml;
 
     // Transform "Recurring" field (from FormBuilder) to backend structure
-    let finalInvoice = { ...invoiceInformation };
+    const finalInvoice = { ...invoiceInformation };
     if (finalInvoice.Recurring && finalInvoice.Recurring !== "None") {
         finalInvoice.recurring = {
             frequency: finalInvoice.Recurring.toLowerCase(),

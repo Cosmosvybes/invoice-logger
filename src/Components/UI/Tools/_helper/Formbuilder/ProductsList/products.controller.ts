@@ -28,7 +28,7 @@ export default function useProductsListController() {
     )!;
   }
 
-  let [products, setProducts] = useState<Item[]>([
+  const [products, setProducts] = useState<Item[]>([
     ...invoiceInformation.itemList,
   ]);
 

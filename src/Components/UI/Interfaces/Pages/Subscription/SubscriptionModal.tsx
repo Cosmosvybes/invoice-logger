@@ -1,7 +1,7 @@
 import React from "react";
 import { RemoveCircle, CheckMarkCircle, Diamond, Repeat, Star } from "react-huge-icons/solid";
-import { useNavigate } from "react-router-dom";
-import usePaddle from "../../../../../States/hoooks/usePaddle"; // Import Hook
+// import { useNavigate } from "react-router-dom";
+import { useFlutterwavePayment } from "../../../../../States/hoooks/useFlutterwavePayment";
 
 interface SubscriptionModalProps {
   isOpen: boolean;
@@ -9,8 +9,8 @@ interface SubscriptionModalProps {
 }
 
 const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }) => {
-  const navigate = useNavigate();
-  const paddle = usePaddle(); // Initialize Paddle
+  // const navigate = useNavigate();
+  const { handleFlutterPayment } = useFlutterwavePayment();
   
   if (!isOpen) return null;
 
@@ -98,10 +98,12 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
             
             <button
               onClick={() => {
-                if (!paddle) return;
-                paddle.Checkout.open({
-                  items: [{ priceId: "pri_01jk5p4b8x093845" }], // Replace with REAL Price ID
-                });
+                const config = {
+                    amount: 3000, 
+                    email: "user@example.com", 
+                    name: "John Doe", 
+                };
+                handleFlutterPayment(config);
                 onClose();
               }}
               className="w-full py-3 bg-slate-900 hover:bg-violet-600 text-white font-bold rounded-xl shadow-lg transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 text-sm"
