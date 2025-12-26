@@ -486,6 +486,18 @@ const invoiceSlice = createSlice({
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
     });
+
+    // Handle getInvoice
+    builder.addCase(getInvoice.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getInvoice.fulfilled, (state, action) => {
+      state.loading = false;
+      state.currentInvoice = action.payload;
+    });
+    builder.addCase(getInvoice.rejected, (state) => {
+      state.loading = false;
+    });
   },
 });
 
