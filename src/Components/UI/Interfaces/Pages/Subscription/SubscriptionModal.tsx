@@ -11,7 +11,7 @@ interface SubscriptionModalProps {
 const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }) => {
   // const navigate = useNavigate();
   const config = {
-    amount: 3000, 
+    amount: 4.5, 
     email: "user@example.com", 
     name: "John Doe", 
   };
@@ -91,7 +91,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
         <div className="p-4 border-t border-slate-100 bg-slate-50/80 backdrop-blur-md flex-shrink-0">
             <div className="flex justify-between items-center mb-3">
                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-black text-slate-900 tracking-tight">$2</span>
+                    <span className="text-2xl font-black text-slate-900 tracking-tight">$4.5</span>
                     <span className="text-slate-500 font-bold text-[10px] uppercase">/ month</span>
                  </div>
                  <div className="bg-green-100 px-2.5 py-1 rounded-full border border-green-200">

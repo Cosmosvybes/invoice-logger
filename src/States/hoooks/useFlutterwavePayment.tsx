@@ -14,7 +14,7 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
   const config = {
     public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string,
     tx_ref: Date.now().toString(),
-    currency: "NGN",
+    currency: "USD",
     payment_options: "card,mobilemoney,ussd",
     amount: paymentProps.amount,
     customer: {
