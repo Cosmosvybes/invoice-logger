@@ -1,4 +1,4 @@
-import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { useFlutterwave } from "flutterwave-react-v3";
 
 interface FlutterwavePaymentProps {
   amount: number;
@@ -10,50 +10,26 @@ interface FlutterwavePaymentProps {
   logo?: string;
 }
 
-export const useFlutterwavePayment = () => {
+export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => {
   const config = {
     public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string,
     tx_ref: Date.now().toString(),
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd",
+    amount: paymentProps.amount,
+    customer: {
+      email: paymentProps.email,
+      phone_number: paymentProps.phone_number || "",
+      name: paymentProps.name,
+    },
+    customizations: {
+      title: paymentProps.title || "Invoice Logger PRO",
+      description: paymentProps.description || "Subscription for Invoice Logger PRO",
+      logo: paymentProps.logo || "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
   };
 
-  const handleFlutterPayment = ({
-    amount,
-    email,
-    name,
-    phone_number = "",
-    title = "Invoice Logger PRO",
-    description = "Subscription for Invoice Logger PRO",
-    logo = "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
-  }: FlutterwavePaymentProps) => {
-    
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const handlePayment = useFlutterwave({
-      ...config,
-      amount,
-      customer: {
-        email,
-        phone_number,
-        name,
-      },
-      customizations: {
-        title,
-        description,
-        logo,
-      },
-    });
+  const handlePayment = useFlutterwave(config);
 
-    handlePayment({
-      callback: (response: any) => {
-        console.log("Payment Success:", response);
-        closePaymentModal(); // this will close the modal programmatically
-      },
-      onClose: () => {
-        console.log("Payment Closed");
-      },
-    });
-  };
-
-  return { handleFlutterPayment };
+  return { handleFlutterPayment: handlePayment };
 };

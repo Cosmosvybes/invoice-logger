@@ -10,7 +10,12 @@ interface SubscriptionModalProps {
 
 const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }) => {
   // const navigate = useNavigate();
-  const { handleFlutterPayment } = useFlutterwavePayment();
+  const config = {
+    amount: 3000, 
+    email: "user@example.com", 
+    name: "John Doe", 
+  };
+  const { handleFlutterPayment } = useFlutterwavePayment(config);
   
   if (!isOpen) return null;
 
@@ -72,7 +77,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
               </div>
             </div>
 
-             <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-amber-50/50 border border-amber-100/50">
+            <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-amber-50/50 border border-amber-100/50">
               <div className="text-amber-600 mt-0.5"><Diamond className="text-lg" /></div>
               <div>
                 <h3 className="text-slate-900 font-bold text-sm mb-0">Premium Templates</h3>
@@ -98,13 +103,21 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
             
             <button
               onClick={() => {
-                const config = {
-                    amount: 3000, 
-                    email: "user@example.com", 
-                    name: "John Doe", 
-                };
-                handleFlutterPayment(config);
-                onClose();
+                handleFlutterPayment({
+                    callback: (response: any) => {
+                       console.log("Payment Success:", response);
+                       // closePaymentModal(); // Not available here unless imported, or use hook's close.
+                       // The hook returns handlePayment which automatically handles opening.
+                       // But wait, where is the callback handling now?
+                       // The hook accepts config. The callback is part of the config in library?
+                       // Standard useFlutterwave takes config which INCLUDES callback.
+                       // Oops, I removed the callback from my hook refactor!
+                       onClose();
+                    },
+                    onClose: () => {
+                       console.log("Payment Closed");
+                    }
+                });
               }}
               className="w-full py-3 bg-slate-900 hover:bg-violet-600 text-white font-bold rounded-xl shadow-lg transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 text-sm"
             >

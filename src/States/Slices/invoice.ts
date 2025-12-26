@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
+// import useModalController from "../../Components/UI/Tools/InvoiceModal/controller";
 
 import {
   deletingItemId,
@@ -15,7 +15,9 @@ import {
 } from "./invoice.types";
 import { toast } from "react-toastify";
 
-const { combinedForm } = useModalController();
+import { combinedForm } from "../../Components/UI/Tools/InvoiceModal/controller";
+
+// const { combinedForm } = useModalController();
 
 const invoiceStaticValue = combinedForm.reduce(
   (valuesBucket: any, currVa: any) => ({
