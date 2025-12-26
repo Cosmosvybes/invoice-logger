@@ -9,16 +9,21 @@ interface SubscriptionModalProps {
 }
 
 const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }) => {
-  // const navigate = useNavigate();
+  const [plan, setPlan] = React.useState<'monthly' | 'yearly'>('monthly');
+
   const config = {
-    amount: 4.5, 
-    email: "user@example.com", 
-    name: "John Doe", 
+    amount: plan === 'monthly' ? 4.5 : 48.6,
+    email: "user@example.com", // Dynamic Email should go here
+    name: "John Doe",
+    payment_plan: plan === 'monthly' 
+        ? import.meta.env.VITE_FLUTTERWAVE_MONTHLY_PLAN_ID 
+        : import.meta.env.VITE_FLUTTERWAVE_YEARLY_PLAN_ID,
+    planType: plan
   };
+  
   const { handleFlutterPayment } = useFlutterwavePayment(config);
   
   if (!isOpen) return null;
-
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in transition-all">
@@ -48,6 +53,24 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
             >
                 <RemoveCircle className="text-lg" />
             </button>
+        </div>
+
+        {/* Plan Toggle */}
+        <div className="px-4 pt-4 flex justify-center">
+            <div className="bg-slate-100 p-1 rounded-lg flex items-center gap-1 shadow-inner">
+                <button 
+                    onClick={() => setPlan('monthly')}
+                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${plan === 'monthly' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                >
+                    Monthly ($4.50)
+                </button>
+                <button 
+                    onClick={() => setPlan('yearly')}
+                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${plan === 'yearly' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                >
+                    Yearly ($48.60) <span className="text-[9px] text-green-600 ml-1 bg-green-100 px-1 rounded-full">-10%</span>
+                </button>
+            </div>
         </div>
 
         {/* Scrollable Content - Ultra Compact Grid */}
@@ -91,8 +114,12 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
         <div className="p-4 border-t border-slate-100 bg-slate-50/80 backdrop-blur-md flex-shrink-0">
             <div className="flex justify-between items-center mb-3">
                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-black text-slate-900 tracking-tight">$4.5</span>
-                    <span className="text-slate-500 font-bold text-[10px] uppercase">/ month</span>
+                    <span className="text-2xl font-black text-slate-900 tracking-tight">
+                        {plan === 'monthly' ? '$4.50' : '$48.60'}
+                    </span>
+                    <span className="text-slate-500 font-bold text-[10px] uppercase">
+                        {plan === 'monthly' ? '/ month' : '/ year'}
+                    </span>
                  </div>
                  <div className="bg-green-100 px-2.5 py-1 rounded-full border border-green-200">
                     <span className="text-green-700 text-[10px] font-bold flex items-center gap-1">
@@ -104,14 +131,8 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
             <button
               onClick={() => {
                 handleFlutterPayment({
-                    callback: (response: any) => {
-                       console.log("Payment Success:", response);
-                       // closePaymentModal(); // Not available here unless imported, or use hook's close.
-                       // The hook returns handlePayment which automatically handles opening.
-                       // But wait, where is the callback handling now?
-                       // The hook accepts config. The callback is part of the config in library?
-                       // Standard useFlutterwave takes config which INCLUDES callback.
-                       // Oops, I removed the callback from my hook refactor!
+                    callback: () => {
+                       // Handled in Hook
                        onClose();
                     },
                     onClose: () => {
@@ -130,5 +151,6 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
     </div>
   );
 };
+
 
 export default SubscriptionModal;
