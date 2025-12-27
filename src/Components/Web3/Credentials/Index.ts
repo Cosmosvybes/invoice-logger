@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { PinataSDK } from "pinata";
+
 import { shopCredientials } from "./Shop/constants";
 import { tokenCredientials } from "./Token/constants";
 import { marketPlaceCredentials } from "./Marketplace/Index";
@@ -29,17 +29,11 @@ import { useNavigate } from "react-router-dom";
 import { clearDisputes, setDisputes } from "../../../States/Slices/disputes";
 
 export default function useSmartContractController() {
-  const pinata = new PinataSDK({
-    pinataJwt: import.meta.env.VITE_PINATA_JWT,
-    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
-  });
 
   const handleFileUpload = async (file: any, escrowId: string) => {
     try {
       dispatch(setLoading());
-      const { cid } = await pinata.upload.public.file(file);
-      const data = await verifyFile(cid);
-      console.log(file, escrowId, data);
+      console.log(file, escrowId);
       const result = await fetch(
         "http://localhost:8080/api/upload/escrow_docs",
         {
@@ -48,7 +42,7 @@ export default function useSmartContractController() {
             "Content-Type": "Application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify({ escrowID: escrowId, file: data }),
+          body: JSON.stringify({ escrowID: escrowId, file: file }),
         }
       );
       const { response } = await result.json();
@@ -60,14 +54,7 @@ export default function useSmartContractController() {
     }
   };
 
-  const verifyFile = async (cid: string) => {
-    try {
-      const response = await pinata.gateways.public.convert(cid);
-      return response;
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
+
 
   const { address, balance, transactionHistory } = useAppSelector(
     (state) => state.walletSlice
