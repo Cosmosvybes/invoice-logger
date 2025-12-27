@@ -5,6 +5,11 @@ import {
   Container,
   Img,
   Tailwind,
+  Button,
+  Section,
+  Text,
+  Row,
+  Column,
 } from "@react-email/components";
 import { Invoice } from "../../States/Slices/invoice.types";
 
@@ -13,157 +18,166 @@ const InvoiceTemplate = ({
 }: {
   invoiceInformation: Invoice;
 }) => {
+  const mainColor = "#7c3aed"; // violet-600
+
   return (
-    <>
-      <Tailwind>
-        <Body className=" text-black py-5 px-2 border-5 border-gray-100 bg-gray-white  w-full">
-          <Container className="py-auto border-3 border-gray-100 ">
-            <Heading className="h-16">
-              <Img
-                className="h-20 w-1/2 object-cover"
-                src="https://res.cloudinary.com/dkckrpwew/image/upload/v1726595270/logo_transparent_jxwxhn.png"
-                alt="logo"
-              />
+    <Tailwind
+      config={{
+        theme: {
+          extend: {
+            colors: {
+              primary: mainColor,
+              gray: {
+                50: "#f9fafb",
+                100: "#f3f4f6",
+                200: "#e5e7eb",
+                500: "#6b7280",
+                800: "#1f2937",
+                900: "#111827",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "Helvetica", "Arial", "sans-serif"],
+            },
+          },
+        },
+      }}
+    >
+      <Body className="bg-gray-50 py-10 font-sans">
+        <Container className="bg-white border border-gray-200 rounded-lg shadow-sm mx-auto p-0 overflow-hidden max-w-2xl">
+          {/* Header */}
+          <Section className="px-8 py-6 border-b border-gray-100 bg-gray-50/50">
+            <Row>
+              <Column>
+                <Img
+                  className="h-10 object-contain"
+                  src="https://res.cloudinary.com/dkckrpwew/image/upload/v1726595270/logo_transparent_jxwxhn.png"
+                  alt="Etherbill"
+                />
+              </Column>
+              <Column align="right">
+                <Text className="text-gray-500 text-xs uppercase tracking-wider font-semibold m-0">
+                  Invoice #{invoiceInformation.id}
+                </Text>
+                <Text className="text-gray-900 text-sm font-bold m-0 mt-1">
+                  {invoiceInformation.DateIssued}
+                </Text>
+              </Column>
+            </Row>
+          </Section>
+
+          {/* Hero / Summary */}
+          <Section className="px-8 py-8 text-center bg-white">
+            <Text className="text-gray-500 text-sm mb-2 font-medium">
+              You received an invoice from <span className="text-gray-900 font-bold">{invoiceInformation.Business || invoiceInformation.IssuedBy}</span>
+            </Text>
+            <Heading className="text-4xl font-extrabold text-gray-900 my-4 m-0">
+               {Number(invoiceInformation.TOTAL).toLocaleString()} <span className="text-lg text-gray-500 ml-1 align-top">{invoiceInformation.currency}</span>
             </Heading>
+            
+            {invoiceInformation.paymentLink && (
+               <Button
+                 className="bg-primary hover:bg-violet-700 text-white px-8 py-4 rounded-lg font-bold text-sm no-underline mt-4 shadow-md inline-block"
+                 href={invoiceInformation.paymentLink}
+               >
+                 Pay Invoice Now
+               </Button>
+            )}
+            <Text className="text-gray-400 text-xs mt-4">
+              Due Date: {invoiceInformation.DateDue}
+            </Text>
+          </Section>
 
-            <p className="text-sm">
-              Hi there 👋, I'm Chris from etherbill. You have got an invoice.
-            </p>
-            <Hr className="border-gray-100 w-full" />
-            <p className="text-black font-normal">
-              Reference ID- {invoiceInformation.id}
-            </p>
-            <Hr className="border-gray-100 w-full" />
+          <Hr className="border-gray-100 my-0 mx-8" />
 
-            <p className="text-black  font-normal">
-              Sender's address - {invoiceInformation.BusinessAddress}{" "}
-              {invoiceInformation.ClientCity} {invoiceInformation.BusinessState}
-              , {invoiceInformation.BusinessCountry}.
-            </p>
-            <Hr className="border-gray-100 w-full" />
-            <p className="text-black  font-normal">
-              {" "}
-              Date issued- {invoiceInformation.DateIssued}{" "}
-            </p>
-            <Hr className="border-gray-100 w-full" />
-            <p className="text-black  font-normal">
-              {" "}
-              Date due - {invoiceInformation.DateDue}{" "}
-            </p>
-            <Hr className="border-gray-100 w-full" />
-            <Container className=" text-gray-700">
-              <Heading className="text-center">Products</Heading>
-              <table
-                border={0}
-                width={"100%"}
-                cellPadding={0}
-                cellSpacing={0}
-                style={{ width: "100%", borderCollapse: "collapse" }}
-              >
-                <thead className="w-full">
-                  <tr className="w-full">
-                    <th style={{ textAlign: "left", padding: "14px" }}>
-                      S/No.
-                    </th>
-                    <th style={{ textAlign: "left", padding: "14px" }}>
-                      Description
-                    </th>
-                    <th style={{ textAlign: "left", padding: "14px" }}>
-                      prod.Qty
-                    </th>
-                    <th style={{ textAlign: "left", padding: "14px" }}>
-                      Prod.Price
-                    </th>
-                    <th style={{ textAlign: "left", padding: "14px" }}>
-                      Unit total
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="w-full">
-                  {invoiceInformation.itemList.map((_: any, i: number) => (
-                    <tr
-                      key={i}
-                      className={` ${
-                        i % 2 == 0 ? "bg-gray-100" : "bg-gray-50"
-                      }  w-full`}
-                    >
-                      <td style={{ textAlign: "left", padding: "14px" }}>
-                        {String(_.itemID).slice(0, 12)}
-                      </td>
-                      <td style={{ textAlign: "left", padding: "14px" }}>
-                        {_.description}
-                      </td>
-                      <td style={{ textAlign: "left", padding: "14px" }}>
-                        {_.quantity}
-                      </td>
-                      <td style={{ textAlign: "left", padding: "14px" }}>
-                        {_.unitPrice}
-                      </td>
-                      <td style={{ textAlign: "left", padding: "14px" }}>
-                        {_.unitTotal}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </Container>
-            <br />
+          {/* Details Grid */}
+          <Section className="px-8 py-8">
+            <Row>
+              <Column className="w-1/2 align-top pr-4">
+                <Text className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Billed To</Text>
+                <Text className="text-gray-900 font-bold text-sm m-0 mb-1">{invoiceInformation.Client}</Text>
+                <Text className="text-gray-500 text-xs m-0 leading-relaxed">
+                  {invoiceInformation.ClientAddress}<br/>
+                  {invoiceInformation.ClientCity} {invoiceInformation.clientState}, {invoiceInformation.Country}
+                </Text>
+              </Column>
+              <Column className="w-1/2 align-top pl-4">
+                 <Text className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">From</Text>
+                 <Text className="text-gray-900 font-bold text-sm m-0 mb-1">{invoiceInformation.Business}</Text>
+                  <Text className="text-gray-500 text-xs m-0 leading-relaxed">
+                  {invoiceInformation.BusinessAddress}<br/>
+                  {invoiceInformation.City} {invoiceInformation.BusinessState}, {invoiceInformation.BusinessCountry}
+                </Text>
+              </Column>
+            </Row>
+          </Section>
+          
+          {/* Items Table - Clean CSS Grid/Table Hybrid */}
+          <Section className="px-8 pb-8">
+             <Text className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Line Items</Text>
+             <Section className="border border-gray-200 rounded-lg overflow-hidden">
+                {/* Table Header */}
+                <Row className="bg-gray-50 border-b border-gray-200">
+                    <Column className="px-4 py-3 text-left w-1/2"><Text className="m-0 text-xs font-bold text-gray-500">Description</Text></Column>
+                    <Column className="px-4 py-3 text-right"><Text className="m-0 text-xs font-bold text-gray-500">Qty</Text></Column>
+                    <Column className="px-4 py-3 text-right"><Text className="m-0 text-xs font-bold text-gray-500">Price</Text></Column>
+                    <Column className="px-4 py-3 text-right"><Text className="m-0 text-xs font-bold text-gray-500">Total</Text></Column>
+                </Row>
+                
+                {/* Items */}
+                {invoiceInformation.itemList.map((item: any, i: number) => (
+                    <Row key={i} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'}`}>
+                        <Column className="px-4 py-3 text-left"><Text className="m-0 text-sm font-medium text-gray-900">{item.description}</Text></Column>
+                        <Column className="px-4 py-3 text-right"><Text className="m-0 text-sm text-gray-500">{item.quantity}</Text></Column>
+                        <Column className="px-4 py-3 text-right"><Text className="m-0 text-sm text-gray-500">{Number(item.unitPrice).toLocaleString()}</Text></Column>
+                        <Column className="px-4 py-3 text-right"><Text className="m-0 text-sm font-bold text-gray-900">{Number(item.unitTotal).toLocaleString()}</Text></Column>
+                    </Row>
+                ))}
+             </Section>
 
-            <div className="relative text-gray-700 justify-end items-center px-2 flex-col">
-              <p> Shipping address - {invoiceInformation.shippingAddress}</p>
+             {/* Totals Breakdown */}
+             <Section className="mt-4">
+                 <Row>
+                     <Column className="w-1/2"></Column>
+                     <Column className="w-1/2">
+                        <Row className="mb-2">
+                             <Column align="left"><Text className="m-0 text-xs font-bold text-gray-500">Subtotal</Text></Column>
+                             <Column align="right"><Text className="m-0 text-sm font-medium text-gray-900">{Number(invoiceInformation.TOTAL - (invoiceInformation.VAT / 100 * invoiceInformation.TOTAL) + (invoiceInformation.Discount / 100 * invoiceInformation.TOTAL)).toLocaleString()}</Text></Column>
+                        </Row>
+                        {invoiceInformation.Discount > 0 && (
+                            <Row className="mb-2">
+                                <Column align="left"><Text className="m-0 text-xs font-bold text-green-600">Discount ({invoiceInformation.Discount}%)</Text></Column>
+                                <Column align="right"><Text className="m-0 text-sm font-medium text-green-600">-{invoiceInformation.Discount}%</Text></Column>
+                            </Row>
+                        )}
+                         {invoiceInformation.VAT > 0 && (
+                            <Row className="mb-2">
+                                <Column align="left"><Text className="m-0 text-xs font-bold text-gray-500">VAT ({invoiceInformation.VAT}%)</Text></Column>
+                                <Column align="right"><Text className="m-0 text-sm font-medium text-gray-900">+{invoiceInformation.VAT}%</Text></Column>
+                            </Row>
+                        )}
+                        <Hr className="border-gray-200 my-3" />
+                        <Row>
+                             <Column align="left"><Text className="m-0 text-base font-extrabold text-gray-900">Total Due</Text></Column>
+                             <Column align="right"><Text className="m-0 text-xl font-extrabold text-primary">{Number(invoiceInformation.TOTAL).toLocaleString()} {invoiceInformation.currency}</Text></Column>
+                        </Row>
+                     </Column>
+                 </Row>
+             </Section>
+          </Section>
 
-              <Hr className="border-gray-100 w-full" />
-
-              <p>
-                {" "}
-                Payment Information - {invoiceInformation.paymentInformation}
-              </p>
-
-              <Hr className="border-gray-100 w-full" />
-
-              <p> Transaction notes -{invoiceInformation.Notes}</p>
-
-              <Hr className="border-gray-100 w-full" />
-
-              <p> Other Information -{invoiceInformation.otherInformation}</p>
-            </div>
-            <div className="relative  text-gray-700 justify-end items-center px-2 flex-col">
-              <p> Value added tax- {invoiceInformation.VAT} % </p>
-              <Hr className="border-gray-100 w-full" />
-
-              <p> Discount- {invoiceInformation.Discount} % </p>
-              <Hr className="border-gray-100 w-full" />
-
-              <p>
-                {" "}
-                Total- {String(invoiceInformation.TOTAL.toLocaleString())}{" "}
-                {invoiceInformation.currency}{" "}
-              </p>
-            </div>
-            <Hr />
-            <Heading className="text-black flex justify-start h-20 text-center ">
-              <Img
-                className="h-full w-auto object-cover"
-                src="https://res.cloudinary.com/dkckrpwew/image/upload/v1726595270/logo_transparent_jxwxhn.png"
-                style={{
-                  width: "100%",
-                }}
-                alt="logo"
-              />
-            </Heading>
-            <Container className="px-2 text-gray-500">
-              <p>
-                All trademarks, service marks, and company names are the
-                property of Etherbill Inc.
-              </p>
-              <p className="text-sm font-normal">
-                Etherbill Inc • {new Date().getFullYear()} &copy;
-              </p>
-            </Container>
-          </Container>
-        </Body>
-      </Tailwind>
-    </>
+          {/* Footer */}
+          <Section className="bg-gray-50 border-t border-gray-200 px-8 py-6 text-center">
+            <Text className="text-gray-500 text-xs mb-2">
+               If you have any questions, contact us at <span className="text-primary">{invoiceInformation.email}</span>
+            </Text>
+            <Text className="text-gray-400 text-[10px] uppercase tracking-wider">
+               Powered by Etherbill
+            </Text>
+          </Section>
+        </Container>
+      </Body>
+    </Tailwind>
   );
 };
 

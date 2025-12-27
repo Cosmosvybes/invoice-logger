@@ -1,10 +1,9 @@
 
+import { PlusThin } from "react-huge-icons/outline";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
 import InvoiceTemplate from "../_helper/Formbuilder/Common/InvoiceTemplate";
 import { useState } from "react";
-// import { Card, CardBody, CardText, CardTitle } from "reactstrap"; // Removed Reactstrap
-// import GlassCard from "../GlassCard"; // Removed GlassCard usage
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,18 +13,20 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { MoneyBagDollar, Invoice, LoadingDashed, ChartHistogram, ExchangeRectangle } from "react-huge-icons/solid";
 
 const AccountDetails = () => {
   const { draft, sent, revenue, paid, settings } = useAppSelector(
     (state) => state.invoice
   );
-  // const { balance, isConnected } = useAppSelector((store) => store.walletSlice);
+  const { account } = useAppSelector((state) => state.userSlice);
+  
   const [invoicesPerPage] = useState(2);
-
-  const [currrentPage] = useState(1);
-  const indexOfLastInvoice = currrentPage * invoicesPerPage;
+  const [currentPage] = useState(1);
+  const indexOfLastInvoice = currentPage * invoicesPerPage;
   const indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
   const currentInvoices = draft?.slice(indexOfFirstInvoice, indexOfLastInvoice);
 
@@ -36,179 +37,250 @@ const AccountDetails = () => {
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler
   );
 
-  // Chart Global Defaults for Light Mode
-  ChartJS.defaults.color = "#475569"; // slate-600
-  ChartJS.defaults.borderColor = "#e2e8f0"; // slate-200
+  // Chart Global Defaults
+  ChartJS.defaults.color = "#94a3b8";
+  ChartJS.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
 
-  // Helper to calculate monthly volume
   const getMonthlyCounts = (invoices: any[]) => {
     const counts = new Array(12).fill(0);
     invoices?.forEach((inv) => {
-        // Use ID as timestamp if available, fallback to createdAt if it were ISO (but it's not)
-        // ideally ID is Date.now() from creation
         const date = new Date(Number(inv.id));
         if (!isNaN(date.getTime())) {
-            const month = date.getMonth(); // 0-11
+            const month = date.getMonth();
             counts[month]++;
         }
     });
     return counts;
   };
 
-  // Get real data
   const paidCounts = getMonthlyCounts(paid || []);
   const draftCounts = getMonthlyCounts(draft || []);
 
   const data = {
-    labels: [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "July", "Aug", "Sept", "Oct", "Nov", "Dec",
-    ],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
-        label: "Paid",
-        data: paidCounts, // [NEW] Real Data
-        borderColor: "#7c3aed", // Violet 600
-        backgroundColor: "rgba(124, 58, 237, 0.1)",
+        label: "Income",
+        data: paidCounts,
+        borderColor: "#8b5cf6",
+        backgroundColor: (context: any) => {
+            const chart = context.chart;
+            const {ctx, chartArea} = chart;
+            if (!chartArea) return null;
+            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+            gradient.addColorStop(0, 'rgba(139, 92, 246, 0)');
+            gradient.addColorStop(1, 'rgba(139, 92, 246, 0.1)');
+            return gradient;
+        },
+        fill: true,
         tension: 0.4,
-        pointBackgroundColor: "#7c3aed",
+        pointBackgroundColor: "#fff",
+        pointBorderColor: "#8b5cf6",
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
       },
       {
-        label: "Draft",
-        data: draftCounts, // [NEW] Real Data
-        borderColor: "#0ea5e9", // Sky 500
-        backgroundColor: "rgba(14, 165, 233, 0.1)",
+        label: "Work in Progress",
+        data: draftCounts,
+        borderColor: "#0ea5e9",
+        backgroundColor: (context: any) => {
+            const chart = context.chart;
+            const {ctx, chartArea} = chart;
+            if (!chartArea) return null;
+            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+            gradient.addColorStop(0, 'rgba(14, 165, 233, 0)');
+            gradient.addColorStop(1, 'rgba(14, 165, 233, 0.1)');
+            return gradient;
+        },
+        fill: true,
         tension: 0.4,
-        pointBackgroundColor: "#0ea5e9",
+        pointBackgroundColor: "#fff",
+        pointBorderColor: "#0ea5e9",
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
       },
     ],
   };
 
   const LineChart = () => {
     return (
-      <>
         <Line
-          height={180}
+          height={240}
           data={data}
           options={{
             responsive: true,
             maintainAspectRatio: false,
             scales: {
                 y: {
-                    beginAtZero: true, // Ensure we start at 0
-                    ticks: {
-                        stepSize: 1, // Count is integer
-                        precision: 0
-                    },
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.05)'
-                    }
+                    beginAtZero: true,
+                    ticks: { stepSize: 1, color: '#94a3b8' },
+                    grid: { display: true, color: '#f1f5f9' }
                 },
                 x: {
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.05)'
-                    }
+                    grid: { display: false }
                 }
             },
             plugins: {
-              legend: { position: "top", labels: { color: "#475569" } },
-              title: { display: false, text: "Invoicing Metrics", color: "#1e293b" },
+              legend: { 
+                position: "top", 
+                align: 'end',
+                labels: { 
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    padding: 20,
+                    font: { size: 12, weight: 'bold' }
+                } 
+              },
+              tooltip: {
+                backgroundColor: '#1e293b',
+                padding: 12,
+                titleFont: { size: 14 },
+                bodyFont: { size: 13 },
+                cornerRadius: 8,
+                displayColors: false
+              }
             },
           }}
         />
-      </>
     );
   };
 
+  const greeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 17) return "Good afternoon";
+    return "Good evening";
+  };
+
   return (
-    <>
-      <div className="relative overflow-y-scroll w-full flex-col transition max-sm:py-2 max-sm:h-auto flex justify-center items-center max-sm:px-0 max-sm:w-full">
-        <div className="relative h-auto w-full max-sm:w-full rounded-3xl flex flex-col gap-4 px-1 font-bold">
-          <div className="w-full block relative">
-            <p className="text-slate-900 px-2 text-xl max-sm:text-sm font-bold mb-4 tracking-tight">
-              Overview
-            </p>
+    <div className="w-full flex flex-col gap-8 pb-12 animate-fade-in">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-1">
+            {greeting()}, {account?.Firstname || 'there'}!
+          </h1>
+          <p className="text-slate-500 font-medium">
+            Here's what's happening with your business today.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+            <Link 
+                to="/new/invoice"
+                className="flex items-center gap-2 px-5 py-2.5 bg-violet-600 text-white rounded-xl font-bold shadow-lg shadow-violet-200 hover:bg-violet-700 transition-all active:scale-95"
+            >
+                <Invoice className="text-lg" />
+                Quick Invoice
+            </Link>
+        </div>
+      </div>
 
-            <div className="relative w-full grid gap-4 max-md:gap-5 mt-2 px-1 grid-cols-4 max-md:grid-cols-2 max-sm:gap-2 max-sm:grid-cols-2">
-              <div className="flex flex-col justify-center gap-2 bg-white border border-slate-200 shadow-sm p-6 rounded-xl hover:shadow-md transition-shadow">
-                <h3 className="text-slate-600 text-sm uppercase tracking-wide font-bold">Revenue</h3>
-                <p className="text-slate-900 text-3xl max-sm:text-xl font-extrabold tracking-tight">
-                  {new Intl.NumberFormat('en-US', { style: 'currency', currency: typeof settings?.defaultCurrency === 'string' ? settings.defaultCurrency : 'USD' }).format(revenue)}
-                </p>
-              </div>
-              
-              <div className="flex flex-col justify-center gap-2 bg-white border border-slate-200 shadow-sm p-6 rounded-xl hover:shadow-md transition-shadow">
-                <h3 className="text-slate-600 text-sm uppercase tracking-wide font-bold">Total Invoices</h3>
-                <p className="text-slate-900 text-3xl max-sm:text-xl font-extrabold tracking-tight">
-                  {draft.length + sent.length + paid.length}
-                </p>
-              </div>
-
-              <div className="flex flex-col justify-center gap-2 bg-white border border-slate-200 shadow-sm p-6 rounded-xl hover:shadow-md transition-shadow">
-                <h3 className="text-slate-600 text-sm uppercase tracking-wide font-bold">Drafts</h3>
-                <p className="text-slate-900 text-3xl max-sm:text-xl font-extrabold tracking-tight">
-                  {draft.length}
-                </p>
-              </div>
-
-              <div className="flex flex-col justify-center gap-2 bg-white border border-slate-200 shadow-sm p-6 rounded-xl hover:shadow-md transition-shadow">
-                <h3 className="text-slate-600 text-sm uppercase tracking-wide font-bold">Outgoing</h3>
-                <p className="text-slate-900 text-3xl max-sm:text-xl font-extrabold tracking-tight">
-                  {sent.length}
-                </p>
-              </div>
-            </div>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <MoneyBagDollar className="text-7xl -mr-4 -mt-4 text-violet-600" />
           </div>
-
-          <div className="relative w-full flex items-center mt-6 gap-2 justify-between max-sm:px-0 max-sm:grid max-sm:grid-cols-1 max-sm:w-full">
-            <div className="relative w-full flex justify-between items-center px-1">
-              <p className="text-slate-700 text-sm font-bold uppercase tracking-wider">
-                Latest Invoice
-              </p>
-              <Link
-                to={"/invoices"}
-                className="text-violet-600 text-sm font-bold hover:text-violet-800 transition-colors bg-violet-50 px-3 py-1 rounded-full"
-               >
-                View All
-              </Link>
-            </div>
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Revenue</p>
+          <h2 className="text-2xl font-black text-slate-900 mb-1">
+            {new Intl.NumberFormat('en-US', { style: 'currency', currency: typeof settings?.defaultCurrency === 'string' ? settings.defaultCurrency : 'USD' }).format(revenue)}
+          </h2>
+          <div className="flex items-center gap-1.5 text-emerald-600 text-[10px] font-bold">
+            <span className="p-1 rounded-full bg-emerald-50 text-[8px]">↑</span>
+            Calculated from paid invoices
           </div>
+        </div>
 
-          {/* invoice drafts */}
-          <div className="relative w-full max-sm:h-auto h-auto gap-6 border-none flex justify-between max-sm:flex-col max-md:flex-col mt-2">
-            <div className="w-1/2 max-sm:w-full flex-col gap-4">
-              <div className="flex flex-col w-full gap-4">
-                {draft?.length == 0 ? (
-                  <div className="text-center py-12 bg-white border border-slate-200 rounded-xl">
-                    <p className="text-slate-400 text-lg font-medium">No recent invoices found</p>
-                  </div>
-                ) : (
-                  <div className="w-full flex-col gap-3 flex">
-                    {currentInvoices.reverse().map((invoice: any) => (
-                      <div
-                        className="relative rounded-xl overflow-hidden bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all p-1"
-                        key={invoice.id}
-                      >
-                        <InvoiceTemplate invoice={invoice} />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+        <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <ChartHistogram className="text-7xl -mr-4 -mt-4 text-sky-600" />
+          </div>
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Total Invoices</p>
+          <h2 className="text-2xl font-black text-slate-900 mb-1">
+            {draft.length + sent.length + paid.length}
+          </h2>
+          <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold">
+            All registered transactions
+          </div>
+        </div>
 
-            <div className="w-1/2 h-full max-sm:w-full">
-              <div className="w-full h-full min-h-[350px] bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-                <LineChart />
-              </div>
-            </div>
+        <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <LoadingDashed className="text-7xl -mr-4 -mt-4 text-amber-600" />
+          </div>
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Drafts</p>
+          <h2 className="text-2xl font-black text-slate-900 mb-1">{draft.length}</h2>
+          <div className="flex items-center gap-1.5 text-amber-600 text-[10px] font-bold">
+            Unsent or incomplete work
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <ExchangeRectangle className="text-7xl -mr-4 -mt-4 text-blue-600" />
+          </div>
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Outgoing</p>
+          <h2 className="text-2xl font-black text-slate-900 mb-1">{sent.length}</h2>
+          <div className="flex items-center gap-1.5 text-blue-600 text-[10px] font-bold">
+            Awaiting payment confirmation
           </div>
         </div>
       </div>
-    </>
+
+      {/* Activity Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Chart View */}
+        <div className="lg:col-span-2 bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-lg font-black text-slate-900 tracking-tight">Performance Volume</h3>
+            <div className="flex items-center gap-4 text-xs font-bold tracking-wider text-slate-400 uppercase">
+                {new Date().getFullYear()} Overview
+            </div>
+          </div>
+          <div className="h-[280px]">
+            <LineChart />
+          </div>
+        </div>
+
+        {/* Recent Activity */}
+        <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-lg font-black text-slate-900 tracking-tight">Recent Invoices</h3>
+            <Link to="/invoices" className="text-xs font-bold text-violet-600 hover:text-violet-800 transition-colors uppercase tracking-widest">
+                View All
+            </Link>
+          </div>
+          
+          <div className="flex flex-col gap-4">
+            {draft?.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center opacity-40">
+                <Invoice className="text-4xl mb-2" />
+                <p className="text-sm font-medium">No recent activity</p>
+              </div>
+            ) : (
+                currentInvoices.reverse().map((invoice: any) => (
+                  <div key={invoice.id} className="group cursor-pointer">
+                    <div className="flex items-center justify-between p-1 bg-slate-50 rounded-xl hover:bg-white border border-transparent hover:border-slate-100 transition-all hover:shadow-xl hover:shadow-slate-100">
+                        <InvoiceTemplate invoice={invoice} />
+                    </div>
+                  </div>
+                ))
+            )}
+            
+            <Link to="/new/invoice" className="mt-4 flex items-center justify-center gap-2 py-4 rounded-xl border border-dashed border-slate-200 text-slate-400 hover:text-violet-600 hover:border-violet-200 hover:bg-violet-50/50 transition-all font-bold text-sm">
+                <PlusThin className="text-lg" />
+                Create New Invoice
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

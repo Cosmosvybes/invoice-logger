@@ -9,19 +9,19 @@ const NavBtn = ({
   id: number;
   func(): void;
 }) => {
+  const isActive = active === id;
+  
   return (
-    <div className="h-full">
-      <button
-        className={`px-6 py-2 rounded-full font-medium text-sm transition-all duration-300 border border-transparent ${
-          active == id 
-            ? "bg-violet-600/20 text-violet-300 border-violet-500/50 shadow-[0_0_10px_-3px_rgba(124,58,237,0.3)]" 
-            : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
-        }`}
-        onClick={() => func()}
-      >
-        {node}
-      </button>
-    </div>
+    <button
+      onClick={() => func()}
+      className={`px-6 py-2 rounded-xl text-sm font-black capitalize transition-all duration-200 whitespace-nowrap ${
+        isActive 
+          ? "bg-white text-violet-600 shadow-sm" 
+          : "text-slate-500 hover:text-slate-700 hover:bg-white/50"
+      }`}
+    >
+      {node}
+    </button>
   );
 };
 

@@ -21,15 +21,16 @@ const BreadCrumb = ({
   //new invoice
   const handleNewInvoice = async () => {
     const token = localStorage.getItem("token");
-    localStorage.setItem("id", String(Date.now()));
+    const newId = Date.now();
+    localStorage.setItem("id", String(newId));
     dispatch(
       createInvoice({
         ...staticForm,
         itemList: [],
-        id: localStorage.getItem("id"),
+        id: newId,
         TOTAL: 0,
-        VAT: "",
-        Discount: "",
+        VAT: 0,
+        Discount: 0,
         currency: "",
         status: "Draft",
         token,
@@ -53,10 +54,10 @@ const BreadCrumb = ({
       body: JSON.stringify({
         ...staticForm,
         itemList: [],
-        id: localStorage.getItem("id"),
+        id: newId,
         TOTAL: 0,
-        VAT: "",
-        Discount: "",
+        VAT: 0,
+        Discount: 0,
         currency: "",
         status: "Draft",
         token,

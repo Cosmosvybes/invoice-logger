@@ -88,7 +88,7 @@ export default function useSignUpController() {
         {
           method: "POST",
           headers: { "Content-Type": "Application/json" },
-          body: JSON.stringify(formValues),
+          body: JSON.stringify({ ...formValues, freemiumCount: 50 }),
         }
       );
       if (!result.ok) {

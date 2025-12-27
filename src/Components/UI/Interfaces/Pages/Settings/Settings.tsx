@@ -4,62 +4,66 @@ import InputProvider from "../../../Tools/_helper/Formbuilder/Settings/InputProv
 import { Spinner } from "reactstrap";
 import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import { useState } from "react";
-import { User, Setting as SettingsIcon, MoneyBagDollar } from "react-huge-icons/outline";
+import { User, Setting as SettingsIcon, Briefcase } from "react-huge-icons/outline";
+import { MoneyBagDollar } from "react-huge-icons/solid";
+
 const Settings = () => {
   const {
-    settingsSchema,
-    personalizationSchema,
-    fieldsValue,
-    subscriptionSchema,
-    businessDetails,
+ 
+    payoutSchema,
+ 
     settings,
     handleChange,
     handleSubmit,
+    payout,
     loading,
   } = useSettingsController();
 
   const [activeTab, setActiveTab] = useState("profile");
 
   const TABS = [
-    { id: "profile", label: "Profile & Account", icon: <User className="text-xl" /> },
-    { id: "preferences", label: "Preferences", icon: <SettingsIcon className="text-xl" /> },
-    { id: "subscription", label: "Subscription", icon: <MoneyBagDollar className="text-xl" /> },
+    { id: "profile", label: "Identity & Business", icon: <User className="text-xl" /> },
+    { id: "preferences", label: "User Preferences", icon: <SettingsIcon className="text-xl" /> },
+    { id: "subscription", label: "Pro Subscription", icon: <MoneyBagDollar className="text-xl" /> },
+    { id: "payout", label: "Payout Gateway", icon: <Briefcase className="text-xl text-emerald-600" /> },
   ];
 
   const renderContent = () => {
+    const isPayoutConnected = !!payout?.account_number && !!payout?.bank_name;
+
     switch (activeTab) {
       case "profile":
+// ... existing switch cases ...
+      case "payout":
         return (
-          <InputProvider
-            settings={settings}
-            handleSubmit={handleSubmit}
-            schema={[...settingsSchema, ...businessDetails]}
-            data={fieldsValue}
-            title="Profile & Account Info"
-            handleChange={handleChange}
-          />
-        );
-      case "preferences":
-        return (
-          <InputProvider
-            settings={settings}
-            handleSubmit={handleSubmit}
-            schema={personalizationSchema}
-            data={fieldsValue}
-            title="User Preferences"
-            handleChange={handleChange}
-          />
-        );
-      case "subscription":
-        return (
-          <InputProvider
-            settings={settings}
-            handleSubmit={handleSubmit}
-            schema={subscriptionSchema}
-            data={fieldsValue}
-            title="Subscription Management"
-            handleChange={handleChange}
-          />
+          <div className="space-y-6">
+              {isPayoutConnected && (
+                  <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-[2rem] flex items-center justify-between animate-fade-in">
+                      <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-100">
+                               <Briefcase className="text-2xl" />
+                          </div>
+                          <div>
+                              <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Active Settlement Account</p>
+                              <h4 className="text-lg font-black text-slate-900">{payout.bank_name} • {payout.account_number}</h4>
+                              <p className="text-xs font-bold text-slate-500">{payout.account_name}</p>
+                          </div>
+                      </div>
+                      <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-tighter">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                          Verified & Connected
+                      </div>
+                  </div>
+              )}
+              
+              <InputProvider
+                settings={settings}
+                handleSubmit={handleSubmit}
+                schema={payoutSchema}
+                title={isPayoutConnected ? "Change Settlement Gateway" : "Payout & Settlement Gateway"}
+                handleChange={handleChange}
+              />
+          </div>
         );
       default:
         return null;
@@ -67,29 +71,29 @@ const Settings = () => {
   };
 
   return (
-    <>
-      <div className="relative w-full h-full min-h-screen px-4 md:px-12 py-6">
+    <div className="w-full min-h-screen bg-slate-50/50 pb-20">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 animate-fade-in">
         <BreadCrumb title="Settings" useLink={false} linkTitle="" />
         
-        <div className="relative w-full mt-8 flex flex-col lg:flex-row gap-8 animate-fade-in-up max-w-6xl mx-auto">
+        <div className="mt-8 flex flex-col lg:flex-row gap-8 items-start">
           {/* Sidebar Navigation */}
-          <aside className="w-full lg:w-1/4 flex-shrink-0">
-             <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden sticky top-6">
-                <div className="p-4 border-b border-slate-100 bg-slate-50/50">
-                    <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Menu</h3>
+          <aside className="w-full lg:w-72 flex-shrink-0 lg:sticky lg:top-8">
+             <div className="bg-white rounded-[2rem] border border-slate-200/60 shadow-xl shadow-slate-200/20 overflow-hidden">
+                <div className="p-6 border-b border-slate-50 bg-slate-50/30">
+                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Configuration</h3>
                 </div>
-                <nav className="flex flex-col p-2">
+                <nav className="flex flex-col p-3 gap-1">
                     {TABS.map((tab) => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all duration-200 ${
+                            className={`flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-black transition-all duration-200 ${
                                 activeTab === tab.id
-                                    ? "bg-violet-50 text-violet-700 shadow-sm"
-                                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                                    ? "bg-violet-600 text-white shadow-lg shadow-violet-200 scale-[1.02]"
+                                    : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                             }`}
                         >
-                            {tab.icon}
+                            <span className={`${activeTab === tab.id ? "text-white" : "text-slate-400"}`}>{tab.icon}</span>
                             {tab.label}
                         </button>
                     ))}
@@ -98,24 +102,29 @@ const Settings = () => {
           </aside>
 
           {/* Main Content Area */}
-          <main className="flex-1 min-w-0">
-              {renderContent()}
+          <main className="flex-1 w-full min-w-0 flex flex-col gap-6">
+              <div className="animate-fade-in-up">
+                  {renderContent()}
+              </div>
 
-             <div className="relative w-full flex justify-end items-center mt-6">
+             <div className="flex justify-end items-center px-4">
                 <button
-                    className="relative px-6 py-3 rounded-xl bg-violet-600 text-white font-bold shadow-md hover:bg-violet-700 hover:shadow-lg transition-all duration-200 flex items-center gap-2 text-sm transform active:scale-95"
-                    onClick={handleSubmit}
+                    className="px-10 py-4 bg-slate-900 text-white font-black rounded-2xl shadow-xl shadow-slate-200 hover:bg-violet-600 transition-all active:scale-95 flex items-center gap-3 text-sm disabled:opacity-50"
+                    onClick={() => handleSubmit(activeTab)}
+                    disabled={loading}
                 >
-                    {loading && (
-                    <Spinner type="grow" color="light" size="sm" className="mr-2" />
+                    {loading ? (
+                        <Spinner size="sm" color="light" className="mr-2" />
+                    ) : (
+                        <MoneyBagDollar className="text-xl" />
                     )}
-                    Save Changes
+                    Synchronize Changes
                 </button>
             </div>
           </main>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

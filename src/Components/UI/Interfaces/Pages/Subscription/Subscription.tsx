@@ -160,6 +160,7 @@ const Subscription = () => {
     transactionPerPage,
     handleApproval,
     handleGetTransactionHistory,
+    currentPage,
     // getEscrows,
   } = useSmartContractController();
 
@@ -431,9 +432,10 @@ const Subscription = () => {
             </div>
             <br />
             <Paginate
-              invoices={transactionHistory}
-              paginateHandler={handlePageChange}
-              postsPerPage={transactionPerPage}
+              totalItems={transactionHistory.length}
+              onPageChange={handlePageChange}
+              itemsPerPage={transactionPerPage}
+              currentPage={currentPage}
             />
           </section>
 

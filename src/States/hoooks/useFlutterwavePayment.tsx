@@ -1,5 +1,30 @@
 import { useFlutterwave } from "flutterwave-react-v3";
 
+export interface FlutterwaveResponse {
+  status: string;
+  transaction_id: number;
+  tx_ref: string;
+  flw_ref: string;
+  charge_response_code: string;
+  charge_response_message: string;
+  amount: number;
+  currency: string;
+  charged_amount: number;
+  card?: {
+    first_6digits: string;
+    last_4digits: string;
+    issuer: string;
+    country: string;
+    type: string;
+    expiry: string;
+  };
+  customer?: {
+    name: string;
+    email: string;
+    phone_number: string;
+  };
+}
+
 interface FlutterwavePaymentProps {
   amount: number;
   email: string;
@@ -10,16 +35,19 @@ interface FlutterwavePaymentProps {
   logo?: string;
   payment_plan?: string;
   planType?: 'monthly' | 'yearly';
+  currency?: string;
+  subaccounts?: { id: string; transaction_charge?: number; transaction_charge_type?: string }[];
 }
 
 export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => {
   const config = {
     public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string,
     tx_ref: Date.now().toString(),
-    currency: "USD",
+    currency: paymentProps.currency || "USD",
     payment_options: "card,mobilemoney,ussd",
     amount: paymentProps.amount,
-    payment_plan: paymentProps.payment_plan, // Add Plan ID
+    payment_plan: paymentProps.payment_plan, 
+    subaccounts: paymentProps.subaccounts, // [NEW] Add subaccounts
     customer: {
       email: paymentProps.email,
       phone_number: paymentProps.phone_number || "",
@@ -30,7 +58,8 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
       description: paymentProps.description || "Subscription for Invoice Logger PRO",
       logo: paymentProps.logo || "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
-    callback: async (response: any) => {
+
+    callback: async (response: FlutterwaveResponse) => {
       console.log("Payment Success:", response);
       
       // Call Backend to Upgrade User

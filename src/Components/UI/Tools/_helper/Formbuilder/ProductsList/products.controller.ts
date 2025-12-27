@@ -38,7 +38,7 @@ export default function useProductsListController() {
     const allProducts = [...products];
     allProducts.splice(index, 1);
     setProducts(allProducts);
-    const invoiceId: any = id ? _id_ : localStorage.getItem("id");
+    const invoiceId: any = id ? _id_ : Number(localStorage.getItem("id"));
     dispatch(deleteInvoiceItems({ invoiceId, itemID, token }));
   };
 
@@ -77,9 +77,9 @@ export default function useProductsListController() {
       {
         itemID: Date.now(),
         description: "",
-        quantity: "",
+        quantity: 0,
         unitPrice: 0,
-        unitTotal: "",
+        unitTotal: 0,
       },
     ]);
 
@@ -91,9 +91,9 @@ export default function useProductsListController() {
             item: {
               itemID: Date.now(),
               description: "",
-              quantity: "",
+              quantity: 0,
               unitPrice: 0,
-              unitTotal: "",
+              unitTotal: 0,
             },
           })
         )
@@ -104,9 +104,9 @@ export default function useProductsListController() {
             item: {
               itemID: Date.now(),
               description: "",
-              quantity: "",
+              quantity: 0,
               unitPrice: 0,
-              unitTotal: "",
+              unitTotal: 0,
             },
           })
         );

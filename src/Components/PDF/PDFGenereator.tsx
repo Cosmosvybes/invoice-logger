@@ -2,226 +2,124 @@ import {
   Document,
   Page,
   Text,
-  StyleSheet,
   View,
   Image,
 } from "@react-pdf/renderer";
-import logo from "../../assets/react.svg";
+import logo from "../../assets/react.svg"; // Fallback logo
 import { Invoice } from "../../States/Slices/invoice.types";
+import styles from "./Components/style/PDFStyles";
 
 export interface pdfPropTypes {
-  headers: string[];
   invoiceInformation: Invoice;
 }
-const GeneratePDF = ({ headers, invoiceInformation }: pdfPropTypes) => {
-  const styles = StyleSheet.create({
-    table: {
-      display: "flex",
-      position: "relative",
-      borderColor: "grey",
-      justifyContent: "flex-start",
-    },
-    tableRow: {
-      margin: "auto",
-      display: "flex",
-      flexDirection: "row",
-      borderTopWidth: 1,
-      justifyContent: "center",
-      alignItems: "stretch",
-      textAlign: "center",
-    },
-    tableCol: {
-      borderStyle: "dotted",
-      display: "flex",
-      borderBottom: "grey",
-      flexDirection: "column",
-    },
-    tableCell: {
-      margin: "auto",
-      marginTop: 5,
-      fontSize: 4,
-      marginBottom: 3,
-      textAlign: "center",
-      fontStyle: "serif",
-      width: "10%",
-    },
-    logo: {
-      position: "relative",
-      width: "25%",
-    },
-    title: {
-      fontSize: 8,
-      marginBottom: 3,
-      textAlign: "center",
-    },
-    reportType: {
-      fontSize: 10,
-      fontWeight: "extrabold",
-      marginTop: 10,
-      marginBottom: 10,
-      textAlign: "center",
-    },
-    body: {
-      paddingTop: 35,
-      paddingBottom: 65,
-      paddingHorizontal: 35,
-      backgroundColor: "#E4E4E4",
-      "@media max-width: 400": {
-        width: 300,
-      },
-      "@media orientation: landscape": {
-        width: 400,
-      },
-    },
-    header: {
-      fontSize: 8,
-      textAlign: "center",
-      color: "grey",
-      marginBottom: 10,
-    },
-  });
 
+const GeneratePDF = ({ invoiceInformation }: pdfPropTypes) => {
   return (
     <Document>
-      <Page size="A4" style={styles.body}>
-        <Image src={logo} style={styles.logo} />
-        <View
-          style={{
-            display: "flex",
-            paddingLeft: 140,
-            justifyContent: "flex-end",
-            marginBottom: 20,
-          }}
-        >
-          <Text style={styles.title}>
-            ~ Invoice ref- {invoiceInformation.id} ~
-          </Text>
+      <Page size="A4" style={styles.page}>
+        
+        {/* Header Section */}
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <Image src={logo} style={styles.logo} />
+            <Text style={styles.brandName}>{invoiceInformation.Business || "Invoice Logger"}</Text>
+            <Text style={styles.valueRegular}>{invoiceInformation.BusinessAddress}</Text>
+            <Text style={styles.valueRegular}>
+                {invoiceInformation.City}, {invoiceInformation.BusinessState}
+            </Text>
+            <Text style={styles.valueRegular}>{invoiceInformation.BusinessCountry}</Text>
+          </View>
+          <View style={styles.headerRight}>
+            <Text style={styles.title}>INVOICE</Text>
+            <Text style={styles.invoiceId}>#{invoiceInformation.id}</Text>
+            <Text style={styles.invoiceId}>Date: {invoiceInformation.DateIssued}</Text>
+            <Text style={styles.invoiceId}>Due: {invoiceInformation.DateDue}</Text>
+            {/* Status Placeholder - ReactPDF doesn't support fancy badges well but we simulate it in styles */}
+          </View>
         </View>
 
-        <br />
-        <View
-          style={{
-            display: "flex",
-            paddingLeft: 140,
-            justifyContent: "flex-end",
-            marginBottom: 20,
-          }}
-        >
-          <Text style={{ textAlign: "justify", fontSize: 4 }}>
-            {" "}
-            Created since- {" " + invoiceInformation.DateIssued}
-          </Text>
-          <Text style={{ textAlign: "justify", fontSize: 4 }}>
-            {" "}
-            Company address -{invoiceInformation.BusinessAddress}
-            {""} {invoiceInformation.ClientCity}, {""}
-            {invoiceInformation.BusinessState}.
-          </Text>
+        {/* Bill To & Details Grid */}
+        <View style={styles.grid}>
+          <View style={styles.col}>
+            <Text style={styles.label}>Bill To:</Text>
+            <Text style={styles.value}>{invoiceInformation.Client}</Text>
+            <Text style={styles.valueRegular}>{invoiceInformation.ClientAddress}</Text>
+            <Text style={styles.valueRegular}>
+              {invoiceInformation.ClientCity} {invoiceInformation.clientState}
+            </Text>
+            <Text style={styles.valueRegular}>{invoiceInformation.Country}</Text>
+          </View>
+          <View style={styles.col}>
+            <Text style={styles.label}>Payment Info:</Text>
+            <Text style={styles.valueRegular}>{invoiceInformation.paymentInformation || "Bank Transfer"}</Text>
+            <Text style={styles.label}>Notes:</Text>
+            <Text style={styles.valueRegular}>{invoiceInformation.Notes || "Thank you for your business."}</Text>
+          </View>
         </View>
 
-        <br />
-        <View
-          style={{
-            display: "flex",
-            paddingLeft: 140,
-            justifyContent: "flex-start",
-          }}
-        >
-          <Text style={{ textAlign: "left", fontSize: 8 }}>Products</Text>
-        </View>
-
+        {/* Items Table */}
         <View style={styles.table}>
-          <View style={styles.tableRow}>
-            {headers.map((header: any) => (
-              <Text style={styles.tableCell} key={header}>
-                {header}
-              </Text>
-            ))}
-          </View>
+            {/* Header Row */}
+            <View style={styles.tableHeader}>
+                <Text style={[styles.cellId, styles.cellHeader]}>ID</Text>
+                <Text style={[styles.cellDesc, styles.cellHeader]}>Description</Text>
+                <Text style={[styles.cellQty, styles.cellHeader]}>Qty</Text>
+                <Text style={[styles.cellPrice, styles.cellHeader]}>Price</Text>
+                <Text style={[styles.cellTotal, styles.cellHeader]}>Total</Text>
+            </View>
 
-          {invoiceInformation?.itemList?.map(
-            (product: (typeof invoiceInformation.itemList)[0]) => (
-              <View style={styles.tableCol} key={product.itemID}>
-                <View style={styles.tableRow}>
-                  <Text style={styles.tableCell}>{product.itemID}</Text>
-                  <Text style={styles.tableCell}>{product.description}</Text>
-                  <Text style={styles.tableCell}>{product.quantity}</Text>
-                  <Text style={styles.tableCell}>{product.unitPrice}</Text>
-                  <Text style={styles.tableCell}>
-                    {Number(product.unitTotal).toLocaleString()}
-                  </Text>
+            {/* Rows */}
+            {invoiceInformation?.itemList?.map((item, index) => (
+                <View style={styles.tableRow} key={index}>
+                     <Text style={styles.cellId}>{index + 1}</Text>
+                     <Text style={styles.cellDesc}>{item.description}</Text>
+                     <Text style={styles.cellQty}>{item.quantity}</Text>
+                     <Text style={styles.cellPrice}>{Number(item.unitPrice).toLocaleString()}</Text>
+                     <Text style={styles.cellTotal}>{Number(item.unitTotal).toLocaleString()}</Text>
                 </View>
-              </View>
-            )
-          )}
-          <br />
-          <View
-            style={{
-              display: "flex",
-              paddingLeft: 140,
-              justifyContent: "flex-end",
-              marginTop: 10,
-            }}
-          >
-            <Text style={{ textAlign: "justify", fontSize: 4 }}>
-              {" "}
-              Transaction notes - {invoiceInformation.Notes}
-            </Text>
-            <Text style={{ textAlign: "justify", fontSize: 4 }}>
-              {" "}
-              Payment information - {invoiceInformation.paymentInformation}
-            </Text>
-            <Text style={{ textAlign: "justify", fontSize: 4 }}>
-              {" "}
-              Shipping Address - {invoiceInformation.shippingAddress}{" "}
-            </Text>
-          </View>
-
-          <br />
-          <View
-            style={{
-              display: "flex",
-              paddingRight: 140,
-              justifyContent: "flex-end",
-              marginTop: 10,
-            }}
-          >
-            <Text style={{ textAlign: "right", fontSize: 4 }}>
-              {" "}
-              Discount - {invoiceInformation.Discount}%
-            </Text>
-            <Text style={{ textAlign: "right", fontSize: 4 }}>
-              {" "}
-              VAT - {invoiceInformation.VAT}%
-            </Text>
-            <Text style={{ textAlign: "right", fontSize: 4 }}>
-              {" "}
-              TOTAL - {invoiceInformation.TOTAL.toLocaleString()}{" "}
-              {invoiceInformation.currency}
-            </Text>
-          </View>
-
-          <br />
-          <View
-            style={{
-              display: "flex",
-              paddingLeft: 140,
-              justifyContent: "flex-end",
-              marginTop: 10,
-            }}
-          >
-            <Text style={{ textAlign: "justify", fontSize: 4 }}>
-              {" "}
-              Customer name - {invoiceInformation.Client}
-            </Text>
-            <Text style={{ textAlign: "justify", fontSize: 4 }}>
-              {" "}
-              Customer address- {invoiceInformation.ClientAddress}{" "}
-              {invoiceInformation.City}
-              {invoiceInformation.clientState} {invoiceInformation.Country}
-            </Text>
-          </View>
+            ))}
         </View>
+
+        {/* Totals Summary */}
+        <View style={styles.summary}>
+            <View style={styles.rowSummary}>
+                <Text style={styles.totalLabel}>Subtotal</Text>
+                <Text style={styles.totalValue}>
+                    {(Number(invoiceInformation.TOTAL) / (1 + (Number(invoiceInformation.VAT) / 100))).toLocaleString()} {invoiceInformation.currency}
+                </Text>
+            </View>
+            {Number(invoiceInformation.VAT) > 0 && (
+                 <View style={styles.rowSummary}>
+                    <Text style={styles.totalLabel}>VAT ({invoiceInformation.VAT}%)</Text>
+                    <Text style={styles.totalValue}>
+                        {(Number(invoiceInformation.TOTAL) - (Number(invoiceInformation.TOTAL) / (1 + (Number(invoiceInformation.VAT) / 100)))).toLocaleString()} {invoiceInformation.currency}
+                    </Text>
+                 </View>
+            )}
+            {Number(invoiceInformation.Discount) > 0 && (
+                <View style={styles.rowSummary}>
+                     <Text style={styles.totalLabel}>Discount ({invoiceInformation.Discount}%)</Text>
+                      <Text style={[styles.totalValue, { color: '#ef4444' }]}>
+                        -{invoiceInformation.Discount}%
+                    </Text>
+                </View>
+            )}
+             <View style={[styles.rowSummary, { marginTop: 8, paddingTop: 8, borderTopWidth: 1, borderTopColor: '#e2e8f0' }]}>
+                <Text style={[styles.totalLabel, { fontSize: 14, color: '#7c3aed' }]}>Grand Total</Text>
+                <Text style={styles.grandTotal}>
+                     {Number(invoiceInformation.TOTAL).toLocaleString()} {invoiceInformation.currency}
+                </Text>
+            </View>
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+            <Text style={styles.footerText}>Thank you for your business!</Text>
+            <Text style={styles.footerText}>
+                {invoiceInformation.Business} | {invoiceInformation.BusinessAddress} | Generated by Invoice Logger
+            </Text>
+        </View>
+
       </Page>
     </Document>
   );

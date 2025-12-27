@@ -66,6 +66,7 @@ export default function useInvoiceListController(invoices: Invoice[]) {
     setShowActions,
     listPerTable,
     currentInvoiceList,
+    currentPage,
     handleNextList,
     handleMarkAsPaid,
   };

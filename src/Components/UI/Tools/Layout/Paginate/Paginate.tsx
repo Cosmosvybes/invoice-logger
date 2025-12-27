@@ -1,69 +1,79 @@
-import { ArrowLeftCircle, ArrowRightCircle } from "react-huge-icons/solid";
+import { ArrowLeft, ArrowRight } from "react-huge-icons/outline";
 import { IPaginate } from "./types";
-import { useState } from "react";
+import React from "react";
 
-const Paginate = ({ invoices, paginateHandler, postsPerPage }: IPaginate) => {
-  const pageLinks = [];
+const Paginate = ({ totalItems, itemsPerPage, currentPage, onPageChange }: IPaginate) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  for (let i = 1; i <= Math.ceil(invoices.length / postsPerPage); i++) {
-    pageLinks.push(i);
-  }
+  if (totalPages <= 1) return null;
 
-  const [active, setActive] = useState(1);
-  const switchActive = (val: number) => {
-    setActive(val);
-  };
+  const getPageNumbers = () => {
+    const pages = [];
+    const windowSize = 2; // How many pages to show around the current page
 
-  const handlePrevious = () => {
-    setActive((prev) => (prev >= 2 ? prev - 1 : prev));
-    paginateHandler(active >= 2 ? active - 1 : active);
-  };
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      
+      let start = Math.max(2, currentPage - windowSize);
+      let end = Math.min(totalPages - 1, currentPage + windowSize);
 
-  const handleNext = () => {
-    setActive((prev) =>
-      prev < invoices.length / postsPerPage ? prev + 1 : prev
-    );
-    paginateHandler(
-      active < Math.ceil(invoices.length / postsPerPage) ? active + 1 : active
-    );
+      if (start > 2) pages.push("...");
+      
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (end < totalPages - 1) pages.push("...");
+      
+      pages.push(totalPages);
+    }
+    return pages;
   };
 
   return (
-    <>
-      <ul className="flex justify-center gap-2 px-2 place-items-center flex-wrap rounded-md  ">
+    <nav className="flex items-center justify-center gap-2 py-4">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-900 active:scale-90 transition-all disabled:opacity-30 disabled:pointer-events-none group"
+        aria-label="Previous Page"
+      >
+        <ArrowLeft className="text-xl group-hover:-translate-x-0.5 transition-transform" />
+      </button>
 
-        <button onClick={handlePrevious}>
- 
-          <ArrowLeftCircle className="text-2xl text-grey-400" />{" "}
-        </button>
-
-        <span>...</span>
-        {pageLinks.slice(0, 3).map((linkNumber) => (
-          <button
-            onClick={() => {
-              switchActive(linkNumber);
-              paginateHandler(linkNumber);
-            }}
-            key={linkNumber}
-            className={` w-8 rounded-lg border text-xl font-bold  h-auto duration-700 transition shadow-md cursor-pointer ${
-              active != linkNumber ? "bg-gray-200" : "bg-purple-500 text-white"
-            } ${
-              active == linkNumber ? "text-white" : "text-black"
-            } px-1 rounded-sm text-center`}
-          >
-            {linkNumber}
-          </button>
+      <div className="flex items-center gap-1.5">
+        {getPageNumbers().map((page, index) => (
+          <React.Fragment key={index}>
+            {page === "..." ? (
+              <span className="w-8 text-center text-slate-400 font-black tracking-widest text-[10px]">•••</span>
+            ) : (
+              <button
+                onClick={() => onPageChange(Number(page))}
+                className={`w-10 h-10 rounded-xl text-sm font-black transition-all duration-300 active:scale-90 ${
+                  currentPage === page
+                    ? "bg-slate-900 text-white shadow-xl shadow-slate-200"
+                    : "bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300"
+                }`}
+              >
+                {page}
+              </button>
+            )}
+          </React.Fragment>
         ))}
-        <span>...</span>
-        <button className="text-3xl  font-normal">
-          <ArrowRightCircle
-            className="text-2xl text-grey-400"
-            onClick={handleNext}
-          />{" "}
-        </button>
-      </ul>
-    </>
+      </div>
+
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-900 active:scale-90 transition-all disabled:opacity-30 disabled:pointer-events-none group"
+        aria-label="Next Page"
+      >
+        <ArrowRight className="text-xl group-hover:translate-x-0.5 transition-transform" />
+      </button>
+    </nav>
   );
 };
 
-export default Paginate;
+export default React.memo(Paginate);

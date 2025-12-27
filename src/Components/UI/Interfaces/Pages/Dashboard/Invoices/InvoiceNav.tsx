@@ -13,24 +13,22 @@ const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
   useEffect(() => {
     switchTab("draft");
   }, []);
+
   return (
-    <>
-      <div className="relative w-full flex items-center justify-start gap-4 p-4 mb-6 border-b border-white/10 overflow-x-auto">
-        {buttonData.map((nav) => (
-          <div className="relative" key={nav.id}>
-            <NavBtn
-              node={nav.text}
-              id={nav.id}
-              active={active}
-              func={() => {
-                switchTab(nav.text);
-                setActive(nav.id);
-              }}
-            />
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="w-full flex items-center justify-start gap-1 p-1 mb-8 bg-slate-200/50 rounded-2xl w-fit max-w-full overflow-x-auto no-scrollbar">
+      {buttonData.map((nav) => (
+        <NavBtn
+          key={nav.id}
+          node={nav.text}
+          id={nav.id}
+          active={active}
+          func={() => {
+            switchTab(nav.text);
+            setActive(nav.id);
+          }}
+        />
+      ))}
+    </div>
   );
 };
 

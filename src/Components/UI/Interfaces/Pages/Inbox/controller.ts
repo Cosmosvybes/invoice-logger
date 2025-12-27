@@ -13,6 +13,7 @@ export default function useInvoiceReceivedController() {
     inbox,
     setCurrentPage,
     currentList,
+    currentPage,
     postPerPage,
   };
 }

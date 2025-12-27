@@ -14,6 +14,7 @@ import {
   taxAndDiscount,
 } from "./invoice.types";
 import { toast } from "react-toastify";
+import { API_URL } from "../../Components/constants/Index";
 
 import { combinedForm } from "../../Components/UI/Tools/InvoiceModal/controller";
 
@@ -44,7 +45,7 @@ export const getUser = createAsyncThunk(
   async (token: string) => {
     try {
       const response = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/user",
+        `${API_URL}/api/user`,
         {
           headers: { Authorization: `Bearer ${token}` },
           method: "GET",
@@ -67,7 +68,7 @@ export const getInvoice = createAsyncThunk(
   async (id: any) => {
     try {
       const response = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/invoice?id=${id}`,
+        `${API_URL}/api/invoice?id=${id}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           method: "GET",
@@ -116,6 +117,12 @@ const initialState: ACCOUNT = {
   loading: false,
   currentInvoice: {},
   settings: defaultSettings,
+  payout: {
+      bank_name: "",
+      account_number: "",
+      account_name: "",
+      bank_code: ""
+  }
 };
 
 // export const mySlice = createSlice({
@@ -167,11 +174,11 @@ const invoiceSlice = createSlice({
       const invoice = state.draft.find((invoice) => invoice.id == id);
       invoice!.currency = currency;
 
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(invoice),
       })
@@ -194,12 +201,12 @@ const invoiceSlice = createSlice({
       state.draft.splice(state.draft.indexOf(invoice!), 1);
 
       fetch(
-        `https://ether-bill-server-1.onrender.com/api/invoice/delete/?id=${id}`,
+        `${API_URL}/api/invoice/delete/?id=${id}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "Application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(invoice),
         }
@@ -233,10 +240,9 @@ const invoiceSlice = createSlice({
 
       fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
         method: "PUT",
-        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(invoice),
       })
@@ -277,11 +283,11 @@ const invoiceSlice = createSlice({
         0
       );
       invoice!.TOTAL = Number(total_);
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(invoice),
       })
@@ -338,11 +344,11 @@ const invoiceSlice = createSlice({
         minute: "2-digit",
       });
       invoiceItem!.TOTAL -= item.unitTotal;
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(invoice),
       })
@@ -363,11 +369,11 @@ const invoiceSlice = createSlice({
     updateInvoiceTotal: (state, action: PayloadAction<invoiceTotalUpdate>) => {
       const { invoiceID, value, token }: invoiceTotalUpdate = action.payload;
       const invoice = state.draft.find((inv: Invoice) => inv.id == invoiceID);
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(invoice),
       })
@@ -404,11 +410,11 @@ const invoiceSlice = createSlice({
         hour: "2-digit",
         minute: "2-digit",
       });
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(invoice),
       })
@@ -442,11 +448,11 @@ const invoiceSlice = createSlice({
         minute: "2-digit",
       });
 
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(invoice),
       })
@@ -475,8 +481,10 @@ const invoiceSlice = createSlice({
       state.draft = draft;
       state.sent = sent;
       state.revenue = revenue;
+      state.revenue = revenue;
       state.clients = clients;
       state.settings = settings || defaultSettings;
+      state.payout = payload.payout || { bank_name: "", account_number: "", account_name: "", bank_code: "" }; // Save payout
       state.email = email; // Save email to state
       state.inbox = inbox;
       state.paid = paid;

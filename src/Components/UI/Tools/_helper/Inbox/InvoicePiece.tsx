@@ -41,19 +41,12 @@ const InvoicePiece = ({
              </div>
 
              <div className="flex items-center gap-3 w-full md:w-auto">
-                <div className="hidden md:block">
+                <div className="">
                      <PDFDownloader
                         reportType={`${invoiceInformation.id} - invoice`}
                         file={
                             <GeneratePDF
                             invoiceInformation={invoiceInformation}
-                            headers={[
-                                "ID",
-                                "Description",
-                                "Quantity",
-                                "Unit price",
-                                "Unit total",
-                            ]}
                             />
                         }
                     />
@@ -184,6 +177,14 @@ const InvoicePiece = ({
           >
              Message Sendor <Chatting className="text-lg" />
           </Button>
+           <PDFDownloader
+                reportType={`${invoiceInformation.id} - invoice`}
+                file={
+                    <GeneratePDF
+                    invoiceInformation={invoiceInformation}
+                    />
+                }
+            />
         </ModalFooter>
       </Modal>
     </>

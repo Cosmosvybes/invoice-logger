@@ -19,6 +19,9 @@ import {
   UsersDouble,
 } from "react-huge-icons/solid";
 import SideNav from "./Nav/SideNav";
+import { useAppDispatch } from "../../../../States/hoooks/hook";
+import { logOut } from "../../../../States/Slices/ClientSlice/useAuth/user";
+import { useNavigate } from "react-router-dom";
 
 const Layout = ({ children }: any) => {
   const icons = [
@@ -40,23 +43,39 @@ const Layout = ({ children }: any) => {
     <BookAdd className="inline text-xl" />,
   ];
   const { sideMenu } = useLayoutController(icons);
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  // const navigate = useNavigate();
+  const handleSignOut = () => {
+    dispatch(logOut());
+    navigate("/");
+  };
 
-  // if (!isAuthenticated) return <SignIn />;
   return (
     <div className="w-full h-screen overflow-hidden flex flex-col bg-slate-50">
       <Nav />
       <div className="flex flex-1 overflow-hidden">
         {/* SideNav Container */}
-        <div className="w-64 hidden md:flex flex-col border-r border-slate-200 bg-white h-full overflow-y-auto shrink-0 z-20 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]">
-          {sideMenu.map(({ title, children }) => (
-            <div className="border-b border-slate-100 last:border-0 pb-2" key={title}>
-              <SideNav title={title} children={children!} setMode={() => ""} />
-            </div>
-          ))}
-        </div>
+        <aside className="w-72 hidden md:flex flex-col border-r border-slate-200/60 bg-white h-full shrink-0 z-20 shadow-[1px_0_10px_rgba(0,0,0,0.02)]">
+          <div className="flex-1 overflow-y-auto no-scrollbar">
+            {sideMenu.map(({ title, children }) => (
+              <div className="first:mt-4" key={title}>
+                <SideNav title={title} children={children!} setMode={() => ""} />
+              </div>
+            ))}
+          </div>
+
+          {/* Fixed Logout Button at Bottom */}
+          <div className="p-6 border-t border-slate-100 bg-slate-50/30">
+            <button 
+              onClick={handleSignOut}
+              className="flex items-center gap-3.5 w-full px-5 py-3.5 text-sm font-black text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-all duration-300 group active:scale-[0.98]"
+            >
+              <Logout className="text-xl text-slate-400 group-hover:text-red-500 transition-colors" />
+              <span className="tracking-tight">Sign Out</span>
+            </button>
+          </div>
+        </aside>
 
         {/* Main Content Area */}
         <div className="flex-1 relative flex flex-col h-full overflow-y-auto custom-scrollbar bg-slate-50">

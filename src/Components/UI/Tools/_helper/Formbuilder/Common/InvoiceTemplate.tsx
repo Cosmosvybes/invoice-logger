@@ -4,6 +4,8 @@ import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 import { deleteInvoice } from "../../../../../../States/Slices/invoice";
 import { MoreVertical } from "react-huge-icons/solid";
 import { useLayoutEffect, useRef, useState } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import GeneratePDF from "../../../../../PDF/PDFGenereator";
 
 const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
   const dispatch = useAppDispatch();
@@ -21,8 +23,10 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
 
   useLayoutEffect(() => {
     document.body.addEventListener("mousedown", handleCloseOptions);
+    document.body.addEventListener("touchstart", handleCloseOptions);
     return () => {
       document.body.removeEventListener("mousedown", handleCloseOptions);
+      document.body.removeEventListener("touchstart", handleCloseOptions);
     };
   }, []);
 
@@ -40,6 +44,18 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
             >
               Edit invoice
             </Link>
+
+            <PDFDownloadLink
+              document={
+                <GeneratePDF
+                  invoiceInformation={invoice}
+                />
+              }
+              fileName={`invoice_${invoice.id}.pdf`}
+              className="text-slate-700 hover:bg-violet-50 transition duration-200 hover:text-violet-700 text-sm text-left font-medium py-2 px-3 w-full rounded-lg flex items-center"
+            >
+              {({ loading }) => (loading ? "Generating PDF..." : "Download PDF")}
+            </PDFDownloadLink>
             <button
               onClick={() =>
                 dispatch(
@@ -80,12 +96,16 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
         <div className="relative h-auto w-full flex text-sm flex-col gap-1 justify-between mt-1">
           <div className="flex justify-between items-center">
              <span className="text-slate-500 text-xs">Created:</span>
-             <span className="text-slate-700 font-bold text-xs">{invoice.createdAt}</span>
+             <span className="text-slate-700 font-bold text-xs">
+                {new Date(invoice.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + " " + new Date(invoice.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+             </span>
           </div>
 
           <div className="flex justify-between items-center">
              <span className="text-slate-500 text-xs">Updated:</span>
-             <span className="text-slate-700 font-bold text-xs">{invoice.updatedAt}</span>
+             <span className="text-slate-700 font-bold text-xs">
+                {new Date(invoice.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + " " + new Date(invoice.updatedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+             </span>
           </div>
         </div>
       </div>

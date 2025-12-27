@@ -24,7 +24,6 @@ import React, { useState } from "react";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
 import Overlay from "../../../../Interfaces/Pages/Subscription/_OverlayComp/Overlay";
 import { LoadingDashed, Pencil, RemoveCircle } from "react-huge-icons/solid";
-// import { toast } from "react-toastify";
 import SubscriptionModal from "../../../../Interfaces/Pages/Subscription/SubscriptionModal";
 
 const Template = React.memo(
@@ -36,7 +35,6 @@ const Template = React.memo(
       customEmail,
       sendAsMessage,
       setSetAsMessage,
-      // setCustomEmail,
       handleSetCustomEmail,
       setUseCustom,
       setViewMode,
@@ -62,8 +60,14 @@ const Template = React.memo(
     // FORM BUILDER TEMPLATE
     //   //?? ///////////////////////////////////////////////
 
+    // [NEW] Inject Payment Link for Email
+    const invoiceWithLink = {
+        ...invoiceInformation,
+        paymentLink: `${window.location.origin}/invoice/pay/${invoiceInformation.id}`
+    };
+
     const emailHtml = render(
-      <Mailer invoiceInformation={invoiceInformation} />,
+      <Mailer invoiceInformation={invoiceWithLink} />,
       {
         pretty: true,
       }
@@ -129,34 +133,36 @@ const Template = React.memo(
 
     const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
       <div
-        className="relative py-1 flex items-center gap-2"
+        className="relative py-1 flex flex-col gap-1"
         key={input.id}
       >
-        <span className="text-xs text-slate-600 font-bold">{input.placeholder}</span>
-        <Input
-          className="clean-input p-2 text-xs text-center w-20 font-mono text-violet-700 font-bold bg-white border-slate-300"
-          type={"text"}
-          placeholder={`0`}
-          value={invoiceInformation[input.name]}
-          onChange={(e) =>
-            input.name == "Discount"
-              ? dispatch(
-                  updateDiscount({
-                    invoiceId: invoiceInformation.id,
-                    value: Number(e.target.value),
-                    token,
-                  })
-                )
-              : dispatch(
-                  updateVAT({
-                    token,
-                    invoiceId: invoiceInformation.id,
-                    value: Number(e.target.value),
-                  })
-                )
-          }
-        />
-        <span className="text-slate-500 font-bold">%</span>
+        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider pl-1">{input.placeholder}</span>
+        <div className="relative">
+            <Input
+              className="clean-input p-2.5 text-sm text-center w-28 font-mono text-violet-700 font-bold bg-white border-slate-300 shadow-sm rounded-lg"
+              type={"number"}
+              placeholder={`0`}
+              value={invoiceInformation[input.name]}
+              onChange={(e) =>
+                input.name == "Discount"
+                  ? dispatch(
+                      updateDiscount({
+                        invoiceId: invoiceInformation.id,
+                        value: Number(e.target.value),
+                        token,
+                      })
+                    )
+                  : dispatch(
+                      updateVAT({
+                        token,
+                        invoiceId: invoiceInformation.id,
+                        value: Number(e.target.value),
+                      })
+                    )
+              }
+            />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">%</span>
+        </div>
       </div>
     ));
 
@@ -429,10 +435,12 @@ const Template = React.memo(
 
                 <div className="relative w-full flex items-center justify-end py-2">
                    {/* VAT Discount Input Area */}
-                  <div className="w-full max-w-md bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl flex justify-between items-center gap-3 shadow-sm">
-                     <span className="text-slate-600 text-sm font-bold">Params:</span>
+                  <div className="w-auto bg-slate-50 border border-slate-200 px-6 py-4 rounded-xl flex flex-wrap justify-end items-end gap-6 shadow-sm">
                     {VAT_DISCOUNT_INPUT} 
-                    <Currency />
+                    <div className="flex flex-col gap-1">
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider pl-1">Currency</span>
+                        <Currency />
+                    </div>
                   </div>
                 </div>
 

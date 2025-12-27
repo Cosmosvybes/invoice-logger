@@ -1,4 +1,4 @@
-import PaystackPop from "@paystack/inline-js";
+import { useFlutterwavePayment } from "../../../../../../States/hoooks/useFlutterwavePayment";
 import withAuth from "../../../../Tools/_helper/Auth/withAuth";
 import { CheckMarkCircle, Diamond, Star } from "react-huge-icons/solid";
 import { useSelector } from "react-redux";
@@ -6,13 +6,13 @@ import { RootState } from "../../../../../../States/store";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
-const popup = new PaystackPop();
+
 
 type CurrencyCode = 'NGN' | 'USD';
 
 const PRICING = {
     NGN: { amount: 2999, symbol: '₦', label: 'NGN' },
-    USD: { amount: 2, symbol: '$', label: 'USD' }
+    USD: { amount: 11.99, symbol: '$', label: 'USD' }
 };
 
 function Payment() {
@@ -21,38 +21,32 @@ function Payment() {
   const [currency, setCurrency] = useState<CurrencyCode>('NGN');
   
   const currentPrice = PRICING[currency];
-  // Amount in lowest denomination (kobo for NGN, cents for USD)
-  const finalAmount = currentPrice.amount * 100; 
+  /* Flutterwave Hook */
+  const { handleFlutterPayment } = useFlutterwavePayment({
+      amount: currentPrice.amount,
+      email: email || "user@example.com", // Fallback if email missing
+      name: email || "Valued User",
+      currency: currency,
+      title: "Etherbill PRO Subscription",
+      description: `Monthly subscription for ${currency} ${currentPrice.amount}`,
+      planType: 'monthly',
+      logo: "https://ether-bill.onrender.com/logo.png" // Update with real logo url if available
+  });
 
-  const handlePayment = async () => {
+  const handlePayment = () => {
     if (!email) {
       toast.error("User email not found. Please reload or contact support.");
       return;
     }
-
-    try {
-      // Pass currency to backend
-      const response = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/one/time/payment/?email=${email}&amount=${finalAmount}&currency=${currency}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "Application/json" },
+    handleFlutterPayment({
+        callback: (response: any) => {
+           console.log(response);
+           // ... rest of code
+        },
+        onClose: () => {
+            console.log("Payment closed");
         }
-      );
-      const result = await response.json();
-      const { access_code, status } = result;
-
-      if(status === false) {
-          toast.error("Could not initialize payment. Please try again.");
-          return;
-      }
-
-      const data = popup.resumeTransaction(access_code);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-      toast.error("Payment initialization failed. Server might not support currency.");
-    }
+    });
   };
 
   return (
@@ -135,7 +129,7 @@ function Payment() {
                 
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Complete Payment</h3>
                 <p className="text-slate-500 text-sm mb-4 px-4">
-                    You'll be redirected to Paystack's secure gateway.
+                    You all be redirected to Flutterwave's secure gateway.
                 </p>
 
                 <button
@@ -148,7 +142,7 @@ function Payment() {
                 
                 <div className="mt-6 flex flex-col items-center gap-2">
                     <p className="text-xs text-slate-400">Powered by</p>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Paystack_Logo.png" alt="Paystack" className="h-4 opacity-60 grayscale hover:grayscale-0 transition-all" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/cf/cf/Flutterwave_Logo.png" alt="Flutterwave" className="h-6 opacity-60 grayscale hover:grayscale-0 transition-all" />
                 </div>
             </div>
         </div>

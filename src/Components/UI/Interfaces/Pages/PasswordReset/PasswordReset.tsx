@@ -1,5 +1,3 @@
- // import { Button, Input } from "reactstrap";
-// import Header from "../../../Tools/_helper/Formbuilder/Common/Header/Header";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { render } from "@react-email/components";
@@ -13,24 +11,26 @@ import { LoadingDashed } from "react-huge-icons/solid";
 import GeneralMailer from "../../../../EMAIL/GeneralMailer";
 import { API_URL } from "../../../../constants/Index";
 import { Link, useNavigate } from "react-router-dom";
+import AuthLayout from "../../../Tools/_helper/Formbuilder/Onboarding/AuthLayout";
+import { Spinner } from "reactstrap";
+import { ArrowRight } from "react-huge-icons/outline";
 
 const PasswordReset = () => {
-  // Generate a stable 6-digit code (100000-999999) to avoid leading zero issues
   const [verificationCode] = useState(String(Math.floor(100000 + Math.random() * 900000)));
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const { loading } = useAppSelector((store) => store.walletSlice);
+  const { loading } = useAppSelector((store: any) => store.walletSlice);
   const dispatch = useAppDispatch();
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
 
-  const passwordResetHandler = async () => {
+  const passwordResetHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!email) return;
 
     dispatch(setLoading());
-    setErrorDetails(null); // Clear previous errors
+    setErrorDetails(null);
 
     try {
-      // Render email template inside handler to ensure latest state
       const emailHtml = await render(
         <GeneralMailer verificationCode={Number(verificationCode)} />,
         { pretty: true }
@@ -44,8 +44,8 @@ const PasswordReset = () => {
           body: JSON.stringify({ 
             email, 
             userEmail: email, 
-            recipient: email, // Common
-            receipient: email, // Matches typo in InvoiceTemplate sending logic
+            recipient: email,
+            receipient: email,
             emailInstance: emailHtml, 
             htmlContent: emailHtml, 
             verificationCode 
@@ -55,19 +55,12 @@ const PasswordReset = () => {
 
       if (!response.ok) {
         dispatch(setLoading());
-        
-        // Capture detailed error for user debugging
         const errorData = await response.json().catch(() => ({}));
         const userMsg = errorData.response || response.statusText;
-        const debugMsg = `${response.status}: ${userMsg}`;
-        setErrorDetails(debugMsg);
+        setErrorDetails(`${response.status}: ${userMsg}`);
 
-        if (response.status === 503) {
-          return toast.error("Service temporarily unavailable");
-        } else if (response.status === 403) {
+        if (response.status === 403) {
           return toast.error("Account does not exist");
-        } else if (response.status === 500) {
-          return toast.error("Connection error");
         } else {
              return toast.error(userMsg || "Failed to request code");
         }
@@ -81,80 +74,68 @@ const PasswordReset = () => {
     } catch (error: any) {
       dispatch(setLoading());
       console.error("Password Reset Error:", error);
-      const debugMsg = error.message || "Network Error";
-      setErrorDetails(debugMsg);
+      setErrorDetails(error.message || "Network Error");
       toast.error("An error occurred while sending requests");
     }
   };
 
   return (
-    <>
+    <AuthLayout 
+      title="Reset Password" 
+      subtitle="Enter your email to receive a verification code"
+    >
       {loading && (
-        <Overlay
-          children={
-            <LoadingDashed className="text-5xl text-violet-500 animate-spin z-30" />
-          }
-        />
+        <Overlay>
+          <LoadingDashed className="text-5xl text-violet-500 animate-spin z-30" />
+        </Overlay>
       )}
 
-      <div className="w-full h-full min-h-screen flex justify-center items-center bg-slate-50 p-4">
-        <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden p-8 md:p-12 animate-fade-in-up">
-          <div className="flex flex-col gap-6">
-            <div className="text-center">
-                <h1 className="text-3xl text-slate-900 font-extrabold mb-2 tracking-tight">
-                Password Reset
-                </h1>
-                <p className="text-slate-500 text-sm">Enter the email associated with your account.</p>
-            </div>
-            
-            <div className="flex flex-col gap-2">
-                <label className="text-slate-700 text-xs font-bold uppercase tracking-wide ml-1">Email Address</label>
-                <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                required={true}
-                onChange={(e) => setEmail(e.target.value)}
-                className="clean-input w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-900 font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all"
-                />
-            </div>
-
-            <button
-                onClick={() => passwordResetHandler()}
-                className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-violet-600 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-[0.98] group"
-            >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                    Request Code
-                </span>
-            </button>
-
-             {errorDetails && (
-                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-left animate-fade-in">
-                    <p className="text-red-800 text-xs font-bold mb-1">Server Error Details:</p>
-                    <code className="text-[10px] text-red-600 font-mono break-all block">
-                        {errorDetails}
-                    </code>
-                    <p className="text-[10px] text-red-500 mt-1 italic">
-                        (If this says "500", the email server is failing)
-                    </p>
-                </div>
-            )}
-
-            <div className="relative mt-4 flex justify-center w-full text-center border-t border-slate-100 pt-6">
-                <p className="text-slate-500 text-sm">
-                    Remember your password?
-                    <Link
-                    to={"/"}
-                    className="text-violet-600 font-bold hover:text-violet-800 transition-colors ml-1"
-                    >
-                    Sign in
-                    </Link>
-                </p>
-            </div>
-          </div>
+      <form onSubmit={passwordResetHandler} className="space-y-6">
+        <div>
+          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+            Email Address
+          </label>
+          <input
+            type="email"
+            placeholder="name@company.com"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all outline-none"
+          />
         </div>
-      </div>
-    </>
+
+        <button
+          disabled={loading}
+          className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-violet-600 transition-all active:scale-[0.98] flex items-center justify-center gap-2 group"
+        >
+          {loading ? (
+            <Spinner size="sm" color="light" />
+          ) : (
+            <>
+              Request Code
+              <ArrowRight className="text-lg group-hover:translate-x-1 transition-transform" />
+            </>
+          )}
+        </button>
+
+        {errorDetails && (
+          <div className="p-3 bg-red-50 border border-red-100 rounded-lg animate-fade-in">
+            <p className="text-red-700 text-[10px] font-bold uppercase mb-1 tracking-tight">System Message</p>
+            <code className="text-[10px] text-red-500 font-mono break-all">{errorDetails}</code>
+          </div>
+        )}
+
+        <div className="text-center pt-2">
+          <p className="text-sm text-slate-500">
+            Remembered your password?{" "}
+            <Link to="/" className="text-violet-600 font-bold hover:underline">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </form>
+    </AuthLayout>
   );
 };
 

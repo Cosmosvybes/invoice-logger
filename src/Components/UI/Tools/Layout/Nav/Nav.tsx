@@ -1,6 +1,6 @@
 import { MenuLineHorizontal } from "react-huge-icons/outline";
 import useNavMenu from "./links.menu";
-import logo from "./../../../../../assets/HatchfulExport-All(1) (2)/logo_transparent.png";
+import logo from "./../../../../../assets/logo.png";
 import SideNav from "./SideNav";
 import {
   AddRectangle,
@@ -55,22 +55,22 @@ const Nav = () => {
             <img
               src={logo}
               alt="logo_image"
-              className="w-24 h-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </div>
 
           <div className="relative flex items-center gap-4">
              {/* User Profile Pill */}
             <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-full py-1.5 px-3 pr-4 transition-all hover:bg-slate-100 cursor-pointer group">
-               <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shadow-md shadow-violet-200">
-                  {String(account.firstname).charAt(0).toUpperCase()}
-                  {String(account.lastname).charAt(0).toUpperCase()}
+               <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shadow-md shadow-violet-200 uppercase">
+                  {account?.Firstname?.[0] || 'U'}
+                  {account?.Lastname?.[0] || 'A'}
                </div>
-               <div className="hidden md:flex flex-col items-start leading-none">
+                <div className="hidden md:flex flex-col items-start leading-none">
                   <span className="text-xs font-bold text-slate-700 group-hover:text-violet-700 transition-colors">
-                    {String(account.firstname)} {String(account.lastname).charAt(0)}.
+                    {account?.Firstname || 'User'} {account?.Lastname?.[0] ? `${account.Lastname[0]}.` : 'Account'}
                   </span>
-               </div>
+                </div>
             </div>
 
             <MenuLineHorizontal
@@ -82,32 +82,32 @@ const Nav = () => {
           {viewMode && (
             <div
               ref={navRef}
-              className="fixed inset-y-0 right-0 w-3/4 max-w-sm bg-white shadow-2xl z-50 transform transition-transform duration-300 flex flex-col"
+              className="fixed inset-y-0 right-0 w-80 max-w-[85%] bg-white/95 backdrop-blur-xl shadow-[-20px_0_80px_-20px_rgba(0,0,0,0.15)] z-50 flex flex-col animate-slide-in-right"
             >
-              <div className="p-6 border-b border-slate-100 bg-slate-50/50">
-                 <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-violet-600 text-white flex items-center justify-center text-lg font-bold shadow-lg shadow-violet-200">
-                        {String(account.firstname).charAt(0).toUpperCase()}
-                        {String(account.lastname).charAt(0).toUpperCase()}
+              <div className="p-8 border-b border-slate-100 bg-slate-50/50">
+                 <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white flex items-center justify-center text-xl font-black shadow-xl shadow-violet-200 uppercase">
+                        {account?.Firstname?.[0] || 'U'}
+                        {account?.Lastname?.[0] || 'A'}
                     </div>
-                    <div>
-                        <h6 className="font-bold text-slate-900 text-lg">
-                            {String(account.firstname)} {String(account.lastname)}
+                    <div className="flex flex-col">
+                        <h6 className="font-black text-slate-900 text-lg tracking-tight leading-none">
+                            {account?.Firstname || 'User'} {account?.Lastname || 'Account'}
                         </h6>
-                        <p className="text-slate-500 text-xs truncate max-w-[150px]">
+                        <p className="text-slate-400 text-xs mt-1.5 font-medium truncate max-w-[150px]">
                             {account.email}
                         </p>
                     </div>
                  </div>
-                 <div className="flex items-center gap-2 text-red-500 hover:text-red-700 cursor-pointer transition-colors" onClick={handleSignOut}>
-                     <LogoutOpen className="text-xl" />
-                     <span className="text-sm font-medium">Sign Out</span>
+                 <div className="flex items-center gap-3 px-4 py-3 bg-red-50 text-red-600 rounded-xl cursor-pointer hover:bg-red-100 transition-all active:scale-95 group" onClick={handleSignOut}>
+                     <LogoutOpen className="text-xl group-hover:rotate-12 transition-transform" />
+                     <span className="text-sm font-black uppercase tracking-wider">Sign Out</span>
                  </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4">
+              <div className="flex-1 overflow-y-auto no-scrollbar pt-2">
                 {sideMenu.map(({ title, children }) => (
-                  <div className="mb-6" key={title}>
+                  <div className="mb-2" key={title}>
                     <SideNav
                       title={title}
                       children={children!}

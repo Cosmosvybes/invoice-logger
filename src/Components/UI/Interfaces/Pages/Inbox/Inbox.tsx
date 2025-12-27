@@ -6,7 +6,7 @@ import Empty from "../Dashboard/Invoices/Empty";
 
 import useInvoiceReceivedController from "./controller";
 const Inbox = () => {
-  const { inbox, setCurrentPage, currentList, postPerPage } =
+  const { inbox, setCurrentPage, currentList, postPerPage, currentPage } =
     useInvoiceReceivedController();
 
   return (
@@ -25,9 +25,10 @@ const Inbox = () => {
               
               <div className="mt-8">
                  <Paginate
-                    invoices={inbox}
-                    paginateHandler={setCurrentPage}
-                    postsPerPage={postPerPage}
+                    totalItems={inbox.length}
+                    onPageChange={setCurrentPage}
+                    itemsPerPage={postPerPage}
+                    currentPage={currentPage}
                 />
               </div>
             </div>

@@ -59,6 +59,7 @@ export interface Invoice {
   createdAt: string;
   status: string;
   currency: string;
+  paymentLink?: string; // Added for email
   token: string | undefined;
   [key: string]: string | any;
 }
@@ -96,6 +97,12 @@ export interface ACCOUNT {
     businessName: string;
     businessAddress: string;
     [key: string]: boolean | string;
+  };
+  payout: {
+    bank_name: string;
+    account_number: string;
+    account_name: string;
+    bank_code: string;
   };
 }
 export interface productKeyValue {

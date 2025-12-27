@@ -1,5 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import Dashboard from "../UI/Interfaces/Pages/Dashboard/Dashboard";
+import Landing from "../UI/Interfaces/Pages/Landing/Landing";
 
 import Create from "../UI/Interfaces/Pages/Dashboard/Create-F/Create";
 import Invoices from "../UI/Interfaces/Pages/Dashboard/Invoices/Invoices";
@@ -23,44 +24,52 @@ import VerificationCodePage from "../UI/Interfaces/Pages/PasswordReset/Verificat
 import NewPassword from "../UI/Interfaces/Pages/PasswordReset/NewPassword";
 import Chat from "../UI/Tools/chat/Chat";
 import Payment from "../UI/Interfaces/Pages/Dashboard/payment/Payment";
+import InvoicePay from "../UI/Interfaces/Pages/Public/InvoicePay";
+import Layout from "../UI/Tools/Layout/Layout";
+
+const LayoutWrapper = () => {
+    return (
+        <Layout>
+            <Outlet />
+        </Layout>
+    )
+}
 
 const _Routes = () => {
   return (
     <>
       <ToastContainer />
       <Routes>
+        {/* Public / Standalone Routes */}
+        <Route path="/" element={<Landing />}></Route>
+        <Route path="/subscription/payment" element={<Payment />}></Route>
+        <Route path="/login" element={<SignIn />}></Route>
+        <Route path="/create/new/account" element={<Signup />}></Route>
         <Route path="/new_password" element={<NewPassword />}></Route>
         <Route path="/reset_password" element={<PasswordReset />}></Route>
-        <Route
-          path="/verification_code"
-          element={<VerificationCodePage />}
-        ></Route>
-        <Route path="/" element={<SignIn />}></Route>
-        <Route path="/create/new/account" element={<Signup />}></Route>
-        <Route path="/account/invoice-received" element={<Inbox />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/finance/escrows" element={<Escrows />}></Route>
-        <Route path="/invoices" element={<Invoices />}></Route>
-        <Route path="/finance/deal/disputes" element={<Disputes />}></Route>
-        <Route path="/new/invoice" element={<Create />}></Route>
-        <Route path="/clients" element={<ClientPage />}></Route>
-        <Route path="/client/new" element={<AddClient />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/invoice/chat" element={<Chat />}></Route>
-        <Route path="/subscription/payment" element={<Payment />}></Route>
-        <Route path="/deal/escrow/:id" element={<Escrow />}></Route>
-        <Route path="/finance/marketplace" element={<Marketplace />}></Route>
-        <Route path="/finance/user/listings" element={<Listings />}></Route>
-        <Route
-          path="/account/business/trust-trade"
-          element={<Marketplace />}
-        ></Route>
-        <Route path="/account/settings" element={<Settings />}></Route>
-        <Route
-          path="account/finance/overview"
-          element={<Subscription />}
-        ></Route>
-        <Route path="/invoice/update/:id" element={<Create />}></Route>
+        <Route path="/verification_code" element={<VerificationCodePage />}></Route>
+        <Route path="/invoice/pay/:id" element={<InvoicePay />}></Route>
+
+        {/* Dashboard / Layout Wrapped Routes */}
+        <Route element={<LayoutWrapper />}>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route path="/account/invoice-received" element={<Inbox />}></Route>
+            <Route path="/finance/escrows" element={<Escrows />}></Route>
+            <Route path="/invoices" element={<Invoices />}></Route>
+            <Route path="/finance/deal/disputes" element={<Disputes />}></Route>
+            <Route path="/new/invoice" element={<Create />}></Route>
+            <Route path="/clients" element={<ClientPage />}></Route>
+            <Route path="/client/new" element={<AddClient />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/invoice/chat" element={<Chat />}></Route>
+            <Route path="/deal/escrow/:id" element={<Escrow />}></Route>
+            <Route path="/finance/marketplace" element={<Marketplace />}></Route>
+            <Route path="/finance/user/listings" element={<Listings />}></Route>
+            <Route path="/account/business/trust-trade" element={<Marketplace />}></Route>
+            <Route path="/account/settings" element={<Settings />}></Route>
+            <Route path="account/finance/overview" element={<Subscription />}></Route>
+            <Route path="/invoice/update/:id" element={<Create />}></Route>
+        </Route>
       </Routes>
     </>
   );

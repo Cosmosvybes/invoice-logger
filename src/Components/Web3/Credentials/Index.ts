@@ -1018,6 +1018,7 @@ export default function useSmartContractController() {
     handlePageChange,
     getUsersListedDeals,
     handleDelistDeal,
+    currentPage: pageNumber,
     handleGetTransactionHistory,
   };
 }
