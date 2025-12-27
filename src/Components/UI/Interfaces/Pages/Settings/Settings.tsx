@@ -9,9 +9,11 @@ import { MoneyBagDollar } from "react-huge-icons/solid";
 
 const Settings = () => {
   const {
- 
     payoutSchema,
- 
+    businessDetails,
+    personalizationSchema,
+    settingsSchema,
+    subscriptionSchema,
     settings,
     handleChange,
     handleSubmit,
@@ -20,6 +22,7 @@ const Settings = () => {
   } = useSettingsController();
 
   const [activeTab, setActiveTab] = useState("profile");
+  const [showPayoutForm, setShowPayoutForm] = useState(false);
 
   const TABS = [
     { id: "profile", label: "Identity & Business", icon: <User className="text-xl" /> },
@@ -33,12 +36,49 @@ const Settings = () => {
 
     switch (activeTab) {
       case "profile":
-// ... existing switch cases ...
+        return (
+          <InputProvider
+            settings={settings}
+            handleSubmit={handleSubmit}
+            schema={businessDetails}
+            title="Business Identity"
+            handleChange={handleChange}
+          />
+        );
+      case "preferences":
+        return (
+          <div className="space-y-8">
+            <InputProvider
+              settings={settings}
+              handleSubmit={handleSubmit}
+              schema={personalizationSchema}
+              title="Personalization"
+              handleChange={handleChange}
+            />
+            <InputProvider
+              settings={settings}
+              handleSubmit={handleSubmit}
+              schema={settingsSchema}
+              title="Global Preferences"
+              handleChange={handleChange}
+            />
+          </div>
+        );
+      case "subscription":
+        return (
+          <InputProvider
+            settings={settings}
+            handleSubmit={handleSubmit}
+            schema={subscriptionSchema}
+            title="Pro Subscription Features"
+            handleChange={handleChange}
+          />
+        );
       case "payout":
         return (
           <div className="space-y-6">
               {isPayoutConnected && (
-                  <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-[2rem] flex items-center justify-between animate-fade-in">
+                  <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-[2rem] flex items-center justify-between animate-fade-in shadow-sm">
                       <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-100">
                                <Briefcase className="text-2xl" />
@@ -49,20 +89,32 @@ const Settings = () => {
                               <p className="text-xs font-bold text-slate-500">{payout.account_name}</p>
                           </div>
                       </div>
-                      <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-tighter">
-                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                          Verified & Connected
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-tighter">
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                            Verified & Connected
+                        </div>
+                        <button 
+                            onClick={() => setShowPayoutForm(!showPayoutForm)}
+                            className="text-xs font-black text-slate-400 hover:text-violet-600 transition-colors uppercase tracking-widest px-2"
+                        >
+                            {showPayoutForm ? "Cancel Change" : "Change Bank"}
+                        </button>
                       </div>
                   </div>
               )}
               
-              <InputProvider
-                settings={settings}
-                handleSubmit={handleSubmit}
-                schema={payoutSchema}
-                title={isPayoutConnected ? "Change Settlement Gateway" : "Payout & Settlement Gateway"}
-                handleChange={handleChange}
-              />
+              {(!isPayoutConnected || showPayoutForm) && (
+                <div className="animate-fade-in-up">
+                    <InputProvider
+                        settings={settings}
+                        handleSubmit={handleSubmit}
+                        schema={payoutSchema}
+                        title={isPayoutConnected ? "Update Settlement Gateway" : "Payout & Settlement Gateway"}
+                        handleChange={handleChange}
+                    />
+                </div>
+              )}
           </div>
         );
       default:

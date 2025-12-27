@@ -1,3 +1,4 @@
+import React from "react";
 import { useFlutterwave } from "flutterwave-react-v3";
 
 export interface FlutterwaveResponse {
@@ -40,9 +41,11 @@ interface FlutterwavePaymentProps {
 }
 
 export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => {
+  const tx_ref = React.useMemo(() => `SUB_${paymentProps.email.split('@')[0]}_${Date.now()}`, [paymentProps.email]);
+  
   const config = {
     public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string,
-    tx_ref: Date.now().toString(),
+    tx_ref: tx_ref,
     currency: paymentProps.currency || "USD",
     payment_options: "card,mobilemoney,ussd",
     amount: paymentProps.amount,
@@ -73,7 +76,8 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
                       "Authorization": `Bearer ${token}`
                   },
                   body: JSON.stringify({
-                      planType: paymentProps.planType || 'monthly'
+                      planType: paymentProps.planType || 'monthly',
+                      tx_ref: response.tx_ref
                   })
               });
               

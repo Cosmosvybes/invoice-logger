@@ -168,6 +168,9 @@ const invoiceSlice = createSlice({
       }
       state.settings[key] = value;
     },
+    updatePayout: (state, action: PayloadAction<ACCOUNT['payout']>) => {
+      state.payout = action.payload;
+    },
 
     changeCurrency: (state, action: PayloadAction<ICURRENCY>) => {
       const { id, currency, token }: ICURRENCY = action.payload;
@@ -523,6 +526,7 @@ export const {
   addItem,
   changeCurrency,
   updateSettings,
+  updatePayout,
   removeDraft,
   markAsPaid,
   setCurrrentInvoices,

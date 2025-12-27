@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUser, updateSettings } from "../../../../../States/Slices/invoice";
+import { getUser, updateSettings, updatePayout } from "../../../../../States/Slices/invoice";
 import { setIsAuthenticated } from "../../../../../States/Slices/ClientSlice/useAuth/user";
 import { useAppDispatch } from "../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
@@ -24,6 +24,13 @@ export default function useSettingsController() {
     dispatch(getUser(localStorage.getItem("token")!));
     dispatch(setIsAuthenticated());
   }, []);
+
+  // Sync settings with current payout data on load or when payout changes
+  useEffect(() => {
+    if (payout?.bank_name) dispatch(updateSettings({ key: "bankName", value: payout.bank_name }));
+    if (payout?.account_number) dispatch(updateSettings({ key: "accountNumber", value: payout.account_number }));
+    if (payout?.account_name) dispatch(updateSettings({ key: "accountName", value: payout.account_name }));
+  }, [payout]);
 
   /* New State for Banks */
   const [banks, setBanks] = useState<{ id: number; code: string; name: string }[]>([]);
@@ -329,6 +336,11 @@ export default function useSettingsController() {
       }
       const resData = await response_.json();
       toast.success(resData.response, { theme: "light" });
+      
+      // Update the payout state immediately if it was a payout setup
+      if (url.includes("payout/setup") && resData.data) {
+          dispatch(updatePayout(resData.data));
+      }
       
       // Reload logic or update state if needed
       setLoading(false);
