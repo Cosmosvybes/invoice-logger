@@ -17,7 +17,10 @@ const PRICING = {
 
 function Payment() {
   // Get email from Redux state
-  const { email } = useSelector((state: RootState) => state.invoice);
+  const { account } = useSelector((state: RootState) => state.userSlice);
+  const email = account?.email || account?.Email;
+  const name = account?.Firstname ? `${account.Firstname} ${account.Lastname || ''}` : "Valued User";
+
   const [currency, setCurrency] = useState<CurrencyCode>('NGN');
   
   const currentPrice = PRICING[currency];
@@ -25,7 +28,7 @@ function Payment() {
   const { handleFlutterPayment } = useFlutterwavePayment({
       amount: currentPrice.amount,
       email: email || "user@example.com", // Fallback if email missing
-      name: email || "Valued User",
+      name: name,
       currency: currency,
       title: "Etherbill PRO Subscription",
       description: `Monthly subscription for ${currency} ${currentPrice.amount}`,

@@ -2,6 +2,8 @@ import React from "react";
 import { RemoveCircle, CheckMarkCircle, Diamond, Repeat, Star } from "react-huge-icons/solid";
 // import { useNavigate } from "react-router-dom";
 import { useFlutterwavePayment } from "../../../../../States/hoooks/useFlutterwavePayment";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../States/store";
 
 interface SubscriptionModalProps {
   isOpen: boolean;
@@ -11,10 +13,14 @@ interface SubscriptionModalProps {
 const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }) => {
   const [plan, setPlan] = React.useState<'monthly' | 'yearly'>('monthly');
 
+  const { account } = useSelector((state: RootState) => state.userSlice);
+  const email = account?.email || account?.Email;
+  const name = account?.Firstname ? `${account.Firstname} ${account.Lastname || ''}` : "John Doe";
+
   const config = {
     amount: plan === 'monthly' ? 4.5 : 48.6,
-    email: "user@example.com", // Dynamic Email should go here
-    name: "John Doe",
+    email: email || "user@example.com", 
+    name: name,
     payment_plan: plan === 'monthly' 
         ? import.meta.env.VITE_FLUTTERWAVE_MONTHLY_PLAN_ID 
         : import.meta.env.VITE_FLUTTERWAVE_YEARLY_PLAN_ID,
