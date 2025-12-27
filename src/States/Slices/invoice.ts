@@ -25,7 +25,7 @@ const invoiceStaticValue = combinedForm.reduce(
     ...valuesBucket,
     [currVa.name]: currVa.value,
   }),
-  { id: Date.now() }
+  { id: Date.now(), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
 );
 
 export interface invoiceTotalUpdate {
@@ -233,13 +233,7 @@ const invoiceSlice = createSlice({
         (invoice) => invoice.id == invoiceID
       );
       invoice[key] = value;
-      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      invoice!.updatedAt = new Date().toISOString();
 
       fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
         method: "PUT",
@@ -315,13 +309,7 @@ const invoiceSlice = createSlice({
       );
       invoice!.itemList.push(item);
       invoice!.TOTAL += Number(item.unitTotal);
-      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      invoice!.updatedAt = new Date().toISOString();
     },
 
     deleteInvoiceItems: (state, action: PayloadAction<itemToDelete>) => {
@@ -339,13 +327,7 @@ const invoiceSlice = createSlice({
       const invoice: Invoice = state.draft.find(
         (invoice) => invoice.id == invoiceId
       )!;
-      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      invoice!.updatedAt = new Date().toISOString();
       invoiceItem!.TOTAL -= item.unitTotal;
       fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
@@ -393,6 +375,7 @@ const invoiceSlice = createSlice({
           console.log(err);
         });
       invoice!.TOTAL = value;
+      invoice!.updatedAt = new Date().toISOString();
     },
 
     updateDiscount: (state, action: PayloadAction<taxAndDiscount>) => {
@@ -406,13 +389,7 @@ const invoiceSlice = createSlice({
       invoice!.TOTAL =
         subtotal - (invoice!.Discount / 100) * subtotal + invoice!.VAT;
 
-      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      invoice!.updatedAt = new Date().toISOString();
       fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
@@ -443,13 +420,7 @@ const invoiceSlice = createSlice({
       invoice!.VAT = value;
       invoice!.TOTAL = subtotal + (invoice!.VAT / 100) * subtotal;
 
-      invoice!.updatedAt = new Date().toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        dayPeriod: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      invoice!.updatedAt = new Date().toISOString();
 
       fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",

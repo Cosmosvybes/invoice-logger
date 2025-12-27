@@ -146,7 +146,12 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
 
                     <td className="p-6">
                         <span className="text-xs text-slate-500 font-bold whitespace-nowrap">
-                            {new Date(invoice.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                            {(() => {
+                                const date = new Date(invoice.updatedAt);
+                                return isNaN(date.getTime()) 
+                                    ? String(invoice.updatedAt || 'N/A') 
+                                    : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                            })()}
                         </span>
                     </td>
 
