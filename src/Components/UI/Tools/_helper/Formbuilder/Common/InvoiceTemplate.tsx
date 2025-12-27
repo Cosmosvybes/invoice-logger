@@ -97,14 +97,24 @@ const InvoiceTemplate = ({ invoice }: { invoice: Invoice }) => {
           <div className="flex justify-between items-center">
              <span className="text-slate-500 text-xs">Created:</span>
              <span className="text-slate-700 font-bold text-xs">
-                {new Date(invoice.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + " " + new Date(invoice.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                {(() => {
+                    const date = new Date(invoice.createdAt);
+                    return isNaN(date.getTime()) 
+                        ? 'N/A' 
+                        : date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + " " + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                })()}
              </span>
           </div>
 
           <div className="flex justify-between items-center">
              <span className="text-slate-500 text-xs">Updated:</span>
              <span className="text-slate-700 font-bold text-xs">
-                {new Date(invoice.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + " " + new Date(invoice.updatedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                {(() => {
+                    const date = new Date(invoice.updatedAt);
+                    return isNaN(date.getTime()) 
+                        ? 'N/A' 
+                        : date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + " " + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                })()}
              </span>
           </div>
         </div>
