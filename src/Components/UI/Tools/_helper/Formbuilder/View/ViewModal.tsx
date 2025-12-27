@@ -26,15 +26,6 @@ const ViewModal = ({
               <p className="text-black  text-xs">
                 Business address- {data.BusinessAddress}
               </p>
-              <p className="text-black  text-xs">
-                City/Postal- {data.ClientCity}
-              </p>
-              <p className="text-black  text-xs">
-                State- {data.BusinessState}
-              </p>
-              <p className="text-black  text-xs">
-                Country - {data.BusinessCountry}
-              </p>
             </div>
           </div>
 
@@ -51,25 +42,12 @@ const ViewModal = ({
                 Client Address- {data.ClientAddress}
               </p>
               <p className="text-black  text-xs">
-                City/Postal- {data.City}
-              </p>
-              <p className="text-black  text-xs">State- {data.State}</p>
-              <p className="text-black  text-xs">
-                Country - {data.Country}
-              </p>
-              <p className="text-black  text-xs">
                 Date Issued - {data.DateIssued}
               </p>
               <p className="text-black  text-xs">
                 Due Date - {data.DateDue}
               </p>
-              <p className="text-black  text-xs">
-                Payment information - {data.paymentInformation}
-              </p>
               <p className="text-black  text-xs">Note - {data.Notes}</p>
-              <p className="text-black  text-xs">
-                Shipping Address - {data.shippingAddress}
-              </p>
             </div>
           </div>
           <div className="relative block ">

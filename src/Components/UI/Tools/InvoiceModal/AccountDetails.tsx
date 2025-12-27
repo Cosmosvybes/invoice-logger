@@ -17,12 +17,15 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { MoneyBagDollar, Invoice, LoadingDashed, ChartHistogram, ExchangeRectangle } from "react-huge-icons/solid";
+import { useAppDispatch } from "../../../../States/hoooks/hook";
+import { createNewInvoice } from "../../../../States/Slices/invoice";
 
 const AccountDetails = () => {
   const { draft, sent, revenue, paid, settings } = useAppSelector(
     (state) => state.invoice
   );
   const { account } = useAppSelector((state) => state.userSlice);
+  const dispatch = useAppDispatch();
   
   const [invoicesPerPage] = useState(2);
   const [currentPage] = useState(1);
@@ -173,6 +176,7 @@ const AccountDetails = () => {
         <div className="flex items-center gap-3">
             <Link 
                 to="/new/invoice"
+                onClick={() => dispatch(createNewInvoice())}
                 className="flex items-center gap-2 px-5 py-2.5 bg-violet-600 text-white rounded-xl font-bold shadow-lg shadow-violet-200 hover:bg-violet-700 transition-all active:scale-95"
             >
                 <Invoice className="text-lg" />
@@ -273,7 +277,11 @@ const AccountDetails = () => {
                 ))
             )}
             
-            <Link to="/new/invoice" className="mt-4 flex items-center justify-center gap-2 py-4 rounded-xl border border-dashed border-slate-200 text-slate-400 hover:text-violet-600 hover:border-violet-200 hover:bg-violet-50/50 transition-all font-bold text-sm">
+            <Link 
+                to="/new/invoice" 
+                onClick={() => dispatch(createNewInvoice())}
+                className="mt-4 flex items-center justify-center gap-2 py-4 rounded-xl border border-dashed border-slate-200 text-slate-400 hover:text-violet-600 hover:border-violet-200 hover:bg-violet-50/50 transition-all font-bold text-sm"
+            >
                 <PlusThin className="text-lg" />
                 Create New Invoice
             </Link>

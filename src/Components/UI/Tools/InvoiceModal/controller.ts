@@ -9,27 +9,8 @@ export const forms = [
     type: "text",
     name: "BusinessAddress",
     value: "",
-    placeholder: "Your address",
+    placeholder: "Your address (incl. City, State, Country)",
   },
-  {
-    type: "text",
-    name: "ClientCity",
-    value: "",
-    placeholder: "Your city/postal",
-  },
-  {
-    type: "text",
-    name: "BusinessState",
-    value: "",
-    placeholder: "Your state",
-  },
-  {
-    type: "text",
-    name: "BusinessCountry",
-    value: "",
-    placeholder: "Your country",
-  },
-
   {
     type: "text",
     name: "Client",
@@ -40,50 +21,13 @@ export const forms = [
     type: "text",
     name: "ClientAddress",
     value: "",
-    placeholder: "Client's address",
-  },
-  {
-    type: "text",
-    name: "City",
-    value: "",
-    placeholder: "Client's city/Postal",
-  },
-  {
-    type: "text",
-    name: "State",
-    value: "",
-    placeholder: "Client's state",
-  },
-  {
-    type: "text",
-    name: "Country",
-    value: "",
-    placeholder: "Client's country",
-  },
-
-  {
-    type: "text",
-    name: "paymentInformation",
-    value: "",
-    placeholder: "Payment Information",
+    placeholder: "Client's address (incl. City, State, Country)",
   },
   {
     type: "text",
     name: "Notes",
     value: "",
-    placeholder: "Transaction  Notes",
-  },
-  {
-    type: "text",
-    name: "shippingAddress",
-    value: "",
-    placeholder: "Shipping Address",
-  },
-  {
-    type: "text",
-    name: "otherInformation",
-    value: "",
-    placeholder: "Other Information",
+    placeholder: "Notes / Payment Instructions",
   },
   {
     type: "date",
@@ -123,19 +67,7 @@ const newCLientsFormField = [
     type: "text",
     name: "Address",
     value: "",
-    placeholder: "Address",
-  },
-  {
-    type: "text",
-    name: "City_Postal_State",
-    value: "",
-    placeholder: "City or Postal , State",
-  },
-  {
-    type: "text",
-    name: "Country",
-    value: "",
-    placeholder: "Country",
+    placeholder: "Client's address (incl. City, State, Country)",
   },
 ];
 

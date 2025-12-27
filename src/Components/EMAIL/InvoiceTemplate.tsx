@@ -97,16 +97,14 @@ const InvoiceTemplate = ({
                 <Text className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Billed To</Text>
                 <Text className="text-gray-900 font-bold text-sm m-0 mb-1">{invoiceInformation.Client}</Text>
                 <Text className="text-gray-500 text-xs m-0 leading-relaxed">
-                  {invoiceInformation.ClientAddress}<br/>
-                  {invoiceInformation.ClientCity} {invoiceInformation.clientState}, {invoiceInformation.Country}
+                  {invoiceInformation.ClientAddress}
                 </Text>
               </Column>
               <Column className="w-1/2 align-top pl-4">
                  <Text className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">From</Text>
                  <Text className="text-gray-900 font-bold text-sm m-0 mb-1">{invoiceInformation.Business}</Text>
                   <Text className="text-gray-500 text-xs m-0 leading-relaxed">
-                  {invoiceInformation.BusinessAddress}<br/>
-                  {invoiceInformation.City} {invoiceInformation.BusinessState}, {invoiceInformation.BusinessCountry}
+                  {invoiceInformation.BusinessAddress}
                 </Text>
               </Column>
             </Row>

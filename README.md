@@ -1,62 +1,65 @@
-# Invoice Logger
+# Etherbill (Front-end) 💎
 
-Invoice Logger is a comprehensive web application designed to streamline invoicing, client management, and financial tracking for businesses and freelancers. It provides a robust platform for generating professional invoices, managing subscriptions, and tracking payments with ease.
+**The Ultimate Financial Operating System for Freelancers and Agencies.**
 
-## Features
+Etherbill simplifies the complex world of invoicing, client management, and recurring billing into a sleek, high-performance interface. Built for speed, clarity, and professionalism.
 
-### Invoicing System
-- **Create and Manage Invoices**: Easily create, edit, and delete invoices.
-- **PDF Generation**: Generate downloadable PDF versions of invoices for easy sharing.
-- **Status Tracking**: Track the status of invoices (Draft, Pending, Paid, Overdue).
-- **History**: View a detailed history of all invoice activities.
+## Elevated Features
 
-### Client Management
-- **Client Database**: Maintain a database of clients with their contact details.
-- **Easy Association**: Quickly associate invoices with existing clients.
+### Precision Dashboard
+- **Financial Overview**: Real-time tracking of Revenue, Paid, and Overdue invoices.
+- **Management Center**: Dedicated tabs for **Drafts**, **Sent**, **Paid**, **Overdue**, and the new **Recurring** billing section.
+- **Smart Filtering**: Instant search and status filtering for any volume of invoices.
 
-### Subscriptions (Pro Access)
-- **Recurring Invoices**: Automate your billing with weekly or monthly recurring invoices.
-- **Auto-Chasing**: Set up automated reminders to chase overdue payments without lifting a finger.
-- **Smart Settings**: Automatically apply tax rates, currencies, and payment terms to every invoice.
-- **Professional Exports**: Generate sleek, branded PDF invoices.
-- **Secure Payments**: Subscription payments are handled securely via Flutterwave.
-- **Trial Period**: Try Pro features risk-free with our trial period.
+### Recurring Automation Management
+- **Centralized Control**: View all active automated billing profiles in one place.
+- **Instant Suspension**: Terminate recurring billings with a single click.
+- **Schedule Awareness**: Visual clarity on when the next invoice will be generated.
 
-### Technical Integrations
-- **Authentication**: Secure user authentication.
+### Modern Checkout Experience
+- **USD/NGN Global Payments**: Dynamic currency selection for global operations.
+- **Secured by Flutterwave**: Industry-standard encryption for subscription upgrades.
+- **Card-Gated Experience**: Seamless trial-to-pro transition.
+
+### Professional Documentation
+- **Sleek PDF Generation**: High-quality, branded invoices generated instantly in the browser.
+- **Identity Settings**: Custom branding for your business name, address, and local tax requirements.
+
+---
+
+## Tech Stack
+- **Framework**: React 18+ (TypeScript)
+- **State Engine**: Redux Toolkit (Asynchronous state management)
+- **Styling**: Vanilla CSS & Tailwind (Custom Premium Components)
+- **Networking**: RESTful API integration with Etherbill Engine (Node/Mongo)
+- **PDF Core**: @react-pdf/renderer
+
+---
+
+## 🏗️ Installation & Setup
+
+1. **Clone & Enter**
+   ```bash
+   git clone https://github.com/Cosmosvybes/invoice-logger.git
+   cd invoice-logger
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
 
-## Technology Stack
 
-- **Frontend Framework**: React with TypeScript
-- **Build Tool**: Vite
-- **State Management**: Redux Toolkit
-- **Styling**: Tailwind CSS
-- **Database**: Supabase / Firebase
-- **Payments**: Flutterwave (Subscriptions),
-- **PDF Generation**: @react-pdf/renderer
+4. **Launch Development**
+   ```bash
+   npm run dev
+   ```
 
+---
 
-## Installation and Setup
+## 🎨 Design Philosophy
+Etherbill follows a **"Glassmorphism & Micro-Interactions"** philosophy. Every transition, hover state, and modal entry is designed to feel fluid and premium, instilling confidence in your clients when they receive and pay your invoices.
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/Cosmosvybes/invoice-logger.git
-    cd invoice-logger
-    ```
-
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Run the development server**
-    ```bash
-    npm run dev
-    ```
-
-4.  **Build for production**
-    ```bash
-    npm run build
-    ```
-
+---
+*Empowering the global freelance economy.*

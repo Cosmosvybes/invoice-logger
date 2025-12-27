@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../../../../States/hoooks/hook";
-import { getInvoice } from "../../../../../../States/Slices/invoice";
+import { getInvoice, createNewInvoice } from "../../../../../../States/Slices/invoice";
 
 export default function useCreateController() {
   const { draft, loading, currentInvoice } = useAppSelector((state) => state.invoice);
@@ -14,12 +14,20 @@ export default function useCreateController() {
         const existsInDraft = draft?.find((inv) => String(inv.id) === String(id));
         
         // If not in draft and not currently loaded (or loaded ID doesn't match), fetch it
-        // Note: checking currentInvoice.id might need casting if types are loose
         if (!existsInDraft && (!currentInvoice || String((currentInvoice as any).id) !== String(id))) {
             dispatch(getInvoice(id));
         }
+    } else {
+        // We are on /new/invoice route
+        const activeDraftId = localStorage.getItem("id");
+        const exists = draft?.find((inv) => String(inv.id) === String(activeDraftId));
+        
+        // If no active draft exists in state, start a new one
+        if (!exists && !loading) {
+            dispatch(createNewInvoice());
+        }
     }
-  }, [id, draft, currentInvoice, dispatch]);
+  }, [id, draft, currentInvoice, dispatch, loading]);
 
   // Priority: 1. Draft list (local edits) 2. Fetched invoice (server data)
   const invoiceInformation = id 

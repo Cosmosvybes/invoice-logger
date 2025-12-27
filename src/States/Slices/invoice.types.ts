@@ -34,18 +34,10 @@ export interface taxAndDiscount {
 export interface Invoice {
   TOTAL: number;
   id: string | number;
-  AdditionalInfo: string;
   Business: string;
   BusinessAddress: string;
-  BusinessState: string;
-  BusinessCountry: string;
-  City: string;
-  State: string;
   Client: string;
   ClientAddress: string;
-  ClientCity: string;
-  Country: string;
-  clientState: string;
   DateDue: string;
   DateIssued: string;
   IssuedBy: string;
@@ -53,8 +45,6 @@ export interface Invoice {
   VAT: number;
   Discount: number;
   Notes: string;
-  paymentInformation: string;
-  shippingAddress: string;
   updatedAt: string;
   createdAt: string;
   status: string;

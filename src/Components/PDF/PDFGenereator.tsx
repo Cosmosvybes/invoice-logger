@@ -24,10 +24,6 @@ const GeneratePDF = ({ invoiceInformation }: pdfPropTypes) => {
             <Image src={logo} style={styles.logo} />
             <Text style={styles.brandName}>{invoiceInformation.Business || "Invoice Logger"}</Text>
             <Text style={styles.valueRegular}>{invoiceInformation.BusinessAddress}</Text>
-            <Text style={styles.valueRegular}>
-                {invoiceInformation.City}, {invoiceInformation.BusinessState}
-            </Text>
-            <Text style={styles.valueRegular}>{invoiceInformation.BusinessCountry}</Text>
           </View>
           <View style={styles.headerRight}>
             <Text style={styles.title}>INVOICE</Text>
@@ -44,15 +40,9 @@ const GeneratePDF = ({ invoiceInformation }: pdfPropTypes) => {
             <Text style={styles.label}>Bill To:</Text>
             <Text style={styles.value}>{invoiceInformation.Client}</Text>
             <Text style={styles.valueRegular}>{invoiceInformation.ClientAddress}</Text>
-            <Text style={styles.valueRegular}>
-              {invoiceInformation.ClientCity} {invoiceInformation.clientState}
-            </Text>
-            <Text style={styles.valueRegular}>{invoiceInformation.Country}</Text>
           </View>
           <View style={styles.col}>
-            <Text style={styles.label}>Payment Info:</Text>
-            <Text style={styles.valueRegular}>{invoiceInformation.paymentInformation || "Bank Transfer"}</Text>
-            <Text style={styles.label}>Notes:</Text>
+            <Text style={styles.label}>Notes / Payment Info:</Text>
             <Text style={styles.valueRegular}>{invoiceInformation.Notes || "Thank you for your business."}</Text>
           </View>
         </View>

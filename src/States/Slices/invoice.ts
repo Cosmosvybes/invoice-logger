@@ -87,6 +87,49 @@ export const getInvoice = createAsyncThunk(
   }
 );
 
+export const createNewInvoice = createAsyncThunk(
+  "user/createNewInvoice",
+  async (_, { getState }) => {
+    const state = (getState() as any).invoice;
+    const token = localStorage.getItem("token");
+    const newId = Date.now();
+    
+    const newInvoice = {
+      ...state.staticForm,
+      itemList: [],
+      id: newId,
+      TOTAL: 0,
+      VAT: 0,
+      Discount: 0,
+      currency: state.settings?.defaultCurrency || "USD",
+      status: "Draft",
+      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/api/new/invoice`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newInvoice),
+      });
+
+      if (response.status === 403 || response.status === 401) {
+        return location.replace("/");
+      }
+
+      localStorage.setItem("id", String(newId));
+      return newInvoice;
+    } catch (error) {
+       console.error("Failed to create invoice", error);
+       throw error;
+    }
+  }
+);
+
 const defaultSettings = {
     tokenBalanceNotification: true,
     invoiceSentNotication: true,
@@ -227,6 +270,7 @@ const invoiceSlice = createSlice({
           }
         });
     },
+
 
     deleteRecurring: (state, action: PayloadAction<deletingItemId>) => {
       const { id, token }: deletingItemId = action.payload;
@@ -471,6 +515,16 @@ const invoiceSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    builder.addCase(createNewInvoice.fulfilled, (state, action) => {
+        state.draft.push(action.payload as Invoice);
+        state.loading = false;
+    });
+    builder.addCase(createNewInvoice.pending, (state) => {
+        state.loading = true;
+    });
+    builder.addCase(createNewInvoice.rejected, (state) => {
+        state.loading = false;
+    });
     builder.addCase(getUser.pending, (state) => {
       state.loading = true;
     });
