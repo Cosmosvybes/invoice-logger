@@ -83,7 +83,7 @@ export default function useSettingsController() {
       name: "defaultCurrency",
       value: "USD",
       label: "Account Default Currency",
-      options: ["USD", "NGN", "EUR", "GBP", "KWT", "CAD", "AUD"],
+      options: ["USD", "NGN", "EUR", "GBP", "KWT", "CAD", "AUD", "KES", "GHS", "ZAR", "RWF", "XOF", "XAF", "UGX", "TZS"],
     },
     {
       id: 11,

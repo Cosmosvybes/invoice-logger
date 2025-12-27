@@ -35,6 +35,14 @@ const Currency = () => {
           <option>USD</option>
           <option>EUR</option>
           <option>KWT</option>
+          <option>KES</option>
+          <option>GHS</option>
+          <option>ZAR</option>
+          <option>RWF</option>
+          <option>XOF</option>
+          <option>XAF</option>
+          <option>UGX</option>
+          <option>TZS</option>
         </select>
       </div>
     </>
