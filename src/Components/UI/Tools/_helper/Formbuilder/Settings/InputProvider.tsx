@@ -18,6 +18,7 @@ const InputProvider = React.memo(
       label: string;
       checked?: boolean | string;
       options?: string[];
+      disabled?: boolean;
     }[];
     settings: { [key: string]: any };
     handleChange: (name: string, newVal: string | boolean) => void;
@@ -89,7 +90,8 @@ const InputProvider = React.memo(
                 <label className="text-xs text-slate-400 uppercase font-black tracking-[0.15em] ml-1"> {_.label}</label>
                 <Input
                   type="text"
-                  className="w-full h-14 px-5 rounded-2xl text-sm font-bold text-slate-900 bg-slate-50 border-slate-100 focus:ring-4 focus:ring-violet-50 focus:border-violet-200 focus:bg-white transition-all shadow-sm"
+                  disabled={_.disabled}
+                  className="w-full h-14 px-5 rounded-2xl text-sm font-bold text-slate-900 bg-slate-50 border-slate-100 focus:ring-4 focus:ring-violet-50 focus:border-violet-200 focus:bg-white transition-all shadow-sm disabled:opacity-50 disabled:bg-slate-100 cursor-not-allowed"
                   value={safeSettings[_.name] || ""}
                   onChange={(e) => handleChange(_.name, e.target.value)}
                 />

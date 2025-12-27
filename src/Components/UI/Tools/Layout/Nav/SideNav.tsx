@@ -5,6 +5,7 @@ import {
 } from "../../../../../States/hoooks/hook";
 import { createInvoice } from "../../../../../States/Slices/invoice";
 import { toast } from "react-toastify";
+import { API_URL } from "../../../../../Components/constants/Index";
 
 interface Main {
   title: string;
@@ -48,7 +49,7 @@ const SideNav = ({ title, children, setMode, mode }: Main) => {
       })
     );
 
-    fetch("https://ether-bill-server-1.onrender.com/api/new/invoice", {
+    fetch(`${API_URL}/api/new/invoice`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

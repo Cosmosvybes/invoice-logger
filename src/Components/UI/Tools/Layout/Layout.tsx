@@ -22,6 +22,7 @@ import SideNav from "./Nav/SideNav";
 import { useAppDispatch } from "../../../../States/hoooks/hook";
 import { logOut } from "../../../../States/Slices/ClientSlice/useAuth/user";
 import { useNavigate } from "react-router-dom";
+import SystemBanner from "./SystemBanner";
 
 const Layout = ({ children }: any) => {
   const icons = [
@@ -53,6 +54,7 @@ const Layout = ({ children }: any) => {
 
   return (
     <div className="w-full h-screen overflow-hidden flex flex-col bg-slate-50">
+      <SystemBanner />
       <Nav />
       <div className="flex flex-1 overflow-hidden">
         {/* SideNav Container */}

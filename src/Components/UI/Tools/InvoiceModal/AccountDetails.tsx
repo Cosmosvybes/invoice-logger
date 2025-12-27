@@ -167,7 +167,7 @@ const AccountDetails = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-1">
-            {greeting()}, {account?.Firstname || 'there'}!
+            {greeting()}, {account?.Firstname || account?.firstname || 'there'}!
           </h1>
           <p className="text-slate-500 font-medium">
             Here's what's happening with your business today.
@@ -193,7 +193,10 @@ const AccountDetails = () => {
           </div>
           <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Revenue</p>
           <h2 className="text-2xl font-black text-slate-900 mb-1">
-            {new Intl.NumberFormat('en-US', { style: 'currency', currency: typeof settings?.defaultCurrency === 'string' ? settings.defaultCurrency : 'USD' }).format(revenue)}
+            {new Intl.NumberFormat('en-US', { 
+              style: 'currency', 
+              currency: settings?.defaultCurrency || 'USD' 
+            }).format(revenue)}
           </h2>
           <div className="flex items-center gap-1.5 text-emerald-600 text-[10px] font-bold">
             <span className="p-1 rounded-full bg-emerald-50 text-[8px]">↑</span>

@@ -51,7 +51,6 @@ export default function useClientFormController() {
       id: Date.now(),
     };
     setLoading(true);
-    // https://ether-bill-server-1.onrender.com
     const response = await fetch(`${API_URL}/api/client/new`, {
       method: "POST",
       headers: {

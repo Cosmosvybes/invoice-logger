@@ -1,5 +1,6 @@
 import { MenuLineHorizontal } from "react-huge-icons/outline";
 import useNavMenu from "./links.menu";
+import useLayoutController from "../layout.controller";
 import logo from "./../../../../../assets/logo.png";
 import SideNav from "./SideNav";
 import {
@@ -40,7 +41,8 @@ const Nav = () => {
     <InformationRectangle className="inline text-3xl" />,
     <BookAdd className="inline text-3xl" />,
   ];
-  const { handleSignOut, sideMenu, viewMode, setMode, navRef } =
+  const { sideMenu } = useLayoutController(icons);
+  const { handleSignOut, viewMode, setMode, navRef } =
     useNavMenu(icons);
 
   const { isAuthenticated, account } = useAppSelector(

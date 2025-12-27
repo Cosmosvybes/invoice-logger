@@ -42,7 +42,7 @@ export interface settingsI {
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async (token: string) => {
+  async (token: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `${API_URL}/api/user`,
@@ -52,14 +52,16 @@ export const getUser = createAsyncThunk(
         }
       );
 
-      if (response.status != 200) {
-        return location.replace("/");
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+            return rejectWithValue("AUTH_ERROR");
+        }
+        return rejectWithValue("Failed to fetch user data");
       }
       const user = await response.json();
       return user;
     } catch (error: any) {
-      toast.error("session expired", { theme: "colored" });
-      return location.replace("/");
+      return rejectWithValue(error.message || "Session expired");
     }
   }
 );
@@ -160,7 +162,7 @@ const initialState: ACCOUNT = {
   staticForm: invoiceStaticValue,
   loading: false,
   currentInvoice: {},
-  settings: defaultSettings,
+  settings: { ...defaultSettings },
   payout: {
       bank_name: "",
       account_number: "",
@@ -208,8 +210,9 @@ const invoiceSlice = createSlice({
     updateSettings: (state, action: PayloadAction<settingsI>) => {
       const { value, key }: settingsI = action.payload;
       if (!state.settings) {
-        state.settings = defaultSettings;
+        state.settings = { ...defaultSettings };
       }
+      // Use Immer's draft to update safely
       state.settings[key] = value;
     },
     updatePayout: (state, action: PayloadAction<ACCOUNT['payout']>) => {
@@ -230,15 +233,10 @@ const invoiceSlice = createSlice({
         body: JSON.stringify(invoice),
       })
         .then((result) => {
-          if (result.status == 403) {
-            return location.replace("/");
-          }
           return result.json();
         })
         .catch((err) => {
-          if (err.response && err.response.status == 401) {
-            return location.replace("/");
-          }
+          console.log(err);
         });
     },
 
@@ -259,15 +257,10 @@ const invoiceSlice = createSlice({
         }
       )
         .then((result) => {
-          if (result.status == 403) {
-            return location.replace("/");
-          }
           return result.json();
         })
         .catch((err) => {
-          if (err.response && err.response.status == 401) {
-            return location.replace("/");
-          }
+          console.log(err);
         });
     },
 
@@ -305,7 +298,7 @@ const invoiceSlice = createSlice({
       invoice[key] = value;
       invoice!.updatedAt = new Date().toISOString();
 
-      fetch("https://ether-bill-server-1.onrender.com/api/invoice/updates", {
+      fetch(`${API_URL}/api/invoice/updates`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -469,15 +462,10 @@ const invoiceSlice = createSlice({
         body: JSON.stringify(invoice),
       })
         .then((result) => {
-          if (result.status == 403) {
-            return location.replace("/");
-          }
           return result.json();
         })
         .catch((err) => {
-          if (err.response && err.response.status == 401) {
-            return location.replace("/");
-          }
+          console.log(err);
         });
     },
     updateVAT: (state, action: PayloadAction<taxAndDiscount>) => {
@@ -530,21 +518,22 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, { payload }) => {
       state.loading = false;
-      const { draft, sent, revenue, clients, settings, inbox, paid, token, email, recurring } =
+      if (!payload) return;
+
+      const { draft, sent, revenue, clients, settings, inbox, paid, token, email, recurring, payout } =
         payload;
-      state.draft = draft;
-      state.sent = sent;
-      state.revenue = revenue;
-      state.revenue = revenue;
-      state.clients = clients;
+      state.draft = draft || [];
+      state.sent = sent || [];
+      state.revenue = revenue || 0;
+      state.clients = clients || [];
       state.settings = settings || defaultSettings;
-      state.payout = payload.payout || { bank_name: "", account_number: "", account_name: "", bank_code: "" }; // Save payout
-      state.email = email; // Save email to state
-      state.inbox = inbox;
-      state.paid = paid;
-      state.tokens = token;
+      state.payout = payout || { bank_name: "", account_number: "", account_name: "", bank_code: "" };
+      state.email = email || "";
+      state.inbox = inbox || [];
+      state.paid = paid || [];
+      state.tokens = token || 0;
       state.recurring = recurring || [];
-      state.currentData = draft;
+      state.currentData = state.draft;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;

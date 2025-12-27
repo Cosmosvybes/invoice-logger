@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { setLoading } from "../../../../../../States/Slices/wallet";
-import { useAppDispatch } from "../../../../../../States/hoooks/hook";
+import { useAppDispatch, useAppSelector } from "../../../../../../States/hoooks/hook";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { API_URL } from "../../../../../../Components/constants/Index";
 
 interface valueInterface {
   [key: string]: string;
@@ -10,6 +12,14 @@ interface valueInterface {
 
 export default function useSignUpController() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAppSelector((store) => store.userSlice);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
+
   const [formFields] = useState([
     {
       id: 1,
@@ -84,7 +94,7 @@ export default function useSignUpController() {
     try {
       dispatch(setLoading());
       const result = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/create_account",
+        `${API_URL}/api/create_account`,
         {
           method: "POST",
           headers: { "Content-Type": "Application/json" },
@@ -104,8 +114,12 @@ export default function useSignUpController() {
       } else {
         dispatch(setLoading());
         const { response } = await result.json();
+        
+        // [NEW] Save email for verification page
+        localStorage.setItem("email", formValues["Email"]);
+        
         toast.success(response);
-        navigate("/");
+        navigate("/verification_code?onboard=true");
       }
     } catch (error: any) {
       dispatch(setLoading());

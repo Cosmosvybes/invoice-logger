@@ -10,12 +10,20 @@ import {
   useAppSelector,
 } from "../../../../../../States/hoooks/hook";
 import { getUser } from "../../../../../../States/Slices/invoice";
+import { useEffect } from "react";
+import { API_URL } from "../../../../../../Components/constants/Index";
 
 //
 export default function useSigninController() {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((store) => store.userSlice);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
   const [formFields] = useState([
     {
       id: 1,
@@ -57,11 +65,10 @@ export default function useSigninController() {
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
     //// // //
-    // https://ether-bill-server-1.onrender.com
     setLoading(true);
     // console.log(loading);
     const response = await fetch(
-      `https://ether-bill-server-1.onrender.com/api/sign-in`,
+      `${API_URL}/api/sign-in`,
       {
         method: "POST",
         headers: { "Content-Type": "Application/json" },
@@ -77,6 +84,12 @@ export default function useSigninController() {
     if (response.status == 403) {
       setLoading(false);
       return toast.warning(result.response, { theme: "colored" });
+    } else if (response.status == 401) {
+      // [NEW] Handle unverified users
+      setLoading(false);
+      localStorage.setItem("email", formValues["Email"]);
+      toast.info("Email not verified. Redirecting to verification...", { theme: "colored" });
+      return setTimeout(() => navigate("/verification_code?onboard=true"), 2000);
     } else if (response.status == 404) {
       setLoading(false);
       return toast.warning(result.response, { theme: "dark" });
@@ -86,7 +99,7 @@ export default function useSigninController() {
     } else {
       localStorage.setItem("token", token);
       const response = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/user`,
+        `${API_URL}/api/user`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -94,7 +107,7 @@ export default function useSigninController() {
 
       if (response.status == 200) {
         dispatch(setIsAuthenticated());
-        dispatch(setUser({ user: await response.json() }));
+        dispatch(setUser(await response.json()));
         dispatch(getUser(localStorage.getItem("token")!));
         navigate("/dashboard");
       }

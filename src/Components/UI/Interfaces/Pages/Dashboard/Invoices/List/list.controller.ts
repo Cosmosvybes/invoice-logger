@@ -3,6 +3,7 @@ import { Invoice } from "../../../../../../../States/Slices/invoice.types";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../../../../../States/hoooks/hook";
 import { markAsPaid } from "../../../../../../../States/Slices/invoice";
+import { API_URL } from "../../../../../../../Components/constants/Index";
 
 export default function useInvoiceListController(invoices: Invoice[]) {
   const [currentRowDataID, setCurrentRowDataID] = useState<null | number>(null);
@@ -42,7 +43,7 @@ export default function useInvoiceListController(invoices: Invoice[]) {
 
   const handleMarkAsPaid = async (invoiceID: any) => {
     const response = await fetch(
-      `https://ether-bill-server-1.onrender.com/api/invoice/mark-as-paid/?invoiceID=${invoiceID}`,
+      `${API_URL}/api/invoice/mark-as-paid/?invoiceID=${invoiceID}`,
       {
         method: "PATCH",
         headers: {

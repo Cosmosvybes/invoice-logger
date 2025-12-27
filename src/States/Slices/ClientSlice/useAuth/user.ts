@@ -1,30 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { createSlice } from "@reduxjs/toolkit";
 import { initialStateI } from "./types";
-import { toast } from "react-toastify";
-import { API_URL } from "../../../../Components/constants/Index";
-
-export const getUser = createAsyncThunk("user/getUser", async () => {
-  try {
-    const response = await fetch(`${API_URL}/api/user`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-    if (response.status != 200) {
-      if (response.status == 403) {
-        return;
-      }
-      return;
-    }
-    const user = await response.json();
-    return user;
-  } catch (error: any) {
-    toast.warn("Please sign in", { theme: "colored" });
-  }
-});
+import { getUser } from "../../invoice"; // Import the consolidated thunk from invoice
 
 const initialState: initialStateI = {
-  userToken: "",
-  isAuthenticated: false,
+  userToken: localStorage.getItem("token") || "",
+  isAuthenticated: !!localStorage.getItem("token"),
   loading: false,
   account: {},
 };
@@ -37,15 +17,14 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
     },
     setIsAuthenticated: (state) => {
-      // const { token }: userToken = action.payload;
       state.isAuthenticated = true;
     },
     setUser: (state, { payload }) => {
-      state.account = payload.user;
+      state.account = payload;
     },
     logOut: (state) => {
       state.isAuthenticated = false;
-      state.userToken = undefined;
+      state.userToken = "";
       localStorage.removeItem("token");
     },
   },
@@ -55,20 +34,27 @@ const userSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-
-      if (action.payload == undefined || action.payload == null) {
+      if (action.payload) {
+        state.isAuthenticated = true;
+        state.account = action.payload;
+      } else {
         state.isAuthenticated = false;
-        // location.assign("/");
+        state.userToken = "";
+        localStorage.removeItem("token");
       }
-      state.isAuthenticated = true;
-      state.account = action.payload;
-      // console.log(action.payload);
     });
-    builder.addCase(getUser.rejected, (state) => {
+    builder.addCase(getUser.rejected, (state, action) => {
       state.loading = false;
+      if (action.payload === "AUTH_ERROR") {
+        state.isAuthenticated = false;
+        state.userToken = "";
+        localStorage.removeItem("token");
+        // We'll let the UI handle the redirect to login via withAuth
+      }
     });
   },
 });
 
+export { getUser }; // Re-export the thunk if needed by other components
 export default userSlice.reducer;
-export const { setIsAuthenticated, logOut, setUser } = userSlice.actions;
+export const { setIsAuthenticated, logOut, setUser, switchAuth } = userSlice.actions;

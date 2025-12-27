@@ -7,29 +7,35 @@ import {
 } from "../../../../../States/hoooks/hook";
 import { setLoading } from "../../../../../States/Slices/wallet";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import AuthLayout from "../../../Tools/_helper/Formbuilder/Onboarding/AuthLayout";
 import { Spinner } from "reactstrap";
 import { ArrowRight } from "react-huge-icons/outline";
+import { API_URL } from "../../../../../Components/constants/Index";
 
 const VerificationCodePage = () => {
   const [code, setCode] = useState("");
   const { loading } = useAppSelector((store: any) => store.walletSlice);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isOnboarding = searchParams.get("onboard") === "true";
 
   const codeVerificationHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!code) return;
-    const userEmail = localStorage.getItem("email");
+    
+    // Support both "email" and "userEmail" (consistency with backend)
+    const email = localStorage.getItem("email");
+    
     dispatch(setLoading());
     try {
       const response = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/verify_code",
+        `${API_URL}/api/verify_code`,
         {
           method: "POST",
           headers: { "Content-Type": "Application/json" },
-          body: JSON.stringify({ code, userEmail }),
+          body: JSON.stringify({ code, email }),
         }
       );
 
@@ -43,8 +49,13 @@ const VerificationCodePage = () => {
       } else {
         const { message } = await response.json();
         dispatch(setLoading());
-        toast.success(message);
-        navigate("/new_password");
+        toast.success(isOnboarding ? "Account verified! Please sign in." : message);
+        
+        if (isOnboarding) {
+            navigate("/login");
+        } else {
+            navigate("/new_password");
+        }
       }
     } catch (error) {
       dispatch(setLoading());

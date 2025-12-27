@@ -12,6 +12,9 @@ import Settings from "../UI/Interfaces/Pages/Settings/Settings";
 import Inbox from "../UI/Interfaces/Pages/Inbox/Inbox";
 import Subscription from "../UI/Interfaces/Pages/Subscription/Subscription";
 import Signup from "../UI/Interfaces/Pages/Onboard/signup/Signup";
+import AdminDashboard from "../UI/Interfaces/Pages/Admin/AdminDashboard";
+import UserManagement from "../UI/Interfaces/Pages/Admin/UserManagement";
+import UserSupport from "../UI/Interfaces/Pages/Support/UserSupport";
 
 import Escrow from "../UI/Interfaces/Pages/Escrow/Escrow";
 import Marketplace from "../UI/Interfaces/Pages/Marketplace/Marketplace";
@@ -52,6 +55,8 @@ const _Routes = () => {
 
         {/* Dashboard / Layout Wrapped Routes */}
         <Route element={<LayoutWrapper />}>
+            <Route path="/admin" element={<AdminDashboard />}></Route>
+            <Route path="/admin/users" element={<UserManagement />}></Route>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/account/invoice-received" element={<Inbox />}></Route>
             <Route path="/finance/escrows" element={<Escrows />}></Route>
@@ -69,6 +74,7 @@ const _Routes = () => {
             <Route path="/account/settings" element={<Settings />}></Route>
             <Route path="account/finance/overview" element={<Subscription />}></Route>
             <Route path="/invoice/update/:id" element={<Create />}></Route>
+            <Route path="/support" element={<UserSupport />}></Route>
         </Route>
       </Routes>
     </>

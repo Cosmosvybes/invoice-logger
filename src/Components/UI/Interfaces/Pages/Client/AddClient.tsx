@@ -1,41 +1,39 @@
-import { useLayoutEffect } from "react";
-import ClientFormBuilder from "../../../Tools/_helper/Formbuilder/ClientForm/ClientFormBuilder";
 import BreadCrumb from "../../../Tools/Layout/BreadCrumb";
+import ClientFormBuilder from "../../../Tools/_helper/Formbuilder/ClientForm/ClientFormBuilder";
 import user from "./../../../../../assets/User.svg";
-import {
-  getUser,
-  setIsAuthenticated,
-} from "../../../../../States/Slices/ClientSlice/useAuth/user";
-import { useAppDispatch } from "../../../../../States/hoooks/hook";
-import withAuth from "../../../Tools/_helper/Auth/withAuth";
+
 const AddClient = () => {
-  const dispatch = useAppDispatch();
-  useLayoutEffect(() => {
-    dispatch(getUser());
-    dispatch(setIsAuthenticated());
-  }, []);
+  // const dispatch = useAppDispatch();
+  
+  // Auth is handled globally by Layout
 
   return (
-    <>
-      <div className="w-full h-full min-h-screen px-4 md:px-8 py-6">
-        <BreadCrumb title="New Client" useLink={false} linkTitle="client/new" />
+    <div className="w-full min-h-screen bg-slate-50/50 pb-20">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 animate-fade-in">
+        <BreadCrumb title="New Business Client" useLink={false} linkTitle="" />
+        
+        <div className="mt-10">
+            <div className="bg-white rounded-[2.5rem] border border-slate-200/60 shadow-xl shadow-slate-200/20 overflow-hidden">
+                <div className="p-8 md:p-12">
+                    <div className="flex flex-col md:flex-row gap-8 items-start mb-12">
+                        <div className="w-20 h-20 bg-violet-600 rounded-[2rem] flex items-center justify-center p-4 shadow-lg shadow-violet-200 shrink-0">
+                            <img src={user} alt="user" className="w-full h-full invert brightness-0" />
+                        </div>
+                        <div>
+                            <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Build Your Network</h2>
+                            <p className="text-slate-500 font-bold max-w-lg">Add a new client to your dashboard to start issuing professional invoices and tracking payments instantly.</p>
+                        </div>
+                    </div>
 
-        <div className="relative w-full mt-6 max-w-2xl mx-auto animate-fade-in-up">
-          <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-6 md:p-8">
-            <div className="mb-8 text-center">
-                 <div className="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <img src={user} alt="new client" className="w-8 h-8 opacity-50" />
-                 </div>
-                 <h2 className="text-2xl font-bold text-slate-800">Add New Client</h2>
-                 <p className="text-slate-500 mt-2">Enter the client's information below to create a new profile.</p>
+                    <div className="bg-slate-50/50 rounded-3xl border border-slate-100 p-6 md:p-10">
+                         <ClientFormBuilder />
+                    </div>
+                </div>
             </div>
-            
-            <ClientFormBuilder />
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default withAuth(AddClient);
+export default AddClient;

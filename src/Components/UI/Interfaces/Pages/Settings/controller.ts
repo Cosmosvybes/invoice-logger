@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { getUser, updateSettings, updatePayout } from "../../../../../States/Slices/invoice";
-import { setIsAuthenticated } from "../../../../../States/Slices/ClientSlice/useAuth/user";
-import { useAppDispatch } from "../../../../../States/hoooks/hook";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { updateSettings, updatePayout } from "../../../../../States/Slices/invoice";
+import { useAppDispatch, useAppSelector } from "../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
-import { useAppSelector } from "../../../../../States/hoooks/hook";
+import { API_URL } from "../../../../../Components/constants/Index";
 
 export interface SchemaField {
       id: number;
@@ -16,353 +15,207 @@ export interface SchemaField {
 }
 
 export default function useSettingsController() {
-  const { settings, payout } = useAppSelector((state) => state.invoice);
-
   const dispatch = useAppDispatch();
+  
+  // Use specialized selectors to avoid whole-state-listener issues
+  const settings = useAppSelector((state) => state.invoice?.settings || {});
+  const payout = useAppSelector((state) => state.invoice?.payout || {});
 
-  useEffect(() => {
-    dispatch(getUser(localStorage.getItem("token")!));
-    dispatch(setIsAuthenticated());
-  }, []);
-
-  // Sync settings with current payout data on load or when payout changes
-  useEffect(() => {
-    if (payout?.bank_name) dispatch(updateSettings({ key: "bankName", value: payout.bank_name }));
-    if (payout?.account_number) dispatch(updateSettings({ key: "accountNumber", value: payout.account_number }));
-    if (payout?.account_name) dispatch(updateSettings({ key: "accountName", value: payout.account_name }));
-  }, [payout]);
-
-  /* New State for Banks */
   const [banks, setBanks] = useState<{ id: number; code: string; name: string }[]>([]);
   const [loadingBanks, setLoadingBanks] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
 
+  // Data loading is handled globally by LayoutWrapper/layout.controller
+
+  // Bank Fetching
   useEffect(() => {
+    let mounted = true;
     const fetchBanks = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
         setLoadingBanks(true);
         try {
-            const res = await fetch("https://ether-bill-server-1.onrender.com/api/payout/banks?country=NG", {
-                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            const res = await fetch(`${API_URL}/api/payout/banks?country=NG`, {
+                headers: { "Authorization": `Bearer ${token}` }
             });
             const data = await res.json();
-            if(res.ok && Array.isArray(data.data)) {
-                setBanks(data.data.map((b: any) => ({ id: b.id, code: b.code, name: b.name })));
-            } else {
-                console.warn("Bank fetch error or invalid data format:", data.response || "No data");
+            if(mounted && res.ok && Array.isArray(data.data)) {
+                const mappedBanks = data.data.map((b: any) => ({ id: b.id, code: b.code, name: b.name }));
+                console.log("Banks Fetched Successfully:", mappedBanks.length);
+                setBanks(mappedBanks);
             }
         } catch (e) {
-            console.error("Failed to fetch banks", e);
+            console.error("Bank fetch error:", e);
         } finally {
-            setLoadingBanks(false);
+            if (mounted) setLoadingBanks(false);
         }
     };
     fetchBanks();
+    return () => { mounted = false; };
   }, []);
 
-  const [settingsSchema] = useState([
-    {
-      id: 13,
-      type: "switch",
-      name: "tokenBalanceNotification",
-      value: false,
-      label: "Balance notification",
-    },
+  const settingsSchema = useMemo(() => [
+    { id: 13, type: "switch", name: "tokenBalanceNotification", value: false, label: "Balance notification" },
+    { id: 17, type: "switch", name: "invoiceSentNotication", value: true, label: "Invoice notification" },
+  ], []);
 
-    {
-      id: 17,
-      type: "switch",
-      name: "invoiceSentNotication",
-      value: true,
-      label: "Invoice notification",
-    },
-  ]);
+  const personalizationSchema = useMemo(() => [
+    { id: 10, type: "select", name: "defaultCurrency", value: "USD", label: "Account Default Currency", options: ["USD", "NGN", "EUR", "GBP"] },
+    { id: 11, type: "switch", name: "applyTax", value: true, label: "Apply tax to invoices" },
+    { id: 15, type: "switch", name: "defaultPaymentTerms", value: false, label: "30 days default payment" },
+    { id: 64, type: "switch", name: "revenueNotification", value: false, label: "Enable revenue notification" },
+  ], []);
 
-  const [personalizationSchema] = useState([
-    {
-      id: 10,
-      type: "select",
-      name: "defaultCurrency",
-      value: "USD",
-      label: "Account Default Currency",
-      options: ["USD", "NGN", "EUR", "GBP", "KWT", "CAD", "AUD", "KES", "GHS", "ZAR", "RWF", "XOF", "XAF", "UGX", "TZS"],
-    },
-    {
-      id: 11,
-      type: "switch",
-      name: "applyTax",
-      value: true,
-      label: "Apply tax to invoices",
-    },
-    {
-      id: 15,
-      type: "switch",
-      name: "defaultPaymentTerms",
-      value: false,
-      label: "30 days default payment",
-    },
+  const subscriptionSchema = useMemo(() => [
+    { id: 186, type: "switch", name: "sharingToken", value: false, label: "Enable/disable token sharing" },
+    { id: 19, type: "switch", name: "autoRenewal", value: false, label: "Subscription auto-renewal" },
+  ], []);
 
-    {
-      id: 64,
-      type: "switch",
-      name: "revenueNotification",
-      value: false,
-      label: "Enable revenue notification",
-    },
-    {
-      id: 99,
-      type: "switch",
-      name: "autoChase",
-      value: false,
-      label: "Enable Auto-Chasing (Daily Reminders)",
-    },
-  ]);
-  const [subscriptionSchema] = useState([
-    {
-      id: 186,
-      type: "switch",
-      name: "sharingToken",
-      value: false,
-      label: "Enable/disable token sharing",
-    },
-    {
-      id: 19,
-      type: "switch",
-      name: "autoRenewal",
-      value: false,
-      label: "Subscription auto-renewal",
-    },
-  ]);
+  const businessDetails = useMemo(() => [
+    { id: 71, type: "text", name: "businessName", value: "", label: "business name" },
+    { id: 971, type: "text", name: "businessAddress", value: "", label: "Business address" },
+  ], []);
 
-  const [businessDetails] = useState([
-    {
-      id: 71,
-      type: "text",
-      name: "businessName",
-      value: "",
-      label: "business name",
-    },
-    {
-      id: 971,
-      type: "text",
-      name: "businessAddress",
-      value: "",
-      label: "Business address",
-    },
-  ]);
+  const payoutSchema = useMemo(() => [
+    { id: 201, type: "select", name: "bankName", value: "", label: "Bank Name", options: banks.map(b => b.name) },
+    { id: 202, type: "text", name: "accountNumber", value: "", label: "Account Number" },
+    { id: 203, type: "text", name: "accountName", value: "", label: "Account Name", disabled: true },
+  ], [banks]);
 
-  // Dynamic Payout Schema
-  const [payoutSchema, setPayoutSchema] = useState<SchemaField[]>([
-    {
-      id: 201,
-      type: "select",
-      name: "bankName",
-      value: "",
-      label: "Bank Name",
-      options: []
-    },
-    {
-      id: 202,
-      type: "text",
-      name: "accountNumber",
-      value: "",
-      label: "Account Number",
-    },
-    {
-      id: 203,
-      type: "text",
-      name: "accountName",
-      value: "",
-      label: "Account Name (Verified Automatically)",
-      disabled: true
-    },
-  ]);
-
-
-
-  // Auto-resolve account name when Bank and Number are present
+  // Account Resolution
   useEffect(() => {
-     const resolveAccount = async () => {
-         const bankName = settings['bankName'] as string; 
-         const accountNumber = settings['accountNumber'] as string;
-         
-         // Only proceed if we have a bank, and account number is 10 digits
-         if(bankName && accountNumber && typeof accountNumber === 'string' && accountNumber.length === 10) {
-             const selectedBank = banks.find(b => b.name === bankName);
-             if(!selectedBank) return;
+    const accountNumber = settings['accountNumber'] ?? payout?.account_number ?? "";
+    const bankName = settings['bankName'] ?? payout?.bank_name ?? "";
 
-             console.log("Attempting resolution for:", bankName, accountNumber, selectedBank);
+    const resolveAccount = async () => {
+        // Trigger resolution if we have a bank and at least 5 digits of account number (for some testing accounts)
+        if (typeof accountNumber === 'string' && accountNumber.length >= 5 && bankName) {
+            const selectedBank = banks.find(b => b.name === bankName);
+            if (!selectedBank) return;
 
-             try {
-                // Show verifiable feedback
-                toast.info("Verifying...", { autoClose: 1000, toastId: "verifying" });
-                
-                const res = await fetch("https://ether-bill-server-1.onrender.com/api/payout/resolve", {
+            try {
+                const response = await fetch(`${API_URL}/api/payout/resolve`, {
                     method: "POST",
                     headers: { 
                         "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                        "Content-Type": "Application/json"
+                        "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        account_number: accountNumber,
-                        bank_code: selectedBank.code
-                    })
+                    body: JSON.stringify({ account_number: accountNumber, bank_code: selectedBank.code })
                 });
-                const data = await res.json();
-                console.log("Resolution Response:", data);
-
-                if(res.ok) {
-                    dispatch(updateSettings({ key: "accountName", value: data.data.account_name }));
-                    toast.success("Verified: " + data.data.account_name);
-                } else {
-                    console.warn("Verification failed", data.response);
-                    toast.error(data.response || "Verification failed");
-                    dispatch(updateSettings({ key: "accountName", value: "" })); 
+                const data = await response.json();
+                
+                // Flutterwave returns account_name in data.data
+                const resolvedName = data.data?.account_name || data.data?.accountName;
+                
+                if (response.ok && resolvedName) {
+                    const currentName = settings['accountName'] || payout?.account_name;
+                    
+                    // Only update and toast if the name is different or missing
+                    if (resolvedName !== currentName) {
+                        dispatch(updateSettings({ key: 'accountName', value: resolvedName }));
+                        
+                        if (isDirty) {
+                            toast.success("Account name resolved: " + resolvedName, { toastId: "resolve-success" });
+                        }
+                    }
                 }
-             } catch (e: any) {
-                 console.error("Resolve error", e);
-                 toast.error("Network Error: " + e.message);
-             }
-         }
-     }
-     
-     // Debounce could be good, but for now just run on change
-     // If we had a useDebounce hook, we'd use it.
-     // Check if we have useDebounce.ts in hooks? Yes we do! 
-     // But let's keep it simple for now to avoid extensive rewrites.
-     // useEffect dependency array handles changes. 
-     
-     const timer = setTimeout(() => {
-        resolveAccount();
-     }, 1000); // 1s debounce
+            } catch (e) {
+                console.error("Account resolution error:", e);
+            }
+        }
+    };
 
-     return () => clearTimeout(timer);
-  }, [settings['bankName'], settings['accountNumber'], banks]);
+    const timeoutId = setTimeout(resolveAccount, 600); 
+    return () => clearTimeout(timeoutId);
+  }, [settings['accountNumber'], settings['bankName'], payout?.account_number, payout?.bank_name, banks, dispatch]);
 
-  useEffect(() => {
-     if(banks.length > 0) {
-         setPayoutSchema(prev => prev.map(field => {
-             if(field.name === 'bankName') {
-                 return { ...field, options: banks.map(b => b.name) };
-             }
-             return field;
-         }));
-     }
-  }, [banks]);
 
-  const values = [
-    ...settingsSchema,
-    ...personalizationSchema,
-    ...subscriptionSchema,
-    ...businessDetails,
-    ...payoutSchema,
-  ].reduce(
-    (acc, curr) => {
-        let val = curr.value;
-        // Override with saved payout data if available
-        if (curr.name === "bankName" && payout?.bank_name) val = payout.bank_name;
-        if (curr.name === "accountNumber" && payout?.account_number) val = payout.account_number;
-        if (curr.name === "accountName" && payout?.account_name) val = payout.account_name;
-        
-        return {
-            ...acc,
-            [curr.name]: val,
-        };
-    },
-    {}
-  );
-
-  const [fieldsValue] = useState(values);
-  const handleChange = (fieldName: string, newValue: string | boolean) => {
+  const handleChange = useCallback((fieldName: string, newValue: string | boolean) => {
     dispatch(updateSettings({ key: fieldName, value: newValue }));
+    setIsDirty(true);
+    
+    // Clear resolved name if sensitive fields change
+    if (fieldName === 'accountNumber' || fieldName === 'bankName') {
+        dispatch(updateSettings({ key: 'accountName', value: "" }));
+    }
+  }, [dispatch]);
+
+  const fullSettings = {
+    ...settings,
+    bankName: settings.bankName ?? payout?.bank_name ?? "",
+    accountNumber: settings.accountNumber ?? payout?.account_number ?? "",
+    accountName: settings.accountName ?? payout?.account_name ?? "",
   };
 
-  const [loading, setLoading] = useState(false);
-
-  const token = localStorage.getItem("token");
   const handleSubmit = async (activeTab?: string) => {
     setLoading(true);
     try {
-      // Check if we are saving Payout Settings (simplistic check: if bankName is present in settings and valid)
-      // Since `settings` contains ALL fields, we need to know what we are submitting.
-      // Ideally we pass `activeTab` to this function. 
-      // For now, let's assume if it is a payout update if 'bankName' and 'accountNumber' are changed?
-      // Better: we can inspect the payload or just handle split logic.
-      
-      // But wait! `settings` is global state.
-      // If we are strictly on Payout tab, we might want to trigger the Payout Setup endpoint.
-      
-      // Let's implement a specific check or dedicated function.
-      // But adhering to the existing structure:
-      
-      let url = "https://ether-bill-server-1.onrender.com/api/account/settings";
-      let body: any = { ...settings };
+      let url = `${API_URL}/api/account/settings`;
+      let body: any = { ...fullSettings }; // Use full settings for generic settings update
 
-      const bankName = settings['bankName']; 
-      if (bankName && activeTab === 'payout') {
-          // Check if anything actually changed compared to current payout
-          if (settings['bankName'] === payout?.bank_name && 
-              settings['accountNumber'] === payout?.account_number) {
-              toast.info("Account already verified and connected.");
+      if (activeTab === 'payout') {
+          url = `${API_URL}/api/payout/setup`;
+          const selectedBank = banks.find(b => b.name === fullSettings.bankName);
+          const bankCode = selectedBank ? selectedBank.code : (payout?.bank_code || "");
+          
+          if (!bankCode || !fullSettings.accountNumber) {
+              toast.error("Please select a bank and enter a valid account number");
               setLoading(false);
               return;
           }
 
-          url = "https://ether-bill-server-1.onrender.com/api/payout/setup";
-          const selectedBank = banks.find(b => b.name === bankName);
           body = {
-              bank_code: selectedBank ? selectedBank.code : "",
-              account_number: settings['accountNumber'],
-              business_name: settings['businessName'], // Optional
-              business_email: "", // User email from token will be used
+              bank_code: bankCode,
+              account_number: fullSettings.accountNumber,
+              business_name: fullSettings.businessName || "User",
               country: "NG"
           };
+          console.log("Saving Payout Details:", body);
       }
 
-      const response_ = await fetch(
-        url,
-        {
+      const response = await fetch(url, {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "Application/json",
+          headers: { 
+            Authorization: `Bearer ${localStorage.getItem("token")}`, 
+            "Content-Type": "Application/json" 
           },
           body: JSON.stringify(body),
-        }
-      );
-      if (!response_.ok) {
-        setLoading(false);
-        const err = await response_.json();
-        // Show specific error from backend if available (e.g. FW error)
-        throw new Error(err.error || err.response || err.message || "Operation failed");
+      });
+
+      let resData: any;
+      const responseText = await response.text();
+      console.log("Raw Server Response:", responseText);
+
+      try {
+          resData = JSON.parse(responseText);
+      } catch (e) {
+          console.error("Failed to parse response as JSON:", responseText);
+          toast.error("Server returned non-JSON response. Check console.");
+          setLoading(false);
+          return;
       }
-      const resData = await response_.json();
-      toast.success(resData.response, { theme: "light" });
-      
-      // Update the payout state immediately if it was a payout setup
-      if (url.includes("payout/setup") && resData.data) {
-          dispatch(updatePayout(resData.data));
+
+      console.log("Save Response Data:", resData);
+
+      if (response.ok) {
+          toast.success(resData.response || "Success!");
+          if (url.includes("payout/setup")) {
+              dispatch(updatePayout(resData.data));
+          }
+      } else {
+          toast.error(resData.response || `Error ${response.status}: ${JSON.stringify(resData)}`);
       }
-      
-      // Reload logic or update state if needed
-      setLoading(false);
     } catch (error: any) {
-      setLoading(false);
-      console.log(error.message);
+      console.error("Save Error:", error);
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return {
-    settingsSchema,
-    personalizationSchema,
-    fieldsValue,
-    settings,
-    handleChange,
-    handleSubmit,
-    subscriptionSchema,
-    businessDetails,
-    payoutSchema,
-    payout,
-    loading,
-    loadingBanks,
+    settingsSchema, personalizationSchema, settings: fullSettings, handleChange, handleSubmit,
+    subscriptionSchema, businessDetails, payoutSchema, payout, loading, loadingBanks,
   };
 }

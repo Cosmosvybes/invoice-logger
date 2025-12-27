@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "react-toastify/ReactToastify.css";
 import { ItemsType, VAT_DISCOUNT } from "../type";
+import { API_URL } from "../../../../../../Components/constants/Index";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
 
 import {
@@ -227,7 +228,7 @@ export default function useTemplateController() {
     try {
       dispatch(setLoading());
       const responseInfo = await fetch(
-        `https://ether-bill-server-1.onrender.com/api/send/invoice?sendAsMessage=${sendAsMessage}`,
+        `${API_URL}/api/send/invoice?sendAsMessage=${sendAsMessage}`,
         {
           method: "POST",
           headers: {

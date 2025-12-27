@@ -1,5 +1,6 @@
 import React from "react";
 import { useFlutterwave } from "flutterwave-react-v3";
+import { API_URL } from "../../Components/constants/Index";
 
 export interface FlutterwaveResponse {
   status: string;
@@ -69,7 +70,7 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
       if (response.status === "successful") {
           try {
               const token = localStorage.getItem("token");
-              const res = await fetch("https://ether-bill-server-1.onrender.com/api/subscription/upgrade", {
+              const res = await fetch(`${API_URL}/api/subscription/upgrade`, {
                   method: "POST",
                   headers: {
                       "Content-Type": "application/json",

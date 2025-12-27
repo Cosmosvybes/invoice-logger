@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import AuthLayout from "../../../Tools/_helper/Formbuilder/Onboarding/AuthLayout";
 import { Spinner } from "reactstrap";
 import { ArrowRight, Eye, EyeDisable } from "react-huge-icons/outline";
+import { API_URL } from "../../../../../Components/constants/Index";
 
 const NewPassword = () => {
   const { loading } = useAppSelector((store: any) => store.walletSlice);
@@ -32,7 +33,7 @@ const NewPassword = () => {
 
     try {
       const response = await fetch(
-        "https://ether-bill-server-1.onrender.com/api/update_password",
+        `${API_URL}/api/update_password`,
         {
           method: "POST",
           headers: { "Content-Type": "Application/json" },

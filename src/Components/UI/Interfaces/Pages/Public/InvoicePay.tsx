@@ -4,6 +4,7 @@ import { useFlutterwavePayment } from "../../../../../States/hoooks/useFlutterwa
 import { Spinner } from "reactstrap";
 import { CheckMarkCircle, Diamond } from "react-huge-icons/solid";
 import { Invoice } from "../../../../../States/Slices/invoice.types";
+import { API_URL } from "../../../../../Components/constants/Index";
 
 interface MerchantInfo {
     businessName: string;
@@ -26,7 +27,7 @@ const InvoicePay = () => {
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
-        const res = await fetch(`https://ether-bill-server-1.onrender.com/api/public/invoice/${id}`);
+        const res = await fetch(`${API_URL}/api/public/invoice/${id}`);
         if (!res.ok) throw new Error("Invoice not found");
         const data = await res.json();
         setInvoice(data.invoice);
@@ -123,7 +124,7 @@ const InvoicePay = () => {
                        if(response.status === "successful") {
                            // Call Backend to Verify and Mark as Paid
                            try {
-                               const res = await fetch("https://ether-bill-server-1.onrender.com/api/public/invoice/verify", {
+                               const res = await fetch(`${API_URL}/api/public/invoice/verify`, {
                                    method: "POST",
                                    headers: { "Content-Type": "application/json" },
                                    body: JSON.stringify({

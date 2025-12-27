@@ -8,6 +8,7 @@ import marketplaceSlice from "./Slices/marketplace";
 import escrowSlice from "./Slices/escrow";
 import disputeSlice from "./Slices/disputes";
 import dealProof from "./Slices/dealProof";
+import admin from "./Slices/admin";
 export const store = configureStore({
   reducer: {
     clientSlice,
@@ -18,6 +19,7 @@ export const store = configureStore({
     escrowSlice,
     disputeSlice,
     dealProof,
+    admin,
   },
 });
 

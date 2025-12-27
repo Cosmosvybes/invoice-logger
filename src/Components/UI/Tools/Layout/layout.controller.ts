@@ -1,60 +1,13 @@
 import { useEffect, useState } from "react";
-// import { getUser } from "../../../../States/Slices/ClientSlice/useAuth/user";
-import { useAppDispatch} from "../../../../States/hoooks/hook";
+import { useAppDispatch, useAppSelector } from "../../../../States/hoooks/hook";
 import { getUser } from "../../../../States/Slices/ClientSlice/useAuth/user";
-// import { getUser as userState } from "../../../../States/Slices/invoice";
+import { useLocation } from "react-router-dom";
 
 export default function useLayoutController(icons: any) {
-  // const { isAuthenticated } = useAppSelector((store) => store.userSlice);
-  const sideMenu = [
-    // {
-    //   id: 2,
-    //   title: "Finance",
-    //   children: [
-    //     {
-    //       id: 18,
-    //       title: "Dashboard",
-    //       path: "dashboard",
-    //       icon: icons[8],
-    //       onclick: "",
-    //     },
-    //     {
-    //       id: 16,
-    //       title: "Business deals",
-    //       path: "account/business/trust-trade",
-    //       icon: icons[12],
-    //       onclick: "",
-    //     },
-    //     {
-    //       id: 164,
-    //       title: "Transactions",
-    //       path: "account/finance/overview",
-    //       icon: icons[4],
-    //       onclick: "",
-    //     },
-    //     {
-    //       id: 2,
-    //       title: "Escrow",
-    //       path: "finance/escrows",
-    //       icon: icons[13],
-    //       onclick: "",
-    //     },
-    //     {
-    //       id: 3,
-    //       title: "My Listings",
-    //       path: "finance/user/listings",
-    //       icon: icons[15],
-    //       onclick: "",
-    //     },
-    //     {
-    //       id: 93,
-    //       title: "Disputes",
-    //       path: "finance/deal/disputes",
-    //       icon: icons[14],
-    //       onclick: "",
-    //     },
-    //   ],
-    // },
+  const { account } = useAppSelector((state) => state.userSlice);
+  const { pathname } = useLocation();
+
+  const userMenu = [
     {
       id: 1,
       title: "Creator",
@@ -122,17 +75,82 @@ export default function useLayoutController(icons: any) {
           icon: icons[6],
           onclick: "",
         },
+        {
+          id: 90,
+          title: "Customer Support",
+          path: "support",
+          icon: icons[14], // InformationRectangle
+          onclick: "",
+        },
       ],
     },
   ];
+
+  const adminMenu = [
+    {
+        id: 100,
+        title: "Admin OS",
+        children: [
+            {
+                id: 101,
+                title: "Control Center",
+                path: "admin",
+                icon: icons[36] || icons[8], // Using Dashboard icon
+                onclick: "",
+            },
+            {
+                id: 102,
+                title: "User Management",
+                path: "admin/users",
+                icon: icons[31] || icons[2], // User icon
+                onclick: "",
+            }
+        ]
+    },
+    {
+        id: 200,
+        title: "Platform",
+        children: [
+            {
+                id: 201,
+                title: "Back to App",
+                path: "dashboard",
+                icon: icons[40] || icons[4], // Return icon
+                onclick: "",
+            }
+        ]
+    }
+  ];
+
+  const isAdmin = account?.isAdmin || account?.Role === 'admin' || account?.role === 'admin' || account?.Email === 'admin@invoicelogger.com';
+  // console.log("Current User Role Check:", { email: account?.email, isAdmin, account });
+
+  if (isAdmin && !pathname.startsWith("/admin")) {
+    userMenu.push({
+      id: 99,
+      title: "Administration",
+      children: [
+        {
+          id: 1,
+          title: "Switch to Admin",
+          path: "admin",
+          icon: icons[4], // ChartHistogram
+          onclick: "",
+        },
+      ],
+    });
+  }
+
+  const sideMenu = pathname.startsWith("/admin") ? adminMenu : userMenu;
+
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUser());
-  }, []);
+    const token = localStorage.getItem("token");
+    if (token) {
+        dispatch(getUser(token));
+    }
+  }, [dispatch]);
 
-  // useLayoutEffect(() => {
-  //   dispatch(userState(localStorage.getItem("token")!));
-  // }, [isAuthenticated]);
   const [viewMode, setMode] = useState(false);
   return {
     sideMenu,
