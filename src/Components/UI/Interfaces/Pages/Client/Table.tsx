@@ -110,9 +110,9 @@ const Table_ = () => {
         {clients.length > 0 && (
             <div className="p-6 border-t border-slate-50 flex justify-center bg-slate-50/30">
                 <Paginate
-                    list={clients}
-                    listPerPage={postPerPage}
-                    handleNext={setCurrentPage}
+                    totalItems={clients.length}
+                    itemsPerPage={postPerPage}
+                    onPageChange={setCurrentPage}
                     currentPage={currentPage}
                 />
             </div>
