@@ -111,6 +111,7 @@ const initialState: ACCOUNT = {
   subscriptionStatus: "free",
   clients: [],
   inbox: [],
+  recurring: [],
   accountCurrency: "",
   email: "", // Initialize email
   staticForm: invoiceStaticValue,
@@ -225,6 +226,31 @@ const invoiceSlice = createSlice({
             return location.replace("/");
           }
         });
+    },
+
+    deleteRecurring: (state, action: PayloadAction<deletingItemId>) => {
+      const { id, token }: deletingItemId = action.payload;
+      const invoice = state.recurring.find((inv) => inv.id == id);
+      if (invoice) {
+        state.recurring.splice(state.recurring.indexOf(invoice), 1);
+        // If the current tab is recurring, update currentData as well
+        state.currentData = state.recurring;
+      }
+
+      fetch(
+        `${API_URL}/api/invoice/recurring?id=${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) toast.success("Recurring profile stopped.");
+      })
+      .catch((err) => console.error("Failed to delete recurring", err));
     },
 
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
@@ -450,7 +476,7 @@ const invoiceSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, { payload }) => {
       state.loading = false;
-      const { draft, sent, revenue, clients, settings, inbox, paid, token, email } =
+      const { draft, sent, revenue, clients, settings, inbox, paid, token, email, recurring } =
         payload;
       state.draft = draft;
       state.sent = sent;
@@ -463,6 +489,7 @@ const invoiceSlice = createSlice({
       state.inbox = inbox;
       state.paid = paid;
       state.tokens = token;
+      state.recurring = recurring || [];
       state.currentData = draft;
     });
     builder.addCase(getUser.rejected, (state) => {
@@ -500,5 +527,6 @@ export const {
   updatePayout,
   removeDraft,
   markAsPaid,
+  deleteRecurring,
   setCurrrentInvoices,
 } = invoiceSlice.actions;

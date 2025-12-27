@@ -7,6 +7,7 @@ const InvoiceNav = ({ switchTab }: { switchTab(arg: string): void }) => {
     { id: 1, text: "sent" },
     { id: 3, text: "paid" },
     { id: 4, text: "overdue" },
+    { id: 5, text: "recurring" },
   ]);
   const [active, setActive] = useState(buttonData[0].id);
 

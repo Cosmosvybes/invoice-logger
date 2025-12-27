@@ -7,7 +7,7 @@ import {
 import { setCurrrentInvoices } from "../../../../../../States/Slices/invoice";
 //custom hook
 export default function useInvoiceController() {
-  const { draft, sent, paid, overdue } = useAppSelector(
+  const { draft, sent, paid, overdue, recurring } = useAppSelector(
     (state) => state.invoice
   );
 
@@ -36,6 +36,10 @@ export default function useInvoiceController() {
         );
 
         return dispatch(setCurrrentInvoices(uniqueOverdue));
+
+      case "recurring":
+        return dispatch(setCurrrentInvoices(recurring));
+
       default:
         const drafts = draft.filter((item) => item.status == "Draft");
         return dispatch(setCurrrentInvoices(drafts));

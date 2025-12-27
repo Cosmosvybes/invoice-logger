@@ -82,6 +82,7 @@ export interface ACCOUNT {
   loading: boolean;
   clients: any[];
   inbox: Invoice[];
+  recurring: Invoice[]; // Added for recurring management
   currentInvoice: any;
   tokens: 0;
   subscriptionStatus: 'free' | 'pro';

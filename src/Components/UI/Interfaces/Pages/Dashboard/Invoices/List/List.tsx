@@ -11,6 +11,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { MoreVertical, ChatDot, Edit, RemoveCircle } from "react-huge-icons/outline";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import GeneratePDF from "../../../../../../PDF/PDFGenereator";
+import { useAppDispatch } from "../../../../../../../States/hoooks/hook";
+import { deleteRecurring } from "../../../../../../../States/Slices/invoice";
 
 const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
   const {
@@ -23,6 +25,7 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
   } = useInvoiceListController(currentData);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
   const handleToggle = () => setModal(!modal);
 
@@ -81,6 +84,21 @@ const List = React.memo(({ currentData }: { currentData: Invoice[] }) => {
                             </div>
                         )}
                     </PDFDownloadLink>
+                )}
+
+                {activeInvoice?.recurring && (
+                    <button
+                        onClick={() => {
+                            if (currentRowDataID !== null) {
+                                dispatch(deleteRecurring({ id: currentRowDataID, token: localStorage.getItem("token")! }));
+                                handleToggle();
+                            }
+                        }}
+                        className="flex items-center gap-3 p-4 rounded-2xl bg-orange-50 text-orange-600 hover:bg-orange-100 transition-all font-bold text-sm"
+                    >
+                        <div className="p-2 bg-white rounded-xl shadow-sm"><RemoveCircle className="text-xl" /></div>
+                        Stop Recurring Billing
+                    </button>
                 )}
             </div>
           </div>
