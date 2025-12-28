@@ -23,12 +23,12 @@ export default function useSettingsController() {
   const { account } = useAppSelector((state) => state.userSlice);
   const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
 
+  // Default to NG (Nigeria)
+  const [selectedCountry, setSelectedCountry] = useState("NG");
   const [banks, setBanks] = useState<{ id: number; code: string; name: string }[]>([]);
   const [loadingBanks, setLoadingBanks] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
-
-  // Data loading is handled globally by LayoutWrapper/layout.controller
 
   // Bank Fetching
   useEffect(() => {
@@ -36,15 +36,16 @@ export default function useSettingsController() {
     const fetchBanks = async () => {
         const token = localStorage.getItem("token");
         if (!token) return;
+        setBanks([]); // Clear previous banks
         setLoadingBanks(true);
         try {
-            const res = await fetch(`${API_URL}/api/payout/banks?country=NG`, {
+            const res = await fetch(`${API_URL}/api/payout/banks?country=${selectedCountry}`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             const data = await res.json();
             if(mounted && res.ok && Array.isArray(data.data)) {
                 const mappedBanks = data.data.map((b: any) => ({ id: b.id, code: b.code, name: b.name }));
-                console.log("Banks Fetched Successfully:", mappedBanks.length);
+                console.log(`Banks Fetched for ${selectedCountry}:`, mappedBanks.length);
                 setBanks(mappedBanks);
             }
         } catch (e) {
@@ -55,7 +56,7 @@ export default function useSettingsController() {
     };
     fetchBanks();
     return () => { mounted = false; };
-  }, []);
+  }, [selectedCountry]); // Re-fetch when country changes
 
   const settingsSchema = useMemo(() => [
     { id: 13, type: "switch", name: "tokenBalanceNotification", value: false, label: "Balance notification" },
@@ -70,7 +71,6 @@ export default function useSettingsController() {
   ], []);
 
   const subscriptionSchema = useMemo(() => [
-    { id: 186, type: "switch", name: "sharingToken", value: false, label: "Enable/disable token sharing" },
     { id: 19, type: "switch", name: "autoRenewal", value: false, label: "Subscription auto-renewal" },
   ], []);
 
@@ -80,10 +80,11 @@ export default function useSettingsController() {
   ], []);
 
   const payoutSchema = useMemo(() => [
+    { id: 200, type: "select", name: "_country", value: selectedCountry, label: "Bank Country", options: ["NG", "GH", "KE", "ZA", "US"] },
     { id: 201, type: "select", name: "bankName", value: "", label: "Bank Name", options: banks.map(b => b.name) },
     { id: 202, type: "text", name: "accountNumber", value: "", label: "Account Number" },
     { id: 203, type: "text", name: "accountName", value: "", label: "Account Name", disabled: true },
-  ], [banks]);
+  ], [banks, selectedCountry]);
 
   // Account Resolution
   useEffect(() => {
@@ -134,6 +135,16 @@ export default function useSettingsController() {
 
 
   const handleChange = useCallback((fieldName: string, newValue: string | boolean) => {
+    // Special handling for country switcher
+    if (fieldName === "_country") {
+        setSelectedCountry(String(newValue));
+        // Reset bank details when country changes
+        dispatch(updateSettings({ key: 'bankName', value: "" }));
+        dispatch(updateSettings({ key: 'accountNumber', value: "" }));
+        dispatch(updateSettings({ key: 'accountName', value: "" }));
+        return;
+    }
+
     dispatch(updateSettings({ key: fieldName, value: newValue }));
     setIsDirty(true);
     
@@ -148,6 +159,7 @@ export default function useSettingsController() {
     bankName: settings.bankName ?? payout?.bank_name ?? "",
     accountNumber: settings.accountNumber ?? payout?.account_number ?? "",
     accountName: settings.accountName ?? payout?.account_name ?? "",
+    _country: selectedCountry // Add country to settings obj for schema
   };
 
   const handleSubmit = async (activeTab?: string) => {
@@ -171,7 +183,7 @@ export default function useSettingsController() {
               bank_code: bankCode,
               account_number: fullSettings.accountNumber,
               business_name: fullSettings.businessName || "User",
-              country: "NG"
+              country: selectedCountry // Send selected country
           };
           console.log("Saving Payout Details:", body);
       }

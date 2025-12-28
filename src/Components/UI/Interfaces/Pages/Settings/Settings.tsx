@@ -52,7 +52,51 @@ const Settings = () => {
           </div>
         );
       case "subscription":
-        return <InputProvider settings={settings} handleSubmit={() => handleSubmit(activeTab)} schema={subscriptionSchema} title="Pro Features" handleChange={handleChange} />;
+        return (
+             <div className="bg-white rounded-[2rem] border border-slate-200/60 shadow-xl shadow-slate-200/20 overflow-hidden">
+                <div className="p-8 border-b border-slate-50 bg-slate-50/20 flex justify-between items-center">
+                    <div>
+                        <h3 className="text-xl font-black text-slate-900 tracking-tight">Pro Features</h3>
+                        <div className="mt-2 w-12 h-1 bg-violet-600 rounded-full"></div>
+                    </div>
+                    {isPro ? (
+                        <span className="bg-violet-100 text-violet-700 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border border-violet-200">Active Plan: PRO</span>
+                    ) : (
+                        <span className="bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border border-slate-200">Active Plan: Free</span>
+                    )}
+                </div>
+                
+                <div className="p-8">
+                     {!isPro ? (
+                         <div className="text-center py-8">
+                             <div className="w-20 h-20 bg-violet-50 rounded-3xl flex items-center justify-center mx-auto mb-6 text-4xl">💎</div>
+                             <h4 className="text-2xl font-black text-slate-900 mb-2">Upgrade to Pro</h4>
+                             <p className="text-slate-500 font-medium mb-8 max-w-md mx-auto">Unlock unlimited invoices, custom branding, and exclusive features to power up your business.</p>
+                             
+                             <button 
+                                onClick={() => setShowUpgradeModal(true)}
+                                className="px-8 py-4 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-2xl transition-all shadow-lg shadow-violet-200 hover:shadow-violet-300 transform hover:-translate-y-1"
+                             >
+                                 Get Pro Access
+                             </button>
+                         </div>
+                     ) : (
+                         <div className="space-y-6">
+                            <div className="bg-violet-50 border border-violet-100 p-6 rounded-3xl flex items-start gap-4">
+                                <div className="text-3xl">🎉</div>
+                                <div>
+                                    <h5 className="text-lg font-black text-violet-900">You are a Pro Member!</h5>
+                                    <p className="text-violet-700/80 font-medium text-sm mt-1">Thank you for supporting us. You have access to all premium features.</p>
+                                </div>
+                            </div>
+                            
+                            {/* Render Schema for Auto-Renewal if needed */}
+                            <InputProvider settings={settings} handleSubmit={() => handleSubmit(activeTab)} schema={subscriptionSchema} title="" handleChange={handleChange} />
+                         </div>
+                     )}
+                </div>
+             </div>
+        );
       case "payout":
         return (
           <div className="space-y-6">

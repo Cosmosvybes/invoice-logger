@@ -26,20 +26,7 @@ import {
   setLoading as walletLoader,
 } from "../../../../../../States/Slices/wallet";
 export default function useTemplateController() {
-  // const { tokenAbi, tokenAddress } = tokenCredientials;
-  // const { contractAddress, abi } = shopCredientials;
-  // const getSmartContractAction = async (address_: string, abi: any) => {
-  //   try {
-  //     const provider = new ethers.BrowserProvider(ethereum);
-  //     const signer = await provider.getSigner();
-  //     const smartContraction = new ethers.Contract(address_, abi, signer);
-  //     return smartContraction;
-  //   } catch (error) {
-  //     toast.error("Error connecting to smart contract", {
-  //       theme: "dark",
-  //     });
-  //   }
-  // };
+  
 
   const dispatch = useAppDispatch();
   // const navigate = useNavigate();
@@ -252,6 +239,21 @@ export default function useTemplateController() {
           body: JSON.stringify({ ...emailObject }),
         }
       );
+      if (responseInfo.status === 403) {
+        const errorData = await responseInfo.json();
+        // Trigger Subscription Modal if possible, or just Show Toast
+        // Ideally we start a flow here. For now, specific toast.
+        toast.info(
+            "Freemium Limit Reached! Upgrade to Pro to keep sending invoices.",
+            { 
+              theme: "colored",
+              autoClose: 5000,
+              onClick: () => window.location.href = "/settings" // Or simpler navigation
+            }
+        );
+        throw new Error(errorData.res || "Upgrade to Pro needed.");
+      }
+
       if (!responseInfo.ok) {
           throw new Error("Failed to send invoice. Please try again.");
       }
