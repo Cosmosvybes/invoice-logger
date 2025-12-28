@@ -44,7 +44,7 @@ const InvoicePay = () => {
   // Handle Payment
   const paymentProps = {
       amount: invoice ? Number(invoice.TOTAL) : 0,
-      email: "guest@client.com", // Ideally we ask for client email or use invoice.clientEmail if available
+      email: invoice?.clientEmail || "guest@client.com",
       name: invoice?.Client || "Client",
       title: `Invoice #${invoice?.id}`,
       description: `Payment for ${merchant?.businessName}`,
@@ -55,7 +55,8 @@ const InvoicePay = () => {
               transaction_charge_type: "flat", // or percentage
               transaction_charge: 0 // Platform fee if we want
           }
-      ] : undefined
+      ] : undefined,
+      currency: invoice?.currency || "USD"
   };
 
   const { handleFlutterPayment } = useFlutterwavePayment(paymentProps);
