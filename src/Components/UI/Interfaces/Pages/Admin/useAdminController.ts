@@ -23,9 +23,12 @@ export default function useAdminController() {
 
   useEffect(() => {
     const fetchStats = async () => {
+      const token = userToken || localStorage.getItem("token");
+      if (!token) return;
+      
       try {
         const response = await fetch(`${API_URL}/api/admin/stats`, {
-            headers: { Authorization: `Bearer ${userToken}` },
+            headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
         if (response.ok) {
@@ -40,7 +43,7 @@ export default function useAdminController() {
       }
     };
 
-    if (userToken) fetchStats();
+    fetchStats();
   }, [userToken]);
 
   return { stats, loading };

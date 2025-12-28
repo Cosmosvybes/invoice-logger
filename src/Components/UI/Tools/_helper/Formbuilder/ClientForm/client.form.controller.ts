@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { add } from "../../../../../../States/Slices/ClientSlice/clientSlice";
-import { useAppDispatch } from "../../../../../../States/hoooks/hook";
+import { useAppDispatch, useAppSelector } from "../../../../../../States/hoooks/hook";
 import useModalController from "../../../InvoiceModal/controller";
 import { API_URL } from "../../../../../constants/Index";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,13 @@ export default function useClientFormController() {
   const { newCLientsFormField } = useModalController();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  // Selectors for Limit Check
+  const { clients } = useAppSelector((state) => state.clientSlice);
+  const { account } = useAppSelector((state) => state.userSlice);
+  
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+
   const clientFormValues = newCLientsFormField.reduce(
     (allInfo, currInfo) => ({
       ...allInfo,
@@ -35,6 +42,13 @@ export default function useClientFormController() {
   const [loading, setLoading] = useState(false);
 
   const handleAddNewClient = async () => {
+    // 1. Check Limits (Freemium: Max 3 Clients)
+    const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise'; 
+    if (!isPro && clients.length >= 3) {
+       setShowUpgradeModal(true);
+       return;
+    }
+
     const hasEmptyStr = Object.values(formValues).find((val) => val == "");
 
     if (hasEmptyStr != undefined) {
@@ -60,9 +74,10 @@ export default function useClientFormController() {
       body: JSON.stringify(client),
     });
     if (!response.ok) {
-      if (response.status === 403) {
-        navigate("/subscription/payment");
-      }
+        if (response.status === 403) {
+            // Backend might also enforce limit or auth requirement
+            navigate("/subscription/payment");
+        }
       // location.replace("/");
     } else toast.success("New Client added", { theme: "light" });
     Object.keys(clientFormValues).map((name) => updateClientForm("", name));
@@ -75,5 +90,7 @@ export default function useClientFormController() {
     formValues,
     updateClientForm,
     handleAddNewClient,
+    showUpgradeModal,
+    setShowUpgradeModal
   };
 }

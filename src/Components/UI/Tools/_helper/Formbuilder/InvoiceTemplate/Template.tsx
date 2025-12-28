@@ -31,6 +31,7 @@ const Template = React.memo(
     const { forms } = useModalController();
     const [modal, setModal] = useState(false);
     const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+    const [showProducts, setShowProducts] = useState(true);
     const {
       customEmail,
       sendAsMessage,
@@ -60,10 +61,12 @@ const Template = React.memo(
     // FORM BUILDER TEMPLATE
     //   //?? ///////////////////////////////////////////////
 
+    if (!invoiceInformation) return <Spinner_ />;
+
     // [NEW] Inject Payment Link for Email
     const invoiceWithLink = {
         ...invoiceInformation,
-        paymentLink: `${window.location.origin}/invoice/pay/${invoiceInformation.id}`
+        paymentLink: `${window.location.origin}/invoice/pay/${invoiceInformation?.id}`
     };
 
     const emailHtml = render(
@@ -73,7 +76,7 @@ const Template = React.memo(
       }
     );
 
-    const FORM = forms.map((input, index) => {
+    const FORM = (forms || []).map((input, index) => {
       switch (input.type) {
         case "checkbox":
           return (
@@ -131,7 +134,7 @@ const Template = React.memo(
       }
     });
 
-    const VAT_DISCOUNT_INPUT = tax_discount_input.map((input: any) => (
+    const VAT_DISCOUNT_INPUT = (tax_discount_input || []).map((input: any) => (
       <div
         className="relative py-1 flex flex-col gap-1"
         key={input.id}
@@ -180,7 +183,7 @@ const Template = React.memo(
           />
         )}
 
-        {!invoiceInformation && loading ? (
+        {false ? (
           <Spinner_ />
         ) : (
           <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-6 md:p-8 animate-fade-in-up">
@@ -410,17 +413,27 @@ const Template = React.memo(
                           <RemoveCircle className="text-2xl" />
                         </button>
                         
-                        <div className="w-full md:w-1/2 p-8 overflow-y-auto custom-scrollbar border-b md:border-b-0 md:border-r border-slate-100">
-                            <h3 className="text-xl text-slate-800 font-bold mb-6">Invoice Details</h3>
+                        <div className={`w-full ${showProducts ? 'md:w-1/2' : 'w-full'} p-8 overflow-y-auto custom-scrollbar border-b md:border-b-0 md:border-r border-slate-100 transition-all duration-300`}>
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="text-xl text-slate-800 font-bold">Invoice Details</h3>
+                                <button 
+                                    onClick={() => setShowProducts(!showProducts)}
+                                    className="flex items-center gap-2 text-xs font-bold text-violet-600 bg-violet-50 px-3 py-1.5 rounded-lg hover:bg-violet-100 transition-all border border-violet-100"
+                                >
+                                    {showProducts ? "Hide Items" : "View Items"}
+                                </button>
+                            </div>
                             <div className="grid grid-cols-1 gap-4">
                                 {FORM}
                             </div>
                         </div>
-                        <div className="w-full md:w-1/2 p-0 bg-slate-50">
-                          <div className="h-full overflow-y-auto custom-scrollbar p-6">
-                             <ProductsList />
-                          </div>
-                        </div>
+                        {showProducts && (
+                            <div className="w-full md:w-1/2 p-0 bg-slate-50 transition-all duration-300 animate-fade-in-right">
+                              <div className="h-full overflow-y-auto custom-scrollbar p-6">
+                                 <ProductsList />
+                              </div>
+                            </div>
+                        )}
                       </div>
                     }
                   />

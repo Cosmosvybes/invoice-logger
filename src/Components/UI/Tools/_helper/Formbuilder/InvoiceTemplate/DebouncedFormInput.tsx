@@ -19,10 +19,13 @@ const DebouncedFormInput: React.FC<DebouncedFormInputProps> = ({
   // This prevents resetting the value if the parent re-renders with the old value while the user is typing
   const isDirty = useRef(false);
 
+  const valueRef = useRef(value);
+
   useEffect(() => {
-    // Only sync if we haven't touched it, OR if the initialValue has caught up to our last commit? 
-    // Simplify: Always sync from parent unless we are actively typing?
-    // Actually, simple standard: sync on prop change.
+    valueRef.current = value;
+  }, [value]);
+
+  useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
 
@@ -32,15 +35,27 @@ const DebouncedFormInput: React.FC<DebouncedFormInputProps> = ({
 
     const timer = setTimeout(() => {
       onChange(value as string);
-      // We don't reset isDirty here because we want to keep "ownership" until the parent syncs back?
-      // Actually, after we call onChange, we expect the parent to eventually update `initialValue` to match `value`.
+      isDirty.current = false; // Reset dirty after sync
     }, debounceTimeout);
 
-    return () => clearTimeout(timer);
+    return () => {
+        clearTimeout(timer);
+    };
   }, [value, debounceTimeout, onChange]);
 
+  // Flush on unmount ONLY
+  useEffect(() => {
+      return () => {
+          if (isDirty.current && valueRef.current !== undefined) {
+               onChange(valueRef.current as string);
+          }
+      }
+  }, []); // Empty dependency array ensures this ONLY runs on unmount
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const val = e.target.value;
+    setValue(val);
+    valueRef.current = val;
     isDirty.current = true;
   };
 

@@ -86,33 +86,34 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
               <div className="text-violet-600 mt-0.5"><Repeat className="text-lg" /></div>
               <div>
                 <h3 className="text-slate-900 font-bold text-sm mb-0">Recurring Invoices</h3>
-                <p className="text-slate-500 text-[11px] leading-snug">Automate weekly/monthly billing.</p>
+                <p className="text-slate-500 text-[11px] leading-snug">Automate billing (Set & Forget).</p>
               </div>
             </div>
 
             <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-pink-50/50 border border-pink-100/50">
               <div className="text-pink-600 mt-0.5"><Diamond className="text-lg" /></div>
               <div>
-                <h3 className="text-slate-900 font-bold text-sm mb-0">Auto-Chasing</h3>
-                <p className="text-slate-500 text-[11px] leading-snug">Auto-reminders for overdue revenue.</p>
+                <h3 className="text-slate-900 font-bold text-sm mb-0">Auto-Pursuing</h3>
+                <p className="text-slate-500 text-[11px] leading-snug">Smart follow-ups for overdue revenue.</p>
               </div>
             </div>
 
             <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-sky-50/50 border border-sky-100/50">
               <div className="text-sky-600 mt-0.5"><Star className="text-lg" /></div>
               <div>
-                <h3 className="text-slate-900 font-bold text-sm mb-0">Smart Settings</h3>
-                <p className="text-slate-500 text-[11px] leading-snug">Auto-applied Tax & Payment terms.</p>
+                <h3 className="text-slate-900 font-bold text-sm mb-0">Smart Invoice Tools</h3>
+                <p className="text-slate-500 text-[11px] leading-snug">Auto-applied Tax & Discounts.</p>
               </div>
             </div>
 
             <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-amber-50/50 border border-amber-100/50">
               <div className="text-amber-600 mt-0.5"><Diamond className="text-lg" /></div>
               <div>
-                <h3 className="text-slate-900 font-bold text-sm mb-0">Premium Templates</h3>
-                 <p className="text-slate-500 text-[11px] leading-snug">Professional layouts.</p>
+                <h3 className="text-slate-900 font-bold text-sm mb-0">Invoice Chat</h3>
+                 <p className="text-slate-500 text-[11px] leading-snug">Negotiate directly on invoices.</p>
               </div>
             </div>
+
           </div>
         </div>
 

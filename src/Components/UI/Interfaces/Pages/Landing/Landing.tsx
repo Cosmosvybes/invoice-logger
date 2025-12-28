@@ -228,7 +228,8 @@ const Landing = () => {
                     </div>
                     <ul className="space-y-5 text-slate-300 font-medium mb-12 flex-1">
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> 50 Complimentary Invoices</li>
-                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Basic Client Tracking</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Manage up to 3 Clients</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Integrated Payment Processing</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Standard PDF Templates</li>
                     </ul>
                     <Link to="/create/new/account" className="block w-full py-5 text-center bg-white/10 hover:bg-white text-white hover:text-slate-900 rounded-2xl font-black text-sm transition-all shadow-xl group-hover:shadow-white/5">
@@ -241,16 +242,16 @@ const Landing = () => {
                     <div className="absolute top-8 right-8 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-4 py-1.5 rounded-full tracking-widest uppercase">Elite</div>
                     <h3 className="text-lg font-black text-violet-200 uppercase tracking-widest mb-4">Pro Plan</h3>
                     <div className="flex items-baseline gap-1 mb-10">
-                        <span className="text-6xl font-black">$11.99</span>
+                        <span className="text-6xl font-black">$4.5</span>
                         <span className="text-sm font-bold text-violet-200 tracking-wide">/ MONTHLY</span>
                     </div>
                     <ul className="space-y-5 text-white font-medium mb-12 flex-1">
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Unlimited Client Relationships</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Integrated Payment Processing</li>
-                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Smart Recurring Logic</li>
-                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Automated Payment Reminders</li>
-                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Professional Brand Kits</li>
-                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Multi-Currency Support</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Recurring Invoices (Set & Forget)</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Auto-Pursuing (Smart Follow-ups)</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Smart Tax & Discounts</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Real-time Invoice Chat</li>
                     </ul>
                     <Link to="/create/new/account" className="block w-full py-5 text-center bg-white text-violet-700 hover:bg-slate-50 rounded-2xl font-black text-sm transition-all shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95">
                         Unlock Pro Access

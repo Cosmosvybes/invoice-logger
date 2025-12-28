@@ -28,9 +28,9 @@ export default function useProductsListController() {
     )!;
   }
 
-  const [products, setProducts] = useState<Item[]>([
-    ...invoiceInformation.itemList,
-  ]);
+  const [products, setProducts] = useState<Item[]>(
+    invoiceInformation?.itemList || []
+  );
 
   const dispatch = useAppDispatch();
 
@@ -43,7 +43,7 @@ export default function useProductsListController() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    value: string | number,
     index: number,
     key: "description" | "quantity" | "unitPrice" | "unitTotal"
   ) => {
@@ -55,7 +55,7 @@ export default function useProductsListController() {
             id: Number(localStorage.getItem("id")),
             index,
             key,
-            value: e.target.value,
+            value: String(value),
           })
         )
       : dispatch(
@@ -64,7 +64,7 @@ export default function useProductsListController() {
             id: _id_,
             index,
             key,
-            value: e.target.value,
+            value: String(value),
           })
         );
   };

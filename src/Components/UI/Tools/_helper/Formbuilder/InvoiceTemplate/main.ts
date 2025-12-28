@@ -50,6 +50,7 @@ export default function useTemplateController() {
   }, []);
 
   const { draft, clients } = useAppSelector((state) => state.invoice);
+  const { account } = useAppSelector((state) => state.userSlice);
   const { loading, isConnected } = useAppSelector(
     //also import from the wallet slice address
     (store) => store.walletSlice
@@ -69,7 +70,7 @@ export default function useTemplateController() {
   const token = String(localStorage.getItem("token"));
   
   // [NEW] Logic for Default Payment Terms & Apply Tax
-  const { settings } = useAppSelector((state) => state.invoice);
+  const { settings, payout } = useAppSelector((state) => state.invoice);
   useEffect(() => {
     if (invoiceInformation && !id) { // Only on new invoice creation (not editing existing)
         
@@ -226,6 +227,19 @@ export default function useTemplateController() {
     // if (!isConnected) return toast.warn("Account not conneected");
 
     try {
+      // Payout Setup Notification for Free Users (or any user)
+      // "Just to let know they need to have a sub account"
+      if (!payout?.account_number || !payout?.bank_name) {
+          toast.info("Reminder: Connect your bank account in Settings to receive payments directly.", {
+              position: "top-center",
+              autoClose: 7000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+          });
+      }
+
       dispatch(setLoading());
       const responseInfo = await fetch(
         `${API_URL}/api/send/invoice?sendAsMessage=${sendAsMessage}`,
@@ -305,5 +319,6 @@ export default function useTemplateController() {
     isConnected,
     editToggle,
     handleEditFormToggle,
+    account,
   };
 }

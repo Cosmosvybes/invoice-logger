@@ -10,6 +10,8 @@ const InputProvider = React.memo(
     handleChange,
     handleSubmit,
     title,
+    isPro,
+    onUpgrade,
   }: {
     schema: {
       type: string;
@@ -19,21 +21,28 @@ const InputProvider = React.memo(
       checked?: boolean | string;
       options?: string[];
       disabled?: boolean;
+      gated?: boolean;
     }[];
-    settings: { [key: string]: any };
+    settings: any;
     handleChange: (name: string, newVal: string | boolean) => void;
     handleSubmit(): void;
     title: string;
+    isPro?: boolean;
+    onUpgrade?: () => void;
   }) => {
     const safeSettings = settings || {};
     
     const FORM = schema.map((_, i) => {
       switch (_.type) {
         case "switch":
+          const isLocked = _.gated && !isPro;
           return (
             <div className="relative bg-slate-50 border border-slate-100 p-4 rounded-2xl mb-3 hover:bg-white hover:border-violet-100 hover:shadow-lg hover:shadow-violet-200/10 transition-all flex items-center justify-between group" key={i}>
               <div className="flex flex-col">
-                  <label className="text-sm font-black text-slate-800 cursor-pointer mb-0.5">{_.label}</label>
+                  <div className="flex items-center gap-2">
+                     <label className={`text-sm font-black ${isLocked ? 'text-slate-400' : 'text-slate-800'} cursor-pointer mb-0.5`}>{_.label}</label>
+                     {isLocked && <span className="bg-slate-200 text-slate-500 text-[9px] font-black px-1.5 py-0.5 rounded uppercase flex items-center gap-1">🔒 PRO</span>}
+                  </div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status: {safeSettings[_.name] ? 'Enabled' : 'Disabled'}</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
@@ -41,11 +50,23 @@ const InputProvider = React.memo(
                     type="checkbox" 
                     className="sr-only peer"
                     checked={!!safeSettings[_.name]}
+                    disabled={isLocked}
                     onChange={(e) => {
+                        if(isLocked && onUpgrade) {
+                            onUpgrade();
+                            return;
+                        }
                         handleChange(_.name, e.currentTarget.checked);
                     }}
                 />
-                <div className="w-12 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[20px] after:w-[20px] after:transition-all peer-checked:bg-violet-600 shadow-inner group-hover:scale-105 transform"></div>
+                 {/* Upgrade Overlay for Click Hijacking if needed, but visually disabled input handles it partially. Better to wrap in div for click capture. */}
+                 {isLocked ? (
+                     <div onClick={(e) => { e.preventDefault(); if(onUpgrade) onUpgrade(); }} className="w-12 h-7 bg-slate-200 rounded-full flex items-center justify-center cursor-pointer shadow-none">
+                         <span className="text-[10px]">🔒</span>
+                     </div>
+                 ) : (
+                    <div className="w-12 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[20px] after:w-[20px] after:transition-all peer-checked:bg-violet-600 shadow-inner group-hover:scale-105 transform"></div>
+                 )}
               </label>
             </div>
           );

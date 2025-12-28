@@ -4,7 +4,8 @@ import InputProvider from "../../../Tools/_helper/Formbuilder/Settings/InputProv
 import { Spinner } from "reactstrap";
 import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import { useState } from "react";
-
+import SubscriptionModal from "../Subscription/SubscriptionModal";
+import { User, SettingShort,Diamond, Bank } from "react-huge-icons/solid";
 const Settings = () => {
   const {
     payoutSchema,
@@ -16,15 +17,17 @@ const Settings = () => {
     handleChange,
     handleSubmit,
     loading,
+    isPro,
   } = useSettingsController();
 
   const [activeTab, setActiveTab] = useState("profile");
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   const TABS = [
-    { id: "profile", label: "Identity", icon: "👤" },
-    { id: "preferences", label: "Prefs", icon: "⚙️" },
-    { id: "subscription", label: "Pro", icon: "💎" },
-    { id: "payout", label: "Payout", icon: "🏦" },
+    { id: "profile", label: "Identity", icon:User},
+    { id: "preferences", label: "Prefs", icon: SettingShort},
+    { id: "subscription", label: "Pro", icon: Diamond},
+    { id: "payout", label: "Payout", icon: Bank},
   ];
 
   const renderContent = () => {
@@ -36,7 +39,15 @@ const Settings = () => {
       case "preferences":
         return (
           <div className="space-y-8">
-            <InputProvider settings={settings} handleSubmit={() => handleSubmit(activeTab)} schema={personalizationSchema} title="Personalization" handleChange={handleChange} />
+            <InputProvider 
+                settings={settings} 
+                handleSubmit={() => handleSubmit(activeTab)} 
+                schema={personalizationSchema} 
+                title="Personalization" 
+                handleChange={handleChange} 
+                isPro={isPro}
+                onUpgrade={() => setShowUpgradeModal(true)}
+            />
             <InputProvider settings={settings} handleSubmit={() => handleSubmit(activeTab)} schema={settingsSchema} title="Global" handleChange={handleChange} />
           </div>
         );
@@ -72,17 +83,20 @@ const Settings = () => {
         <div className="mt-8 flex flex-col lg:flex-row gap-8 items-start">
           <aside className="w-full lg:w-64">
              <div className="bg-white rounded-3xl border border-slate-200 p-4 space-y-2">
-                {TABS.map((tab) => (
-                    <button
-                        key={tab.id}
-                        onClick={() => { setActiveTab(tab.id); }}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all ${
-                            activeTab === tab.id ? "bg-violet-600 text-white shadow-lg shadow-violet-200" : "text-slate-500 hover:bg-slate-50"
-                        }`}
-                    >
-                        <span>{tab.icon}</span> {tab.label}
-                    </button>
-                ))}
+                {TABS.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                        <button
+                            key={tab.id}
+                            onClick={() => { setActiveTab(tab.id); }}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all ${
+                                activeTab === tab.id ? "bg-violet-600 text-white shadow-lg shadow-violet-200" : "text-slate-500 hover:bg-slate-50"
+                            }`}
+                        >
+                            <span><Icon /></span> {tab.label}
+                        </button>
+                    );
+                })}
              </div>
           </aside>
           <main className="flex-1 space-y-6">
@@ -99,6 +113,7 @@ const Settings = () => {
           </main>
         </div>
       </div>
+      <SubscriptionModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
     </div>
   );
 };

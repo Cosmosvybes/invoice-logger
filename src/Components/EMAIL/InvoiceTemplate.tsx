@@ -123,7 +123,7 @@ const InvoiceTemplate = ({
                 </Row>
                 
                 {/* Items */}
-                {invoiceInformation.itemList.map((item: any, i: number) => (
+                {(invoiceInformation?.itemList || []).map((item: any, i: number) => (
                     <Row key={i} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'}`}>
                         <Column className="px-4 py-3 text-left"><Text className="m-0 text-sm font-medium text-gray-900">{item.description}</Text></Column>
                         <Column className="px-4 py-3 text-right"><Text className="m-0 text-sm text-gray-500">{item.quantity}</Text></Column>

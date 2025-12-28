@@ -20,6 +20,8 @@ export default function useSettingsController() {
   // Use specialized selectors to avoid whole-state-listener issues
   const settings = useAppSelector((state) => state.invoice?.settings || {});
   const payout = useAppSelector((state) => state.invoice?.payout || {});
+  const { account } = useAppSelector((state) => state.userSlice);
+  const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
 
   const [banks, setBanks] = useState<{ id: number; code: string; name: string }[]>([]);
   const [loadingBanks, setLoadingBanks] = useState(false);
@@ -62,7 +64,7 @@ export default function useSettingsController() {
 
   const personalizationSchema = useMemo(() => [
     { id: 10, type: "select", name: "defaultCurrency", value: "USD", label: "Account Default Currency", options: ["USD", "NGN", "EUR", "GBP"] },
-    { id: 11, type: "switch", name: "applyTax", value: true, label: "Apply tax to invoices" },
+    { id: 11, type: "switch", name: "applyTax", value: true, label: "Apply tax to invoices", gated: true },
     { id: 15, type: "switch", name: "defaultPaymentTerms", value: false, label: "30 days default payment" },
     { id: 64, type: "switch", name: "revenueNotification", value: false, label: "Enable revenue notification" },
   ], []);
@@ -216,6 +218,6 @@ export default function useSettingsController() {
 
   return {
     settingsSchema, personalizationSchema, settings: fullSettings, handleChange, handleSubmit,
-    subscriptionSchema, businessDetails, payoutSchema, payout, loading, loadingBanks,
+    subscriptionSchema, businessDetails, payoutSchema, payout, loading, loadingBanks, isPro,
   };
 }
