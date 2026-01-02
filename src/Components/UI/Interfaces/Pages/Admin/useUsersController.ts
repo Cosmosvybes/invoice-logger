@@ -22,10 +22,13 @@ export default function useUsersController() {
   const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, pages: 1 });
 
   const fetchUsers = async (page = 1) => {
+    const token = userToken || localStorage.getItem("token");
+    if (!token) return;
+
     setLoading(true);
     try {
         const response = await fetch(`${API_URL}/api/admin/users?page=${page}`, {
-            headers: { Authorization: `Bearer ${userToken}` },
+            headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
         if (response.ok) {
