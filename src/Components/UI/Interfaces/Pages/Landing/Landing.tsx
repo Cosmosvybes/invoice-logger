@@ -8,6 +8,7 @@ import {
 } from "react-huge-icons/solid";
 import { Invoice } from "react-huge-icons/bulk";
 import { User as UserGroup } from "react-huge-icons/outline";
+import { Chatting } from "react-huge-icons/bulk";
 
 const Landing = () => {
   return (
@@ -169,6 +170,13 @@ const Landing = () => {
               desc="Professional, custom-tailored invoices that speak your brand's language in every pixel."
               color="text-violet-600"
               bg="bg-violet-100"
+            />
+            <FeatureCard 
+              icon={<Chatting />} 
+              title="Invoice Chatting" 
+              desc="Real-time communication directly on invoices. Resolve queries and close deals faster with integrated chatting."
+              color="text-indigo-600"
+              bg="bg-indigo-100"
             />
             <FeatureCard 
               icon={<UserGroup />} 
