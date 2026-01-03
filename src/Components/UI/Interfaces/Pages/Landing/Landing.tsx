@@ -294,7 +294,7 @@ const Landing = () => {
                     <h4 className="font-black text-slate-900 uppercase text-xs tracking-widest mb-6">Legal</h4>
                     <ul className="space-y-4 text-sm text-slate-500 font-bold">
                         <li><Link to="/privacy" className="hover:text-violet-600 transition-colors">Privacy Policy</Link></li>
-                        <li><Link to="/terms" className="hover:text-violet-600 transition-colors">Terms of Work</Link></li>
+                        <li><Link to="/terms" className="hover:text-violet-600 transition-colors">Terms of Service</Link></li>
                         <li><Link to="/help" className="hover:text-violet-600 transition-colors">Help Center</Link></li>
                     </ul>
                 </div>
