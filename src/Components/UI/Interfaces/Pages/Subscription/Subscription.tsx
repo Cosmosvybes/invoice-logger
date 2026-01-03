@@ -381,7 +381,7 @@ const Subscription = () => {
                 </div>
                 <div className="relative mt-4  ml-1 w-full gap-2 flex">
                   <p className="text-sm text-gray-400">
-                    To approve etherbill for spending,
+                    To approve STEADYBILL for spending,
                   </p>
                   <button
                     onClick={handleApproval}

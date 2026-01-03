@@ -28,6 +28,9 @@ import NewPassword from "../UI/Interfaces/Pages/PasswordReset/NewPassword";
 import Chat from "../UI/Tools/chat/Chat";
 import Payment from "../UI/Interfaces/Pages/Dashboard/payment/Payment";
 import InvoicePay from "../UI/Interfaces/Pages/Public/InvoicePay";
+import PrivacyPolicy from "../UI/Interfaces/Pages/Legal/PrivacyPolicy";
+import TermsOfService from "../UI/Interfaces/Pages/Legal/TermsOfService";
+import HelpCenter from "../UI/Interfaces/Pages/Legal/HelpCenter";
 import Layout from "../UI/Tools/Layout/Layout";
 
 const LayoutWrapper = () => {
@@ -52,6 +55,9 @@ const _Routes = () => {
         <Route path="/reset_password" element={<PasswordReset />}></Route>
         <Route path="/verification_code" element={<VerificationCodePage />}></Route>
         <Route path="/invoice/pay/:id" element={<InvoicePay />}></Route>
+        <Route path="/privacy" element={<PrivacyPolicy />}></Route>
+        <Route path="/terms" element={<TermsOfService />}></Route>
+        <Route path="/help" element={<HelpCenter />}></Route>
 
         {/* Dashboard / Layout Wrapped Routes */}
         <Route element={<LayoutWrapper />}>

@@ -52,7 +52,7 @@ const InvoiceTemplate = ({
                 <Img
                   className="h-10 object-contain"
                   src="https://res.cloudinary.com/dkckrpwew/image/upload/v1726595270/logo_transparent_jxwxhn.png"
-                  alt="Etherbill"
+                  alt="STEADYBILL"
                 />
               </Column>
               <Column align="right">
@@ -170,7 +170,7 @@ const InvoiceTemplate = ({
                If you have any questions, contact us at <span className="text-primary">{invoiceInformation.email}</span>
             </Text>
             <Text className="text-gray-400 text-[10px] uppercase tracking-wider">
-               Powered by Etherbill
+               Powered by STEADYBILL
             </Text>
           </Section>
         </Container>

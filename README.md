@@ -1,8 +1,8 @@
-# Etherbill (Front-end) 💎
+# STEADYBILL (Front-end) 💎
 
 **The Ultimate Financial Operating System for Freelancers and Agencies.**
 
-Etherbill simplifies the complex world of invoicing, client management, and recurring billing into a sleek, high-performance interface. Built for speed, clarity, and professionalism.
+STEADYBILL simplifies the complex world of invoicing, client management, and recurring billing into a sleek, high-performance interface. Built for speed, clarity, and professionalism.
 
 ## Elevated Features
 
@@ -31,7 +31,7 @@ Etherbill simplifies the complex world of invoicing, client management, and recu
 - **Framework**: React 18+ (TypeScript)
 - **State Engine**: Redux Toolkit (Asynchronous state management)
 - **Styling**: Vanilla CSS & Tailwind (Custom Premium Components)
-- **Networking**: RESTful API integration with Etherbill Engine (Node/Mongo)
+- **Networking**: RESTful API integration with STEADYBILL Engine (Node/Mongo)
 - **PDF Core**: @react-pdf/renderer
 
 ---
@@ -59,7 +59,7 @@ Etherbill simplifies the complex world of invoicing, client management, and recu
 ---
 
 ## 🎨 Design Philosophy
-Etherbill follows a **"Glassmorphism & Micro-Interactions"** philosophy. Every transition, hover state, and modal entry is designed to feel fluid and premium, instilling confidence in your clients when they receive and pay your invoices.
+STEADYBILL follows a **"Glassmorphism & Micro-Interactions"** philosophy. Every transition, hover state, and modal entry is designed to feel fluid and premium, instilling confidence in your clients when they receive and pay your invoices.
 
 ---
 *Empowering the global freelance economy.*

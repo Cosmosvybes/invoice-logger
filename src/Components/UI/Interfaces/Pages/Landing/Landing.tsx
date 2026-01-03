@@ -21,7 +21,7 @@ const Landing = () => {
               <div className="w-10 h-10 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-violet-200">
                 <Invoice className="text-2xl" />
               </div>
-              <span className="font-black text-2xl tracking-tight text-slate-900">Etherbill</span>
+              <span className="font-black text-2xl tracking-tight text-slate-900">STEADYBILL</span>
             </div>
             <div className="hidden md:flex items-center gap-10 text-sm font-bold text-slate-500">
               <a href="#features" className="hover:text-violet-600 transition-colors">Features</a>
@@ -270,7 +270,7 @@ const Landing = () => {
                         <div className="w-8 h-8 bg-slate-950 rounded-lg flex items-center justify-center text-white">
                              <Invoice className="text-lg" />
                         </div>
-                        <span className="font-black text-xl text-slate-900 tracking-tight">Etherbill</span>
+                        <span className="font-black text-xl text-slate-900 tracking-tight">STEADYBILL</span>
                     </div>
                     <p className="text-slate-500 font-medium max-w-sm leading-relaxed">Redefining how independent creators and growing agencies experience financial management.</p>
                 </div>
@@ -290,16 +290,17 @@ const Landing = () => {
                         <li><a href="#" className="hover:text-violet-600 transition-colors">Reach Us</a></li>
                     </ul>
                 </div>
-                 <div>
+                <div>
                     <h4 className="font-black text-slate-900 uppercase text-xs tracking-widest mb-6">Legal</h4>
                     <ul className="space-y-4 text-sm text-slate-500 font-bold">
-                        <li><a href="#" className="hover:text-violet-600 transition-colors">Privacy Privacy</a></li>
-                        <li><a href="#" className="hover:text-violet-600 transition-colors">Terms of Work</a></li>
+                        <li><Link to="/privacy" className="hover:text-violet-600 transition-colors">Privacy Policy</Link></li>
+                        <li><Link to="/terms" className="hover:text-violet-600 transition-colors">Terms of Work</Link></li>
+                        <li><Link to="/help" className="hover:text-violet-600 transition-colors">Help Center</Link></li>
                     </ul>
                 </div>
             </div>
             <div className="pt-12 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p className="text-slate-400 text-sm font-bold">&copy; 2024 Etherbill Technologies. All rights reserved.</p>
+                <p className="text-slate-400 text-sm font-bold">&copy; 2024 STEADYBILL Technologies. All rights reserved.</p>
                 <div className="flex gap-8 text-slate-400 font-bold text-sm">
                     <a href="#" className="hover:text-slate-900 transition-colors">Instagram</a>
                     <a href="#" className="hover:text-slate-900 transition-colors">Twitter</a>

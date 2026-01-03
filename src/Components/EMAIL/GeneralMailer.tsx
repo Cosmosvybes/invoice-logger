@@ -21,7 +21,7 @@ const GeneralMailer = ({ verificationCode }: { verificationCode: number }) => {
             </Heading>
 
             <p className="text-sm">
-              Hi there 👋, I'm Chris from etherbill. Check you password reset
+              Hi there 👋, I'm Chris from STEADYBILL. Check you password reset
               code below
             </p>
             <Hr className="border-gray-100 w-full" />
@@ -36,10 +36,10 @@ const GeneralMailer = ({ verificationCode }: { verificationCode: number }) => {
             <Container className="px-2 text-purple-800">
               <p>
                 All trademarks, service marks, and company names are the
-                property of Etherbill Inc.
+                property of STEADYBILL Inc.
               </p>
               <p className="text-sm font-normal">
-                Etherbill Inc. {new Date().getFullYear()} &copy;
+                STEADYBILL Inc. {new Date().getFullYear()} &copy;
               </p>
             </Container>
           </Container>

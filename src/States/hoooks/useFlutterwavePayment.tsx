@@ -58,7 +58,7 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
       name: paymentProps.name,
     },
     customizations: {
-      title: paymentProps.title || "Etherbill PRO",
+      title: paymentProps.title || "STEADYBILL PRO",
       description: paymentProps.description || "Subscription for Invoice Logger PRO",
       logo: paymentProps.logo || "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },

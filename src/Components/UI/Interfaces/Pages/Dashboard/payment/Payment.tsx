@@ -30,7 +30,7 @@ function Payment() {
       email: email || "user@example.com", // Fallback if email missing
       name: name,
       currency: currency,
-      title: "Etherbill PRO Subscription",
+      title: "STEADYBILL PRO Subscription",
       description: `Monthly subscription for ${currency} ${currentPrice.amount}`,
       planType: 'monthly',
       logo: "https://ether-bill.onrender.com/logo.png" // Update with real logo url if available

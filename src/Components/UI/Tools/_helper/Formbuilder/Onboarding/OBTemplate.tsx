@@ -159,7 +159,7 @@ const OBTemplate = ({
 
         <div className="mt-6 text-center">
           <p className="text-slate-400 text-[10px] font-mono">
-            Etherbill v1.0.0
+            STEADYBILL v1.0.0
           </p>
         </div>
       </div>

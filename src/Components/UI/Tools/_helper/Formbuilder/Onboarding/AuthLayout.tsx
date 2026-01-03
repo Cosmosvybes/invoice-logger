@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Invoice } from 'react-huge-icons/bulk';
 import { CheckMarkCircle } from 'react-huge-icons/solid';
 
@@ -11,7 +12,7 @@ interface AuthLayoutProps {
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) => {
   return (
-    <div className="min-h-screen bg-white flex overflow-hidden font-sans">
+    <div className="min-h-screen bg-white flex overflow-hidden font-sans text-slate-900">
       {/* Left Side: Brand & Visuals (Hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-slate-900 items-center justify-center p-12 overflow-hidden">
         {/* Background Decorative Elements */}
@@ -25,7 +26,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) =>
             <div className="w-12 h-12 bg-gradient-to-tr from-violet-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20">
               <Invoice className="text-2xl text-white" />
             </div>
-            <span className="text-2xl font-black tracking-tight uppercase">Etherbill</span>
+            <span className="text-2xl font-black tracking-tight uppercase">STEADYBILL</span>
           </div>
 
           <h1 className="text-4xl font-extrabold mb-6 leading-tight">
@@ -49,7 +50,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) =>
 
         {/* Subtle Bottom Accent */}
         <div className="absolute bottom-8 left-12 text-slate-500 text-sm font-medium">
-            &copy; 2024 Etherbill. All rights reserved.
+            &copy; 2024 STEADYBILL. All rights reserved.
         </div>
       </div>
 
@@ -62,7 +63,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) =>
                 <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white">
                     <Invoice className="text-xl" />
                 </div>
-                <span className="font-bold text-xl text-slate-900">Etherbill</span>
+                <span className="font-bold text-xl text-slate-900">STEADYBILL</span>
              </div>
           </div>
 
@@ -75,10 +76,10 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) =>
           </div>
 
           {/* Small Footer Links */}
-          <div className="mt-8 flex justify-center gap-6 text-xs text-slate-400 font-medium">
-             <a href="#" className="hover:text-slate-600">Privacy Policy</a>
-             <a href="#" className="hover:text-slate-600">Terms of Service</a>
-             <a href="#" className="hover:text-slate-600">Help Center</a>
+          <div className="mt-8 flex justify-center gap-6 text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+             <Link to="/privacy" className="hover:text-violet-600 transition-colors">Privacy Policy</Link>
+             <Link to="/terms" className="hover:text-violet-600 transition-colors">Terms of Service</Link>
+             <Link to="/help" className="hover:text-violet-600 transition-colors">Help Center</Link>
           </div>
         </div>
       </div>
