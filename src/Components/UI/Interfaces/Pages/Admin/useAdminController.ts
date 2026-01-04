@@ -44,7 +44,7 @@ export default function useAdminController() {
     };
 
     fetchStats();
-  }, [userToken]);
+  }, []);
 
   return { stats, loading };
 }
