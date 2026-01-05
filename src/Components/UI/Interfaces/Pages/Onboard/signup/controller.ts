@@ -77,11 +77,12 @@ export default function useSignUpController() {
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    const pattern = /^[A-Z][a-zA-Z]{6,10}[0-9]{1,7}[\W]{1}$/;
+    // Relaxed pattern: Minimum 8 characters, at least one letter and one number
+    const pattern = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
     const isValidPassword = pattern.test(formValues["Password"]);
     if (!isValidPassword) {
-      toast.warn("Check password pattern");
+      toast.warn("Password must be at least 8 characters and include both letters and numbers");
       return;
     }
     const passwordMatch =

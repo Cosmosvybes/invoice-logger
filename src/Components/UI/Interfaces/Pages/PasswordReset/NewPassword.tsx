@@ -28,6 +28,11 @@ const NewPassword = () => {
     if (newPassword !== cPassword)
       return toast.warning("Passwords do not match");
 
+    const pattern = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+    if (!pattern.test(newPassword)) {
+      return toast.warn("Password must be at least 8 characters and include both letters and numbers");
+    }
+
     const userEmail = localStorage.getItem("email");
     dispatch(setLoading());
 

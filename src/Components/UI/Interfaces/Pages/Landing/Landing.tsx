@@ -22,20 +22,20 @@ const Landing = () => {
               <div className="w-10 h-10 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-violet-200">
                 <Invoice className="text-2xl" />
               </div>
-              <span className="font-black text-2xl tracking-tight text-slate-900">STEADYBILL</span>
+              <span className="font-black text-xl sm:text-2xl tracking-tight text-slate-900">STEADYBILL</span>
             </div>
             <div className="hidden md:flex items-center gap-10 text-sm font-bold text-slate-500">
               <a href="#features" className="hover:text-violet-600 transition-colors">Features</a>
               <a href="#pricing" className="hover:text-violet-600 transition-colors">Pricing</a>
               <a href="#testimonials" className="hover:text-violet-600 transition-colors">Testimonials</a>
             </div>
-            <div className="flex items-center gap-5">
-              <Link to="/login" className="text-sm font-black text-slate-600 hover:text-slate-900 transition-colors">
+            <div className="flex items-center gap-3 sm:gap-5">
+              <Link to="/login" className="text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">
                 Log in
               </Link>
               <Link 
                 to="/create/new/account" 
-                className="px-6 py-3 bg-slate-900 text-white text-sm font-black rounded-xl hover:bg-violet-600 transition-all shadow-xl shadow-slate-200 hover:shadow-violet-200 active:scale-95"
+                className="px-4 py-2 sm:px-6 sm:py-3 bg-slate-900 text-white text-[10px] sm:text-sm font-black rounded-xl hover:bg-violet-600 transition-all shadow-xl shadow-slate-200 hover:shadow-violet-200 active:scale-95 whitespace-nowrap"
               >
                 Get Started
               </Link>
@@ -60,7 +60,7 @@ const Landing = () => {
             New: High Performance Dashboard
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-black text-slate-900 mb-8 tracking-tighter leading-[1.1] animate-fade-in-up delay-100">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-slate-900 mb-8 tracking-tighter leading-[1.1] animate-fade-in-up delay-100">
             Professional Billing <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-indigo-600 to-rose-500">
               Made Beautiful.
@@ -71,16 +71,16 @@ const Landing = () => {
             The all-in-one financial toolkit for modern entrepreneurs. Track invoices, manage relationships, and scale your business with crystal-clear precision.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-in-up delay-300">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
             <Link 
               to="/create/new/account"
-              className="w-full sm:w-auto px-10 py-5 bg-violet-600 text-white text-lg font-black rounded-2xl hover:bg-violet-700 transition-all shadow-2xl shadow-violet-200 hover:shadow-violet-300 active:scale-95 flex items-center justify-center gap-3"
+              className="w-full sm:w-auto px-8 py-4 bg-violet-600 text-white text-base font-black rounded-2xl hover:bg-violet-700 transition-all shadow-2xl shadow-violet-200 hover:shadow-violet-300 active:scale-95 flex items-center justify-center gap-2.5"
             >
               Start for Free <ArrowRight className="text-xl" />
             </Link>
             <Link 
               to="/login"
-              className="w-full sm:w-auto px-10 py-5 bg-white text-slate-900 text-lg font-black rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all active:scale-95 shadow-sm"
+              className="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 text-base font-black rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all active:scale-95 shadow-sm"
             >
               Watch Demo
             </Link>
@@ -93,22 +93,22 @@ const Landing = () => {
                   {/* Mock Dashboard Shell */}
                   <div className="flex flex-col gap-8">
                       {/* Top Metrics */}
-                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                          <div className="p-5 bg-violet-600 rounded-3xl text-left shadow-lg shadow-violet-200">
-                              <p className="text-[10px] font-black text-violet-200 uppercase tracking-widest mb-1">Total Revenue</p>
-                              <h4 className="text-xl font-black text-white">$42,912.00</h4>
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                          <div className="p-3 sm:p-5 bg-violet-600 rounded-3xl text-left shadow-lg shadow-violet-200">
+                              <p className="text-[8px] sm:text-[10px] font-black text-violet-200 uppercase tracking-widest mb-1">Total Revenue</p>
+                              <h4 className="text-sm sm:text-xl font-black text-white">$42,912.00</h4>
                           </div>
-                          <div className="p-5 bg-slate-50 border border-slate-100 rounded-3xl text-left">
-                              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Invoices Sent</p>
-                              <h4 className="text-xl font-black text-slate-900">128</h4>
+                          <div className="p-3 sm:p-5 bg-slate-50 border border-slate-100 rounded-3xl text-left">
+                              <p className="text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Invoices Sent</p>
+                              <h4 className="text-sm sm:text-xl font-black text-slate-900">128</h4>
                           </div>
-                          <div className="p-5 bg-slate-50 border border-slate-100 rounded-3xl text-left">
-                              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Active Clients</p>
-                              <h4 className="text-xl font-black text-slate-900">42</h4>
+                          <div className="p-3 sm:p-5 bg-slate-50 border border-slate-100 rounded-3xl text-left">
+                              <p className="text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Active Clients</p>
+                              <h4 className="text-sm sm:text-xl font-black text-slate-900">42</h4>
                           </div>
-                          <div className="p-5 bg-emerald-50 border border-emerald-100 rounded-3xl text-left">
-                              <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">Pending Pay</p>
-                              <h4 className="text-xl font-black text-emerald-700">$3,400.00</h4>
+                          <div className="p-3 sm:p-5 bg-emerald-50 border border-emerald-100 rounded-3xl text-left">
+                              <p className="text-[8px] sm:text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">Pending Pay</p>
+                              <h4 className="text-sm sm:text-xl font-black text-emerald-700">$3,400.00</h4>
                           </div>
                       </div>
 
@@ -138,13 +138,13 @@ const Landing = () => {
                                   { name: "Web Hosting", amt: "-$45", time: "1d ago", color: "bg-rose-500" },
                                   { name: "Consultancy", amt: "+$1,200", time: "1d ago", color: "bg-amber-500" }
                               ].map((item, i) => (
-                                  <div key={i} className="p-4 bg-slate-50/50 hover:bg-white border border-transparent hover:border-slate-100 rounded-2xl flex items-center gap-3 transition-all group">
-                                      <div className={`w-10 h-10 rounded-xl ${item.color} flex-shrink-0 opacity-80 group-hover:scale-110 transition-transform`}></div>
-                                      <div className="flex-1">
-                                          <p className="text-xs font-black text-slate-900 leading-none mb-1">{item.name}</p>
-                                          <p className="text-[10px] font-bold text-slate-400">{item.time}</p>
+                                  <div key={i} className="p-3 sm:p-4 bg-slate-50/50 hover:bg-white border border-transparent hover:border-slate-100 rounded-2xl flex items-center gap-3 transition-all group">
+                                      <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl ${item.color} flex-shrink-0 opacity-80 group-hover:scale-110 transition-transform`}></div>
+                                      <div className="flex-1 min-w-0">
+                                          <p className="text-[10px] sm:text-xs font-black text-slate-900 leading-none mb-1 truncate">{item.name}</p>
+                                          <p className="text-[8px] sm:text-[10px] font-bold text-slate-400">{item.time}</p>
                                       </div>
-                                      <span className={`text-xs font-black ${item.amt.startsWith('+') ? 'text-emerald-600' : 'text-slate-900'}`}>{item.amt}</span>
+                                      <span className={`text-[10px] sm:text-xs font-black shrink-0 ${item.amt.startsWith('+') ? 'text-emerald-600' : 'text-slate-900'}`}>{item.amt}</span>
                                   </div>
                               ))}
                           </div>
@@ -159,7 +159,7 @@ const Landing = () => {
       <section id="features" className="py-32 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mb-24">
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight">Built for individuals, <br />scaled for teams.</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight">Built for individuals, <br />scaled for teams.</h2>
             <p className="text-xl text-slate-500 font-medium">No more spreadsheets. No more friction. Just a seamless billing experience that lives where you do.</p>
           </div>
 
@@ -222,13 +222,13 @@ const Landing = () => {
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-violet-600/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2"></div>
         <div className="relative max-w-5xl mx-auto px-4 text-center">
             <div className="max-w-2xl mx-auto mb-20 text-center">
-                <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">Transparent growth.</h2>
+                <h2 className="text-3xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight">Transparent growth.</h2>
                 <p className="text-xl text-slate-400 font-medium">Choose a plan that scales with your ambition. No hidden fees, ever.</p>
             </div>
 
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-4xl mx-auto">
                 {/* Free Plan */}
-                <div className="flex flex-col bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 text-left hover:bg-white/[0.07] transition-all group">
+                <div className="flex flex-col bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 text-left hover:bg-white/[0.07] transition-all group">
                     <h3 className="text-lg font-black text-slate-400 uppercase tracking-widest mb-4">Starter</h3>
                     <div className="flex items-baseline gap-1 mb-10">
                         <span className="text-6xl font-black">$0</span>
@@ -246,7 +246,7 @@ const Landing = () => {
                 </div>
 
                 {/* Pro Plan */}
-                 <div className="flex flex-col bg-gradient-to-br from-violet-600 to-indigo-700 rounded-[2.5rem] p-10 text-left relative shadow-2xl shadow-violet-900/40 transform hover:scale-[1.02] transition-all hover:rotate-1">
+                 <div className="flex flex-col bg-gradient-to-br from-violet-600 to-indigo-700 rounded-[2.5rem] p-6 sm:p-10 text-left relative shadow-2xl shadow-violet-900/40 transform hover:scale-[1.02] transition-all hover:rotate-1">
                     <div className="absolute top-8 right-8 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-4 py-1.5 rounded-full tracking-widest uppercase">Elite</div>
                     <h3 className="text-lg font-black text-violet-200 uppercase tracking-widest mb-4">Pro Plan</h3>
                     <div className="flex items-baseline gap-1 mb-10">
@@ -323,7 +323,7 @@ const Landing = () => {
 };
 
 const FeatureCard = ({ icon, title, desc, color, bg }: any) => (
-  <div className="p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-violet-100/50 hover:shadow-2xl hover:shadow-violet-500/5 transition-all group overflow-hidden relative">
+  <div className="p-6 sm:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-violet-100/50 hover:shadow-2xl hover:shadow-violet-500/5 transition-all group overflow-hidden relative">
     <div className={`w-16 h-16 rounded-[1.5rem] ${bg} ${color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 relative z-10 shadow-sm`}>
       <span className="text-3xl">{icon}</span>
     </div>
