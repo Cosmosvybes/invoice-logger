@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useFlutterwavePayment } from "../../../../../States/hoooks/useFlutterwavePayment";
+import { useFlutterwavePayment, FlutterwaveResponse } from "../../../../../States/hoooks/useFlutterwavePayment";
 import { Spinner } from "reactstrap";
 import { CheckMarkCircle, Diamond } from "react-huge-icons/solid";
 import { Invoice } from "../../../../../States/Slices/invoice.types";
@@ -120,7 +120,7 @@ const InvoicePay = () => {
 
             <button
                 onClick={() => handleFlutterPayment({
-                    callback: async (response) => {
+                    callback: async (response: FlutterwaveResponse) => {
                        console.log(response);
                        if(response.status === "successful") {
                            // Call Backend to Verify and Mark as Paid
