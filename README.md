@@ -27,39 +27,7 @@ STEADYBILL simplifies the complex world of invoicing, client management, and rec
 
 ---
 
-## Tech Stack
-- **Framework**: React 18+ (TypeScript)
-- **State Engine**: Redux Toolkit (Asynchronous state management)
-- **Styling**: Vanilla CSS & Tailwind (Custom Premium Components)
-- **Networking**: RESTful API integration with STEADYBILL Engine (Node/Mongo)
-- **PDF Core**: @react-pdf/renderer
-
----
-
-## 🏗️ Installation & Setup
-
-1. **Clone & Enter**
-   ```bash
-   git clone https://github.com/Cosmosvybes/invoice-logger.git
-   cd invoice-logger
-   ```
-
-2. **Install Dependencies**
-   ```bash
-   npm install
-   ```
 
 
 
-4. **Launch Development**
-   ```bash
-   npm run dev
-   ```
-
----
-
-## 🎨 Design Philosophy
-STEADYBILL follows a **"Glassmorphism & Micro-Interactions"** philosophy. Every transition, hover state, and modal entry is designed to feel fluid and premium, instilling confidence in your clients when they receive and pay your invoices.
-
----
 *Empowering the global freelance economy.*

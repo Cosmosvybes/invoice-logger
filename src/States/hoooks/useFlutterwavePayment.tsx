@@ -51,7 +51,7 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
     payment_options: "card,mobilemoney,ussd",
     amount: paymentProps.amount,
     payment_plan: paymentProps.payment_plan, 
-    subaccounts: paymentProps.subaccounts, // [NEW] Add subaccounts
+    subaccounts: paymentProps.subaccounts,
     customer: {
       email: paymentProps.email,
       phone_number: paymentProps.phone_number || "",
@@ -64,7 +64,7 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
     },
 
     callback: async (response: FlutterwaveResponse) => {
-      console.log("Payment Success:", response);
+      console.log("Payment Success callback triggered:", response);
       
       // Call Backend to Upgrade User
       if (response.status === "successful") {
@@ -100,5 +100,13 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
 
   const handlePayment = useFlutterwave(config);
 
-  return { handleFlutterPayment: handlePayment };
+  const wrappedHandlePayment = (params: any) => {
+    console.log("Triggering Flutterwave with config:", config);
+    if (!config.public_key) {
+      console.error("CRITICAL: Flutterwave Public Key is MISSING in environment variables!");
+    }
+    handlePayment(params);
+  };
+
+  return { handleFlutterPayment: wrappedHandlePayment };
 };
