@@ -22,15 +22,15 @@ import Mailer from "../../../../../EMAIL/Mailer";
 import Spinner_ from "../../Loader/Spinner";
 import React, { useState } from "react";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
-import Overlay from "../../../../Interfaces/Pages/Subscription/_OverlayComp/Overlay";
+import Overlay from "../../../Layout/Overlay";
 import { LoadingDashed, Pencil, RemoveCircle } from "react-huge-icons/solid";
-import SubscriptionModal from "../../../../Interfaces/Pages/Subscription/SubscriptionModal";
+
 
 const Template = React.memo(
   ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
     const { forms } = useModalController();
     const [modal, setModal] = useState(false);
-    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+    const setShowUpgradeModal = (val: boolean) => console.log("Upgrade modal toggled:", val);
     const [showProducts, setShowProducts] = useState(true);
     const {
       customEmail,
@@ -480,7 +480,7 @@ const Template = React.memo(
               </section>
           </div>
         )}
-        <SubscriptionModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
+
       </>
     );
   }

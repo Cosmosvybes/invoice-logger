@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { render } from "@react-email/components";
-import { setLoading } from "../../../../../States/Slices/wallet";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../States/hoooks/hook";
-import Overlay from "../Subscription/_OverlayComp/Overlay";
+
+import Overlay from "../../../Tools/Layout/Overlay";
 import { LoadingDashed } from "react-huge-icons/solid";
 import GeneralMailer from "../../../../EMAIL/GeneralMailer";
 import { API_URL } from "../../../../constants/Index";
@@ -19,15 +15,15 @@ const PasswordReset = () => {
   const [verificationCode] = useState(String(Math.floor(100000 + Math.random() * 900000)));
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const { loading } = useAppSelector((store: any) => store.walletSlice);
-  const dispatch = useAppDispatch();
+  const [loading, setLoadingLocal] = useState(false);
+  // const dispatch = useAppDispatch();
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
 
   const passwordResetHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
-    dispatch(setLoading());
+    setLoadingLocal(true);
     setErrorDetails(null);
 
     try {
@@ -54,7 +50,7 @@ const PasswordReset = () => {
       );
 
       if (!response.ok) {
-        dispatch(setLoading());
+        setLoadingLocal(false);
         const errorData = await response.json().catch(() => ({}));
         const userMsg = errorData.response || response.statusText;
         setErrorDetails(`${response.status}: ${userMsg}`);
@@ -66,13 +62,13 @@ const PasswordReset = () => {
         }
       } else {
         const { message } = await response.json();
-        dispatch(setLoading());
+        setLoadingLocal(false);
         toast.success(message || "Code sent successfully!");
         localStorage.setItem("email", email);
         navigate("/verification_code");
       }
     } catch (error: any) {
-      dispatch(setLoading());
+      setLoadingLocal(false);
       console.error("Password Reset Error:", error);
       setErrorDetails(error.message || "Network Error");
       toast.error("An error occurred while sending requests");

@@ -4,7 +4,7 @@ import InputProvider from "../../../Tools/_helper/Formbuilder/Settings/InputProv
 import { Spinner } from "reactstrap";
 import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import { useState } from "react";
-import SubscriptionModal from "../Subscription/SubscriptionModal";
+
 import { User, SettingShort,Diamond, Bank } from "react-huge-icons/solid";
 const Settings = () => {
   const {
@@ -21,7 +21,7 @@ const Settings = () => {
   } = useSettingsController();
 
   const [activeTab, setActiveTab] = useState("profile");
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const setShowUpgradeModal = (val: boolean) => console.log("Upgrade modal toggled:", val);
 
   const TABS = [
     { id: "profile", label: "Identity", icon:User},
@@ -157,7 +157,7 @@ const Settings = () => {
           </main>
         </div>
       </div>
-      <SubscriptionModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
+
     </div>
   );
 };

@@ -15,16 +15,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
 import { setIsAuthenticated } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
-// import useSmartContractController from "../../../../../Web3/Credentials/Index";
-// import { ethers } from "ethers";
-// const ethereum = (window as any).ethereum;
-// import { tokenCredientials } from "../../../../../Web3/Credentials/Token/constants";
-// import { shopCredientials } from "../../../../../Web3/Credentials/Shop/constants";
 
-import {
-  setLoading,
-  setLoading as walletLoader,
-} from "../../../../../../States/Slices/wallet";
 export default function useTemplateController() {
   
 
@@ -38,10 +29,10 @@ export default function useTemplateController() {
 
   const { draft, clients } = useAppSelector((state) => state.invoice);
   const { account } = useAppSelector((state) => state.userSlice);
-  const { loading, isConnected } = useAppSelector(
-    //also import from the wallet slice address
-    (store) => store.walletSlice
-  );
+  
+  // Web3 Compatibility Stubs
+  const loading = false;
+  const isConnected = false;
 
   let invoiceInformation: any;
   function setInvoiceInformation() {
@@ -227,7 +218,7 @@ export default function useTemplateController() {
           });
       }
 
-      dispatch(setLoading());
+
       const responseInfo = await fetch(
         `${API_URL}/api/send/invoice?sendAsMessage=${sendAsMessage}`,
         {
@@ -262,10 +253,10 @@ export default function useTemplateController() {
       navigate("/dashboard");
       const invoiceID = invoiceInformation.id;
       dispatch(removeDraft({ invoiceID }));
-      dispatch(walletLoader());
+
     } catch (error: any) {
       toast.error(error.message, { theme: "colored" });
-      dispatch(setLoading());
+
     }
   };
 

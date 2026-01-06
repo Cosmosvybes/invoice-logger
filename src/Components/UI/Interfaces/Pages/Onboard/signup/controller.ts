@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { setLoading } from "../../../../../../States/Slices/wallet";
-import { useAppDispatch, useAppSelector } from "../../../../../../States/hoooks/hook";
+import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { API_URL } from "../../../../../../Components/constants/Index";
@@ -13,6 +12,7 @@ interface valueInterface {
 export default function useSignUpController() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAppSelector((store) => store.userSlice);
+  const [loading, setLoadingLocal] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -73,7 +73,7 @@ export default function useSignUpController() {
     setFormValues((prev) => ({ ...prev, [key]: newValue }));
   };
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -93,7 +93,7 @@ export default function useSignUpController() {
     }
 
     try {
-      dispatch(setLoading());
+      setLoadingLocal(true);
       const result = await fetch(
         `${API_URL}/api/create_account`,
         {
@@ -103,7 +103,7 @@ export default function useSignUpController() {
         }
       );
       if (!result.ok) {
-        dispatch(setLoading());
+        setLoadingLocal(false);
 
         if (result.status == 403) {
           return toast.error("Action forbidden, User account exist, sign in");
@@ -113,7 +113,7 @@ export default function useSignUpController() {
           return toast.error("Internal server error");
         }
       } else {
-        dispatch(setLoading());
+        setLoadingLocal(false);
         const { response } = await result.json();
         
         // [NEW] Save email for verification page
@@ -123,7 +123,7 @@ export default function useSignUpController() {
         navigate("/verification_code?onboard=true");
       }
     } catch (error: any) {
-      dispatch(setLoading());
+      setLoadingLocal(false);
       toast.error(error, { position: "top-center" });
     }
   };
@@ -133,5 +133,6 @@ export default function useSignUpController() {
     formValues,
     handleChange,
     handleSubmit,
+    loading,
   };
 }

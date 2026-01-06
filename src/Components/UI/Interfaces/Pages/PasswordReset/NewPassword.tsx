@@ -1,12 +1,8 @@
-import Overlay from "../Subscription/_OverlayComp/Overlay";
+import Overlay from "../../../Tools/Layout/Overlay";
 import { LoadingDashed } from "react-huge-icons/solid";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../States/hoooks/hook";
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { setLoading } from "../../../../../States/Slices/wallet";
 import { toast } from "react-toastify";
 import AuthLayout from "../../../Tools/_helper/Formbuilder/Onboarding/AuthLayout";
 import { Spinner } from "reactstrap";
@@ -14,13 +10,13 @@ import { ArrowRight, Eye, EyeDisable } from "react-huge-icons/outline";
 import { API_URL } from "../../../../../Components/constants/Index";
 
 const NewPassword = () => {
-  const { loading } = useAppSelector((store: any) => store.walletSlice);
+  const [loading, setLoadingLocal] = useState(false);
   const navigate = useNavigate();
 
   const [newPassword, setNewPassword] = useState("");
   const [cPassword, setcPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const handleNewPasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +30,7 @@ const NewPassword = () => {
     }
 
     const userEmail = localStorage.getItem("email");
-    dispatch(setLoading());
+    setLoadingLocal(true);
 
     try {
       const response = await fetch(
@@ -47,16 +43,16 @@ const NewPassword = () => {
       );
 
       if (!response.ok) {
-        dispatch(setLoading());
+        setLoadingLocal(false);
         return toast.error("Failed to update password. Try again.");
       } else {
         const { message } = await response.json();
-        dispatch(setLoading());
+        setLoadingLocal(false);
         toast.success(message);
         navigate("/");
       }
     } catch (error) {
-      dispatch(setLoading());
+      setLoadingLocal(false);
       toast.error("An unexpected error occurred");
     }
   };

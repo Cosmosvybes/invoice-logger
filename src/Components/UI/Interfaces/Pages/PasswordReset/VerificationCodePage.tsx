@@ -1,11 +1,6 @@
 import { LoadingDashed } from "react-huge-icons/solid";
-import Overlay from "../Subscription/_OverlayComp/Overlay";
+import Overlay from "../../../Tools/Layout/Overlay";
 import { useState } from "react";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../States/hoooks/hook";
-import { setLoading } from "../../../../../States/Slices/wallet";
 import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AuthLayout from "../../../Tools/_helper/Formbuilder/Onboarding/AuthLayout";
@@ -15,8 +10,8 @@ import { API_URL } from "../../../../../Components/constants/Index";
 
 const VerificationCodePage = () => {
   const [code, setCode] = useState("");
-  const { loading } = useAppSelector((store: any) => store.walletSlice);
-  const dispatch = useAppDispatch();
+  const [loading, setLoadingLocal] = useState(false);
+  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isOnboarding = searchParams.get("onboard") === "true";
@@ -28,7 +23,7 @@ const VerificationCodePage = () => {
     // Support both "email" and "userEmail" (consistency with backend)
     const email = localStorage.getItem("email");
     
-    dispatch(setLoading());
+    setLoadingLocal(true);
     try {
       const response = await fetch(
         `${API_URL}/api/verify_code`,
@@ -40,7 +35,7 @@ const VerificationCodePage = () => {
       );
 
       if (!response.ok) {
-        dispatch(setLoading());
+        setLoadingLocal(false);
         if (response.status == 403) {
           return toast.error("Code does not match");
         } else {
@@ -48,7 +43,7 @@ const VerificationCodePage = () => {
         }
       } else {
         const { message } = await response.json();
-        dispatch(setLoading());
+        setLoadingLocal(false);
         toast.success(isOnboarding ? "Account verified! Please sign in." : message);
         
         if (isOnboarding) {
@@ -58,7 +53,7 @@ const VerificationCodePage = () => {
         }
       }
     } catch (error) {
-      dispatch(setLoading());
+      setLoadingLocal(false);
       toast.error("An unexpected error occurred");
     }
   };

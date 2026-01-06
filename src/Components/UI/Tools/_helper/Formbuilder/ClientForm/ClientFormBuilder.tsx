@@ -1,12 +1,13 @@
 import useModalController from "../../../InvoiceModal/controller";
 import useClientFormController from "./client.form.controller";
-import Overlay from "../../../../Interfaces/Pages/Subscription/_OverlayComp/Overlay";
+import Overlay from "../../../Layout/Overlay";
 import { Spinner } from "reactstrap";
-import SubscriptionModal from "../../../../Interfaces/Pages/Subscription/SubscriptionModal";
+// import SubscriptionModal from "../../../../Interfaces/Pages/Subscription/SubscriptionModal";
 
 const ClientFormBuilder = () => {
   const { newCLientsFormField } = useModalController();
-  const { formValues, updateClientForm, handleAddNewClient, loading, showUpgradeModal, setShowUpgradeModal } = useClientFormController();
+  const { formValues, updateClientForm, handleAddNewClient, loading } = useClientFormController();
+  // const { showUpgradeModal, setShowUpgradeModal } = useClientFormController();
 
   const CLIENT_FORM = (newCLientsFormField || []).map((_, i) => {
     const inputClasses = "w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 outline-none font-medium";
@@ -55,7 +56,7 @@ const ClientFormBuilder = () => {
           </button>
         </div>
       </div>
-      <SubscriptionModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
+      {/* <SubscriptionModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} /> */}
     </>
   );
 };

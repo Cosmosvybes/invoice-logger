@@ -4,13 +4,11 @@ import { LoadingDashed } from "react-huge-icons/solid";
 import { useState } from "react";
 import AuthLayout from "../../../../Tools/_helper/Formbuilder/Onboarding/AuthLayout";
 import useSignUpController from "./controller";
-import { useAppSelector } from "../../../../../../States/hoooks/hook";
-import Overlay from "../../Subscription/_OverlayComp/Overlay";
+import Overlay from "../../../../Tools/Layout/Overlay";
 import { Spinner } from "reactstrap";
 
 const Signup = () => {
-  const { handleChange, handleSubmit, formValues } = useSignUpController();
-  const { loading } = useAppSelector((store: any) => store.walletSlice);
+  const { handleChange, handleSubmit, formValues, loading } = useSignUpController();
   const [showPassword, setShowPassword] = useState(false);
 
   return (

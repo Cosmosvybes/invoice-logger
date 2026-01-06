@@ -4,8 +4,8 @@ import withAuth from "../_helper/Auth/withAuth";
 import { ChatDot, Send, ArrowLeft, Information, Lock } from "react-huge-icons/outline";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../../States/hoooks/hook";
-import { useState } from "react";
-import SubscriptionModal from "../../Interfaces/Pages/Subscription/SubscriptionModal";
+
+
 
 function Chat() {
   const { message, messages, handleSendMessage, handleChange, id } = useChatController();
@@ -13,7 +13,7 @@ function Chat() {
   const { account } = useAppSelector((state) => state.userSlice);
   const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
   
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const setShowUpgradeModal = (val: boolean) => console.log("Upgrade modal toggled:", val);
 
   return (
     <div className="fixed inset-0 bg-slate-50 flex flex-col h-screen animate-fade-in overflow-hidden">
@@ -110,7 +110,7 @@ function Chat() {
           </footer>
       </div>
 
-      <SubscriptionModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
+
     </div>
   );
 }
