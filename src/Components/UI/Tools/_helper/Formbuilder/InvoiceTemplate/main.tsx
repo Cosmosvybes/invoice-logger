@@ -31,7 +31,7 @@ export default function useTemplateController() {
 
   const { draft, clients } = useAppSelector((state) => state.invoice);
   const { account } = useAppSelector((state) => state.userSlice);
-  const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
+  const isPro = account?.isSubscribed === true;
   
   // Web3 Compatibility Stubs
   const loading = false;
@@ -193,7 +193,7 @@ export default function useTemplateController() {
 
     // Transform "Recurring" field (from FormBuilder) to backend structure
     const finalInvoice = { ...invoiceInformation };
-    if (finalInvoice.Recurring && finalInvoice.Recurring !== "None") {
+    if (isPro && finalInvoice.Recurring && finalInvoice.Recurring !== "None") {
         finalInvoice.recurring = {
             frequency: finalInvoice.Recurring.toLowerCase(),
             // Default to starting today if not specified

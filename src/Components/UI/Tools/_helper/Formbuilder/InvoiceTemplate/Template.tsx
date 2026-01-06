@@ -117,6 +117,47 @@ const Template = React.memo(
               />
             </div>
           );
+        case "select":
+          const isRecurringField = input.name === "Recurring";
+          const isLocked = isRecurringField && !isPro;
+
+          return (
+            <div className="relative mb-3" key={index}>
+              <div className="flex justify-between items-center mb-1 ml-1">
+                <label className="text-xs text-slate-600 uppercase font-black tracking-wider">{input.placeholder}</label>
+                {isLocked && <span className="bg-violet-100 text-violet-700 text-[9px] font-black px-1.5 py-0.5 rounded border border-violet-200">🔒 PRO</span>}
+              </div>
+              
+              <div className="relative group">
+                <select
+                  disabled={isLocked}
+                  className={`w-full p-2.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 text-sm font-bold appearance-none cursor-pointer focus:ring-4 focus:ring-violet-50 transition-all ${isLocked ? 'opacity-50 grayscale bg-slate-100 cursor-not-allowed' : 'hover:border-violet-200'}`}
+                  value={invoiceInformation[input.name] || (input.name === "Recurring" ? "None" : "")}
+                  onChange={(e) => updateInvoiceDetails(e.target.value, input.name)}
+                >
+                  {(input as any).options?.map((opt: string) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+
+
+                {!isLocked && (
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-hover:text-violet-500 transition-colors">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path></svg>
+                  </div>
+                )}
+                
+                {isLocked && (
+                  <div 
+                    className="absolute inset-0 cursor-pointer z-10" 
+                    onClick={() => setShowUpgradeModal(true)}
+                    title="Upgrade to Pro for recurring invoices"
+                  />
+                )}
+
+              </div>
+            </div>
+          );
         default:
           return (
             <div className="relative" key={index}>
@@ -193,6 +234,7 @@ const Template = React.memo(
                 isOpen={modal}
                 toggle={() => setModal(!modal)}
                 fade={true}
+                zIndex={99999}
                 contentClassName="bg-white border border-slate-200 shadow-xl rounded-xl"
               >
                 <ModalHeader className="text-slate-800 border-b border-slate-100">Sending Invoice</ModalHeader>

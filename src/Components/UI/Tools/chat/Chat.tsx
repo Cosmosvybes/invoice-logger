@@ -13,7 +13,7 @@ function Chat() {
   const { message, messages, handleSendMessage, handleChange, id } = useChatController();
   const navigate = useNavigate();
   const { account } = useAppSelector((state) => state.userSlice);
-  const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
+  const isPro = !!account?.isSubscribed;
   
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 

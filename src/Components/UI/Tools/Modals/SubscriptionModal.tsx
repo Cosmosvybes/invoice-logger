@@ -61,7 +61,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, toggle })
   ];
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered size="lg" className="subscription-modal">
+    <Modal isOpen={isOpen} toggle={toggle} centered size="lg" className="subscription-modal" zIndex={99999}>
         <ModalHeader toggle={toggle} className="border-none pb-0">
             <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center text-violet-600">

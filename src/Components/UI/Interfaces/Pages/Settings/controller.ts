@@ -21,7 +21,7 @@ export default function useSettingsController() {
   const settings = useAppSelector((state) => state.invoice?.settings || {});
   const payout = useAppSelector((state) => state.invoice?.payout || {});
   const { account } = useAppSelector((state) => state.userSlice);
-  const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
+  const isPro = account?.isSubscribed === true;
 
   // Default to NG (Nigeria)
   const [selectedCountry, setSelectedCountry] = useState("NG");

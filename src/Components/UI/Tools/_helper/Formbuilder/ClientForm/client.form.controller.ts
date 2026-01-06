@@ -43,7 +43,7 @@ export default function useClientFormController() {
 
   const handleAddNewClient = async () => {
     // 1. Check Limits (Freemium: Max 3 Clients)
-    const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise'; 
+    const isPro = account?.isSubscribed === true; 
     if (!isPro && clients.length >= 3) {
        setShowUpgradeModal(true);
        return;
