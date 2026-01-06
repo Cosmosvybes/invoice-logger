@@ -1,7 +1,7 @@
 import useModalController from "../../../InvoiceModal/controller";
 import useClientFormController from "./client.form.controller";
 import Overlay from "../../../Layout/Overlay";
-import { Spinner } from "reactstrap";
+import { LoadingDashed } from "react-huge-icons/solid";
 // import SubscriptionModal from "../../../../Interfaces/Pages/Subscription/SubscriptionModal";
 
 const ClientFormBuilder = () => {
@@ -32,7 +32,13 @@ const ClientFormBuilder = () => {
   return (
     <>
       {loading && (
-        <Overlay children={<Spinner color="violet" />} />
+        <Overlay
+          children={
+            <div className="animate-spin z-10 ">
+              <LoadingDashed className="text-3xl text-violet-600" />
+            </div>
+          }
+        />
       )}
 
       <div className="flex flex-col gap-6">

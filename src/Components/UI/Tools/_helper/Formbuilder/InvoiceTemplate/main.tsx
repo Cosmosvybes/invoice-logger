@@ -167,22 +167,25 @@ export default function useTemplateController() {
 
   const [viewMode, setViewMode] = useState(false);
   const [isCreatingNewInvoice, setIsCreatingNewInvoice] = useState(false);
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [recipient, setReceipient] = useState("");
   const [sendAsMessage, setSetAsMessage] = useState(true);
   //
   const navigate = useNavigate();
   const handleSendInvoice = async (emailHtml: any) => {
+    setIsLoading(true);
     const hasEmptyStr = Object.values(invoiceInformation).find(
       (val) => val == ""
     );
 
     if (hasEmptyStr != undefined && typeof hasEmptyStr != "number") {
+      setIsLoading(false);
       toast.warn("Missing invoice details", { theme: "colored" });
       return;
     }
     
     if (!recipient || recipient.trim() === "") {
+        setIsLoading(false);
         toast.warn("Please enter a recipient email address", { theme: "colored" });
         return;
     }
@@ -272,12 +275,14 @@ export default function useTemplateController() {
           throw new Error("Failed to send invoice. Please try again.");
       }
       const response = await responseInfo.json();
+      setIsLoading(false);
       toast.success(response.response, { theme: "light" });
       navigate("/dashboard");
       const invoiceID = invoiceInformation.id;
       dispatch(removeDraft({ invoiceID }));
 
     } catch (error: any) {
+      setIsLoading(false);
       toast.error(error.message, { theme: "colored" });
 
     }

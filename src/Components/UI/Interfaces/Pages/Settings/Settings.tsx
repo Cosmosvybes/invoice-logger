@@ -6,7 +6,8 @@ import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import { useState } from "react";
 import SubscriptionModal from "../../../Tools/Modals/SubscriptionModal";
 
-import { User, SettingShort,Diamond, Bank } from "react-huge-icons/solid";
+import { User, SettingShort, Diamond, Bank, LoadingDashed } from "react-huge-icons/solid";
+import Overlay from "../../../Tools/Layout/Overlay";
 const Settings = () => {
   const {
     payoutSchema,
@@ -123,6 +124,15 @@ const Settings = () => {
 
   return (
     <div className="w-full min-h-screen bg-slate-50/50 pb-20">
+      {loading && (
+        <Overlay
+          children={
+            <div className="animate-spin z-10 ">
+              <LoadingDashed className="text-3xl text-violet-600" />
+            </div>
+          }
+        />
+      )}
       <div className="max-w-6xl mx-auto px-4 py-8">
         <BreadCrumb title="Settings" useLink={false} linkTitle="" />
         <div className="mt-8 flex flex-col lg:flex-row gap-8 items-start">

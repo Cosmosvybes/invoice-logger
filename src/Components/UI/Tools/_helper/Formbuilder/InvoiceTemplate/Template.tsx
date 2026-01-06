@@ -48,7 +48,6 @@ const Template = React.memo(
       updateVAT,
       viewMode,
       token,
-      loading,
       handleSendInvoice,
       isLoading,
       clients,
@@ -175,7 +174,7 @@ const Template = React.memo(
 
     return (
       <>
-        {loading && (
+        {isLoading && (
           <Overlay
             children={
               <div className="animate-spin z-10 ">
