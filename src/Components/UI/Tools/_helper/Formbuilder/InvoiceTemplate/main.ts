@@ -29,6 +29,7 @@ export default function useTemplateController() {
 
   const { draft, clients } = useAppSelector((state) => state.invoice);
   const { account } = useAppSelector((state) => state.userSlice);
+  const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
   
   // Web3 Compatibility Stubs
   const loading = false;
@@ -313,5 +314,6 @@ export default function useTemplateController() {
     editToggle,
     handleEditFormToggle,
     account,
+    isPro,
   };
 }

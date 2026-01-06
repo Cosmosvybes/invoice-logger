@@ -1,4 +1,6 @@
 import useChatController from "./chat.controller";
+import SubscriptionModal from "../Modals/SubscriptionModal";
+import { useState } from "react";
 import Messages from "./Messages";
 import withAuth from "../_helper/Auth/withAuth";
 import { ChatDot, Send, ArrowLeft, Information, Lock } from "react-huge-icons/outline";
@@ -13,7 +15,7 @@ function Chat() {
   const { account } = useAppSelector((state) => state.userSlice);
   const isPro = account?.plan === 'pro' || account?.plan === 'Enterprise';
   
-  const setShowUpgradeModal = (val: boolean) => console.log("Upgrade modal toggled:", val);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   return (
     <div className="fixed inset-0 bg-slate-50 flex flex-col h-screen animate-fade-in overflow-hidden">
@@ -110,7 +112,10 @@ function Chat() {
           </footer>
       </div>
 
-
+      <SubscriptionModal 
+          isOpen={showUpgradeModal} 
+          toggle={() => setShowUpgradeModal(!showUpgradeModal)} 
+      />
     </div>
   );
 }

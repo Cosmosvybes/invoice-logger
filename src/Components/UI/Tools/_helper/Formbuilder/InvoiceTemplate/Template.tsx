@@ -24,13 +24,14 @@ import React, { useState } from "react";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
 import Overlay from "../../../Layout/Overlay";
 import { LoadingDashed, Pencil, RemoveCircle } from "react-huge-icons/solid";
+import SubscriptionModal from "../../../Modals/SubscriptionModal";
 
 
 const Template = React.memo(
   ({ invoiceInformation }: { invoiceInformation: Invoice }) => {
     const { forms } = useModalController();
     const [modal, setModal] = useState(false);
-    const setShowUpgradeModal = (val: boolean) => console.log("Upgrade modal toggled:", val);
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
     const [showProducts, setShowProducts] = useState(true);
     const {
       customEmail,
@@ -55,6 +56,7 @@ const Template = React.memo(
       handleSelectClient,
       editToggle,
       handleEditFormToggle,
+      isPro,
     } = useTemplateController();
 
     //   //?? ///////////////////////////////////////////////
@@ -360,10 +362,7 @@ const Template = React.memo(
                               type="checkbox" 
                               className="sr-only peer"
                               onChange={(e) => {
-                                // Gated Feature: Recurring Invoices
-                                // TODO: Replace with actual state check after verifying backend mapping
-                                // const isPro = subscriptionStatus === 'pro'; 
-                                if (false) { // forcing false for demo until backend is ready or manually toggled
+                                if (isPro) { 
                                    // Allow toggle
                                 } else {
                                    e.preventDefault();
@@ -378,7 +377,7 @@ const Template = React.memo(
                   </div>
                   
                   {/* Collapsible Options */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-slate-100 transition-all duration-300">
+                  <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-slate-100 transition-all duration-300 ${!isPro ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
                       <div className="relative">
                         <label className="text-xs text-slate-600 uppercase font-bold tracking-wider mb-2 block">Frequency</label>
                          <div className="relative">
@@ -481,6 +480,10 @@ const Template = React.memo(
           </div>
         )}
 
+        <SubscriptionModal 
+            isOpen={showUpgradeModal} 
+            toggle={() => setShowUpgradeModal(!showUpgradeModal)} 
+        />
       </>
     );
   }

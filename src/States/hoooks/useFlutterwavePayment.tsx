@@ -101,11 +101,19 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
   const handlePayment = useFlutterwave(config);
 
   const wrappedHandlePayment = (params: any) => {
-    console.log("Triggering Flutterwave with config:", config);
+
+
     if (!config.public_key) {
       console.error("CRITICAL: Flutterwave Public Key is MISSING in environment variables!");
+      alert("Payment Error: Flutterwave Public Key is missing. Please check your .env file.");
+      return;
     }
-    handlePayment(params);
+    
+    try {
+        handlePayment(params);
+    } catch (err) {
+        console.error("useFlutterwavePayment: Error triggering handlePayment", err);
+    }
   };
 
   return { handleFlutterPayment: wrappedHandlePayment };
