@@ -5,7 +5,7 @@ import {
   View,
   Image,
 } from "@react-pdf/renderer";
-import logo from "../../assets/react.svg"; // Fallback logo
+const logo = "https://steadybill.pro/brand-assets/logo.png";
 import { Invoice } from "../../States/Slices/invoice.types";
 import styles from "./Components/style/PDFStyles";
 

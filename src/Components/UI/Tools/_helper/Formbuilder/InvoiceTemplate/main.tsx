@@ -15,6 +15,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../../../States/hoooks/hook";
 import { toast } from "react-toastify";
 import { setIsAuthenticated } from "../../../../../../States/Slices/ClientSlice/useAuth/user";
+import { pdf } from "@react-pdf/renderer";
+import GeneratePDF from "../../../../../PDF/PDFGenereator";
 
 export default function useTemplateController() {
   
@@ -198,12 +200,32 @@ export default function useTemplateController() {
     // Clean up the flat field
     delete finalInvoice.Recurring;
 
+    // Generate PDF Blob
+    let pdfBase64 = null;
+    try {
+        const blob = await pdf(<GeneratePDF invoiceInformation={finalInvoice} />).toBlob();
+        const reader = new FileReader();
+        pdfBase64 = await new Promise((resolve) => {
+            reader.onloadend = () => {
+                const base64String = (reader.result as string).split(',')[1];
+                resolve(base64String);
+            };
+            reader.readAsDataURL(blob);
+        });
+    } catch (pdfError) {
+        console.error("PDF Generation Error:", pdfError);
+        // We continue anyway, but maybe log it
+    }
+
     const emailObject = {
       receipient: recipient,
       htmlContent: emailData,
       invoice: finalInvoice,
+      pdfAttachment: pdfBase64 ? {
+          content: pdfBase64,
+          filename: `invoice_${finalInvoice.id || 'draft'}.pdf`
+      } : undefined
     };
-    // if (!isConnected) return toast.warn("Account not conneected");
 
     try {
       // Payout Setup Notification for Free Users (or any user)
@@ -228,7 +250,7 @@ export default function useTemplateController() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "Application/json",
           },
-          body: JSON.stringify({ ...emailObject }),
+          body: JSON.stringify(emailObject),
         }
       );
       if (responseInfo.status === 403) {
