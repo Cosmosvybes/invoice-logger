@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "react-toastify/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 import { ItemsType, VAT_DISCOUNT } from "../type";
 import { API_URL } from "../../../../../../Components/constants/Index";
 import { useAppDispatch } from "../../../../../../States/hoooks/hook";
