@@ -46,7 +46,7 @@ export const forms = [
     name: "Recurring",
     value: "None",
     placeholder: "Recurring Frequency",
-    options: ["None", "Weekly", "Monthly"],
+    options: ["None", "Weekly", "Bi-Weekly", "Monthly", "Quarterly", "Annually"],
   },
 ];
 
