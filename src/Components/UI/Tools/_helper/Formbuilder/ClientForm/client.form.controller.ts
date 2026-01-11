@@ -55,13 +55,14 @@ export default function useClientFormController() {
       toast.warn("Incomplete client details", { theme: "colored" });
       return;
     }
-    const { Name, Email, City_Postal_State, Country, Address } = formValues;
+    const { Name, Email, City_Postal_State, Country, Address, PhoneNumber } = formValues;
     const client = {
       name: Name,
       email: Email,
       address: Address,
       country: Country,
       cityStatePostal: City_Postal_State,
+      phoneNumber: PhoneNumber,
       id: Date.now(),
     };
     setLoading(true);

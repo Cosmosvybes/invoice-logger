@@ -37,12 +37,17 @@ interface FlutterwavePaymentProps {
   logo?: string;
   payment_plan?: string;
   planType?: 'monthly' | 'yearly';
+  type?: 'subscription' | 'topup';
   currency?: string;
+  onSuccess?: (response: FlutterwaveResponse) => void;
   subaccounts?: { id: string; transaction_charge?: number; transaction_charge_type?: string }[];
 }
 
 export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => {
-  const tx_ref = React.useMemo(() => `SUB_${paymentProps.email.split('@')[0]}_${Date.now()}`, [paymentProps.email]);
+  const tx_ref = React.useMemo(() => {
+    const prefix = paymentProps.type === 'topup' ? 'SMS' : 'SUB';
+    return `${prefix}_${paymentProps.email.split('@')[0]}_${Date.now()}`;
+  }, [paymentProps.email, paymentProps.type]);
   
   const config = {
     public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string,
@@ -66,8 +71,16 @@ export const useFlutterwavePayment = (paymentProps: FlutterwavePaymentProps) => 
     callback: async (response: FlutterwaveResponse) => {
       console.log("Payment Success callback triggered:", response);
       
-      // Call Backend to Upgrade User
-      if (response.status === "successful") {
+      if (response.status !== "successful") return;
+
+      // 1. Prioritize custom callback if provided
+      if (paymentProps.onSuccess) {
+          paymentProps.onSuccess(response);
+          return;
+      }
+
+      // 2. Default Subscription upgrade logic
+      if (!paymentProps.type || paymentProps.type === 'subscription') {
           try {
               const token = localStorage.getItem("token");
               const res = await fetch(`${API_URL}/api/subscription/upgrade`, {

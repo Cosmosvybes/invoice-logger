@@ -4,10 +4,10 @@ import useTableController from "./table.controller";
 import Empty from "../Dashboard/Invoices/Empty";
 import useClientDataController from "./client.controller";
 import Paginate from "../../../Tools/Layout/Paginate/Paginate";
-import { Search, MapPin, Mail, User } from "react-huge-icons/outline";
+import { Search, MapPin, Mail, User, Trash } from "react-huge-icons/outline";
 
 const Table_ = () => {
-  const { clients, search, handleSearch } = useTableController();
+  const { clients, search, handleSearch, handleDeleteClient } = useTableController();
 
   const { currentList, postPerPage, setCurrentPage, currentPage } =
     useClientDataController(clients);
@@ -52,12 +52,13 @@ const Table_ = () => {
                     <th className="p-6 text-xs font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Principal Address</th>
                     <th className="p-6 text-xs font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Location</th>
                     <th className="p-6 text-xs font-black text-slate-400 uppercase tracking-widest text-center whitespace-nowrap">Geography</th>
+                    <th className="p-6 text-xs font-black text-slate-400 uppercase tracking-widest text-center whitespace-nowrap">Actions</th>
                 </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
                 {filteredClients.length === 0 ? (
                     <tr>
-                        <td colSpan={5} className="py-20 text-center">
+                        <td colSpan={6} className="py-20 text-center">
                             <div className="flex flex-col items-center justify-center opacity-40">
                                 <User className="text-5xl mb-3" />
                                 <p className="text-sm font-bold">No clients found matching your search</p>
@@ -99,6 +100,16 @@ const Table_ = () => {
                                 <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">
                                     {row.country}
                                 </span>
+                            </td>
+                            <td className="p-6 text-center">
+                                <button
+                                    onClick={() => handleDeleteClient(row.email)}
+                                    className="px-3 py-2 rounded-xl text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 transition-all shadow-sm flex items-center gap-2 mx-auto"
+                                    title="Delete Client"
+                                >
+                                    <Trash className="text-xl" />
+                                    <span className="text-xs font-bold uppercase">Delete</span>
+                                </button>
                             </td>
                         </tr>
                     ))

@@ -61,6 +61,9 @@ export default function useSettingsController() {
   const settingsSchema = useMemo(() => [
     { id: 13, type: "switch", name: "tokenBalanceNotification", value: false, label: "Balance notification" },
     { id: 17, type: "switch", name: "invoiceSentNotication", value: true, label: "Invoice notification" },
+    { id: 14, type: "switch", name: "autoChase", value: false, label: "Auto-Pursue (Overdue Reminders)" },
+    { id: 18, type: "switch", name: "smsNotification", value: true, label: "SMS notification" },
+    { id: 73, type: "number", name: "smsBalance", value: 0, label: "SMS Credits Balance", readOnly: true },
   ], []);
 
   const personalizationSchema = useMemo(() => [
@@ -77,6 +80,7 @@ export default function useSettingsController() {
   const businessDetails = useMemo(() => [
     { id: 71, type: "text", name: "businessName", value: "", label: "business name" },
     { id: 971, type: "text", name: "businessAddress", value: "", label: "Business address" },
+    { id: 72, type: "text", name: "phoneNumber", value: "", label: "your phone number" },
   ], []);
 
   const payoutSchema = useMemo(() => [
@@ -159,7 +163,8 @@ export default function useSettingsController() {
     bankName: settings.bankName ?? payout?.bank_name ?? "",
     accountNumber: settings.accountNumber ?? payout?.account_number ?? "",
     accountName: settings.accountName ?? payout?.account_name ?? "",
-    _country: selectedCountry // Add country to settings obj for schema
+    _country: selectedCountry, // Add country to settings obj for schema
+    smsBalance: account?.smsBalance || 0 // [NEW] Inject balance for UI display
   };
 
   const handleSubmit = async (activeTab?: string) => {

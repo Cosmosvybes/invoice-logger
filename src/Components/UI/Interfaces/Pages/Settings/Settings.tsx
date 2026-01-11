@@ -5,6 +5,7 @@ import { Spinner } from "reactstrap";
 import withAuth from "../../../Tools/_helper/Auth/withAuth";
 import { useState } from "react";
 import SubscriptionModal from "../../../Tools/Modals/SubscriptionModal";
+import SmsTopupModal from "../../../Tools/Modals/SmsTopupModal";
 
 import { User, SettingShort, Diamond, Bank, LoadingDashed } from "react-huge-icons/solid";
 import Overlay from "../../../Tools/Layout/Overlay";
@@ -24,6 +25,7 @@ const Settings = () => {
 
   const [activeTab, setActiveTab] = useState("profile");
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showTopupModal, setShowTopupModal] = useState(false);
 
   const TABS = [
     { id: "profile", label: "Identity", icon:User},
@@ -41,6 +43,23 @@ const Settings = () => {
       case "preferences":
         return (
           <div className="space-y-8">
+            <div className="bg-white rounded-[2rem] border border-slate-200/60 shadow-xl shadow-slate-200/20 p-8 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-xl">
+                        <Diamond />
+                    </div>
+                    <div>
+                        <h4 className="text-lg font-black text-slate-900">SMS Credit Balance</h4>
+                        <p className="text-sm font-bold text-slate-500">Currently have {settings.smsBalance || 0} credits</p>
+                    </div>
+                </div>
+                <button 
+                    onClick={() => setShowTopupModal(true)}
+                    className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl transition-all shadow-lg shadow-emerald-100 transform hover:-translate-y-0.5"
+                >
+                    Top Up Credits
+                </button>
+            </div>
             <InputProvider 
                 settings={settings} 
                 handleSubmit={() => handleSubmit(activeTab)} 
@@ -50,7 +69,15 @@ const Settings = () => {
                 isPro={isPro}
                 onUpgrade={() => setShowUpgradeModal(true)}
             />
-            <InputProvider settings={settings} handleSubmit={() => handleSubmit(activeTab)} schema={settingsSchema} title="Global" handleChange={handleChange} />
+            <InputProvider 
+                settings={settings} 
+                handleSubmit={() => handleSubmit(activeTab)} 
+                schema={settingsSchema} 
+                title="Global" 
+                handleChange={handleChange} 
+                isPro={isPro}
+                onUpgrade={() => setShowUpgradeModal(true)}
+            />
           </div>
         );
       case "subscription":
@@ -172,6 +199,10 @@ const Settings = () => {
       <SubscriptionModal 
           isOpen={showUpgradeModal} 
           toggle={() => setShowUpgradeModal(!showUpgradeModal)} 
+      />
+      <SmsTopupModal 
+          isOpen={showTopupModal} 
+          toggle={() => setShowTopupModal(!showTopupModal)} 
       />
     </div>
   );

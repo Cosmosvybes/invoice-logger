@@ -41,9 +41,9 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, toggle })
         "Unlimited Client Relationships",
         "Integrated Payment Processing",
         "Recurring Invoices (Set & Forget)",
-        "Auto-Pursuing (Smart Follow-ups)",
         "Smart Tax & Discounts",
-        "Real-time Invoice Chat"
+        "Real-time Invoice Chat",
+        "Priority Customer Support"
       ]
     },
     {

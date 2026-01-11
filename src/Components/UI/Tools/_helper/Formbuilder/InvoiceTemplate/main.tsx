@@ -303,7 +303,14 @@ export default function useTemplateController() {
     const selectDoc = document.querySelector(
       "#client-list"
     ) as HTMLSelectElement;
-    setReceipient(selectDoc.value);
+    const selectedEmail = selectDoc.value;
+    setReceipient(selectedEmail);
+
+    // Find client and auto-populate phone if available
+    const selectedClient = clients.find(c => c.email === selectedEmail);
+    if (selectedClient && selectedClient.phoneNumber) {
+      updateInvoiceDetails(selectedClient.phoneNumber, "phoneNumber");
+    }
   };
 
   const [editToggle, setEditToggle] = useState(false);

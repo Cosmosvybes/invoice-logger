@@ -290,6 +290,31 @@ const invoiceSlice = createSlice({
       .catch((err) => console.error("Failed to delete recurring", err));
     },
 
+    deleteClient: (state, action: PayloadAction<{ email: string; token: string }>) => {
+      const { email, token } = action.payload;
+      const client = state.clients.find((c) => c.email === email);
+      if (client) {
+        state.clients.splice(state.clients.indexOf(client), 1);
+      }
+
+      fetch(`${API_URL}/api/client/delete`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+      .then((res) => {
+        if (res.ok) toast.success("Client removed successfully");
+        else toast.error("Failed to remove client");
+      })
+      .catch((err) => {
+        console.error("Failed to delete client", err);
+        toast.error("Operation failed");
+      });
+    },
+
     updateInvoiceInformation: (state, action: PayloadAction<keyValue>) => {
       const { key, value, invoiceID, token } = action.payload;
       const invoice: string | number | boolean | any = state.draft.find(
@@ -571,5 +596,6 @@ export const {
   removeDraft,
   markAsPaid,
   deleteRecurring,
+  deleteClient,
   setCurrrentInvoices,
 } = invoiceSlice.actions;

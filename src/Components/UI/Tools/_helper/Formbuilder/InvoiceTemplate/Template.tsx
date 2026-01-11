@@ -20,11 +20,13 @@ import Currency from "../Common/CurrOptions/Currency";
 import { render } from "@react-email/components";
 import Mailer from "../../../../../EMAIL/Mailer";
 import Spinner_ from "../../Loader/Spinner";
+import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { Invoice } from "../../../../../../States/Slices/invoice.types";
 import Overlay from "../../../Layout/Overlay";
 import { LoadingDashed, Pencil, RemoveCircle } from "react-huge-icons/solid";
 import SubscriptionModal from "../../../Modals/SubscriptionModal";
+import SmsTopupModal from "../../../Modals/SmsTopupModal";
 
 
 const Template = React.memo(
@@ -32,6 +34,7 @@ const Template = React.memo(
     const { forms } = useModalController();
     const [modal, setModal] = useState(false);
     const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+    const [showTopupModal, setShowTopupModal] = useState(false);
     const [showProducts, setShowProducts] = useState(true);
     const {
       customEmail,
@@ -56,6 +59,7 @@ const Template = React.memo(
       editToggle,
       handleEditFormToggle,
       isPro,
+      account,
     } = useTemplateController();
 
     //   //?? ///////////////////////////////////////////////
@@ -382,6 +386,41 @@ const Template = React.memo(
                   </div>
                 </div>
 
+                {/* Auto-Pursue Toggle (Free but credit-dependent) */}
+                <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group hover:border-violet-200 hover:shadow-md transition-all mb-4">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-3">
+                         <strong className="text-lg text-slate-800 font-bold tracking-tight">Auto-Pursue this Invoice</strong>
+                         <span className={`px-2 py-0.5 rounded text-[10px] font-black border ${account?.smsBalance > 0 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'}`}>
+                           {account?.smsBalance || 0} CREDITS
+                         </span>
+                      </div>
+                      <p className="text-slate-600 text-sm font-medium">Send automatic reminders if this invoice becomes overdue.</p>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                       <label className="relative inline-flex items-center cursor-pointer">
+                          <input 
+                              type="checkbox" 
+                              className="sr-only peer"
+                              checked={invoiceInformation.autoChase === true}
+                              onChange={(e) => {
+                                const checked = e.target.checked;
+                                if (checked && (account?.smsBalance || 0) <= 0) {
+                                   toast.warning("You need SMS credits to enable Auto-Pursue notifications.");
+                                   setShowTopupModal(true);
+                                } else {
+                                   updateInvoiceDetails(checked, "autoChase");
+                                }
+                              }} 
+                          />
+                          <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-violet-600 shadow-inner"></div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Recurring Invoice Section (Monetization Feature - Clean UI) */}
                 <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group hover:border-violet-200 hover:shadow-md transition-all">
                   <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -524,6 +563,10 @@ const Template = React.memo(
         <SubscriptionModal 
             isOpen={showUpgradeModal} 
             toggle={() => setShowUpgradeModal(!showUpgradeModal)} 
+        />
+        <SmsTopupModal 
+            isOpen={showTopupModal} 
+            toggle={() => setShowTopupModal(!showTopupModal)} 
         />
       </>
     );

@@ -25,6 +25,12 @@ export const forms = [
   },
   {
     type: "text",
+    name: "phoneNumber",
+    value: "",
+    placeholder: "Client's Phone (e.g. +1234567890)",
+  },
+  {
+    type: "text",
     name: "Notes",
     value: "",
     placeholder: "Notes / Payment Instructions",
@@ -68,6 +74,12 @@ const newCLientsFormField = [
     name: "Address",
     value: "",
     placeholder: "Client's address (incl. City, State, Country)",
+  },
+  {
+    type: "text",
+    name: "PhoneNumber",
+    value: "",
+    placeholder: "Phone (e.g. +1234567890)",
   },
 ];
 

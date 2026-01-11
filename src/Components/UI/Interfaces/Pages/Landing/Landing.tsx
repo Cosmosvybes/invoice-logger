@@ -202,7 +202,7 @@ const Landing = () => {
             <FeatureCard 
               icon={<Diamond />} 
               title="Pro Infrastructure" 
-              desc="Enterprise-grade features like auto-chasing and recurring billing for everyone."
+              desc="Enterprise-grade features like automated recurring billing and custom themes."
               color="text-indigo-600"
               bg="bg-indigo-100"
             />
@@ -238,6 +238,8 @@ const Landing = () => {
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> 50 Complimentary Invoices</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Manage up to 3 Clients</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Integrated Payment Processing</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Auto-Pursuing (Reminders)</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Email & SMS Notifications</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-emerald-500 text-xl" /> Standard PDF Templates</li>
                     </ul>
                     <Link to="/create/new/account" className="block w-full py-5 text-center bg-white/10 hover:bg-white text-white hover:text-slate-900 rounded-2xl font-black text-sm transition-all shadow-xl group-hover:shadow-white/5">
@@ -255,11 +257,11 @@ const Landing = () => {
                     </div>
                     <ul className="space-y-5 text-white font-medium mb-12 flex-1">
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Unlimited Client Relationships</li>
-                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Integrated Payment Processing</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Unlimited Email & SMS Integration</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Recurring Invoices (Set & Forget)</li>
-                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Auto-Pursuing (Smart Follow-ups)</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Smart Tax & Discounts</li>
                         <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Real-time Invoice Chat</li>
+                        <li className="flex items-center gap-3"><CheckMarkCircle className="text-white text-xl" /> Priority Email Support</li>
                     </ul>
                     <Link to="/create/new/account" className="block w-full py-5 text-center bg-white text-violet-700 hover:bg-slate-50 rounded-2xl font-black text-sm transition-all shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95">
                         Unlock Pro Access

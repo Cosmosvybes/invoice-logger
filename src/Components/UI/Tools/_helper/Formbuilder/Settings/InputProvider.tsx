@@ -16,11 +16,12 @@ const InputProvider = React.memo(
     schema: {
       type: string;
       name: string;
-      value: boolean | string;
+      value: boolean | string | number;
       label: string;
       checked?: boolean | string;
       options?: string[];
       disabled?: boolean;
+      readOnly?: boolean;
       gated?: boolean;
     }[];
     settings: any;
@@ -105,17 +106,22 @@ const InputProvider = React.memo(
           );
 
         default:
+          const isReadOnly = _.readOnly || _.disabled;
           return (
             <div className="relative mb-6" key={i}>
               <div className="flex flex-col gap-2">
                 <label className="text-xs text-slate-400 uppercase font-black tracking-[0.15em] ml-1"> {_.label}</label>
                 <Input
-                  type="text"
-                  disabled={_.disabled}
-                  className="w-full h-14 px-5 rounded-2xl text-sm font-bold text-slate-900 bg-slate-50 border-slate-100 focus:ring-4 focus:ring-violet-50 focus:border-violet-200 focus:bg-white transition-all shadow-sm disabled:opacity-50 disabled:bg-slate-100 cursor-not-allowed"
-                  value={safeSettings[_.name] || ""}
+                  type={(_.type as any) || "text"}
+                  disabled={isReadOnly}
+                  placeholder={String(_.label)}
+                  className={`w-full h-14 px-5 rounded-2xl text-sm font-bold text-slate-900 bg-slate-50 border-slate-100 focus:ring-4 focus:ring-violet-50 focus:border-violet-200 focus:bg-white transition-all shadow-sm ${isReadOnly ? 'opacity-70 bg-slate-100 cursor-not-allowed border-dashed' : ''}`}
+                  value={safeSettings[_.name] ?? ""}
                   onChange={(e) => handleChange(_.name, e.target.value)}
                 />
+                {isReadOnly && _.type === "number" && (
+                    <p className="text-[10px] font-bold text-violet-500 uppercase tracking-wider ml-1">This is a system managed balance</p>
+                )}
               </div>
             </div>
           );
